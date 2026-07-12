@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  verification: {
+    other: {
+      "msvalidate.01": "33D5684FC661A2807740B2027FAB673E",
+    },
+  },
   alternates: {
     canonical: "/",
   },
