@@ -9,7 +9,7 @@ export function ToolCard({ calculator }: ToolCardProps) {
   return (
     <Link
       href={`/tools/${calculator.slug}`}
-      className="group rounded-3xl border border-line bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-ink hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+      className="group rounded-3xl border border-line bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-ink hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
     >
       <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
         {calculator.category}
@@ -18,7 +18,7 @@ export function ToolCard({ calculator }: ToolCardProps) {
         {calculator.name}
       </h3>
       <p className="mt-3 leading-7 text-muted">{calculator.description}</p>
-      <span className="mt-6 inline-flex text-sm font-semibold text-ink">
+      <span className="mt-6 inline-flex text-sm font-semibold text-ink transition group-hover:text-brand">
         Open calculator
       </span>
     </Link>

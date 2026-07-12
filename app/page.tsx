@@ -4,11 +4,9 @@ import { ToolCard } from "@/components/tool-card";
 import { calculators } from "@/lib/calculators";
 
 export default function HomePage() {
-  const featuredCalculator = calculators[0];
-
   return (
     <>
-      <section className="border-b border-line bg-gradient-to-b from-white to-surface">
+      <section className="relative overflow-hidden border-b border-line bg-[radial-gradient(circle_at_70%_10%,rgba(37,111,90,0.12),transparent_34%),linear-gradient(180deg,#ffffff_0%,#f7f8fa_100%)]">
         <Container className="grid gap-12 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28">
           <div>
             <p className="mb-5 text-sm font-semibold uppercase tracking-[0.18em] text-brand">
@@ -36,37 +34,44 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-line bg-white p-6 shadow-soft">
-            <div className="rounded-[1.5rem] bg-surface p-6">
-              <p className="text-sm font-medium text-muted">Featured tool</p>
-              <h2 className="mt-3 text-2xl font-semibold text-ink">
-                Chicken Coop Size Calculator
-              </h2>
+          <div className="rounded-[2rem] border border-white/70 bg-white/85 p-4 shadow-soft backdrop-blur sm:p-6">
+            <div className="rounded-[1.5rem] border border-line bg-surface p-5 sm:p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-sm font-medium text-muted">
+                    Backyard planning kit
+                  </p>
+                  <h2 className="mt-3 text-2xl font-semibold text-ink">
+                    Two connected chicken tools
+                  </h2>
+                </div>
+                <div className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-brand">
+                  MVP
+                </div>
+              </div>
+
               <div className="mt-6 grid gap-3">
-                <div className="rounded-2xl bg-white p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                    Indoor coop
-                  </p>
-                  <p className="mt-2 text-3xl font-semibold text-ink">
-                    4 sq ft
-                    <span className="text-base font-medium text-muted">
-                      {" "}
-                      / medium chicken
-                    </span>
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-white p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                    Outdoor run
-                  </p>
-                  <p className="mt-2 text-3xl font-semibold text-ink">
-                    10 sq ft
-                    <span className="text-base font-medium text-muted">
-                      {" "}
-                      / chicken
-                    </span>
-                  </p>
-                </div>
+                {[
+                  ["Coop indoor space", "4 sq ft", "/ medium chicken"],
+                  ["Run space", "10 sq ft", "/ chicken"],
+                  ["Comfort target", "15 sq ft", "/ chicken"],
+                ].map(([label, value, unit]) => (
+                  <div
+                    key={label}
+                    className="rounded-2xl border border-line bg-white p-4"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+                      {label}
+                    </p>
+                    <p className="mt-2 text-3xl font-semibold text-ink">
+                      {value}
+                      <span className="text-base font-medium text-muted">
+                        {" "}
+                        {unit}
+                      </span>
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -92,7 +97,9 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            <ToolCard calculator={featuredCalculator} />
+            {calculators.map((calculator) => (
+              <ToolCard key={calculator.slug} calculator={calculator} />
+            ))}
           </div>
         </Container>
       </section>
@@ -111,7 +118,10 @@ export default function HomePage() {
                 "Useful pages designed to answer common DIY questions.",
               ],
             ].map(([title, body]) => (
-              <div key={title}>
+              <div
+                key={title}
+                className="rounded-3xl border border-line bg-white p-6 shadow-sm"
+              >
                 <h3 className="text-xl font-semibold text-ink">{title}</h3>
                 <p className="mt-3 leading-7 text-muted">{body}</p>
               </div>
