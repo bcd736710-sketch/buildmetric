@@ -39,6 +39,33 @@ export const calculators: CalculatorSummary[] = [
       },
     ],
   },
+  {
+    slug: "chicken-run-size-calculator",
+    name: "Chicken Run Size Calculator",
+    category: "Backyard DIY",
+    description:
+      "Estimate minimum and comfortable outdoor run space for your backyard chicken flock.",
+    seoTitle: "Chicken Run Size Calculator",
+    metaDescription:
+      "Use the free Chicken Run Size Calculator to estimate outdoor chicken run space based on flock size.",
+    faqs: [
+      {
+        question: "How much outdoor run space does a chicken need?",
+        answer:
+          "A practical minimum planning rule is 10 square feet of outdoor run space per chicken.",
+      },
+      {
+        question: "Is more run space better for chickens?",
+        answer:
+          "Yes. More outdoor space can reduce crowding and make the run easier to manage, especially for active flocks.",
+      },
+      {
+        question: "Does ground surface change the calculation?",
+        answer:
+          "In this MVP, surface type is included for planning context but does not change the formula.",
+      },
+    ],
+  },
 ];
 
 export const calculatorBySlug = Object.fromEntries(

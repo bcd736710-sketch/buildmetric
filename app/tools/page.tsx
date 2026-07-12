@@ -30,8 +30,8 @@ export default function ToolsPage() {
             DIY calculators for clearer backyard planning.
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted">
-            Start with practical estimates for your next project. Phase 1
-            includes one focused calculator, with more tools planned.
+            Start with practical estimates for your next backyard project.
+            BuildMetric is growing one focused tool at a time.
           </p>
         </div>
 

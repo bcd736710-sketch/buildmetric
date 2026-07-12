@@ -81,7 +81,7 @@ export default function HomePage() {
                 Featured calculators
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
-                Start with the essential backyard planner.
+                Start with practical backyard planning tools.
               </h2>
             </div>
             <Link

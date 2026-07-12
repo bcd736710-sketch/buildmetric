@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChickenCoopCalculator } from "@/components/chicken-coop-calculator";
+import { ChickenRunCalculator } from "@/components/chicken-run-calculator";
 import { Container } from "@/components/container";
 import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
 
-const calculator = calculatorBySlug["chicken-coop-size-calculator"];
+const calculator = calculatorBySlug["chicken-run-size-calculator"];
 const pageUrl = `/tools/${calculator.slug}`;
 
 export const metadata: Metadata = {
@@ -57,7 +57,7 @@ const jsonLd = {
   ],
 };
 
-export default function ChickenCoopSizeCalculatorPage() {
+export default function ChickenRunSizeCalculatorPage() {
   return (
     <>
       <script
@@ -87,19 +87,19 @@ export default function ChickenCoopSizeCalculatorPage() {
       <section className="py-12 sm:py-16">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1fr_0.72fr] lg:items-start">
-            <ChickenCoopCalculator />
+            <ChickenRunCalculator />
 
             <aside className="rounded-3xl border border-line bg-surface p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
                 Quick guide
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-ink">
-                Plan for comfort first.
+                Give the flock room to move.
               </h2>
               <p className="mt-4 leading-7 text-muted">
-                This calculator estimates minimum indoor coop space and outdoor
-                run space. More room is usually better when your site and budget
-                allow it.
+                This calculator uses 10 square feet per chicken as a practical
+                minimum and 15 square feet per chicken as a more comfortable
+                planning target.
               </p>
             </aside>
           </div>
@@ -113,7 +113,7 @@ export default function ChickenCoopSizeCalculatorPage() {
               Explanation
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-ink">
-              How much coop space do chickens need?
+              How much run space do chickens need?
             </h2>
           </div>
           <div className="space-y-8 text-muted">
@@ -122,11 +122,10 @@ export default function ChickenCoopSizeCalculatorPage() {
                 How the calculation works
               </h3>
               <p className="mt-3 leading-8">
-                The calculator multiplies your flock size by the recommended
-                indoor space for the selected chicken size. Small chickens use 3
-                square feet each, medium chickens use 4 square feet each, and
-                large chickens use 5 square feet each. Run space is calculated
-                at 10 square feet per chicken.
+                The calculator multiplies your flock size by 10 square feet to
+                estimate a minimum outdoor run size. It also multiplies your
+                flock size by 15 square feet to show a more comfortable planning
+                target when your yard and budget allow it.
               </p>
             </div>
             <div>
@@ -134,9 +133,8 @@ export default function ChickenCoopSizeCalculatorPage() {
                 Example calculation
               </h3>
               <p className="mt-3 leading-8">
-                For 6 medium chickens, the recommended indoor coop space is 24
-                square feet. The recommended outdoor run space is 60 square
-                feet.
+                For 6 chickens, the minimum recommended run space is 60 square
+                feet. A more comfortable target is 90 square feet.
               </p>
             </div>
           </div>
@@ -150,7 +148,7 @@ export default function ChickenCoopSizeCalculatorPage() {
               FAQ
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-ink">
-              Chicken coop size questions
+              Chicken run size questions
             </h2>
           </div>
           <div className="mt-8 grid gap-4">
@@ -176,17 +174,17 @@ export default function ChickenCoopSizeCalculatorPage() {
               Related tool
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-ink">
-              Plan the outdoor run too.
+              Plan the indoor coop too.
             </h2>
             <p className="mt-4 leading-7 text-muted">
-              Coop space and run space work together. Estimate the outdoor run
-              area your flock needs before choosing a final layout.
+              Outdoor run space works best when it is planned alongside safe,
+              comfortable indoor coop space.
             </p>
             <Link
-              href="/tools/chicken-run-size-calculator"
+              href="/tools/chicken-coop-size-calculator"
               className="mt-6 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
             >
-              Open Chicken Run Size Calculator
+              Open Chicken Coop Size Calculator
             </Link>
           </div>
         </Container>
