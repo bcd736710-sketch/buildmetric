@@ -11,6 +11,64 @@ import { siteConfig } from "@/lib/site";
 const calculator = calculatorBySlug["chicken-feed-calculator"];
 const pageUrl = `/tools/${calculator.slug}`;
 
+const feedRows = [
+  {
+    flock: "4 adult hens",
+    daily: "1.1 lb",
+    weekly: "7.7 lb",
+    monthly: "33 lb",
+  },
+  {
+    flock: "6 adult hens",
+    daily: "1.7 lb",
+    weekly: "11.6 lb",
+    monthly: "49.5 lb",
+  },
+  {
+    flock: "8 adult hens",
+    daily: "2.2 lb",
+    weekly: "15.4 lb",
+    monthly: "66 lb",
+  },
+  {
+    flock: "10 adult hens",
+    daily: "2.8 lb",
+    weekly: "19.3 lb",
+    monthly: "82.5 lb",
+  },
+];
+
+const feedPlanningFactors = [
+  {
+    title: "Chicken age",
+    description:
+      "Chicks, growers, and adult laying hens have different daily feed targets and feed types.",
+  },
+  {
+    title: "Waste and feeder type",
+    description:
+      "Spilled feed can add up quickly, so a hanging or covered feeder may reduce waste.",
+  },
+  {
+    title: "Forage access",
+    description:
+      "Free ranging can change feed use, but balanced feed should still be available for steady nutrition.",
+  },
+  {
+    title: "Storage time",
+    description:
+      "Buying too much feed at once can lead to stale or damp feed if storage is not dry and sealed.",
+  },
+];
+
+const feedChecklist = [
+  "Match feed type to the flock stage: chick starter, grower, layer, or other specific feed.",
+  "Store feed in a dry sealed container away from moisture and pests.",
+  "Check feeders daily so birds do not run out unexpectedly.",
+  "Track real feed use for one week and adjust future estimates.",
+  "Avoid buying more feed than you can keep fresh.",
+];
+
 export const metadata: Metadata = {
   title: calculator.seoTitle,
   description: calculator.metaDescription,
@@ -99,6 +157,53 @@ export default function ChickenFeedCalculatorPage() {
         </Container>
       </section>
 
+      <section className="border-t border-line bg-white py-12 sm:py-16">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.65fr_1fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Feed chart
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                Chicken feed estimate chart
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                These examples use adult laying hens with the standard feed
+                buffer. Use the calculator for chicks, growers, or a different
+                buffer.
+              </p>
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[560px] text-left text-sm">
+                  <thead className="bg-surface text-ink">
+                    <tr>
+                      <th className="px-5 py-4 font-semibold">Flock</th>
+                      <th className="px-5 py-4 font-semibold">Daily feed</th>
+                      <th className="px-5 py-4 font-semibold">Weekly feed</th>
+                      <th className="px-5 py-4 font-semibold">Monthly feed</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-line text-muted">
+                    {feedRows.map((row) => (
+                      <tr key={row.flock}>
+                        <th className="px-5 py-4 font-semibold text-ink">
+                          {row.flock}
+                        </th>
+                        <td className="px-5 py-4">{row.daily}</td>
+                        <td className="px-5 py-4">{row.weekly}</td>
+                        <td className="px-5 py-4">{row.monthly}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       <section className="border-t border-line py-12 sm:py-16">
         <Container className="grid gap-12 lg:grid-cols-[0.75fr_1fr]">
           <div>
@@ -131,6 +236,70 @@ export default function ChickenFeedCalculatorPage() {
                 week, and 49.5 pounds per month.
               </p>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-surface py-12 sm:py-16">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[0.75fr_1fr]">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Planning details
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                What affects feed use?
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                Feed estimates are best used as a starting point. Real use can
+                change with bird age, season, feeder setup, and how much feed
+                gets wasted.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {feedPlanningFactors.map((factor) => (
+                <article
+                  key={factor.title}
+                  className="rounded-3xl border border-line bg-white p-6 shadow-sm"
+                >
+                  <h3 className="text-xl font-semibold text-ink">
+                    {factor.title}
+                  </h3>
+                  <p className="mt-3 leading-7 text-muted">
+                    {factor.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-12 sm:py-16">
+        <Container className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Checklist
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-ink">
+              Before buying chicken feed
+            </h2>
+            <p className="mt-4 leading-7 text-muted">
+              Use the estimate to plan a shopping interval, then keep storage
+              and flock stage in mind.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-line bg-white p-6 shadow-sm">
+            <ul className="space-y-4">
+              {feedChecklist.map((item) => (
+                <li key={item} className="flex gap-3 leading-7 text-muted">
+                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </section>

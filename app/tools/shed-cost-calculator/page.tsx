@@ -11,6 +11,64 @@ import { siteConfig } from "@/lib/site";
 const calculator = calculatorBySlug["shed-cost-calculator"];
 const pageUrl = `/tools/${calculator.slug}`;
 
+const shedCostRows = [
+  {
+    size: "8 x 10 shed",
+    basic: "$2,800",
+    standard: "$3,600",
+    premium: "$5,600",
+  },
+  {
+    size: "10 x 12 shed",
+    basic: "$4,200",
+    standard: "$5,400",
+    premium: "$8,400",
+  },
+  {
+    size: "10 x 16 shed",
+    basic: "$5,600",
+    standard: "$7,200",
+    premium: "$11,200",
+  },
+  {
+    size: "12 x 16 shed",
+    basic: "$6,720",
+    standard: "$8,640",
+    premium: "$13,440",
+  },
+];
+
+const shedPlanningFactors = [
+  {
+    title: "Shed size",
+    description:
+      "Square footage affects framing, floor material, siding, roofing, trim, and foundation needs.",
+  },
+  {
+    title: "Finish level",
+    description:
+      "Premium doors, windows, siding, roofing, and interior finishes can raise the budget quickly.",
+  },
+  {
+    title: "Foundation type",
+    description:
+      "A concrete slab costs more than a simple gravel or block base but may suit some sites better.",
+  },
+  {
+    title: "Local requirements",
+    description:
+      "Permits, setbacks, delivery fees, and site preparation can change the real project cost.",
+  },
+];
+
+const shedChecklist = [
+  "Check local permit, setback, and HOA rules before buying materials.",
+  "Confirm the shed footprint fits your yard and access path.",
+  "Choose a foundation type based on drainage, soil, and budget.",
+  "Add a budget buffer for fasteners, trim, delivery, and tool rentals.",
+  "Compare DIY materials with prefab kits if time is limited.",
+];
+
 export const metadata: Metadata = {
   title: calculator.seoTitle,
   description: calculator.metaDescription,
@@ -99,6 +157,53 @@ export default function ShedCostCalculatorPage() {
         </Container>
       </section>
 
+      <section className="border-t border-line bg-white py-12 sm:py-16">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.65fr_1fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Cost chart
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                DIY shed cost chart
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                These examples show shell cost estimates before foundation
+                allowance. Use the calculator for your exact size and foundation
+                choice.
+              </p>
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[620px] text-left text-sm">
+                  <thead className="bg-surface text-ink">
+                    <tr>
+                      <th className="px-5 py-4 font-semibold">Shed size</th>
+                      <th className="px-5 py-4 font-semibold">Basic</th>
+                      <th className="px-5 py-4 font-semibold">Standard</th>
+                      <th className="px-5 py-4 font-semibold">Premium</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-line text-muted">
+                    {shedCostRows.map((row) => (
+                      <tr key={row.size}>
+                        <th className="px-5 py-4 font-semibold text-ink">
+                          {row.size}
+                        </th>
+                        <td className="px-5 py-4">{row.basic}</td>
+                        <td className="px-5 py-4">{row.standard}</td>
+                        <td className="px-5 py-4">{row.premium}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       <section className="border-t border-line py-12 sm:py-16">
         <Container className="grid gap-12 lg:grid-cols-[0.75fr_1fr]">
           <div>
@@ -132,6 +237,69 @@ export default function ShedCostCalculatorPage() {
                 becomes $6,120.
               </p>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-surface py-12 sm:py-16">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[0.75fr_1fr]">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Planning details
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                What affects shed cost?
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                A shed estimate is most useful when you understand what can
+                move the final budget up or down before you buy plans.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {shedPlanningFactors.map((factor) => (
+                <article
+                  key={factor.title}
+                  className="rounded-3xl border border-line bg-white p-6 shadow-sm"
+                >
+                  <h3 className="text-xl font-semibold text-ink">
+                    {factor.title}
+                  </h3>
+                  <p className="mt-3 leading-7 text-muted">
+                    {factor.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-12 sm:py-16">
+        <Container className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Checklist
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-ink">
+              Before building a shed
+            </h2>
+            <p className="mt-4 leading-7 text-muted">
+              A budget estimate is only the first step. Check site constraints
+              and project requirements before ordering materials.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-line bg-white p-6 shadow-sm">
+            <ul className="space-y-4">
+              {shedChecklist.map((item) => (
+                <li key={item} className="flex gap-3 leading-7 text-muted">
+                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </section>
