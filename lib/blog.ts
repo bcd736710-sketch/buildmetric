@@ -168,6 +168,56 @@ export const blogPosts: BlogPost[] = [
     readingTime: "5 min read",
     relatedTools: ["raised-garden-bed-soil-calculator"],
   },
+  {
+    slug: "chicken-coop-materials-list",
+    title: "Chicken Coop Materials List",
+    description:
+      "Plan the main materials for a DIY chicken coop, from framing and siding to roofing, hardware cloth, doors, and latches.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["chicken-coop-size-calculator"],
+  },
+  {
+    slug: "chicken-coop-cleaning-schedule",
+    title: "Chicken Coop Cleaning Schedule",
+    description:
+      "Create a simple chicken coop cleaning routine for daily care, weekly refreshes, and deeper seasonal maintenance.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "5 min read",
+    relatedTools: ["chicken-coop-size-calculator"],
+  },
+  {
+    slug: "best-chicken-coop-bedding",
+    title: "Best Chicken Coop Bedding",
+    description:
+      "Compare common chicken coop bedding options for comfort, odor control, moisture management, and cleaning.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["chicken-coop-size-calculator"],
+  },
+  {
+    slug: "raised-garden-bed-size-guide",
+    title: "Raised Garden Bed Size Guide",
+    description:
+      "Choose practical raised garden bed dimensions for backyard layouts, easy reach, soil volume, and planting goals.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "5 min read",
+    relatedTools: ["raised-garden-bed-soil-calculator"],
+  },
+  {
+    slug: "diy-shed-permit-basics",
+    title: "DIY Shed Permit Basics",
+    description:
+      "Understand the basic permit and setback questions homeowners should check before building a backyard shed.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(
