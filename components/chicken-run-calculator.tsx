@@ -7,11 +7,16 @@ import {
   runSurfaceOptions,
   type RunSurface,
 } from "@/lib/chicken-run";
+import { getNumberParam, getStringParam } from "@/lib/calculator-url";
 import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ChickenRunCalculator() {
-  const [chickens, setChickens] = useState(6);
-  const [surface, setSurface] = useState<RunSurface>("mixed");
+  const [chickens, setChickens] = useState(() =>
+    getNumberParam("chickens", 6, 1, 500),
+  );
+  const [surface, setSurface] = useState<RunSurface>(() =>
+    getStringParam("surface", ["grass", "dirt", "mixed"], "mixed"),
+  );
 
   const result = useMemo(
     () => calculateChickenRunSpace(chickens, surface),
@@ -93,6 +98,10 @@ export function ChickenRunCalculator() {
 
       <CalculatorActions
         summary={summary}
+        shareParams={{
+          chickens,
+          surface,
+        }}
         onReset={() => {
           setChickens(6);
           setSurface("mixed");

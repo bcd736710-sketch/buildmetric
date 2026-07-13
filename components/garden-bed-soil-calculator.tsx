@@ -7,13 +7,22 @@ import {
   soilBagSizeOptions,
   type SoilBagSize,
 } from "@/lib/garden-bed-soil";
+import { getNumberParam, getStringParam } from "@/lib/calculator-url";
 import { cubicFeetToLiters } from "@/lib/units";
 
 export function GardenBedSoilCalculator() {
-  const [lengthFeet, setLengthFeet] = useState(8);
-  const [widthFeet, setWidthFeet] = useState(4);
-  const [depthInches, setDepthInches] = useState(10);
-  const [bagSize, setBagSize] = useState<SoilBagSize>("onePointFive");
+  const [lengthFeet, setLengthFeet] = useState(() =>
+    getNumberParam("length", 8, 0, 500),
+  );
+  const [widthFeet, setWidthFeet] = useState(() =>
+    getNumberParam("width", 4, 0, 500),
+  );
+  const [depthInches, setDepthInches] = useState(() =>
+    getNumberParam("depth", 10, 0, 120),
+  );
+  const [bagSize, setBagSize] = useState<SoilBagSize>(() =>
+    getStringParam("bag", ["one", "onePointFive", "two"], "onePointFive"),
+  );
   const result = useMemo(
     () => calculateGardenBedSoil(lengthFeet, widthFeet, depthInches, bagSize),
     [lengthFeet, widthFeet, depthInches, bagSize],
@@ -85,6 +94,12 @@ export function GardenBedSoilCalculator() {
 
       <CalculatorActions
         summary={summary}
+        shareParams={{
+          length: lengthFeet,
+          width: widthFeet,
+          depth: depthInches,
+          bag: bagSize,
+        }}
         onReset={() => {
           setLengthFeet(8);
           setWidthFeet(4);

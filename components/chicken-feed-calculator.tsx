@@ -9,12 +9,19 @@ import {
   type ChickenFeedType,
   type FeedWasteLevel,
 } from "@/lib/chicken-feed";
+import { getNumberParam, getStringParam } from "@/lib/calculator-url";
 import { poundsToKilograms } from "@/lib/units";
 
 export function ChickenFeedCalculator() {
-  const [chickens, setChickens] = useState(6);
-  const [feedType, setFeedType] = useState<ChickenFeedType>("layer");
-  const [wasteLevel, setWasteLevel] = useState<FeedWasteLevel>("standard");
+  const [chickens, setChickens] = useState(() =>
+    getNumberParam("chickens", 6, 1, 500),
+  );
+  const [feedType, setFeedType] = useState<ChickenFeedType>(() =>
+    getStringParam("stage", ["chick", "grower", "layer"], "layer"),
+  );
+  const [wasteLevel, setWasteLevel] = useState<FeedWasteLevel>(() =>
+    getStringParam("buffer", ["low", "standard", "high"], "standard"),
+  );
   const result = useMemo(
     () => calculateChickenFeed(chickens, feedType, wasteLevel),
     [chickens, feedType, wasteLevel],
@@ -110,6 +117,11 @@ export function ChickenFeedCalculator() {
 
       <CalculatorActions
         summary={summary}
+        shareParams={{
+          chickens,
+          stage: feedType,
+          buffer: wasteLevel,
+        }}
         onReset={() => {
           setChickens(6);
           setFeedType("layer");

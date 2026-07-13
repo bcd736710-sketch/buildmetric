@@ -9,12 +9,19 @@ import {
   type ChickenSize,
   type CoopStyle,
 } from "@/lib/chicken-coop";
+import { getNumberParam, getStringParam } from "@/lib/calculator-url";
 import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ChickenCoopCalculator() {
-  const [chickens, setChickens] = useState(6);
-  const [chickenSize, setChickenSize] = useState<ChickenSize>("medium");
-  const [coopStyle, setCoopStyle] = useState<CoopStyle>("standard");
+  const [chickens, setChickens] = useState(() =>
+    getNumberParam("chickens", 6, 1, 500),
+  );
+  const [chickenSize, setChickenSize] = useState<ChickenSize>(() =>
+    getStringParam("size", ["small", "medium", "large"], "medium"),
+  );
+  const [coopStyle, setCoopStyle] = useState<CoopStyle>(() =>
+    getStringParam("style", ["standard", "walk-in"], "standard"),
+  );
 
   const result = useMemo(
     () => calculateChickenCoopSpace(chickens, chickenSize, coopStyle),
@@ -112,6 +119,11 @@ export function ChickenCoopCalculator() {
 
       <CalculatorActions
         summary={summary}
+        shareParams={{
+          chickens,
+          size: chickenSize,
+          style: coopStyle,
+        }}
         onReset={() => {
           setChickens(6);
           setChickenSize("medium");

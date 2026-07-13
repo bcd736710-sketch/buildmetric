@@ -9,14 +9,23 @@ import {
   type ShedFoundationType,
   type ShedFinishLevel,
 } from "@/lib/shed-cost";
+import { getNumberParam, getStringParam } from "@/lib/calculator-url";
 import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ShedCostCalculator() {
-  const [lengthFeet, setLengthFeet] = useState(10);
-  const [widthFeet, setWidthFeet] = useState(12);
-  const [finishLevel, setFinishLevel] = useState<ShedFinishLevel>("standard");
+  const [lengthFeet, setLengthFeet] = useState(() =>
+    getNumberParam("length", 10, 0, 500),
+  );
+  const [widthFeet, setWidthFeet] = useState(() =>
+    getNumberParam("width", 12, 0, 500),
+  );
+  const [finishLevel, setFinishLevel] = useState<ShedFinishLevel>(() =>
+    getStringParam("finish", ["basic", "standard", "premium"], "standard"),
+  );
   const [foundationType, setFoundationType] =
-    useState<ShedFoundationType>("gravel");
+    useState<ShedFoundationType>(() =>
+      getStringParam("foundation", ["none", "gravel", "concrete"], "gravel"),
+    );
   const result = useMemo(
     () => calculateShedCost(lengthFeet, widthFeet, finishLevel, foundationType),
     [lengthFeet, widthFeet, finishLevel, foundationType],
@@ -114,6 +123,12 @@ export function ShedCostCalculator() {
 
       <CalculatorActions
         summary={summary}
+        shareParams={{
+          length: lengthFeet,
+          width: widthFeet,
+          finish: finishLevel,
+          foundation: foundationType,
+        }}
         onReset={() => {
           setLengthFeet(10);
           setWidthFeet(12);
