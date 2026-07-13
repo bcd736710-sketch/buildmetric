@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorAssumptions } from "@/components/calculator-assumptions";
 import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateGardenBedSoil,
@@ -37,6 +38,7 @@ export function GardenBedSoilCalculator() {
     `Soil volume: ${result.cubicFeet.toFixed(1)} cu ft (${cubicFeetToLiters(result.cubicFeet).toFixed(0)} liters)`,
     `Soil volume: ${result.cubicYards.toFixed(2)} cu yd`,
     `${selectedBagSize.label}: ${result.bagsNeeded} bags`,
+    "Formula: length x width x depth; bag count rounds up.",
   ].join("\n");
 
   return (
@@ -91,6 +93,15 @@ export function GardenBedSoilCalculator() {
           unit="bags"
         />
       </div>
+
+      <CalculatorAssumptions
+        items={[
+          "Soil volume equals length x width x depth.",
+          "Depth is converted from inches to feet before calculating cubic feet.",
+          "Cubic yards are calculated by dividing cubic feet by 27.",
+          "Bag count rounds up so you do not underbuy.",
+        ]}
+      />
 
       <CalculatorActions
         summary={summary}

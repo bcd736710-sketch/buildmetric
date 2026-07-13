@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorAssumptions } from "@/components/calculator-assumptions";
 import { CalculatorActions } from "@/components/calculator-actions";
 import {
   chickenSizeOptions,
@@ -39,6 +40,7 @@ export function ChickenCoopCalculator() {
     `Coop style: ${selectedStyle.label}`,
     `Recommended indoor coop space: ${result.coopSpace} sq ft (${squareFeetToSquareMeters(result.coopSpace).toFixed(1)} sq m)`,
     `Recommended run space: ${result.runSpace} sq ft (${squareFeetToSquareMeters(result.runSpace).toFixed(1)} sq m)`,
+    "Formula: chicken size sets indoor sq ft per bird; walk-in coops add 25%; run space uses 10 sq ft per chicken.",
   ].join("\n");
 
   return (
@@ -116,6 +118,16 @@ export function ChickenCoopCalculator() {
         Coop style adjusts indoor space. Walk-in coops include extra planning
         room for access, cleaning, and layout flexibility.
       </p>
+
+      <CalculatorAssumptions
+        items={[
+          "Small chickens use 3 sq ft of indoor coop space per bird.",
+          "Medium chickens use 4 sq ft of indoor coop space per bird.",
+          "Large chickens use 5 sq ft of indoor coop space per bird.",
+          "Walk-in coops add a 25% indoor space allowance.",
+          "Run space uses 10 sq ft per chicken.",
+        ]}
+      />
 
       <CalculatorActions
         summary={summary}

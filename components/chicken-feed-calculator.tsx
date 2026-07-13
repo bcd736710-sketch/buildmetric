@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorAssumptions } from "@/components/calculator-assumptions";
 import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateChickenFeed,
@@ -39,6 +40,7 @@ export function ChickenFeedCalculator() {
     `Daily feed: ${result.dailyFeed.toFixed(1)} lb (${poundsToKilograms(result.dailyFeed).toFixed(1)} kg)`,
     `Weekly feed: ${result.weeklyFeed.toFixed(1)} lb (${poundsToKilograms(result.weeklyFeed).toFixed(1)} kg)`,
     `Monthly feed: ${result.monthlyFeed.toFixed(1)} lb (${poundsToKilograms(result.monthlyFeed).toFixed(1)} kg)`,
+    "Formula: chicken stage sets daily feed per bird; feed buffer adds planning margin.",
   ].join("\n");
 
   return (
@@ -114,6 +116,16 @@ export function ChickenFeedCalculator() {
         Feed buffer adjusts the estimate for waste, spills, open feeders, and a
         small planning margin.
       </p>
+
+      <CalculatorAssumptions
+        items={[
+          "Chicks use 0.10 lb of feed per bird per day.",
+          "Growing chickens use 0.18 lb of feed per bird per day.",
+          "Adult laying hens use 0.25 lb of feed per bird per day.",
+          "Standard buffer adds 10% for waste and planning margin.",
+          "High waste buffer adds 20% for open feeders or higher spill risk.",
+        ]}
+      />
 
       <CalculatorActions
         summary={summary}

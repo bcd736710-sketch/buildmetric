@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorAssumptions } from "@/components/calculator-assumptions";
 import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateShedCost,
@@ -45,6 +46,7 @@ export function ShedCostCalculator() {
     `Build estimate: $${result.buildCost.toLocaleString()}`,
     `Foundation allowance: $${result.foundationCost.toLocaleString()}`,
     `Estimated total: $${result.estimatedCost.toLocaleString()}`,
+    "Formula: shed area x finish rate, plus selected foundation allowance.",
   ].join("\n");
 
   return (
@@ -120,6 +122,16 @@ export function ShedCostCalculator() {
           unit=""
         />
       </div>
+
+      <CalculatorAssumptions
+        items={[
+          "Shed area equals length x width.",
+          "Basic finish uses $25 per sq ft.",
+          "Standard finish uses $45 per sq ft.",
+          "Premium finish uses $75 per sq ft.",
+          "Gravel or block base adds $6 per sq ft; concrete slab adds $14 per sq ft.",
+        ]}
+      />
 
       <CalculatorActions
         summary={summary}

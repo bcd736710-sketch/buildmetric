@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorAssumptions } from "@/components/calculator-assumptions";
 import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateChickenRunSpace,
@@ -30,6 +31,7 @@ export function ChickenRunCalculator() {
     `Run surface: ${selectedSurface.label}`,
     `Minimum recommended run space: ${result.minimumRunSpace} sq ft (${squareFeetToSquareMeters(result.minimumRunSpace).toFixed(1)} sq m)`,
     `More comfortable run space: ${result.comfortableRunSpace} sq ft (${squareFeetToSquareMeters(result.comfortableRunSpace).toFixed(1)} sq m)`,
+    "Formula: surface type sets minimum and comfortable sq ft per chicken.",
   ].join("\n");
 
   return (
@@ -95,6 +97,15 @@ export function ChickenRunCalculator() {
         Surface type adjusts the estimate because grass usually needs more room
         to reduce wear, while dirt and mixed surfaces are planned differently.
       </p>
+
+      <CalculatorAssumptions
+        items={[
+          "Dirt runs use 10 sq ft minimum and 15 sq ft comfortable per chicken.",
+          "Mixed ground runs use 11 sq ft minimum and 16 sq ft comfortable per chicken.",
+          "Grass runs use 12 sq ft minimum and 18 sq ft comfortable per chicken.",
+          "The comfortable target gives the run more margin for movement and wear.",
+        ]}
+      />
 
       <CalculatorActions
         summary={summary}
