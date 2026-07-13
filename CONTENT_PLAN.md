@@ -5,7 +5,7 @@ BuildMetric is currently focused on SEO-driven DIY calculators and supporting gu
 ## Current Site Inventory
 
 - Tools: 5
-- Articles: 20
+- Articles: 25
 - Primary categories: Backyard Chickens, Garden DIY, Backyard DIY
 - Deployment: Netlify
 - Search setup: Bing Webmaster Tools, sitemap submitted
@@ -32,14 +32,16 @@ Published guides:
 - Chicken Coop Materials List
 - Chicken Coop Cleaning Schedule
 - Best Chicken Coop Bedding
+- Chicken Coop Door Size Guide
+- Predator Proof Chicken Run Guide
 
 Next ideas:
 
 - Walk-In Chicken Coop Size Guide
-- Predator Proof Chicken Run Guide
-- Chicken Coop Door Size Guide
 - Chicken Coop Nesting Box Guide
 - Chicken Coop Insulation Guide
+- Chicken Coop Roost Bar Height Guide
+- Chicken Coop Nesting Box Size Guide
 
 ### Garden DIY
 
@@ -54,14 +56,15 @@ Published guides:
 - Best Soil Mix for Raised Garden Beds
 - How Many Bags of Soil for a 4x8 Raised Bed?
 - Raised Garden Bed Size Guide
+- Raised Garden Bed Cost Guide
 
 Next ideas:
 
-- Raised Garden Bed Cost Guide
 - 4x8 Raised Garden Bed Layout
 - Raised Garden Bed Drainage Guide
 - Compost for Raised Garden Beds
 - Raised Garden Bed Irrigation Basics
+- Raised Garden Bed Watering Guide
 
 ### Backyard DIY
 
@@ -76,14 +79,16 @@ Published guides:
 - 10x12 Shed Cost Guide
 - Shed Foundation Cost Guide
 - DIY Shed Permit Basics
+- Shed Roofing Cost Guide
+- 8x10 Shed Cost Guide
 
 Next ideas:
 
-- Shed Roofing Cost Guide
-- 8x10 Shed Cost Guide
 - Shed Door Size Guide
 - Backyard Storage Shed Planning Checklist
 - Shed Ramp Planning Guide
+- Shed Ventilation Guide
+- Shed Flooring Options Guide
 
 ## Publishing Checklist
 
@@ -122,9 +127,14 @@ Use this table manually after deployment.
 | `/blog/best-chicken-coop-bedding` | Backyard Chickens | High | No | Pending | Affiliate potential |
 | `/blog/raised-garden-bed-size-guide` | Garden DIY | Medium | No | Pending | Planning intent |
 | `/blog/diy-shed-permit-basics` | Backyard DIY | Medium | No | Pending | Planning intent |
+| `/blog/shed-roofing-cost-guide` | Backyard DIY | High | No | Pending | Commercial intent |
+| `/blog/8x10-shed-cost-guide` | Backyard DIY | High | No | Pending | Commercial intent |
+| `/blog/raised-garden-bed-cost-guide` | Garden DIY | High | No | Pending | Commercial intent |
+| `/blog/chicken-coop-door-size-guide` | Backyard Chickens | Medium | No | Pending | Planning intent |
+| `/blog/predator-proof-chicken-run-guide` | Backyard Chickens | High | No | Pending | Safety intent |
 
 ## Near-Term Focus
 
 Do not add payments, accounts, databases, comments, or a CMS yet.
 
-The next useful phase is to monitor Bing indexing for a few days, then add another focused batch of 5 guides only after the current pages are stable.
+The next useful phase is to monitor Bing indexing for a few days, improve pages that get impressions, and add only tightly related guides after the current pages are stable.

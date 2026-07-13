@@ -218,6 +218,56 @@ export const blogPosts: BlogPost[] = [
     readingTime: "6 min read",
     relatedTools: ["shed-cost-calculator"],
   },
+  {
+    slug: "shed-roofing-cost-guide",
+    title: "Shed Roofing Cost Guide",
+    description:
+      "Compare common shed roofing choices and understand how roof size, material, slope, and trim affect cost.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
+  },
+  {
+    slug: "8x10-shed-cost-guide",
+    title: "8x10 Shed Cost Guide",
+    description:
+      "Estimate the likely cost of an 8x10 DIY shed and see which choices can raise or lower the budget.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
+  },
+  {
+    slug: "raised-garden-bed-cost-guide",
+    title: "Raised Garden Bed Cost Guide",
+    description:
+      "Plan a realistic raised garden bed budget by estimating lumber, soil, hardware, and optional upgrades.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["raised-garden-bed-soil-calculator"],
+  },
+  {
+    slug: "chicken-coop-door-size-guide",
+    title: "Chicken Coop Door Size Guide",
+    description:
+      "Choose practical chicken coop door sizes for chickens, cleaning access, ventilation, and daily care.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "5 min read",
+    relatedTools: ["chicken-coop-size-calculator"],
+  },
+  {
+    slug: "predator-proof-chicken-run-guide",
+    title: "Predator Proof Chicken Run Guide",
+    description:
+      "Plan a safer chicken run with practical fencing, hardware cloth, apron, roof, latch, and gap-control ideas.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+    relatedTools: ["chicken-run-size-calculator", "chicken-coop-size-calculator"],
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(
