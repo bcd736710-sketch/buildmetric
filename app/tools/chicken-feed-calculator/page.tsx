@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChickenFeedCalculator } from "@/components/chicken-feed-calculator";
 import { Container } from "@/components/container";
+import { RelatedTools } from "@/components/related-tools";
 import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
 
@@ -155,6 +156,8 @@ export default function ChickenFeedCalculatorPage() {
           </div>
         </Container>
       </section>
+
+      <RelatedTools currentSlug={calculator.slug} />
     </>
   );
 }

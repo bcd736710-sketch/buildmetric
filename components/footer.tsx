@@ -11,7 +11,7 @@ export function Footer() {
             Simple, accurate, and beautiful online tools for DIY homeowners.
           </p>
         </div>
-        <div className="flex gap-6">
+        <div className="flex flex-wrap gap-4 sm:gap-6">
           <Link
             className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
             href="/"
@@ -23,6 +23,24 @@ export function Footer() {
             href="/tools"
           >
             Tools
+          </Link>
+          <Link
+            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            href="/blog"
+          >
+            Blog
+          </Link>
+          <Link
+            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            href="/about"
+          >
+            About
+          </Link>
+          <Link
+            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            href="/privacy-policy"
+          >
+            Privacy
           </Link>
         </div>
       </Container>

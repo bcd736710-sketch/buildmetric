@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChickenCoopCalculator } from "@/components/chicken-coop-calculator";
 import { Container } from "@/components/container";
+import { RelatedTools } from "@/components/related-tools";
 import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
 
@@ -169,28 +170,7 @@ export default function ChickenCoopSizeCalculatorPage() {
         </Container>
       </section>
 
-      <section className="py-12 sm:py-16">
-        <Container>
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-              Related tool
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold text-ink">
-              Plan the outdoor run too.
-            </h2>
-            <p className="mt-4 leading-7 text-muted">
-              Coop space and run space work together. Estimate the outdoor run
-              area your flock needs before choosing a final layout.
-            </p>
-            <Link
-              href="/tools/chicken-run-size-calculator"
-              className="mt-6 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            >
-              Open Chicken Run Size Calculator
-            </Link>
-          </div>
-        </Container>
-      </section>
+      <RelatedTools currentSlug={calculator.slug} />
     </>
   );
 }

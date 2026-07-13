@@ -30,6 +30,12 @@ export function Header() {
           >
             Tools
           </Link>
+          <Link
+            className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            href="/blog"
+          >
+            Blog
+          </Link>
         </nav>
       </Container>
     </header>
