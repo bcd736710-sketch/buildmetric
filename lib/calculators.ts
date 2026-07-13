@@ -66,6 +66,87 @@ export const calculators: CalculatorSummary[] = [
       },
     ],
   },
+  {
+    slug: "chicken-feed-calculator",
+    name: "Chicken Feed Calculator",
+    category: "Backyard DIY",
+    description:
+      "Estimate daily, weekly, and monthly chicken feed needs for your flock.",
+    seoTitle: "Chicken Feed Calculator",
+    metaDescription:
+      "Use the free Chicken Feed Calculator to estimate how much feed your chickens need per day, week, and month.",
+    faqs: [
+      {
+        question: "How much feed does an adult chicken eat per day?",
+        answer:
+          "A common planning estimate for an adult laying hen is about 0.25 pounds of feed per day.",
+      },
+      {
+        question: "Should chicks and adult chickens use the same estimate?",
+        answer:
+          "No. Chicks usually eat less than adult chickens, so this calculator includes separate estimates for chicks, growing chickens, and adult laying hens.",
+      },
+      {
+        question: "Is this exact for every flock?",
+        answer:
+          "No. Breed, season, forage access, and feed type can change real feed use, so treat the result as a planning estimate.",
+      },
+    ],
+  },
+  {
+    slug: "raised-garden-bed-soil-calculator",
+    name: "Raised Garden Bed Soil Calculator",
+    category: "Garden DIY",
+    description:
+      "Calculate how much soil you need to fill a raised garden bed.",
+    seoTitle: "Raised Garden Bed Soil Calculator",
+    metaDescription:
+      "Use the free Raised Garden Bed Soil Calculator to estimate soil volume in cubic feet, cubic yards, and bag count.",
+    faqs: [
+      {
+        question: "How do I calculate soil for a raised garden bed?",
+        answer:
+          "Multiply length by width by soil depth. Convert depth from inches to feet before multiplying.",
+      },
+      {
+        question: "How many bags of soil do I need?",
+        answer:
+          "This calculator estimates the number of 1.5 cubic foot bags by dividing total cubic feet by 1.5 and rounding up.",
+      },
+      {
+        question: "Should I buy extra soil?",
+        answer:
+          "It is usually smart to buy a little extra because soil settles after watering and planting.",
+      },
+    ],
+  },
+  {
+    slug: "shed-cost-calculator",
+    name: "Shed Cost Calculator",
+    category: "Backyard DIY",
+    description:
+      "Estimate a simple DIY shed budget from shed size and finish level.",
+    seoTitle: "Shed Cost Calculator",
+    metaDescription:
+      "Use the free Shed Cost Calculator to estimate DIY shed cost based on square footage and finish level.",
+    faqs: [
+      {
+        question: "How does this shed cost calculator work?",
+        answer:
+          "It multiplies shed length by width to get square footage, then multiplies that area by a cost per square foot.",
+      },
+      {
+        question: "What does the finish level mean?",
+        answer:
+          "Finish level represents a simple cost range: basic, standard, or premium materials and finishes.",
+      },
+      {
+        question: "Does this include labor or permits?",
+        answer:
+          "No. This MVP estimate is for simple planning and does not include local labor, permit, delivery, or site preparation costs.",
+      },
+    ],
+  },
 ];
 
 export const calculatorBySlug = Object.fromEntries(

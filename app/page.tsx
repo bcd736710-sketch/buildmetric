@@ -42,7 +42,7 @@ export default function HomePage() {
                     Backyard planning kit
                   </p>
                   <h2 className="mt-3 text-2xl font-semibold text-ink">
-                    Two connected chicken tools
+                    Five focused planning tools
                   </h2>
                 </div>
                 <div className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-brand">
@@ -52,9 +52,9 @@ export default function HomePage() {
 
               <div className="mt-6 grid gap-3">
                 {[
-                  ["Coop indoor space", "4 sq ft", "/ medium chicken"],
-                  ["Run space", "10 sq ft", "/ chicken"],
-                  ["Comfort target", "15 sq ft", "/ chicken"],
+                  ["Chicken coop", "4 sq ft", "/ medium chicken"],
+                  ["Chicken run", "10 sq ft", "/ chicken"],
+                  ["Garden soil", "1.5 cu ft", "/ bag estimate"],
                 ].map(([label, value, unit]) => (
                   <div
                     key={label}

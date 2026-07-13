@@ -1,0 +1,107 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import {
+  calculateShedCost,
+  shedFinishOptions,
+  type ShedFinishLevel,
+} from "@/lib/shed-cost";
+
+export function ShedCostCalculator() {
+  const [lengthFeet, setLengthFeet] = useState(10);
+  const [widthFeet, setWidthFeet] = useState(12);
+  const [finishLevel, setFinishLevel] = useState<ShedFinishLevel>("standard");
+  const result = useMemo(
+    () => calculateShedCost(lengthFeet, widthFeet, finishLevel),
+    [lengthFeet, widthFeet, finishLevel],
+  );
+
+  return (
+    <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
+      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+        Calculator
+      </p>
+      <h2 className="mt-3 text-3xl font-semibold text-ink">
+        Estimate shed project cost
+      </h2>
+      <p className="mt-3 leading-7 text-muted">
+        Enter shed dimensions and finish level to estimate a simple DIY shed
+        budget.
+      </p>
+
+      <div className="mt-8 grid gap-5 sm:grid-cols-3">
+        <NumberInput label="Length" value={lengthFeet} onChange={setLengthFeet} />
+        <NumberInput label="Width" value={widthFeet} onChange={setWidthFeet} />
+        <label className="grid gap-2">
+          <span className="text-sm font-semibold text-ink">Finish level</span>
+          <select
+            value={finishLevel}
+            onChange={(event) =>
+              setFinishLevel(event.target.value as ShedFinishLevel)
+            }
+            className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+          >
+            {shedFinishOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
+        <ResultCard label="Shed area" value={result.squareFeet.toFixed(0)} unit="sq ft" />
+        <ResultCard label="Cost rate" value={`$${result.costPerSquareFoot}`} unit="/ sq ft" />
+        <ResultCard
+          label="Estimated cost"
+          value={`$${result.estimatedCost.toLocaleString()}`}
+          unit=""
+        />
+      </div>
+    </div>
+  );
+}
+
+function NumberInput({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <label className="grid gap-2">
+      <span className="text-sm font-semibold text-ink">{label}</span>
+      <input
+        min={0}
+        type="number"
+        value={value}
+        onChange={(event) => onChange(Math.max(0, Number(event.target.value) || 0))}
+        className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+      />
+    </label>
+  );
+}
+
+function ResultCard({
+  label,
+  value,
+  unit,
+}: {
+  label: string;
+  value: string;
+  unit: string;
+}) {
+  return (
+    <div className="rounded-2xl bg-surface p-5">
+      <p className="text-sm font-medium text-muted">{label}</p>
+      <p className="mt-2 text-3xl font-semibold text-ink">
+        {value}
+        {unit ? <span className="text-base font-medium text-muted"> {unit}</span> : null}
+      </p>
+    </div>
+  );
+}
