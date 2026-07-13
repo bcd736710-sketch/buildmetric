@@ -91,7 +91,7 @@ export default function ChickenFeedCalculatorPage() {
               <p className="mt-4 leading-7 text-muted">
                 Adult laying hens often eat about 0.25 pounds of feed per day.
                 Chicks and growing birds usually need less, so this calculator
-                adjusts the estimate by stage.
+                adjusts the estimate by stage and feed buffer.
               </p>
             </aside>
           </div>
@@ -115,8 +115,9 @@ export default function ChickenFeedCalculatorPage() {
               </h3>
               <p className="mt-3 leading-8">
                 The calculator multiplies your flock size by a daily feed
-                estimate for the selected chicken stage, then multiplies that
-                amount by 7 days and 30 days for weekly and monthly planning.
+                estimate for the selected chicken stage, applies the feed buffer
+                for waste or planning margin, then multiplies that amount by 7
+                days and 30 days for weekly and monthly planning.
               </p>
             </div>
             <div>
@@ -124,8 +125,9 @@ export default function ChickenFeedCalculatorPage() {
                 Example calculation
               </h3>
               <p className="mt-3 leading-8">
-                For 6 adult laying hens, the calculator estimates 1.5 pounds of
-                feed per day, 10.5 pounds per week, and 45 pounds per month.
+                For 6 adult laying hens with the standard buffer, the calculator
+                estimates about 1.7 pounds of feed per day, 11.6 pounds per
+                week, and 49.5 pounds per month.
               </p>
             </div>
           </div>

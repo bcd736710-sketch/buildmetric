@@ -90,7 +90,7 @@ export default function ShedCostCalculatorPage() {
               </h2>
               <p className="mt-4 leading-7 text-muted">
                 This tool gives a simple square-foot estimate. Real costs can
-                vary by materials, foundation, permits, delivery, and local
+                vary by materials, foundation type, permits, delivery, and local
                 prices.
               </p>
             </aside>
@@ -116,7 +116,8 @@ export default function ShedCostCalculatorPage() {
               <p className="mt-3 leading-8">
                 The calculator multiplies shed length by width to get square
                 footage, then multiplies the area by a simple cost per square
-                foot based on the selected finish level.
+                foot based on the selected finish level. It then adds a
+                foundation allowance based on the selected foundation type.
               </p>
             </div>
             <div>
@@ -125,7 +126,9 @@ export default function ShedCostCalculatorPage() {
               </h3>
               <p className="mt-3 leading-8">
                 A 10 by 12 foot standard shed is 120 square feet. At $45 per
-                square foot, the estimated cost is $5,400.
+                square foot, the build estimate is $5,400. With a gravel or
+                block base allowance at $6 per square foot, the estimated total
+                becomes $6,120.
               </p>
             </div>
           </div>

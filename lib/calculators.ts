@@ -109,7 +109,7 @@ export const calculators: CalculatorSummary[] = [
       {
         question: "Is this exact for every flock?",
         answer:
-          "No. Breed, season, forage access, and feed type can change real feed use, so treat the result as a planning estimate.",
+          "No. Breed, season, forage access, feeder style, waste, and feed type can change real feed use, so treat the result as a planning estimate.",
       },
       {
         question: "Should I buy feed weekly or monthly?",
@@ -141,7 +141,7 @@ export const calculators: CalculatorSummary[] = [
       {
         question: "How many bags of soil do I need?",
         answer:
-          "This calculator estimates the number of 1.5 cubic foot bags by dividing total cubic feet by 1.5 and rounding up.",
+          "This calculator estimates bag count by dividing total cubic feet by your selected bag size and rounding up.",
       },
       {
         question: "Should I buy extra soil?",
@@ -173,7 +173,7 @@ export const calculators: CalculatorSummary[] = [
       {
         question: "How does this shed cost calculator work?",
         answer:
-          "It multiplies shed length by width to get square footage, then multiplies that area by a cost per square foot.",
+          "It multiplies shed length by width to get square footage, applies the selected finish cost per square foot, then adds the selected foundation allowance.",
       },
       {
         question: "What does the finish level mean?",
@@ -183,7 +183,7 @@ export const calculators: CalculatorSummary[] = [
       {
         question: "Does this include labor or permits?",
         answer:
-          "No. This MVP estimate is for simple planning and does not include local labor, permit, delivery, or site preparation costs.",
+          "No. This estimate is for simple planning and does not include local labor, permit fees, delivery, utility work, or unusual site preparation.",
       },
       {
         question: "What is the biggest cost driver for a DIY shed?",

@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import {
   calculateShedCost,
+  shedFoundationOptions,
   shedFinishOptions,
+  type ShedFoundationType,
   type ShedFinishLevel,
 } from "@/lib/shed-cost";
 
@@ -11,9 +13,11 @@ export function ShedCostCalculator() {
   const [lengthFeet, setLengthFeet] = useState(10);
   const [widthFeet, setWidthFeet] = useState(12);
   const [finishLevel, setFinishLevel] = useState<ShedFinishLevel>("standard");
+  const [foundationType, setFoundationType] =
+    useState<ShedFoundationType>("gravel");
   const result = useMemo(
-    () => calculateShedCost(lengthFeet, widthFeet, finishLevel),
-    [lengthFeet, widthFeet, finishLevel],
+    () => calculateShedCost(lengthFeet, widthFeet, finishLevel, foundationType),
+    [lengthFeet, widthFeet, finishLevel, foundationType],
   );
 
   return (
@@ -29,7 +33,7 @@ export function ShedCostCalculator() {
         budget.
       </p>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-3">
+      <div className="mt-8 grid gap-5 sm:grid-cols-2">
         <NumberInput label="Length" value={lengthFeet} onChange={setLengthFeet} />
         <NumberInput label="Width" value={widthFeet} onChange={setWidthFeet} />
         <label className="grid gap-2">
@@ -48,13 +52,38 @@ export function ShedCostCalculator() {
             ))}
           </select>
         </label>
+        <label className="grid gap-2">
+          <span className="text-sm font-semibold text-ink">Foundation</span>
+          <select
+            value={foundationType}
+            onChange={(event) =>
+              setFoundationType(event.target.value as ShedFoundationType)
+            }
+            className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+          >
+            {shedFoundationOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2" aria-live="polite">
         <ResultCard label="Shed area" value={result.squareFeet.toFixed(0)} unit="sq ft" />
-        <ResultCard label="Cost rate" value={`$${result.costPerSquareFoot}`} unit="/ sq ft" />
         <ResultCard
-          label="Estimated cost"
+          label="Build estimate"
+          value={`$${result.buildCost.toLocaleString()}`}
+          unit=""
+        />
+        <ResultCard
+          label="Foundation allowance"
+          value={`$${result.foundationCost.toLocaleString()}`}
+          unit=""
+        />
+        <ResultCard
+          label="Estimated total"
           value={`$${result.estimatedCost.toLocaleString()}`}
           unit=""
         />

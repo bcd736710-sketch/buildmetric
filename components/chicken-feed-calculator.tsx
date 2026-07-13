@@ -4,15 +4,18 @@ import { useMemo, useState } from "react";
 import {
   calculateChickenFeed,
   chickenFeedOptions,
+  feedWasteOptions,
   type ChickenFeedType,
+  type FeedWasteLevel,
 } from "@/lib/chicken-feed";
 
 export function ChickenFeedCalculator() {
   const [chickens, setChickens] = useState(6);
   const [feedType, setFeedType] = useState<ChickenFeedType>("layer");
+  const [wasteLevel, setWasteLevel] = useState<FeedWasteLevel>("standard");
   const result = useMemo(
-    () => calculateChickenFeed(chickens, feedType),
-    [chickens, feedType],
+    () => calculateChickenFeed(chickens, feedType, wasteLevel),
+    [chickens, feedType, wasteLevel],
   );
 
   return (
@@ -60,6 +63,22 @@ export function ChickenFeedCalculator() {
             ))}
           </select>
         </label>
+        <label className="grid gap-2">
+          <span className="text-sm font-semibold text-ink">Feed buffer</span>
+          <select
+            value={wasteLevel}
+            onChange={(event) =>
+              setWasteLevel(event.target.value as FeedWasteLevel)
+            }
+            className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+          >
+            {feedWasteOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
@@ -67,6 +86,11 @@ export function ChickenFeedCalculator() {
         <ResultCard label="Weekly feed" value={result.weeklyFeed} />
         <ResultCard label="Monthly feed" value={result.monthlyFeed} />
       </div>
+
+      <p className="mt-5 text-sm leading-6 text-muted">
+        Feed buffer adjusts the estimate for waste, spills, open feeders, and a
+        small planning margin.
+      </p>
     </div>
   );
 }

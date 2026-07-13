@@ -115,8 +115,8 @@ export default function RaisedGardenBedSoilCalculatorPage() {
               <p className="mt-3 leading-8">
                 The calculator multiplies length by width by soil depth. Depth
                 is converted from inches to feet before calculating cubic feet.
-                It also converts cubic feet to cubic yards and estimates 1.5
-                cubic foot bags.
+                It also converts cubic feet to cubic yards and estimates bag
+                count using your selected bag size.
               </p>
             </div>
             <div>
@@ -126,7 +126,8 @@ export default function RaisedGardenBedSoilCalculatorPage() {
               <p className="mt-3 leading-8">
                 An 8 by 4 foot raised bed filled 10 inches deep needs about
                 26.7 cubic feet of soil, or roughly 18 bags at 1.5 cubic feet
-                per bag.
+                per bag. If you switch to 2 cubic foot bags, the estimate drops
+                to 14 bags.
               </p>
             </div>
           </div>

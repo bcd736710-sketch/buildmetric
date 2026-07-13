@@ -1,15 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { calculateGardenBedSoil } from "@/lib/garden-bed-soil";
+import {
+  calculateGardenBedSoil,
+  soilBagSizeOptions,
+  type SoilBagSize,
+} from "@/lib/garden-bed-soil";
 
 export function GardenBedSoilCalculator() {
   const [lengthFeet, setLengthFeet] = useState(8);
   const [widthFeet, setWidthFeet] = useState(4);
   const [depthInches, setDepthInches] = useState(10);
+  const [bagSize, setBagSize] = useState<SoilBagSize>("onePointFive");
   const result = useMemo(
-    () => calculateGardenBedSoil(lengthFeet, widthFeet, depthInches),
-    [lengthFeet, widthFeet, depthInches],
+    () => calculateGardenBedSoil(lengthFeet, widthFeet, depthInches, bagSize),
+    [lengthFeet, widthFeet, depthInches, bagSize],
   );
 
   return (
@@ -35,12 +40,27 @@ export function GardenBedSoilCalculator() {
         />
       </div>
 
+      <label className="mt-5 grid gap-2">
+        <span className="text-sm font-semibold text-ink">Bag size</span>
+        <select
+          value={bagSize}
+          onChange={(event) => setBagSize(event.target.value as SoilBagSize)}
+          className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+        >
+          {soilBagSizeOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </label>
+
       <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
         <ResultCard label="Soil volume" value={result.cubicFeet.toFixed(1)} unit="cu ft" />
         <ResultCard label="Soil volume" value={result.cubicYards.toFixed(2)} unit="cu yd" />
         <ResultCard
-          label="1.5 cu ft bags"
-          value={String(result.bagsOnePointFiveCubicFeet)}
+          label={`${result.bagSizeCubicFeet} cu ft bags`}
+          value={String(result.bagsNeeded)}
           unit="bags"
         />
       </div>
