@@ -66,9 +66,10 @@ export default function PrivacyPolicyPage() {
                 Third-party services
               </h2>
               <p className="mt-3 leading-8">
-                BuildMetric is hosted on Netlify. Hosting providers may process
-                basic technical data such as IP address, browser type, and
-                request logs to deliver and secure the website.
+                BuildMetric is hosted by third-party hosting providers.
+                Hosting providers may process basic technical data such as IP
+                address, browser type, and request logs to deliver and secure
+                the website.
               </p>
             </section>
 
