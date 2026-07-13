@@ -53,6 +53,51 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
   },
+  {
+    slug: "chicken-coop-layout-ideas-for-small-backyards",
+    title: "Chicken Coop Layout Ideas for Small Backyards",
+    description:
+      "Plan a compact chicken coop layout that fits a small yard without making cleaning or daily care harder.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
+  {
+    slug: "chicken-run-flooring-ideas",
+    title: "Chicken Run Flooring Ideas",
+    description:
+      "Compare practical chicken run flooring options for drainage, cleaning, comfort, and backyard maintenance.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
+  {
+    slug: "how-much-does-it-cost-to-build-a-chicken-coop",
+    title: "How Much Does It Cost to Build a Chicken Coop?",
+    description:
+      "Understand the main cost drivers behind a DIY chicken coop, from size and materials to predator protection.",
+    category: "Backyard Chickens",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
+  {
+    slug: "raised-garden-bed-depth-guide",
+    title: "Raised Garden Bed Depth Guide",
+    description:
+      "Choose a practical raised garden bed depth for herbs, greens, root crops, and mixed backyard planting.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "5 min read",
+  },
+  {
+    slug: "how-much-does-it-cost-to-build-a-shed",
+    title: "How Much Does It Cost to Build a Shed?",
+    description:
+      "Plan a realistic DIY shed budget by understanding size, finish level, foundation, and material choices.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(
