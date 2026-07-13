@@ -5,7 +5,7 @@ BuildMetric is currently focused on SEO-driven DIY calculators and supporting gu
 ## Current Site Inventory
 
 - Tools: 5
-- Articles: 15
+- Articles: 20
 - Primary categories: Backyard Chickens, Garden DIY, Backyard DIY
 - Deployment: Netlify
 - Search setup: Bing Webmaster Tools, sitemap submitted
@@ -29,14 +29,17 @@ Published guides:
 - Chicken Coop Layout Ideas for Small Backyards
 - Chicken Run Flooring Ideas
 - How Much Does It Cost to Build a Chicken Coop?
-
-Next ideas:
-
 - Chicken Coop Materials List
 - Chicken Coop Cleaning Schedule
 - Best Chicken Coop Bedding
+
+Next ideas:
+
 - Walk-In Chicken Coop Size Guide
 - Predator Proof Chicken Run Guide
+- Chicken Coop Door Size Guide
+- Chicken Coop Nesting Box Guide
+- Chicken Coop Insulation Guide
 
 ### Garden DIY
 
@@ -50,14 +53,15 @@ Published guides:
 - Raised Garden Bed Depth Guide
 - Best Soil Mix for Raised Garden Beds
 - How Many Bags of Soil for a 4x8 Raised Bed?
+- Raised Garden Bed Size Guide
 
 Next ideas:
 
-- Raised Garden Bed Size Guide
 - Raised Garden Bed Cost Guide
 - 4x8 Raised Garden Bed Layout
 - Raised Garden Bed Drainage Guide
 - Compost for Raised Garden Beds
+- Raised Garden Bed Irrigation Basics
 
 ### Backyard DIY
 
@@ -71,14 +75,15 @@ Published guides:
 - DIY Shed Materials List
 - 10x12 Shed Cost Guide
 - Shed Foundation Cost Guide
+- DIY Shed Permit Basics
 
 Next ideas:
 
-- DIY Shed Permit Basics
 - Shed Roofing Cost Guide
 - 8x10 Shed Cost Guide
 - Shed Door Size Guide
 - Backyard Storage Shed Planning Checklist
+- Shed Ramp Planning Guide
 
 ## Publishing Checklist
 
@@ -112,6 +117,11 @@ Use this table manually after deployment.
 | `/blog/diy-shed-materials-list` | Backyard DIY | High | No | Pending | Commercial intent |
 | `/blog/10x12-shed-cost-guide` | Backyard DIY | High | No | Pending | Commercial intent |
 | `/blog/how-many-bags-of-soil-for-a-4x8-raised-bed` | Garden DIY | High | No | Pending | Calculator intent |
+| `/blog/chicken-coop-materials-list` | Backyard Chickens | High | No | Pending | Commercial intent |
+| `/blog/chicken-coop-cleaning-schedule` | Backyard Chickens | Medium | No | Pending | Maintenance intent |
+| `/blog/best-chicken-coop-bedding` | Backyard Chickens | High | No | Pending | Affiliate potential |
+| `/blog/raised-garden-bed-size-guide` | Garden DIY | Medium | No | Pending | Planning intent |
+| `/blog/diy-shed-permit-basics` | Backyard DIY | Medium | No | Pending | Planning intent |
 
 ## Near-Term Focus
 
