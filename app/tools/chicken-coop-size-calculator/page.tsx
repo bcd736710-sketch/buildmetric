@@ -11,6 +11,68 @@ import { siteConfig } from "@/lib/site";
 const calculator = calculatorBySlug["chicken-coop-size-calculator"];
 const pageUrl = `/tools/${calculator.slug}`;
 
+const coopSizeRows = [
+  {
+    flock: "4 chickens",
+    small: "12 sq ft",
+    medium: "16 sq ft",
+    large: "20 sq ft",
+    run: "40 sq ft",
+  },
+  {
+    flock: "6 chickens",
+    small: "18 sq ft",
+    medium: "24 sq ft",
+    large: "30 sq ft",
+    run: "60 sq ft",
+  },
+  {
+    flock: "8 chickens",
+    small: "24 sq ft",
+    medium: "32 sq ft",
+    large: "40 sq ft",
+    run: "80 sq ft",
+  },
+  {
+    flock: "10 chickens",
+    small: "30 sq ft",
+    medium: "40 sq ft",
+    large: "50 sq ft",
+    run: "100 sq ft",
+  },
+];
+
+const planningFactors = [
+  {
+    title: "Chicken size",
+    description:
+      "Bantam and smaller breeds need less floor area than large dual-purpose or heavy breeds.",
+  },
+  {
+    title: "Cleaning access",
+    description:
+      "Walk-in coops usually benefit from extra indoor room for a person, tools, feeders, and bedding changes.",
+  },
+  {
+    title: "Climate and ventilation",
+    description:
+      "Wet or cold climates can make indoor space, dry bedding, and airflow more important.",
+  },
+  {
+    title: "Future flock growth",
+    description:
+      "If you may add chickens later, size the coop for the larger flock now instead of rebuilding soon.",
+  },
+];
+
+const planningChecklist = [
+  "Confirm local rules, setbacks, and any permit requirements.",
+  "Plan roost bars, nesting boxes, doors, ventilation, and cleaning access.",
+  "Add predator protection around doors, windows, vents, and run edges.",
+  "Leave room for feeders and waterers without blocking movement.",
+  "Choose a run location with drainage, shade, and easy daily access.",
+];
+
 export const metadata: Metadata = {
   title: calculator.seoTitle,
   description: calculator.metaDescription,
@@ -109,6 +171,55 @@ export default function ChickenCoopSizeCalculatorPage() {
         </Container>
       </section>
 
+      <section className="border-t border-line bg-white py-12 sm:py-16">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.65fr_1fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Size chart
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                Chicken coop size chart
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                Use this quick chart to compare common backyard flock sizes.
+                The indoor numbers show standard coop space before any walk-in
+                allowance.
+              </p>
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[680px] text-left text-sm">
+                  <thead className="bg-surface text-ink">
+                    <tr>
+                      <th className="px-5 py-4 font-semibold">Flock size</th>
+                      <th className="px-5 py-4 font-semibold">Small birds</th>
+                      <th className="px-5 py-4 font-semibold">Medium birds</th>
+                      <th className="px-5 py-4 font-semibold">Large birds</th>
+                      <th className="px-5 py-4 font-semibold">Run space</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-line text-muted">
+                    {coopSizeRows.map((row) => (
+                      <tr key={row.flock}>
+                        <th className="px-5 py-4 font-semibold text-ink">
+                          {row.flock}
+                        </th>
+                        <td className="px-5 py-4">{row.small}</td>
+                        <td className="px-5 py-4">{row.medium}</td>
+                        <td className="px-5 py-4">{row.large}</td>
+                        <td className="px-5 py-4">{row.run}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       <section className="border-t border-line py-12 sm:py-16">
         <Container className="grid gap-12 lg:grid-cols-[0.75fr_1fr]">
           <div>
@@ -145,6 +256,70 @@ export default function ChickenCoopSizeCalculatorPage() {
                 outdoor run space is 60 square feet.
               </p>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-surface py-12 sm:py-16">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[0.75fr_1fr]">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Planning details
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                What affects coop size?
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                The calculator gives a practical starting point, but the final
+                layout should also account for how the coop will be used every
+                day.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {planningFactors.map((factor) => (
+                <article
+                  key={factor.title}
+                  className="rounded-3xl border border-line bg-white p-6 shadow-sm"
+                >
+                  <h3 className="text-xl font-semibold text-ink">
+                    {factor.title}
+                  </h3>
+                  <p className="mt-3 leading-7 text-muted">
+                    {factor.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-12 sm:py-16">
+        <Container className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Checklist
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-ink">
+              Before you build the coop
+            </h2>
+            <p className="mt-4 leading-7 text-muted">
+              A good size estimate is only one part of the plan. Check these
+              details before buying materials or setting posts.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-line bg-white p-6 shadow-sm">
+            <ul className="space-y-4">
+              {planningChecklist.map((item) => (
+                <li key={item} className="flex gap-3 leading-7 text-muted">
+                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </section>
