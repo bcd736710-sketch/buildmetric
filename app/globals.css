@@ -32,3 +32,34 @@ select,
 button {
   font: inherit;
 }
+
+@media print {
+  header,
+  footer,
+  nav,
+  .calculator-actions {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #141414 !important;
+  }
+
+  main,
+  section,
+  article,
+  div {
+    box-shadow: none !important;
+  }
+
+  a {
+    color: #141414 !important;
+    text-decoration: none !important;
+  }
+
+  input,
+  select {
+    border: 1px solid #d9dee5 !important;
+  }
+}

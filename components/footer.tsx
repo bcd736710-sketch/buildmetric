@@ -20,7 +20,7 @@ export function Footer() {
               Backyard calculators
             </div>
             <div className="rounded-2xl border border-line bg-surface p-4">
-              <span className="block font-semibold text-ink">15 guides</span>
+              <span className="block font-semibold text-ink">25 guides</span>
               SEO content library
             </div>
             <div className="rounded-2xl border border-line bg-surface p-4">

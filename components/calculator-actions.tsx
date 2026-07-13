@@ -46,6 +46,21 @@ export function CalculatorActions({
     setStatus("Print dialog opened.");
   }
 
+  function downloadTextFile() {
+    const blob = new Blob([`${summary}\n`], {
+      type: "text/plain;charset=utf-8",
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = "buildmetric-estimate.txt";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(objectUrl);
+    setStatus("Text file downloaded.");
+  }
+
   return (
     <div className="mt-6 rounded-2xl border border-line bg-white p-4">
       <p className="text-sm font-semibold text-ink">Planning summary</p>
@@ -58,13 +73,25 @@ export function CalculatorActions({
           later.
         </p>
       ) : null}
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+      <p className="mt-3 text-xs leading-5 text-muted">
+        Estimates are for planning only. Check local prices, site conditions,
+        product labels, and applicable rules before buying materials or
+        building.
+      </p>
+      <div className="calculator-actions mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <button
           type="button"
           onClick={copySummary}
           className="inline-flex justify-center rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
         >
           Copy estimate
+        </button>
+        <button
+          type="button"
+          onClick={downloadTextFile}
+          className="inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+        >
+          Download .txt
         </button>
         <button
           type="button"
