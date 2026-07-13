@@ -297,8 +297,9 @@ export function getRelatedPosts(currentPost: BlogPost, limit = 3) {
   return [...sameToolPosts, ...sameCategoryPosts].slice(0, limit);
 }
 
-export function getPostsForTool(toolSlug: string, limit = 4) {
+export function getPostsForTool(toolSlug: string, limit = 6) {
   return blogPosts
     .filter((post) => post.relatedTools.includes(toolSlug))
+    .toReversed()
     .slice(0, limit);
 }
