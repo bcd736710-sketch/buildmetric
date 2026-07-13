@@ -7,6 +7,8 @@ import { blogPosts } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 
 export default function HomePage() {
+  const featuredGuides = blogPosts.slice(-4).reverse();
+
   return (
     <>
       <section className="relative overflow-hidden border-b border-line bg-[radial-gradient(circle_at_72%_8%,rgba(37,111,90,0.14),transparent_34%),radial-gradient(circle_at_18%_82%,rgba(20,20,20,0.06),transparent_30%),linear-gradient(180deg,#ffffff_0%,#f7f8fa_100%)]">
@@ -39,7 +41,7 @@ export default function HomePage() {
             <div className="mt-10 grid max-w-2xl grid-cols-3 gap-3">
               {[
                 ["5", "calculators"],
-                ["15", "guides"],
+                ["25", "guides"],
                 ["0", "accounts"],
               ].map(([value, label]) => (
                 <div
@@ -171,7 +173,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
-            {blogPosts.slice(0, 2).map((post, index) => (
+            {featuredGuides.map((post, index) => (
               <BlogCard key={post.slug} post={post} index={index} />
             ))}
           </div>
