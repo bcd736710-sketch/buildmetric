@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateShedCost,
   shedFoundationOptions,
@@ -8,6 +9,7 @@ import {
   type ShedFoundationType,
   type ShedFinishLevel,
 } from "@/lib/shed-cost";
+import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ShedCostCalculator() {
   const [lengthFeet, setLengthFeet] = useState(10);
@@ -19,6 +21,22 @@ export function ShedCostCalculator() {
     () => calculateShedCost(lengthFeet, widthFeet, finishLevel, foundationType),
     [lengthFeet, widthFeet, finishLevel, foundationType],
   );
+  const selectedFinish =
+    shedFinishOptions.find((option) => option.value === finishLevel) ??
+    shedFinishOptions[1];
+  const selectedFoundation =
+    shedFoundationOptions.find((option) => option.value === foundationType) ??
+    shedFoundationOptions[1];
+  const summary = [
+    "Shed cost estimate",
+    `Shed size: ${lengthFeet} ft x ${widthFeet} ft`,
+    `Finish level: ${selectedFinish.label}`,
+    `Foundation: ${selectedFoundation.label}`,
+    `Shed area: ${result.squareFeet.toFixed(0)} sq ft (${squareFeetToSquareMeters(result.squareFeet).toFixed(1)} sq m)`,
+    `Build estimate: $${result.buildCost.toLocaleString()}`,
+    `Foundation allowance: $${result.foundationCost.toLocaleString()}`,
+    `Estimated total: $${result.estimatedCost.toLocaleString()}`,
+  ].join("\n");
 
   return (
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
@@ -71,7 +89,12 @@ export function ShedCostCalculator() {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2" aria-live="polite">
-        <ResultCard label="Shed area" value={result.squareFeet.toFixed(0)} unit="sq ft" />
+        <ResultCard
+          label="Shed area"
+          value={result.squareFeet.toFixed(0)}
+          unit="sq ft"
+          secondary={`${squareFeetToSquareMeters(result.squareFeet).toFixed(1)} sq m`}
+        />
         <ResultCard
           label="Build estimate"
           value={`$${result.buildCost.toLocaleString()}`}
@@ -88,6 +111,16 @@ export function ShedCostCalculator() {
           unit=""
         />
       </div>
+
+      <CalculatorActions
+        summary={summary}
+        onReset={() => {
+          setLengthFeet(10);
+          setWidthFeet(12);
+          setFinishLevel("standard");
+          setFoundationType("gravel");
+        }}
+      />
     </div>
   );
 }
@@ -119,10 +152,12 @@ function ResultCard({
   label,
   value,
   unit,
+  secondary,
 }: {
   label: string;
   value: string;
   unit: string;
+  secondary?: string;
 }) {
   return (
     <div className="rounded-2xl bg-surface p-5">
@@ -131,6 +166,9 @@ function ResultCard({
         {value}
         {unit ? <span className="text-base font-medium text-muted"> {unit}</span> : null}
       </p>
+      {secondary ? (
+        <p className="mt-1 text-sm font-medium text-muted">{secondary}</p>
+      ) : null}
     </div>
   );
 }

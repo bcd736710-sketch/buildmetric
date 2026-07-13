@@ -1,11 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateChickenRunSpace,
   runSurfaceOptions,
   type RunSurface,
 } from "@/lib/chicken-run";
+import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ChickenRunCalculator() {
   const [chickens, setChickens] = useState(6);
@@ -15,6 +17,15 @@ export function ChickenRunCalculator() {
     () => calculateChickenRunSpace(chickens, surface),
     [chickens, surface],
   );
+  const selectedSurface =
+    runSurfaceOptions.find((option) => option.value === surface) ??
+    runSurfaceOptions[2];
+  const summary = [
+    `Chicken run estimate for ${chickens} chickens`,
+    `Run surface: ${selectedSurface.label}`,
+    `Minimum recommended run space: ${result.minimumRunSpace} sq ft (${squareFeetToSquareMeters(result.minimumRunSpace).toFixed(1)} sq m)`,
+    `More comfortable run space: ${result.comfortableRunSpace} sq ft (${squareFeetToSquareMeters(result.comfortableRunSpace).toFixed(1)} sq m)`,
+  ].join("\n");
 
   return (
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
@@ -79,6 +90,14 @@ export function ChickenRunCalculator() {
         Surface type adjusts the estimate because grass usually needs more room
         to reduce wear, while dirt and mixed surfaces are planned differently.
       </p>
+
+      <CalculatorActions
+        summary={summary}
+        onReset={() => {
+          setChickens(6);
+          setSurface("mixed");
+        }}
+      />
     </div>
   );
 }
@@ -90,6 +109,9 @@ function ResultCard({ label, value }: { label: string; value: number }) {
       <p className="mt-2 text-3xl font-semibold text-ink">
         {value}
         <span className="text-base font-medium text-muted"> sq ft</span>
+      </p>
+      <p className="mt-1 text-sm font-medium text-muted">
+        {squareFeetToSquareMeters(value).toFixed(1)} sq m
       </p>
     </div>
   );

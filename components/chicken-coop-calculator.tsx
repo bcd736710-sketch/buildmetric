@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorActions } from "@/components/calculator-actions";
 import {
   chickenSizeOptions,
   coopStyleOptions,
@@ -8,6 +9,7 @@ import {
   type ChickenSize,
   type CoopStyle,
 } from "@/lib/chicken-coop";
+import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ChickenCoopCalculator() {
   const [chickens, setChickens] = useState(6);
@@ -18,6 +20,19 @@ export function ChickenCoopCalculator() {
     () => calculateChickenCoopSpace(chickens, chickenSize, coopStyle),
     [chickens, chickenSize, coopStyle],
   );
+  const selectedSize =
+    chickenSizeOptions.find((option) => option.value === chickenSize) ??
+    chickenSizeOptions[1];
+  const selectedStyle =
+    coopStyleOptions.find((option) => option.value === coopStyle) ??
+    coopStyleOptions[0];
+  const summary = [
+    `Chicken coop estimate for ${chickens} chickens`,
+    `Chicken size: ${selectedSize.label}`,
+    `Coop style: ${selectedStyle.label}`,
+    `Recommended indoor coop space: ${result.coopSpace} sq ft (${squareFeetToSquareMeters(result.coopSpace).toFixed(1)} sq m)`,
+    `Recommended run space: ${result.runSpace} sq ft (${squareFeetToSquareMeters(result.runSpace).toFixed(1)} sq m)`,
+  ].join("\n");
 
   return (
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
@@ -94,6 +109,15 @@ export function ChickenCoopCalculator() {
         Coop style adjusts indoor space. Walk-in coops include extra planning
         room for access, cleaning, and layout flexibility.
       </p>
+
+      <CalculatorActions
+        summary={summary}
+        onReset={() => {
+          setChickens(6);
+          setChickenSize("medium");
+          setCoopStyle("standard");
+        }}
+      />
     </div>
   );
 }
@@ -105,6 +129,9 @@ function ResultCard({ label, value }: { label: string; value: number }) {
       <p className="mt-2 text-3xl font-semibold text-ink">
         {value}
         <span className="text-base font-medium text-muted"> sq ft</span>
+      </p>
+      <p className="mt-1 text-sm font-medium text-muted">
+        {squareFeetToSquareMeters(value).toFixed(1)} sq m
       </p>
     </div>
   );

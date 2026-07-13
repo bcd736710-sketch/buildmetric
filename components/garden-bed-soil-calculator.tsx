@@ -1,11 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateGardenBedSoil,
   soilBagSizeOptions,
   type SoilBagSize,
 } from "@/lib/garden-bed-soil";
+import { cubicFeetToLiters } from "@/lib/units";
 
 export function GardenBedSoilCalculator() {
   const [lengthFeet, setLengthFeet] = useState(8);
@@ -16,6 +18,17 @@ export function GardenBedSoilCalculator() {
     () => calculateGardenBedSoil(lengthFeet, widthFeet, depthInches, bagSize),
     [lengthFeet, widthFeet, depthInches, bagSize],
   );
+  const selectedBagSize =
+    soilBagSizeOptions.find((option) => option.value === bagSize) ??
+    soilBagSizeOptions[1];
+  const summary = [
+    "Raised garden bed soil estimate",
+    `Bed size: ${lengthFeet} ft x ${widthFeet} ft`,
+    `Soil depth: ${depthInches} in`,
+    `Soil volume: ${result.cubicFeet.toFixed(1)} cu ft (${cubicFeetToLiters(result.cubicFeet).toFixed(0)} liters)`,
+    `Soil volume: ${result.cubicYards.toFixed(2)} cu yd`,
+    `${selectedBagSize.label}: ${result.bagsNeeded} bags`,
+  ].join("\n");
 
   return (
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
@@ -56,7 +69,12 @@ export function GardenBedSoilCalculator() {
       </label>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
-        <ResultCard label="Soil volume" value={result.cubicFeet.toFixed(1)} unit="cu ft" />
+        <ResultCard
+          label="Soil volume"
+          value={result.cubicFeet.toFixed(1)}
+          unit="cu ft"
+          secondary={`${cubicFeetToLiters(result.cubicFeet).toFixed(0)} liters`}
+        />
         <ResultCard label="Soil volume" value={result.cubicYards.toFixed(2)} unit="cu yd" />
         <ResultCard
           label={`${result.bagSizeCubicFeet} cu ft bags`}
@@ -64,6 +82,16 @@ export function GardenBedSoilCalculator() {
           unit="bags"
         />
       </div>
+
+      <CalculatorActions
+        summary={summary}
+        onReset={() => {
+          setLengthFeet(8);
+          setWidthFeet(4);
+          setDepthInches(10);
+          setBagSize("onePointFive");
+        }}
+      />
     </div>
   );
 }
@@ -95,10 +123,12 @@ function ResultCard({
   label,
   value,
   unit,
+  secondary,
 }: {
   label: string;
   value: string;
   unit: string;
+  secondary?: string;
 }) {
   return (
     <div className="rounded-2xl bg-surface p-5">
@@ -107,6 +137,9 @@ function ResultCard({
         {value}
         <span className="text-base font-medium text-muted"> {unit}</span>
       </p>
+      {secondary ? (
+        <p className="mt-1 text-sm font-medium text-muted">{secondary}</p>
+      ) : null}
     </div>
   );
 }

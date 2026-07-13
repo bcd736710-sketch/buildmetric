@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorActions } from "@/components/calculator-actions";
 import {
   calculateChickenFeed,
   chickenFeedOptions,
@@ -8,6 +9,7 @@ import {
   type ChickenFeedType,
   type FeedWasteLevel,
 } from "@/lib/chicken-feed";
+import { poundsToKilograms } from "@/lib/units";
 
 export function ChickenFeedCalculator() {
   const [chickens, setChickens] = useState(6);
@@ -17,6 +19,20 @@ export function ChickenFeedCalculator() {
     () => calculateChickenFeed(chickens, feedType, wasteLevel),
     [chickens, feedType, wasteLevel],
   );
+  const selectedFeed =
+    chickenFeedOptions.find((option) => option.value === feedType) ??
+    chickenFeedOptions[2];
+  const selectedWaste =
+    feedWasteOptions.find((option) => option.value === wasteLevel) ??
+    feedWasteOptions[1];
+  const summary = [
+    `Chicken feed estimate for ${chickens} chickens`,
+    `Chicken stage: ${selectedFeed.label}`,
+    `Feed buffer: ${selectedWaste.label}`,
+    `Daily feed: ${result.dailyFeed.toFixed(1)} lb (${poundsToKilograms(result.dailyFeed).toFixed(1)} kg)`,
+    `Weekly feed: ${result.weeklyFeed.toFixed(1)} lb (${poundsToKilograms(result.weeklyFeed).toFixed(1)} kg)`,
+    `Monthly feed: ${result.monthlyFeed.toFixed(1)} lb (${poundsToKilograms(result.monthlyFeed).toFixed(1)} kg)`,
+  ].join("\n");
 
   return (
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
@@ -91,6 +107,15 @@ export function ChickenFeedCalculator() {
         Feed buffer adjusts the estimate for waste, spills, open feeders, and a
         small planning margin.
       </p>
+
+      <CalculatorActions
+        summary={summary}
+        onReset={() => {
+          setChickens(6);
+          setFeedType("layer");
+          setWasteLevel("standard");
+        }}
+      />
     </div>
   );
 }
@@ -102,6 +127,9 @@ function ResultCard({ label, value }: { label: string; value: number }) {
       <p className="mt-2 text-3xl font-semibold text-ink">
         {value.toFixed(1)}
         <span className="text-base font-medium text-muted"> lb</span>
+      </p>
+      <p className="mt-1 text-sm font-medium text-muted">
+        {poundsToKilograms(value).toFixed(1)} kg
       </p>
     </div>
   );
