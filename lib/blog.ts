@@ -5,6 +5,7 @@ export type BlogPost = {
   category: string;
   publishedAt: string;
   readingTime: string;
+  relatedTools: string[];
 };
 
 export const blogPosts: BlogPost[] = [
@@ -16,6 +17,10 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
+    relatedTools: [
+      "chicken-coop-size-calculator",
+      "chicken-run-size-calculator",
+    ],
   },
   {
     slug: "how-big-should-a-chicken-coop-be",
@@ -25,6 +30,10 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: [
+      "chicken-coop-size-calculator",
+      "chicken-run-size-calculator",
+    ],
   },
   {
     slug: "chicken-coop-ventilation-guide",
@@ -34,6 +43,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["chicken-coop-size-calculator"],
   },
   {
     slug: "how-much-chicken-feed-per-day",
@@ -43,6 +53,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
+    relatedTools: ["chicken-feed-calculator"],
   },
   {
     slug: "how-much-soil-do-i-need-for-a-raised-garden-bed",
@@ -52,6 +63,7 @@ export const blogPosts: BlogPost[] = [
     category: "Garden DIY",
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
+    relatedTools: ["raised-garden-bed-soil-calculator"],
   },
   {
     slug: "chicken-coop-layout-ideas-for-small-backyards",
@@ -61,6 +73,10 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: [
+      "chicken-coop-size-calculator",
+      "chicken-run-size-calculator",
+    ],
   },
   {
     slug: "chicken-run-flooring-ideas",
@@ -70,6 +86,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["chicken-run-size-calculator"],
   },
   {
     slug: "how-much-does-it-cost-to-build-a-chicken-coop",
@@ -79,6 +96,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard Chickens",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["chicken-coop-size-calculator"],
   },
   {
     slug: "raised-garden-bed-depth-guide",
@@ -88,6 +106,7 @@ export const blogPosts: BlogPost[] = [
     category: "Garden DIY",
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
+    relatedTools: ["raised-garden-bed-soil-calculator"],
   },
   {
     slug: "how-much-does-it-cost-to-build-a-shed",
@@ -97,6 +116,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard DIY",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
   },
   {
     slug: "diy-shed-materials-list",
@@ -106,6 +126,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard DIY",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
   },
   {
     slug: "10x12-shed-cost-guide",
@@ -115,6 +136,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard DIY",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
   },
   {
     slug: "shed-foundation-cost-guide",
@@ -124,6 +146,7 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard DIY",
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
   },
   {
     slug: "best-soil-mix-for-raised-garden-beds",
@@ -133,6 +156,7 @@ export const blogPosts: BlogPost[] = [
     category: "Garden DIY",
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
+    relatedTools: ["raised-garden-bed-soil-calculator"],
   },
   {
     slug: "how-many-bags-of-soil-for-a-4x8-raised-bed",
@@ -142,9 +166,39 @@ export const blogPosts: BlogPost[] = [
     category: "Garden DIY",
     publishedAt: "2026-07-13",
     readingTime: "5 min read",
+    relatedTools: ["raised-garden-bed-soil-calculator"],
   },
 ];
 
 export const blogPostBySlug = Object.fromEntries(
   blogPosts.map((post) => [post.slug, post]),
 ) as Record<string, BlogPost>;
+
+export const blogCategories = Array.from(
+  new Set(blogPosts.map((post) => post.category)),
+);
+
+export function getRelatedPosts(currentPost: BlogPost, limit = 3) {
+  const sameToolPosts = blogPosts.filter(
+    (post) =>
+      post.slug !== currentPost.slug &&
+      post.relatedTools.some((toolSlug) =>
+        currentPost.relatedTools.includes(toolSlug),
+      ),
+  );
+
+  const sameCategoryPosts = blogPosts.filter(
+    (post) =>
+      post.slug !== currentPost.slug &&
+      post.category === currentPost.category &&
+      !sameToolPosts.some((relatedPost) => relatedPost.slug === post.slug),
+  );
+
+  return [...sameToolPosts, ...sameCategoryPosts].slice(0, limit);
+}
+
+export function getPostsForTool(toolSlug: string, limit = 4) {
+  return blogPosts
+    .filter((post) => post.relatedTools.includes(toolSlug))
+    .slice(0, limit);
+}

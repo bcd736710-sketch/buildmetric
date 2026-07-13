@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GardenBedSoilCalculator } from "@/components/garden-bed-soil-calculator";
 import { Container } from "@/components/container";
+import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
@@ -158,6 +159,7 @@ export default function RaisedGardenBedSoilCalculatorPage() {
         </Container>
       </section>
 
+      <RelatedGuides toolSlug={calculator.slug} />
       <RelatedTools currentSlug={calculator.slug} />
     </>
   );

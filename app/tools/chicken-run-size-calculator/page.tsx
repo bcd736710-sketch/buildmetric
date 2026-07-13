@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChickenRunCalculator } from "@/components/chicken-run-calculator";
 import { Container } from "@/components/container";
+import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
@@ -168,6 +169,7 @@ export default function ChickenRunSizeCalculatorPage() {
         </Container>
       </section>
 
+      <RelatedGuides toolSlug={calculator.slug} />
       <RelatedTools currentSlug={calculator.slug} />
     </>
   );

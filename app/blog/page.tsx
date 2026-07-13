@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { BlogCard } from "@/components/blog-card";
 import { Container } from "@/components/container";
-import { blogPosts } from "@/lib/blog";
+import { blogCategories, blogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "DIY Planning Guides",
@@ -59,11 +59,57 @@ export default function BlogPage() {
 
       <section className="py-12 sm:py-16">
         <Container>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {blogPosts.map((post, index) => (
-              <BlogCard key={post.slug} post={post} index={index} />
+          <div className="grid gap-4 sm:grid-cols-3">
+            {blogCategories.map((category) => (
+              <a
+                key={category}
+                href={`#${category.toLowerCase().replaceAll(" ", "-")}`}
+                className="rounded-3xl border border-line bg-white p-5 text-sm font-semibold text-ink shadow-sm transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                {category}
+                <span className="mt-2 block text-sm font-medium text-muted">
+                  {
+                    blogPosts.filter((post) => post.category === category)
+                      .length
+                  }{" "}
+                  guides
+                </span>
+              </a>
             ))}
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-12 sm:py-16">
+        <Container className="space-y-14">
+          {blogCategories.map((category) => {
+            const posts = blogPosts.filter((post) => post.category === category);
+
+            return (
+              <div
+                key={category}
+                id={category.toLowerCase().replaceAll(" ", "-")}
+                className="scroll-mt-24"
+              >
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                      {category}
+                    </p>
+                    <h2 className="mt-3 text-3xl font-semibold text-ink">
+                      {posts.length} focused guides
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="mt-8 grid gap-5 lg:grid-cols-2">
+                  {posts.map((post, index) => (
+                    <BlogCard key={post.slug} post={post} index={index} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </Container>
       </section>
     </>

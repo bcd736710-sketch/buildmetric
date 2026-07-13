@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChickenCoopCalculator } from "@/components/chicken-coop-calculator";
 import { Container } from "@/components/container";
+import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
@@ -170,6 +171,7 @@ export default function ChickenCoopSizeCalculatorPage() {
         </Container>
       </section>
 
+      <RelatedGuides toolSlug={calculator.slug} />
       <RelatedTools currentSlug={calculator.slug} />
     </>
   );

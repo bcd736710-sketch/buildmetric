@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { RelatedArticles } from "@/components/related-articles";
 import type { BlogPost } from "@/lib/blog";
 
 type BlogArticleLayoutProps = {
@@ -76,6 +77,8 @@ export function BlogArticleLayout({
           <div className="space-y-10 text-muted">{children}</div>
         </Container>
       </section>
+
+      <RelatedArticles post={post} />
     </article>
   );
 }
