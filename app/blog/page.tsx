@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BlogCard } from "@/components/blog-card";
 import { Container } from "@/components/container";
 import { blogCategories, blogPosts } from "@/lib/blog";
@@ -20,6 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
+  const latestPosts = blogPosts.slice(-6).reverse();
+
   return (
     <>
       <section className="border-b border-line bg-[radial-gradient(circle_at_75%_20%,rgba(37,111,90,0.13),transparent_32%),linear-gradient(180deg,#ffffff_0%,#f7f8fa_100%)] py-14 sm:py-20">
@@ -59,7 +62,21 @@ export default function BlogPage() {
 
       <section className="py-12 sm:py-16">
         <Container>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Browse by project
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                Choose a planning topic.
+              </h2>
+            </div>
+            <p className="max-w-xl leading-7 text-muted">
+              Start with the category closest to your project, then move between
+              guides and calculators as your estimate gets clearer.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {blogCategories.map((category) => (
               <a
                 key={category}
@@ -75,6 +92,32 @@ export default function BlogPage() {
                   guides
                 </span>
               </a>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-surface py-12 sm:py-16">
+        <Container>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Latest guides
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                New planning pages to start with.
+              </h2>
+            </div>
+            <Link
+              href="/tools"
+              className="rounded-full px-2 py-1 text-sm font-semibold text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            >
+              Browse calculators
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            {latestPosts.map((post, index) => (
+              <BlogCard key={post.slug} post={post} index={index} />
             ))}
           </div>
         </Container>
