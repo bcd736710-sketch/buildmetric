@@ -1,50 +1,77 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/brand-mark";
 import { Container } from "@/components/container";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-white py-10">
-      <Container className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+    <footer className="border-t border-line bg-white py-12">
+      <Container className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-md">
-          <p className="text-lg font-semibold text-ink">BuildMetric</p>
+          <div className="flex items-center gap-3">
+            <BrandMark />
+            <p className="text-lg font-semibold text-ink">BuildMetric</p>
+          </div>
           <p className="mt-3 leading-7 text-muted">
             Simple, accurate, and beautiful online tools for DIY homeowners.
           </p>
+          <div className="mt-6 grid gap-3 text-sm text-muted sm:grid-cols-3">
+            <div className="rounded-2xl border border-line bg-surface p-4">
+              <span className="block font-semibold text-ink">5 tools</span>
+              Backyard calculators
+            </div>
+            <div className="rounded-2xl border border-line bg-surface p-4">
+              <span className="block font-semibold text-ink">15 guides</span>
+              SEO content library
+            </div>
+            <div className="rounded-2xl border border-line bg-surface p-4">
+              <span className="block font-semibold text-ink">Free</span>
+              No account needed
+            </div>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-4 sm:gap-6">
-          <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/"
-          >
-            Home
-          </Link>
-          <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/tools"
-          >
-            Tools
-          </Link>
-          <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/blog"
-          >
-            Blog
-          </Link>
-          <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/about"
-          >
-            About
-          </Link>
-          <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/privacy-policy"
-          >
-            Privacy
-          </Link>
+        <div className="grid gap-8 sm:grid-cols-2">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Explore
+            </p>
+            <div className="mt-4 grid gap-3">
+              {[
+                ["Home", "/"],
+                ["Tools", "/tools"],
+                ["Blog", "/blog"],
+              ].map(([label, href]) => (
+                <Link
+                  key={href}
+                  className="rounded-full text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  href={href}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Site
+            </p>
+            <div className="mt-4 grid gap-3">
+              {[
+                ["About", "/about"],
+                ["Privacy", "/privacy-policy"],
+              ].map(([label, href]) => (
+                <Link
+                  key={href}
+                  className="rounded-full text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  href={href}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
-      <Container className="mt-8">
+      <Container className="mt-10 border-t border-line pt-6">
         <p className="text-sm text-muted">
           &copy; {new Date().getFullYear()} BuildMetric. All rights reserved.
         </p>
