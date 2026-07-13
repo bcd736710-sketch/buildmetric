@@ -98,6 +98,51 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-07-13",
     readingTime: "6 min read",
   },
+  {
+    slug: "diy-shed-materials-list",
+    title: "DIY Shed Materials List",
+    description:
+      "Plan the main materials you may need for a DIY shed, from framing and siding to roofing, doors, and fasteners.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
+  {
+    slug: "10x12-shed-cost-guide",
+    title: "10x12 Shed Cost Guide",
+    description:
+      "Estimate the likely cost of a 10x12 DIY shed and understand which choices change the final budget.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
+  {
+    slug: "shed-foundation-cost-guide",
+    title: "Shed Foundation Cost Guide",
+    description:
+      "Compare common shed foundation options and the cost factors behind gravel pads, blocks, piers, and slabs.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "6 min read",
+  },
+  {
+    slug: "best-soil-mix-for-raised-garden-beds",
+    title: "Best Soil Mix for Raised Garden Beds",
+    description:
+      "Understand simple raised bed soil mix options for drainage, nutrients, structure, and long-term garden health.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "5 min read",
+  },
+  {
+    slug: "how-many-bags-of-soil-for-a-4x8-raised-bed",
+    title: "How Many Bags of Soil for a 4x8 Raised Bed?",
+    description:
+      "Estimate how many bags of soil a 4x8 raised bed needs at common depths before you buy materials.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-13",
+    readingTime: "5 min read",
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(
