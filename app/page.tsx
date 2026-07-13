@@ -1,12 +1,15 @@
 import Link from "next/link";
+import { BlogCard } from "@/components/blog-card";
 import { Container } from "@/components/container";
+import { HomeVisual } from "@/components/home-visual";
 import { ToolCard } from "@/components/tool-card";
+import { blogPosts } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 
 export default function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-line bg-[radial-gradient(circle_at_70%_10%,rgba(37,111,90,0.12),transparent_34%),linear-gradient(180deg,#ffffff_0%,#f7f8fa_100%)]">
+      <section className="relative overflow-hidden border-b border-line bg-[radial-gradient(circle_at_72%_8%,rgba(37,111,90,0.14),transparent_34%),radial-gradient(circle_at_18%_82%,rgba(20,20,20,0.06),transparent_30%),linear-gradient(180deg,#ffffff_0%,#f7f8fa_100%)]">
         <Container className="grid gap-12 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28">
           <div>
             <p className="mb-5 text-sm font-semibold uppercase tracking-[0.18em] text-brand">
@@ -34,47 +37,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/70 bg-white/85 p-4 shadow-soft backdrop-blur sm:p-6">
-            <div className="rounded-[1.5rem] border border-line bg-surface p-5 sm:p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-sm font-medium text-muted">
-                    Backyard planning kit
-                  </p>
-                  <h2 className="mt-3 text-2xl font-semibold text-ink">
-                    Five focused planning tools
-                  </h2>
-                </div>
-                <div className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-brand">
-                  MVP
-                </div>
-              </div>
-
-              <div className="mt-6 grid gap-3">
-                {[
-                  ["Chicken coop", "4 sq ft", "/ medium chicken"],
-                  ["Chicken run", "10 sq ft", "/ chicken"],
-                  ["Garden soil", "1.5 cu ft", "/ bag estimate"],
-                ].map(([label, value, unit]) => (
-                  <div
-                    key={label}
-                    className="rounded-2xl border border-line bg-white p-4"
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                      {label}
-                    </p>
-                    <p className="mt-2 text-3xl font-semibold text-ink">
-                      {value}
-                      <span className="text-base font-medium text-muted">
-                        {" "}
-                        {unit}
-                      </span>
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <HomeVisual />
         </Container>
       </section>
 
@@ -125,6 +88,32 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-ink">{title}</h3>
                 <p className="mt-3 leading-7 text-muted">{body}</p>
               </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <Container>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Planning guides
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+                Support every calculator with clear advice.
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="rounded-full px-2 py-1 text-sm font-semibold text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            >
+              Read all guides
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {blogPosts.slice(0, 2).map((post, index) => (
+              <BlogCard key={post.slug} post={post} index={index} />
             ))}
           </div>
         </Container>

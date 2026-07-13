@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { BlogCard } from "@/components/blog-card";
 import { Container } from "@/components/container";
 import { blogPosts } from "@/lib/blog";
 
@@ -22,19 +22,37 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
-      <section className="border-b border-line bg-gradient-to-b from-white to-surface py-14 sm:py-20">
+      <section className="border-b border-line bg-[radial-gradient(circle_at_75%_20%,rgba(37,111,90,0.13),transparent_32%),linear-gradient(180deg,#ffffff_0%,#f7f8fa_100%)] py-14 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-              Guides
-            </p>
-            <h1 className="mt-4 text-5xl font-semibold leading-tight text-ink sm:text-6xl">
-              Practical DIY planning advice.
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-muted">
-              Clear, focused articles that support BuildMetric calculators and
-              help homeowners plan projects with fewer surprises.
-            </p>
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.7fr] lg:items-end">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Guides
+              </p>
+              <h1 className="mt-4 text-5xl font-semibold leading-tight text-ink sm:text-6xl">
+                Practical DIY planning advice.
+              </h1>
+              <p className="mt-6 text-lg leading-8 text-muted">
+                Clear, focused articles that support BuildMetric calculators and
+                help homeowners plan projects with fewer surprises.
+              </p>
+            </div>
+            <div className="rounded-[2rem] border border-line bg-white/80 p-5 shadow-soft backdrop-blur">
+              <div className="grid grid-cols-2 gap-3">
+                {["Measure", "Estimate", "Plan", "Build"].map((step) => (
+                  <div
+                    key={step}
+                    className="rounded-3xl border border-line bg-surface p-4 text-center text-sm font-semibold text-ink"
+                  >
+                    {step}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-sm leading-6 text-muted">
+                A lightweight content library built around real DIY planning
+                questions.
+              </p>
+            </div>
           </div>
         </Container>
       </section>
@@ -42,23 +60,8 @@ export default function BlogPage() {
       <section className="py-12 sm:py-16">
         <Container>
           <div className="grid gap-5 lg:grid-cols-2">
-            {blogPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group rounded-3xl border border-line bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:border-ink hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-              >
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-                  {post.category}
-                </p>
-                <h2 className="mt-5 text-3xl font-semibold text-ink">
-                  {post.title}
-                </h2>
-                <p className="mt-4 leading-8 text-muted">{post.description}</p>
-                <p className="mt-8 text-sm font-semibold text-ink">
-                  {post.readingTime}
-                </p>
-              </Link>
+            {blogPosts.map((post, index) => (
+              <BlogCard key={post.slug} post={post} index={index} />
             ))}
           </div>
         </Container>
