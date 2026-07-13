@@ -37,6 +37,16 @@ export const calculators: CalculatorSummary[] = [
         answer:
           "In this first version, coop style is included for planning context but does not change the formula. Future versions may add style-specific recommendations.",
       },
+      {
+        question: "Should I build a larger coop than the calculator suggests?",
+        answer:
+          "Often, yes. The result is a practical starting point. Extra space can help with cleaning, feeders, roosts, nesting boxes, and future flock growth.",
+      },
+      {
+        question: "Does the calculator include nesting boxes and roost space?",
+        answer:
+          "The calculator estimates general indoor floor space. You should still plan room for roost bars, nesting boxes, ventilation, doors, and cleaning access.",
+      },
     ],
   },
   {
@@ -63,6 +73,16 @@ export const calculators: CalculatorSummary[] = [
         question: "Does ground surface change the calculation?",
         answer:
           "In this MVP, surface type is included for planning context but does not change the formula.",
+      },
+      {
+        question: "Can a chicken run be too small even if the coop is large?",
+        answer:
+          "Yes. Chickens spend much of the day outside when conditions allow, so a cramped run can still cause crowding even when the indoor coop is adequate.",
+      },
+      {
+        question: "Should I add extra run space for wet or muddy yards?",
+        answer:
+          "Extra space can help reduce wear on the ground, but drainage, surface material, and run cover also matter in wet climates.",
       },
     ],
   },
@@ -91,6 +111,16 @@ export const calculators: CalculatorSummary[] = [
         answer:
           "No. Breed, season, forage access, and feed type can change real feed use, so treat the result as a planning estimate.",
       },
+      {
+        question: "Should I buy feed weekly or monthly?",
+        answer:
+          "Many small flocks can be planned weekly or monthly. Store feed in a dry, sealed container and avoid buying more than you can keep fresh.",
+      },
+      {
+        question: "Does free ranging reduce feed needs?",
+        answer:
+          "It can reduce some feed use, but most backyard chickens still need a balanced feed available so nutrition stays consistent.",
+      },
     ],
   },
   {
@@ -118,6 +148,16 @@ export const calculators: CalculatorSummary[] = [
         answer:
           "It is usually smart to buy a little extra because soil settles after watering and planting.",
       },
+      {
+        question: "Why does soil depth matter so much?",
+        answer:
+          "Soil depth directly changes volume. A 4x8 bed filled 12 inches deep needs twice as much soil as the same bed filled 6 inches deep.",
+      },
+      {
+        question: "Can I fill the entire bed with bagged soil?",
+        answer:
+          "Yes, but bagged soil can become expensive for larger beds. For big projects, compare bagged soil with bulk delivery or a blended raised bed mix.",
+      },
     ],
   },
   {
@@ -144,6 +184,16 @@ export const calculators: CalculatorSummary[] = [
         question: "Does this include labor or permits?",
         answer:
           "No. This MVP estimate is for simple planning and does not include local labor, permit, delivery, or site preparation costs.",
+      },
+      {
+        question: "What is the biggest cost driver for a DIY shed?",
+        answer:
+          "Size is usually the biggest driver because it affects floor framing, wall framing, siding, roofing, foundation materials, and finishing.",
+      },
+      {
+        question: "Should I include a budget buffer?",
+        answer:
+          "Yes. A small buffer helps cover fasteners, trim, delivery fees, damaged materials, tool rentals, and small design changes during the build.",
       },
     ],
   },
