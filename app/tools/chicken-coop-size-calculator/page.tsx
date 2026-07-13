@@ -127,8 +127,10 @@ export default function ChickenCoopSizeCalculatorPage() {
                 The calculator multiplies your flock size by the recommended
                 indoor space for the selected chicken size. Small chickens use 3
                 square feet each, medium chickens use 4 square feet each, and
-                large chickens use 5 square feet each. Run space is calculated
-                at 10 square feet per chicken.
+                large chickens use 5 square feet each. Standard coops use that
+                base result, while walk-in coops add a 25% indoor space
+                allowance for access and cleaning. Run space is calculated at
+                10 square feet per chicken.
               </p>
             </div>
             <div>
@@ -136,9 +138,10 @@ export default function ChickenCoopSizeCalculatorPage() {
                 Example calculation
               </h3>
               <p className="mt-3 leading-8">
-                For 6 medium chickens, the recommended indoor coop space is 24
-                square feet. The recommended outdoor run space is 60 square
-                feet.
+                For 6 medium chickens in a standard coop, the recommended
+                indoor coop space is 24 square feet. With a walk-in coop, the
+                indoor estimate increases to 30 square feet. The recommended
+                outdoor run space is 60 square feet.
               </p>
             </div>
           </div>

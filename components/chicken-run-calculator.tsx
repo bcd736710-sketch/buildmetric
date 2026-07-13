@@ -11,7 +11,10 @@ export function ChickenRunCalculator() {
   const [chickens, setChickens] = useState(6);
   const [surface, setSurface] = useState<RunSurface>("mixed");
 
-  const result = useMemo(() => calculateChickenRunSpace(chickens), [chickens]);
+  const result = useMemo(
+    () => calculateChickenRunSpace(chickens, surface),
+    [chickens, surface],
+  );
 
   return (
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
@@ -73,8 +76,8 @@ export function ChickenRunCalculator() {
       </div>
 
       <p className="mt-5 text-sm leading-6 text-muted">
-        Surface type is included as planning context. The current MVP formula is
-        based on flock size.
+        Surface type adjusts the estimate because grass usually needs more room
+        to reduce wear, while dirt and mixed surfaces are planned differently.
       </p>
     </div>
   );

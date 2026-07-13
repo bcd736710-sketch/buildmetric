@@ -11,22 +11,34 @@ export const chickenSizeOptions: Array<{
   { value: "large", label: "Large", coopSpacePerChicken: 5 },
 ];
 
-export const coopStyleOptions: Array<{ value: CoopStyle; label: string }> = [
-  { value: "standard", label: "Standard coop" },
-  { value: "walk-in", label: "Walk-in coop" },
+export const coopStyleOptions: Array<{
+  value: CoopStyle;
+  label: string;
+  indoorSpaceMultiplier: number;
+}> = [
+  { value: "standard", label: "Standard coop", indoorSpaceMultiplier: 1 },
+  { value: "walk-in", label: "Walk-in coop", indoorSpaceMultiplier: 1.25 },
 ];
 
 export function calculateChickenCoopSpace(
   chickenCount: number,
   chickenSize: ChickenSize,
+  coopStyle: CoopStyle,
 ) {
   const safeChickenCount = Math.max(1, Math.floor(chickenCount || 1));
   const selectedSize =
     chickenSizeOptions.find((option) => option.value === chickenSize) ??
     chickenSizeOptions[1];
+  const selectedStyle =
+    coopStyleOptions.find((option) => option.value === coopStyle) ??
+    coopStyleOptions[0];
 
   return {
-    coopSpace: safeChickenCount * selectedSize.coopSpacePerChicken,
+    coopSpace: Math.ceil(
+      safeChickenCount *
+        selectedSize.coopSpacePerChicken *
+        selectedStyle.indoorSpaceMultiplier,
+    ),
     runSpace: safeChickenCount * 10,
   };
 }

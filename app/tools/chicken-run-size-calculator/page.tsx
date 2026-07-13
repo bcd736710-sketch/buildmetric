@@ -99,9 +99,9 @@ export default function ChickenRunSizeCalculatorPage() {
                 Give the flock room to move.
               </h2>
               <p className="mt-4 leading-7 text-muted">
-                This calculator uses 10 square feet per chicken as a practical
-                minimum and 15 square feet per chicken as a more comfortable
-                planning target.
+                This calculator adjusts the run estimate by surface type. Dirt,
+                mixed ground, and grass have different planning targets because
+                they wear and drain differently.
               </p>
             </aside>
           </div>
@@ -124,10 +124,12 @@ export default function ChickenRunSizeCalculatorPage() {
                 How the calculation works
               </h3>
               <p className="mt-3 leading-8">
-                The calculator multiplies your flock size by 10 square feet to
-                estimate a minimum outdoor run size. It also multiplies your
-                flock size by 15 square feet to show a more comfortable planning
-                target when your yard and budget allow it.
+                The calculator multiplies your flock size by the selected
+                surface target. Dirt uses 10 square feet per chicken as a
+                practical minimum and 15 square feet as a more comfortable
+                target. Mixed ground uses 11 and 16 square feet. Grass uses 12
+                and 18 square feet because it usually needs more room to reduce
+                wear.
               </p>
             </div>
             <div>
@@ -135,8 +137,10 @@ export default function ChickenRunSizeCalculatorPage() {
                 Example calculation
               </h3>
               <p className="mt-3 leading-8">
-                For 6 chickens, the minimum recommended run space is 60 square
-                feet. A more comfortable target is 90 square feet.
+                For 6 chickens on dirt, the minimum recommended run space is 60
+                square feet and a more comfortable target is 90 square feet. On
+                grass, the same flock increases to 72 square feet minimum and
+                108 square feet comfortable.
               </p>
             </div>
           </div>

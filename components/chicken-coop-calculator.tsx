@@ -15,8 +15,8 @@ export function ChickenCoopCalculator() {
   const [coopStyle, setCoopStyle] = useState<CoopStyle>("standard");
 
   const result = useMemo(
-    () => calculateChickenCoopSpace(chickens, chickenSize),
-    [chickens, chickenSize],
+    () => calculateChickenCoopSpace(chickens, chickenSize, coopStyle),
+    [chickens, chickenSize, coopStyle],
   );
 
   return (
@@ -91,8 +91,8 @@ export function ChickenCoopCalculator() {
       </div>
 
       <p className="mt-5 text-sm leading-6 text-muted">
-        Coop style is included for planning context in this MVP. The current
-        formula is based on chicken size and flock size.
+        Coop style adjusts indoor space. Walk-in coops include extra planning
+        room for access, cleaning, and layout flexibility.
       </p>
     </div>
   );

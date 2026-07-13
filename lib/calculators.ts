@@ -35,7 +35,7 @@ export const calculators: CalculatorSummary[] = [
       {
         question: "Does coop style change the result?",
         answer:
-          "In this first version, coop style is included for planning context but does not change the formula. Future versions may add style-specific recommendations.",
+          "Yes. Standard coops use the base indoor space estimate. Walk-in coops add a 25% indoor space allowance for access, cleaning, and layout flexibility.",
       },
       {
         question: "Should I build a larger coop than the calculator suggests?",
@@ -72,7 +72,7 @@ export const calculators: CalculatorSummary[] = [
       {
         question: "Does ground surface change the calculation?",
         answer:
-          "In this MVP, surface type is included for planning context but does not change the formula.",
+          "Yes. Grass, dirt, and mixed ground use slightly different square-foot targets because surface wear, drainage, and maintenance needs are different.",
       },
       {
         question: "Can a chicken run be too small even if the coop is large?",
