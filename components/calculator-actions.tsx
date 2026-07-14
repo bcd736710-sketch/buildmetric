@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CalculatorActionsProps = {
   summary: string;
@@ -14,6 +14,21 @@ export function CalculatorActions({
   shareParams,
 }: CalculatorActionsProps) {
   const [status, setStatus] = useState("");
+  const [printUrl, setPrintUrl] = useState("");
+
+  useEffect(() => {
+    async function updatePrintUrl() {
+      if (!shareParams) {
+        setPrintUrl(window.location.href);
+        return;
+      }
+
+      const { buildCalculatorUrl } = await import("@/lib/calculator-url");
+      setPrintUrl(buildCalculatorUrl(shareParams));
+    }
+
+    updatePrintUrl();
+  }, [shareParams]);
 
   async function copySummary() {
     try {
@@ -78,6 +93,11 @@ export function CalculatorActions({
         product labels, and applicable rules before buying materials or
         building.
       </p>
+      <div className="mt-4 hidden border-t border-line pt-4 text-xs leading-5 text-muted print:block">
+        <p className="font-semibold text-ink">BuildMetric planning estimate</p>
+        <p>Generated: {new Date().toLocaleDateString("en-US")}</p>
+        {printUrl ? <p className="break-all">Saved inputs: {printUrl}</p> : null}
+      </div>
       <div className="calculator-actions mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <button
           type="button"
