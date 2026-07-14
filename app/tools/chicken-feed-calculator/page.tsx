@@ -6,7 +6,7 @@ import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { ToolNextSteps } from "@/components/tool-next-steps";
 import { calculatorBySlug } from "@/lib/calculators";
-import { siteConfig } from "@/lib/site";
+import { buildToolJsonLd } from "@/lib/structured-data";
 
 const calculator = calculatorBySlug["chicken-feed-calculator"];
 const pageUrl = `/tools/${calculator.slug}`;
@@ -86,32 +86,7 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebApplication",
-      name: calculator.name,
-      applicationCategory: "UtilitiesApplication",
-      operatingSystem: "Any",
-      url: `${siteConfig.url}${pageUrl}`,
-      description: calculator.metaDescription,
-      featureList: [
-        ...calculator.formulaSummary,
-        ...calculator.assumptions,
-      ],
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: calculator.faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    },
-  ],
-};
+const jsonLd = buildToolJsonLd(calculator, pageUrl);
 
 export default function ChickenFeedCalculatorPage() {
   return (
