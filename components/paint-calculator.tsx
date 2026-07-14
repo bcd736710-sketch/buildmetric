@@ -30,7 +30,7 @@ export function PaintCalculator() {
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
       <CalculatorHeader title="Estimate paint quantity" body="Enter paintable wall area, coats, and coverage to estimate gallons needed for a room or project." />
       <div className="mt-8 grid gap-5 sm:grid-cols-3">
-        <NumberInput label="Wall area" value={wallArea} onChange={setWallArea} />
+        <NumberInput label="Wall area (sq ft)" value={wallArea} onChange={setWallArea} />
         <label className="grid gap-2">
           <span className="text-sm font-semibold text-ink">Coats</span>
           <select
@@ -45,7 +45,7 @@ export function PaintCalculator() {
             ))}
           </select>
         </label>
-        <NumberInput label="Coverage / gallon" value={coverage} onChange={setCoverage} />
+        <NumberInput label="Coverage (sq ft / gal)" value={coverage} onChange={setCoverage} />
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
         <ResultCard label="Paintable area" value={result.paintableArea.toFixed(0)} unit="sq ft" />

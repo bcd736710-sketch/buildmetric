@@ -29,10 +29,10 @@ export function ConcreteSlabCalculator() {
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
       <CalculatorHeader title="Estimate concrete slab volume" body="Calculate concrete volume for a slab, patio, shed base, or small DIY pad." />
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <NumberInput label="Length" value={lengthFeet} onChange={setLengthFeet} />
-        <NumberInput label="Width" value={widthFeet} onChange={setWidthFeet} />
-        <NumberInput label="Thickness" value={thicknessInches} onChange={setThicknessInches} />
-        <NumberInput label="Waste percent" value={wastePercent} onChange={setWastePercent} />
+        <NumberInput label="Length (ft)" value={lengthFeet} onChange={setLengthFeet} />
+        <NumberInput label="Width (ft)" value={widthFeet} onChange={setWidthFeet} />
+        <NumberInput label="Thickness (in)" value={thicknessInches} onChange={setThicknessInches} />
+        <NumberInput label="Waste (%)" value={wastePercent} onChange={setWastePercent} />
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-2" aria-live="polite">
         <ResultCard label="Concrete volume" value={result.cubicYards.toFixed(2)} unit="cu yd" />

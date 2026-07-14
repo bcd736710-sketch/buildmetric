@@ -41,9 +41,9 @@ export function MulchCalculator() {
     <div className="rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
       <CalculatorHeader title="Estimate mulch quantity" body="Enter the project area and mulch depth to estimate cubic feet, cubic yards, and bag count." />
       <div className="mt-8 grid gap-5 sm:grid-cols-3">
-        <NumberInput label="Length" value={lengthFeet} onChange={setLengthFeet} />
-        <NumberInput label="Width" value={widthFeet} onChange={setWidthFeet} />
-        <NumberInput label="Depth" value={depthInches} onChange={setDepthInches} />
+        <NumberInput label="Length (ft)" value={lengthFeet} onChange={setLengthFeet} />
+        <NumberInput label="Width (ft)" value={widthFeet} onChange={setWidthFeet} />
+        <NumberInput label="Depth (in)" value={depthInches} onChange={setDepthInches} />
       </div>
       <label className="mt-5 grid gap-2">
         <span className="text-sm font-semibold text-ink">Bag size</span>

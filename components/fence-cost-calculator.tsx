@@ -43,7 +43,7 @@ export function FenceCostCalculator() {
         body="Enter fence length, material type, and gate count to estimate a simple backyard fence budget."
       />
       <div className="mt-8 grid gap-5 sm:grid-cols-3">
-        <NumberInput label="Fence length" value={lengthFeet} onChange={setLengthFeet} />
+        <NumberInput label="Fence length (ft)" value={lengthFeet} onChange={setLengthFeet} />
         <label className="grid gap-2">
           <span className="text-sm font-semibold text-ink">Material</span>
           <select
@@ -58,7 +58,7 @@ export function FenceCostCalculator() {
             ))}
           </select>
         </label>
-        <NumberInput label="Gates" value={gates} onChange={setGates} />
+        <NumberInput label="Gates (count)" value={gates} onChange={setGates} />
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-3" aria-live="polite">
         <ResultCard label="Cost per foot" value={`$${result.costPerFoot}`} unit="/ ft" />
