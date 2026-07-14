@@ -116,6 +116,12 @@ export default function MethodologyPage() {
               Use the calculators as a starting point, then verify important
               decisions before spending money or building.
             </p>
+            <Link
+              href="/contact"
+              className="inline-flex rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            >
+              Send methodology feedback
+            </Link>
           </div>
         </Container>
       </section>

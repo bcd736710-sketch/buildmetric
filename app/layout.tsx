@@ -54,6 +54,13 @@ const siteJsonLd = {
       logo: `${siteConfig.url}/icon.svg`,
       description: siteConfig.description,
       slogan: siteConfig.tagline,
+      email: siteConfig.contactEmail,
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: siteConfig.contactEmail,
+        contactType: "customer support",
+        availableLanguage: "en",
+      },
       audience: {
         "@type": "Audience",
         audienceType: siteConfig.audience,

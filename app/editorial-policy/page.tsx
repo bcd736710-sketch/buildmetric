@@ -40,7 +40,7 @@ const policySections = [
   },
   {
     title: "Corrections",
-    body: "If a formula, assumption, link, or explanation appears unclear or incorrect, it should be corrected quickly and transparently in the content. BuildMetric is built to improve as the calculator library grows.",
+    body: "If a formula, assumption, link, or explanation appears unclear or incorrect, contact BuildMetric with the page URL and a short note. Corrections should be handled quickly and transparently as the calculator library grows.",
   },
 ];
 
@@ -129,6 +129,12 @@ export default function EditorialPolicyPage() {
                 className="inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
                 Browse calculators
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex justify-center rounded-full px-4 py-3 text-sm font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                Report a correction
               </Link>
             </div>
           </div>

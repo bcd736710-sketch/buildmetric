@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/container";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -78,8 +80,21 @@ export default function PrivacyPolicyPage() {
                 Contact
               </h2>
               <p className="mt-3 leading-8">
-                For privacy questions, add a public contact email here before
-                launching paid products, advertising, or newsletter collection.
+                For privacy questions, email BuildMetric at{" "}
+                <a
+                  href={`mailto:${siteConfig.contactEmail}`}
+                  className="font-semibold text-ink underline decoration-line underline-offset-4 transition hover:text-brand"
+                >
+                  {siteConfig.contactEmail}
+                </a>
+                . You can also use the{" "}
+                <Link
+                  href="/contact"
+                  className="font-semibold text-ink underline decoration-line underline-offset-4 transition hover:text-brand"
+                >
+                  contact page
+                </Link>{" "}
+                for calculator feedback, corrections, and business inquiries.
               </p>
             </section>
           </div>
