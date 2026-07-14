@@ -88,6 +88,7 @@ export function Footer() {
                 ["Methodology", "/methodology"],
                 ["Editorial Policy", "/editorial-policy"],
                 ["Privacy", "/privacy-policy"],
+                ["RSS Feed", "/feed.xml"],
               ].map(([label, href]) => (
                 <Link
                   key={href}
