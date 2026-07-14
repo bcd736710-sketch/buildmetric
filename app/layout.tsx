@@ -39,6 +39,55 @@ export const metadata: Metadata = {
   },
 };
 
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: `${siteConfig.url}/icon.svg`,
+      description: siteConfig.description,
+      slogan: siteConfig.tagline,
+      audience: {
+        "@type": "Audience",
+        audienceType: siteConfig.audience,
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      description: siteConfig.description,
+      publisher: {
+        "@id": `${siteConfig.url}/#organization`,
+      },
+      inLanguage: "en",
+    },
+    {
+      "@type": "SiteNavigationElement",
+      name: [
+        "Home",
+        "Tools",
+        "Blog",
+        "Backyard DIY",
+        "Methodology",
+        "Editorial Policy",
+      ],
+      url: [
+        siteConfig.url,
+        `${siteConfig.url}/tools`,
+        `${siteConfig.url}/blog`,
+        `${siteConfig.url}/backyard-diy`,
+        `${siteConfig.url}/methodology`,
+        `${siteConfig.url}/editorial-policy`,
+      ],
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,6 +96,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white text-ink antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        />
         <Header />
         <main>{children}</main>
         <Footer />

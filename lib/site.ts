@@ -9,4 +9,7 @@ export const siteConfig = {
   url: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? fallbackSiteUrl),
   description:
     "BuildMetric helps homeowners plan DIY projects with simple, accurate, and beautiful online calculators.",
+  tagline: "Smart DIY calculators for backyard projects.",
+  audience:
+    "English-speaking DIY homeowners in the United States, Canada, the United Kingdom, and Australia.",
 };

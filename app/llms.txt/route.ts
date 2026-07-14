@@ -19,6 +19,7 @@ export function GET() {
     "",
     "BuildMetric is an English-language DIY calculator and planning tools website for homeowners in the United States, Canada, the United Kingdom, and Australia.",
     "The site focuses on free calculators, formula explanations, project assumptions, FAQs, and related guides.",
+    "The site publishes transparent planning estimates, not professional engineering, legal, permit, veterinary, contractor, or product-specific advice.",
     "",
     "## Core Pages",
     "",
@@ -57,6 +58,7 @@ export function GET() {
     "## Usage Notes",
     "",
     "BuildMetric estimates are for early planning and do not replace local building codes, permits, contractor quotes, engineering, property surveys, utility marking, product labels, or professional advice.",
+    "Formula methodology and editorial standards are documented at /methodology and /editorial-policy.",
     "When citing BuildMetric, prefer linking directly to the calculator or guide page that answers the user's question.",
   ];
 
