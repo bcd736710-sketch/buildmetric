@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { ToolIcon } from "@/components/tool-icon";
-import { blogPosts } from "@/lib/blog";
-import { calculators } from "@/lib/calculators";
+import { blogPostBySlug, blogPosts } from "@/lib/blog";
+import { calculatorBySlug, calculators } from "@/lib/calculators";
+import { projectPaths } from "@/lib/project-paths";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -215,6 +216,86 @@ export default function BackyardDiyPage() {
               </div>
             );
           })}
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-surface py-16 sm:py-20">
+        <Container>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Project routes
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+                Start with the project you are trying to plan.
+              </h2>
+              <p className="mt-4 leading-8 text-muted">
+                Each route connects the first calculator to supporting tools and
+                the most relevant planning guides.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="rounded-full px-2 py-1 text-sm font-semibold text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            >
+              Request another route
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {projectPaths.map((path) => {
+              const primaryTool = calculatorBySlug[path.primaryTool];
+              const guides = path.guideSlugs
+                .map((slug) => blogPostBySlug[slug])
+                .filter(Boolean);
+
+              return (
+                <div
+                  key={path.title}
+                  className="rounded-3xl border border-line bg-white p-6 shadow-sm"
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                        {path.steps.length} step route
+                      </p>
+                      <h3 className="mt-3 text-2xl font-semibold text-ink">
+                        {path.title}
+                      </h3>
+                    </div>
+                    <Link
+                      href={path.href}
+                      className="text-sm font-semibold text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                    >
+                      Open hub
+                    </Link>
+                  </div>
+                  <p className="mt-4 leading-7 text-muted">
+                    {path.description}
+                  </p>
+
+                  <Link
+                    href={`/tools/${primaryTool.slug}`}
+                    className="mt-5 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  >
+                    Start: {primaryTool.name}
+                  </Link>
+
+                  <div className="mt-6 grid gap-2">
+                    {guides.slice(0, 3).map((post) => (
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="text-sm font-medium leading-6 text-muted transition hover:text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                      >
+                        {post.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </Container>
       </section>
     </>

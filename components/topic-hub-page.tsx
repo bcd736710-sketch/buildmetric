@@ -3,6 +3,7 @@ import { Container } from "@/components/container";
 import { ToolIcon } from "@/components/tool-icon";
 import { blogPosts, type BlogPost } from "@/lib/blog";
 import { calculatorBySlug, type CalculatorSummary } from "@/lib/calculators";
+import { projectPaths } from "@/lib/project-paths";
 import { siteConfig } from "@/lib/site";
 import type { TopicHub } from "@/lib/topic-hubs";
 
@@ -31,6 +32,7 @@ export function TopicHubPage({ hub }: TopicHubPageProps) {
     .map((slug) => calculatorBySlug[slug])
     .filter((tool): tool is CalculatorSummary => Boolean(tool));
   const posts = getHubPosts(hub);
+  const hubProjectPaths = projectPaths.filter((path) => path.href === `/${hub.slug}`);
   const pageUrl = `${siteConfig.url}/${hub.slug}`;
 
   const jsonLd = [
@@ -80,6 +82,12 @@ export function TopicHubPage({ hub }: TopicHubPageProps) {
           position: tools.length + index + 1,
           url: `${siteConfig.url}/blog/${post.slug}`,
           name: post.title,
+        })),
+        ...hubProjectPaths.map((path, index) => ({
+          "@type": "ListItem",
+          position: tools.length + posts.length + index + 1,
+          url: `${siteConfig.url}${path.href}`,
+          name: path.title,
         })),
       ],
     },
@@ -168,6 +176,98 @@ export function TopicHubPage({ hub }: TopicHubPageProps) {
           </div>
         </Container>
       </section>
+
+      {hubProjectPaths.length > 0 ? (
+        <section className="border-t border-line bg-white py-16 sm:py-20">
+          <Container>
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Project path
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+                Follow a practical starter route.
+              </h2>
+              <p className="mt-4 leading-8 text-muted">
+                Use the right calculator first, then read the supporting guides
+                before deciding what to buy or build.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-5 lg:grid-cols-2">
+              {hubProjectPaths.map((path) => {
+                const primaryTool = calculatorBySlug[path.primaryTool];
+                const secondaryTools = path.secondaryTools
+                  .map((slug) => calculatorBySlug[slug])
+                  .filter((tool): tool is CalculatorSummary => Boolean(tool));
+                const guides = path.guideSlugs
+                  .map((slug) => blogPosts.find((post) => post.slug === slug))
+                  .filter((post): post is BlogPost => Boolean(post));
+
+                return (
+                  <div
+                    key={path.title}
+                    className="rounded-3xl border border-line bg-surface p-6 shadow-sm"
+                  >
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                      {path.steps.length} step plan
+                    </p>
+                    <h3 className="mt-4 text-2xl font-semibold text-ink">
+                      {path.title}
+                    </h3>
+                    <p className="mt-3 leading-7 text-muted">
+                      {path.description}
+                    </p>
+
+                    <ol className="mt-5 grid gap-2 text-sm font-medium text-ink">
+                      {path.steps.map((step) => (
+                        <li key={step} className="flex gap-3">
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-brand" />
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+
+                    <div className="mt-6 grid gap-3">
+                      <Link
+                        href={`/tools/${primaryTool.slug}`}
+                        className="rounded-2xl border border-line bg-white px-4 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                      >
+                        Start with: {primaryTool.name}
+                      </Link>
+                      {secondaryTools.map((tool) => (
+                        <Link
+                          key={tool.slug}
+                          href={`/tools/${tool.slug}`}
+                          className="rounded-2xl border border-line bg-white px-4 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                        >
+                          Also useful: {tool.name}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 border-t border-line pt-5">
+                      <p className="text-sm font-semibold text-ink">
+                        Guides for this path
+                      </p>
+                      <div className="mt-3 grid gap-2">
+                        {guides.map((post) => (
+                          <Link
+                            key={post.slug}
+                            href={`/blog/${post.slug}`}
+                            className="text-sm font-medium leading-6 text-muted transition hover:text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                          >
+                            {post.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="border-t border-line bg-surface py-16 sm:py-20">
         <Container>
