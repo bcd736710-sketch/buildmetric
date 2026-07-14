@@ -35,7 +35,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div className="grid gap-8 sm:grid-cols-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
               Explore
@@ -46,6 +46,27 @@ export function Footer() {
                 ["Backyard DIY", "/backyard-diy"],
                 ["Tools", "/tools"],
                 ["Blog", "/blog"],
+              ].map(([label, href]) => (
+                <Link
+                  key={href}
+                  className="rounded-full text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  href={href}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Topics
+            </p>
+            <div className="mt-4 grid gap-3">
+              {[
+                ["Backyard Chickens", "/backyard-chickens"],
+                ["Garden DIY", "/garden-diy"],
+                ["Shed Planning", "/shed-planning"],
+                ["Home Improvement", "/home-improvement"],
               ].map(([label, href]) => (
                 <Link
                   key={href}

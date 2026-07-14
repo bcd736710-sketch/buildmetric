@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { blogPosts } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
+import { topicHubs } from "@/lib/topic-hubs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -41,6 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...topicHubs.map((hub) => ({
+      url: `${siteConfig.url}/${hub.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.82,
+    })),
     ...calculators.map((calculator) => ({
       url: `${siteConfig.url}/tools/${calculator.slug}`,
       lastModified: new Date(),
