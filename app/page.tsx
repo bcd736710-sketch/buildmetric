@@ -5,6 +5,7 @@ import { HomeVisual } from "@/components/home-visual";
 import { ToolCard } from "@/components/tool-card";
 import { blogPosts } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
+import { projectPaths } from "@/lib/project-paths";
 
 export default function HomePage() {
   const featuredCalculators = calculators.slice(-6).reverse();
@@ -103,6 +104,54 @@ export default function HomePage() {
                 <p className="mt-3 text-sm leading-6 text-muted">
                   {category.description}
                 </p>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-line bg-surface py-16 sm:py-20">
+        <Container>
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Project starters
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+              Pick a project path before choosing a calculator.
+            </h2>
+            <p className="mt-4 leading-8 text-muted">
+              Start with the goal, then move through the right estimate, guide,
+              and planning check without hunting across the whole site.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {projectPaths.map((path) => (
+              <Link
+                key={path.title}
+                href={path.href}
+                className="group rounded-3xl border border-line bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-ink hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                  {path.steps.length} step plan
+                </p>
+                <h3 className="mt-4 text-2xl font-semibold text-ink">
+                  {path.title}
+                </h3>
+                <p className="mt-3 leading-7 text-muted">
+                  {path.description}
+                </p>
+                <ol className="mt-5 grid gap-2 text-sm font-medium text-ink">
+                  {path.steps.map((step) => (
+                    <li key={step} className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-brand" />
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                <span className="mt-6 inline-flex text-sm font-semibold text-ink transition group-hover:text-brand">
+                  Open project hub
+                </span>
               </Link>
             ))}
           </div>
