@@ -154,6 +154,34 @@ export function BlogArticleLayout({
                 </div>
               </section>
             ) : null}
+
+            <section className="rounded-3xl border border-line bg-ink p-6 text-white shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
+                Next step
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold">
+                Use the estimate before you buy materials.
+              </h2>
+              <p className="mt-4 leading-8 text-white/75">
+                Turn this guide into a quick planning number, then compare the
+                result with local prices, supplier notes, and your real site
+                conditions.
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href={primaryTool.href}
+                  className="inline-flex justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/30"
+                >
+                  {primaryTool.label}
+                </Link>
+                <Link
+                  href="/tools"
+                  className="inline-flex justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/30"
+                >
+                  Browse all calculators
+                </Link>
+              </div>
+            </section>
           </div>
         </Container>
       </section>

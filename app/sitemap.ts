@@ -43,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.45,
     },
     {
+      url: `${siteConfig.url}/partnerships`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
       url: `${siteConfig.url}/methodology`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -53,6 +59,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.45,
+    },
+    {
+      url: `${siteConfig.url}/affiliate-disclosure`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.35,
     },
     {
       url: `${siteConfig.url}/privacy-policy`,

@@ -77,6 +77,25 @@ export default function PrivacyPolicyPage() {
 
             <section>
               <h2 className="text-2xl font-semibold text-ink">
+                Advertising and affiliate links
+              </h2>
+              <p className="mt-3 leading-8">
+                BuildMetric may add clearly disclosed advertising, affiliate
+                links, sponsorships, or partnership pages in the future. Any
+                such monetization should be explained before it goes live. Read
+                the{" "}
+                <Link
+                  href="/affiliate-disclosure"
+                  className="font-semibold text-ink underline decoration-line underline-offset-4 transition hover:text-brand"
+                >
+                  affiliate disclosure
+                </Link>{" "}
+                for the current policy.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-ink">
                 Contact
               </h2>
               <p className="mt-3 leading-8">

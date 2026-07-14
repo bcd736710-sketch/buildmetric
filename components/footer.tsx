@@ -86,8 +86,10 @@ export function Footer() {
               {[
                 ["About", "/about"],
                 ["Contact", "/contact"],
+                ["Partnerships", "/partnerships"],
                 ["Methodology", "/methodology"],
                 ["Editorial Policy", "/editorial-policy"],
+                ["Affiliate Disclosure", "/affiliate-disclosure"],
                 ["Privacy", "/privacy-policy"],
                 ["RSS Feed", "/feed.xml"],
               ].map(([label, href]) => (
