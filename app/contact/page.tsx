@@ -37,6 +37,30 @@ const contactReasons = [
   },
 ];
 
+const emailActions = [
+  {
+    label: "Send feedback",
+    subject: "BuildMetric feedback",
+    primary: true,
+  },
+  {
+    label: "Report a correction",
+    subject: "BuildMetric correction",
+    primary: false,
+  },
+  {
+    label: "Partnership inquiry",
+    subject: "BuildMetric partnership inquiry",
+    primary: false,
+  },
+];
+
+const contactNotes = [
+  "Include the page URL when your message is about a specific calculator or guide.",
+  "For corrections, describe what seems unclear and what source or context we should check.",
+  "Do not send passwords, payment details, private documents, or sensitive personal information.",
+];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
@@ -92,16 +116,23 @@ export default function ContactPage() {
               Please include the page URL and a short description when your
               message is about a specific calculator or guide.
             </p>
-            <div className="mt-6 flex flex-col gap-3">
-              <a
-                href={`mailto:${siteConfig.contactEmail}?subject=BuildMetric%20feedback`}
-                className="inline-flex justify-center rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-              >
-                Email BuildMetric
-              </a>
+            <div className="mt-6 grid gap-3">
+              {emailActions.map((action) => (
+                <a
+                  key={action.subject}
+                  href={`mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(action.subject)}`}
+                  className={
+                    action.primary
+                      ? "inline-flex justify-center rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                      : "inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  }
+                >
+                  {action.label}
+                </a>
+              ))}
               <Link
                 href="/methodology"
-                className="inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                className="inline-flex justify-center rounded-full px-4 py-3 text-sm font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
                 View methodology
               </Link>
@@ -122,6 +153,23 @@ export default function ContactPage() {
                 </p>
               </div>
             ))}
+            <div className="rounded-3xl border border-line bg-surface p-6">
+              <h2 className="text-2xl font-semibold text-ink">
+                Before you email
+              </h2>
+              <ul className="mt-4 grid gap-3">
+                {contactNotes.map((note) => (
+                  <li key={note} className="flex gap-3 leading-7 text-muted">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand" />
+                    <span>{note}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 text-sm leading-6 text-muted">
+                BuildMetric is a small planning tools site, so replies may not
+                be immediate. Clear, specific notes are easiest to review.
+              </p>
+            </div>
           </div>
         </Container>
       </section>

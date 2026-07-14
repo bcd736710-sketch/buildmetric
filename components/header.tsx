@@ -35,6 +35,12 @@ export function Header() {
           >
             Blog
           </Link>
+          <Link
+            className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            href="/contact"
+          >
+            Contact
+          </Link>
         </nav>
       </Container>
     </header>
