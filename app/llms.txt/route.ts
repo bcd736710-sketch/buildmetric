@@ -30,6 +30,7 @@ export function GET() {
     `- Methodology: ${absoluteUrl("/methodology")}`,
     `- Editorial policy: ${absoluteUrl("/editorial-policy")}`,
     `- RSS feed: ${absoluteUrl("/feed.xml")}`,
+    `- JSON feed: ${absoluteUrl("/feed.json")}`,
     `- About: ${absoluteUrl("/about")}`,
     "",
     "## Topic Hubs",
