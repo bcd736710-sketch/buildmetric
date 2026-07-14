@@ -40,7 +40,7 @@ export default function HomePage() {
             </div>
             <div className="mt-10 grid max-w-2xl grid-cols-3 gap-3">
               {[
-                ["5", "calculators"],
+                [String(calculators.length), "calculators"],
                 ["25", "guides"],
                 ["0", "accounts"],
               ].map(([value, label]) => (

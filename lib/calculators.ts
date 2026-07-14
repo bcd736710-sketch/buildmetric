@@ -197,6 +197,166 @@ export const calculators: CalculatorSummary[] = [
       },
     ],
   },
+  {
+    slug: "mulch-calculator",
+    name: "Mulch Calculator",
+    category: "Garden DIY",
+    description:
+      "Estimate mulch volume in cubic feet, cubic yards, and bag count for garden beds and landscape areas.",
+    seoTitle: "Mulch Calculator",
+    metaDescription:
+      "Use the free Mulch Calculator to estimate cubic feet, cubic yards, and bags of mulch for garden beds and landscaping projects.",
+    faqs: [
+      {
+        question: "How do I calculate how much mulch I need?",
+        answer:
+          "Multiply length by width by mulch depth. Convert depth from inches to feet before calculating cubic feet.",
+      },
+      {
+        question: "How deep should mulch be?",
+        answer:
+          "Many garden beds use about 2 to 3 inches of mulch. Around trees, avoid piling mulch against the trunk.",
+      },
+      {
+        question: "How many cubic feet are in a cubic yard of mulch?",
+        answer:
+          "One cubic yard equals 27 cubic feet.",
+      },
+      {
+        question: "Should I buy extra mulch?",
+        answer:
+          "A small extra amount can help cover uneven areas, settling, and measuring differences.",
+      },
+    ],
+  },
+  {
+    slug: "gravel-calculator",
+    name: "Gravel Calculator",
+    category: "Backyard DIY",
+    description:
+      "Estimate gravel volume and approximate tons for paths, pads, shed bases, and landscaping projects.",
+    seoTitle: "Gravel Calculator",
+    metaDescription:
+      "Use the free Gravel Calculator to estimate cubic yards and tons of gravel from length, width, depth, and gravel type.",
+    faqs: [
+      {
+        question: "How do I calculate gravel volume?",
+        answer:
+          "Multiply length by width by depth. Convert depth from inches to feet, then divide cubic feet by 27 to get cubic yards.",
+      },
+      {
+        question: "How many tons are in a cubic yard of gravel?",
+        answer:
+          "A common planning range is about 1.4 to 1.6 tons per cubic yard, depending on gravel type and compaction.",
+      },
+      {
+        question: "Should I order extra gravel?",
+        answer:
+          "Yes, a small buffer can help account for compaction, uneven ground, and spreading loss.",
+      },
+      {
+        question: "Can I use this for a shed base?",
+        answer:
+          "Yes, it is useful for a simple shed base estimate, but confirm depth and compaction requirements for your site.",
+      },
+    ],
+  },
+  {
+    slug: "fence-cost-calculator",
+    name: "Fence Cost Calculator",
+    category: "Backyard DIY",
+    description:
+      "Estimate a simple backyard fence budget from linear feet, material type, and gate count.",
+    seoTitle: "Fence Cost Calculator",
+    metaDescription:
+      "Use the free Fence Cost Calculator to estimate wood, vinyl, or chain link fence cost from length and gate count.",
+    faqs: [
+      {
+        question: "How is fence cost estimated?",
+        answer:
+          "The calculator multiplies fence length by a material cost per linear foot, then adds a simple gate allowance.",
+      },
+      {
+        question: "Does this include labor?",
+        answer:
+          "No. This is a simple planning estimate and does not include local labor, permits, demolition, or unusual site work.",
+      },
+      {
+        question: "What affects fence cost most?",
+        answer:
+          "Material type, total length, height, gates, terrain, posts, and local labor rates can all affect the final cost.",
+      },
+      {
+        question: "Should I measure property lines first?",
+        answer:
+          "Yes. Confirm property lines, setbacks, HOA rules, and utility locations before building a fence.",
+      },
+    ],
+  },
+  {
+    slug: "concrete-slab-calculator",
+    name: "Concrete Slab Calculator",
+    category: "Backyard DIY",
+    description:
+      "Estimate concrete volume in cubic yards and bags for patios, shed bases, and small slabs.",
+    seoTitle: "Concrete Slab Calculator",
+    metaDescription:
+      "Use the free Concrete Slab Calculator to estimate cubic yards and 80 lb bags from slab length, width, and thickness.",
+    faqs: [
+      {
+        question: "How do I calculate concrete for a slab?",
+        answer:
+          "Multiply slab length by width by thickness. Convert thickness from inches to feet, then divide cubic feet by 27 for cubic yards.",
+      },
+      {
+        question: "Should I add waste to a concrete order?",
+        answer:
+          "Yes. Many small projects add about 5% to 10% so the pour does not come up short.",
+      },
+      {
+        question: "How much does an 80 lb bag of concrete make?",
+        answer:
+          "A common planning estimate is about 0.6 cubic feet per 80 lb bag.",
+      },
+      {
+        question: "Can this replace a contractor estimate?",
+        answer:
+          "No. It is for early planning only. Slabs may need base prep, reinforcement, forms, permits, and local code checks.",
+      },
+    ],
+  },
+  {
+    slug: "paint-calculator",
+    name: "Paint Calculator",
+    category: "Home Improvement",
+    description:
+      "Estimate paint gallons from wall area, number of coats, and coverage per gallon.",
+    seoTitle: "Paint Calculator",
+    metaDescription:
+      "Use the free Paint Calculator to estimate how many gallons of paint you need for walls, rooms, and DIY painting projects.",
+    faqs: [
+      {
+        question: "How do I calculate paint needed?",
+        answer:
+          "Multiply paintable wall area by the number of coats, then divide by coverage per gallon.",
+      },
+      {
+        question: "How much area does one gallon of paint cover?",
+        answer:
+          "Many paints cover about 300 to 400 square feet per gallon, but always check the product label.",
+      },
+      {
+        question: "Should I include windows and doors?",
+        answer:
+          "For a rough estimate, you can use total wall area. For a tighter estimate, subtract large windows and doors.",
+      },
+      {
+        question: "Do I need primer?",
+        answer:
+          "Primer may be needed for bare drywall, stains, strong color changes, or uneven surfaces. It can change material needs.",
+      },
+    ],
+  },
 ];
 
 export const calculatorBySlug = Object.fromEntries(

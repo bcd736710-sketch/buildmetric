@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { Container } from "@/components/container";
+import { calculators } from "@/lib/calculators";
 
 export function Footer() {
   return (
@@ -16,7 +17,9 @@ export function Footer() {
           </p>
           <div className="mt-6 grid gap-3 text-sm text-muted sm:grid-cols-3">
             <div className="rounded-2xl border border-line bg-surface p-4">
-              <span className="block font-semibold text-ink">5 tools</span>
+              <span className="block font-semibold text-ink">
+                {calculators.length} tools
+              </span>
               Backyard calculators
             </div>
             <div className="rounded-2xl border border-line bg-surface p-4">
