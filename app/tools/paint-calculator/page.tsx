@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "WebApplication", name: calculator.name, applicationCategory: "UtilitiesApplication", operatingSystem: "Any", url: `${siteConfig.url}${pageUrl}`, description: calculator.metaDescription, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } },
+    { "@type": "WebApplication", name: calculator.name, applicationCategory: "UtilitiesApplication", operatingSystem: "Any", url: `${siteConfig.url}${pageUrl}`, description: calculator.metaDescription, featureList: [...calculator.formulaSummary, ...calculator.assumptions], offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } },
     { "@type": "FAQPage", mainEntity: calculator.faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) },
   ],
 };

@@ -3,6 +3,9 @@ export type CalculatorSummary = {
   name: string;
   category: string;
   description: string;
+  formulaSummary: string[];
+  assumptions: string[];
+  bestFor: string;
   seoTitle: string;
   metaDescription: string;
   faqs: Array<{
@@ -18,6 +21,19 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate recommended indoor coop space and outdoor run space for your backyard chicken flock.",
+    formulaSummary: [
+      "Indoor coop space = number of chickens × space per chicken",
+      "Small chickens use 3 sq ft each, medium chickens use 4 sq ft each, and large chickens use 5 sq ft each",
+      "Walk-in coops add a 25% indoor space allowance",
+      "Run space = number of chickens × 10 sq ft",
+    ],
+    assumptions: [
+      "The result is a planning estimate, not a building code requirement.",
+      "Extra room may be needed for roosts, nesting boxes, feeders, cleaning access, and future flock growth.",
+      "Local rules, climate, ventilation, and predator protection can change the final design.",
+    ],
+    bestFor:
+      "Homeowners planning a backyard chicken coop footprint before choosing a layout or buying materials.",
     seoTitle: "Chicken Coop Size Calculator",
     metaDescription:
       "Use the free Chicken Coop Size Calculator to estimate indoor coop space and outdoor run space based on flock size and chicken size.",
@@ -55,6 +71,18 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate minimum and comfortable outdoor run space for your backyard chicken flock.",
+    formulaSummary: [
+      "Minimum run space = number of chickens × minimum sq ft per chicken",
+      "Comfortable run space = number of chickens × roomier sq ft per chicken",
+      "Surface type adjusts the target because dirt, mixed ground, and grass wear differently",
+    ],
+    assumptions: [
+      "The calculator estimates outdoor run area, not the full coop design.",
+      "Drainage, shade, roof cover, and predator protection can matter as much as square footage.",
+      "Wet or heavily used runs may need a larger footprint or better ground material.",
+    ],
+    bestFor:
+      "Choosing a practical chicken run footprint for a backyard flock before building fencing or posts.",
     seoTitle: "Chicken Run Size Calculator",
     metaDescription:
       "Use the free Chicken Run Size Calculator to estimate outdoor chicken run space based on flock size.",
@@ -92,6 +120,19 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate daily, weekly, and monthly chicken feed needs for your flock.",
+    formulaSummary: [
+      "Daily feed = number of chickens × feed per chicken per day",
+      "Weekly feed = daily feed × 7",
+      "Monthly feed = daily feed × 30",
+      "Bag count = monthly feed divided by selected bag size, rounded up",
+    ],
+    assumptions: [
+      "Feed use varies by breed, age, season, forage access, feeder waste, and feed type.",
+      "The estimate assumes balanced feed remains available as the main food source.",
+      "Store feed dry and avoid buying more than you can keep fresh.",
+    ],
+    bestFor:
+      "Estimating how much chicken feed to buy for small backyard flocks over a week or month.",
     seoTitle: "Chicken Feed Calculator",
     metaDescription:
       "Use the free Chicken Feed Calculator to estimate how much feed your chickens need per day, week, and month.",
@@ -129,6 +170,19 @@ export const calculators: CalculatorSummary[] = [
     category: "Garden DIY",
     description:
       "Calculate how much soil you need to fill a raised garden bed.",
+    formulaSummary: [
+      "Soil volume = bed length × bed width × soil depth",
+      "Depth is converted from inches to feet before calculating cubic feet",
+      "Cubic yards = cubic feet ÷ 27",
+      "Bag count = cubic feet ÷ bag size, rounded up",
+    ],
+    assumptions: [
+      "Soil can settle after watering, planting, and the first few weeks of use.",
+      "Large beds may be cheaper with bulk delivery than bagged soil.",
+      "The calculator estimates fill volume and does not design a soil mix.",
+    ],
+    bestFor:
+      "Planning raised bed soil purchases before buying bags, bulk soil, or compost blends.",
     seoTitle: "Raised Garden Bed Soil Calculator",
     metaDescription:
       "Use the free Raised Garden Bed Soil Calculator to estimate soil volume in cubic feet, cubic yards, and bag count.",
@@ -166,6 +220,18 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate a simple DIY shed budget from shed size and finish level.",
+    formulaSummary: [
+      "Shed area = length × width",
+      "Base project cost = shed area × selected cost per square foot",
+      "Estimated total = base project cost + selected foundation allowance",
+    ],
+    assumptions: [
+      "The estimate is for early DIY budgeting, not a contractor quote.",
+      "Labor, permits, delivery, demolition, utilities, and unusual site work are not included.",
+      "Prices vary by region, lumber market, finish level, and foundation choice.",
+    ],
+    bestFor:
+      "Comparing rough DIY shed budgets before choosing a shed size, finish level, or foundation.",
     seoTitle: "Shed Cost Calculator",
     metaDescription:
       "Use the free Shed Cost Calculator to estimate DIY shed cost based on square footage and finish level.",
@@ -203,6 +269,19 @@ export const calculators: CalculatorSummary[] = [
     category: "Garden DIY",
     description:
       "Estimate mulch volume in cubic feet, cubic yards, and bag count for garden beds and landscape areas.",
+    formulaSummary: [
+      "Mulch volume = area length × area width × mulch depth",
+      "Depth is converted from inches to feet before calculating cubic feet",
+      "Cubic yards = cubic feet ÷ 27",
+      "Bag count = cubic feet ÷ bag size, rounded up",
+    ],
+    assumptions: [
+      "Mulch depth is a planning choice; many beds use about 2 to 3 inches.",
+      "Uneven beds, settling, and spreading loss can change real material use.",
+      "Avoid piling mulch directly against stems, trunks, siding, or wood structures.",
+    ],
+    bestFor:
+      "Estimating bagged or bulk mulch for garden beds, tree rings, and landscape refresh projects.",
     seoTitle: "Mulch Calculator",
     metaDescription:
       "Use the free Mulch Calculator to estimate cubic feet, cubic yards, and bags of mulch for garden beds and landscaping projects.",
@@ -235,6 +314,19 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate gravel volume and approximate tons for paths, pads, shed bases, and landscaping projects.",
+    formulaSummary: [
+      "Gravel volume = length × width × depth",
+      "Depth is converted from inches to feet before calculating cubic feet",
+      "Cubic yards = cubic feet ÷ 27",
+      "Approximate tons = cubic yards × selected gravel density",
+    ],
+    assumptions: [
+      "Gravel density varies by stone type, moisture, and supplier.",
+      "Compaction and uneven ground can increase the amount needed.",
+      "The result is a planning estimate and should be checked against supplier guidance.",
+    ],
+    bestFor:
+      "Planning gravel for paths, shed bases, pads, drainage areas, and simple landscaping projects.",
     seoTitle: "Gravel Calculator",
     metaDescription:
       "Use the free Gravel Calculator to estimate cubic yards and tons of gravel from length, width, depth, and gravel type.",
@@ -267,6 +359,18 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate a simple backyard fence budget from linear feet, material type, and gate count.",
+    formulaSummary: [
+      "Fence material cost = total linear feet × selected material cost per foot",
+      "Gate cost = number of gates × gate allowance",
+      "Estimated total = fence material cost + gate cost",
+    ],
+    assumptions: [
+      "The estimate excludes labor, permits, demolition, survey work, and difficult terrain.",
+      "Height, posts, corners, slopes, gates, and local labor can materially change final cost.",
+      "Confirm property lines, utility locations, HOA rules, and local requirements before building.",
+    ],
+    bestFor:
+      "Comparing early backyard fence budgets across wood, vinyl, and chain link options.",
     seoTitle: "Fence Cost Calculator",
     metaDescription:
       "Use the free Fence Cost Calculator to estimate wood, vinyl, or chain link fence cost from length and gate count.",
@@ -299,6 +403,19 @@ export const calculators: CalculatorSummary[] = [
     category: "Backyard DIY",
     description:
       "Estimate concrete volume in cubic yards and bags for patios, shed bases, and small slabs.",
+    formulaSummary: [
+      "Slab volume = length × width × thickness",
+      "Thickness is converted from inches to feet before calculating cubic feet",
+      "Cubic yards = cubic feet ÷ 27",
+      "Final estimate can include a selected waste allowance",
+    ],
+    assumptions: [
+      "The calculator estimates concrete volume only, not structural design.",
+      "Base preparation, forms, reinforcement, drainage, and local code may affect the project.",
+      "Small pours often need a 5% to 10% buffer to avoid running short.",
+    ],
+    bestFor:
+      "Estimating concrete for patios, shed slabs, utility pads, and small homeowner concrete projects.",
     seoTitle: "Concrete Slab Calculator",
     metaDescription:
       "Use the free Concrete Slab Calculator to estimate cubic yards and 80 lb bags from slab length, width, and thickness.",
@@ -331,6 +448,18 @@ export const calculators: CalculatorSummary[] = [
     category: "Home Improvement",
     description:
       "Estimate paint gallons from wall area, number of coats, and coverage per gallon.",
+    formulaSummary: [
+      "Paint needed = paintable area × number of coats ÷ coverage per gallon",
+      "Gallons to buy are rounded up to the next whole gallon",
+      "Large openings can be subtracted for a tighter estimate",
+    ],
+    assumptions: [
+      "Coverage varies by paint product, wall texture, primer, color change, and application method.",
+      "Primer should be estimated separately when needed.",
+      "The calculator is for planning gallons, not choosing a paint system.",
+    ],
+    bestFor:
+      "Estimating paint gallons for rooms, walls, touch-ups, and simple homeowner painting projects.",
     seoTitle: "Paint Calculator",
     metaDescription:
       "Use the free Paint Calculator to estimate how many gallons of paint you need for walls, rooms, and DIY painting projects.",

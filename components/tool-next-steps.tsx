@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { ToolFormulaSummary } from "@/components/tool-formula-summary";
 import { getPostsForTool } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 
@@ -40,7 +41,9 @@ export function ToolNextSteps({ toolSlug }: ToolNextStepsProps) {
 
   return (
     <section className="border-t border-line py-12 sm:py-16">
-      <Container>
+      <Container className="space-y-8">
+        <ToolFormulaSummary toolSlug={toolSlug} />
+
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">

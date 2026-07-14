@@ -102,6 +102,10 @@ const jsonLd = {
       operatingSystem: "Any",
       url: `${siteConfig.url}${pageUrl}`,
       description: calculator.metaDescription,
+      featureList: [
+        ...calculator.formulaSummary,
+        ...calculator.assumptions,
+      ],
       offers: {
         "@type": "Offer",
         price: "0",
