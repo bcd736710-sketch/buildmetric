@@ -43,6 +43,7 @@ export function Footer() {
             <div className="mt-4 grid gap-3">
               {[
                 ["Home", "/"],
+                ["Backyard DIY", "/backyard-diy"],
                 ["Tools", "/tools"],
                 ["Blog", "/blog"],
               ].map(([label, href]) => (

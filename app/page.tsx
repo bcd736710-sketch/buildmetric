@@ -37,6 +37,12 @@ export default function HomePage() {
               >
                 Browse tools
               </Link>
+              <Link
+                href="/backyard-diy"
+                className="inline-flex items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                View planning hub
+              </Link>
             </div>
             <div className="mt-10 grid max-w-2xl grid-cols-3 gap-3">
               {[
