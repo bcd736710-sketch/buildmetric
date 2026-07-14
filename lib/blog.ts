@@ -418,6 +418,86 @@ export const blogPosts: BlogPost[] = [
     readingTime: "5 min read",
     relatedTools: ["paint-calculator"],
   },
+  {
+    slug: "concrete-slab-cost-by-size",
+    title: "Concrete Slab Cost by Size",
+    description:
+      "Compare concrete slab planning costs by common sizes and see how thickness, waste, and prep affect the estimate.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "6 min read",
+    relatedTools: ["concrete-slab-calculator"],
+  },
+  {
+    slug: "how-much-gravel-for-a-driveway",
+    title: "How Much Gravel for a Driveway?",
+    description:
+      "Estimate gravel volume and tons for a driveway by measuring length, width, depth, and compaction needs.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "6 min read",
+    relatedTools: ["gravel-calculator"],
+  },
+  {
+    slug: "mulch-calculator-by-area",
+    title: "Mulch Calculator by Area",
+    description:
+      "Estimate mulch for common bed areas and understand how square footage, depth, bags, and cubic yards connect.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["mulch-calculator"],
+  },
+  {
+    slug: "paint-calculator-for-bedrooms",
+    title: "Paint Calculator for Bedrooms",
+    description:
+      "Estimate bedroom paint gallons from wall area, coats, coverage, windows, doors, and color changes.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
+    slug: "wood-fence-cost-per-foot",
+    title: "Wood Fence Cost per Foot",
+    description:
+      "Plan a wood fence budget by estimating linear feet, gates, posts, height, hardware, and finish choices.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["fence-cost-calculator"],
+  },
+  {
+    slug: "chain-link-fence-cost-guide",
+    title: "Chain Link Fence Cost Guide",
+    description:
+      "Estimate chain link fence costs by length, gates, height, coatings, privacy options, and site conditions.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["fence-cost-calculator"],
+  },
+  {
+    slug: "concrete-for-shed-base",
+    title: "Concrete for Shed Base",
+    description:
+      "Estimate concrete for a shed base and compare slab thickness, waste allowance, gravel prep, and shed size.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "6 min read",
+    relatedTools: ["concrete-slab-calculator", "shed-cost-calculator"],
+  },
+  {
+    slug: "gravel-path-depth-guide",
+    title: "Gravel Path Depth Guide",
+    description:
+      "Choose a practical gravel depth for garden paths, side yards, walkways, edging, and compacted base layers.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["gravel-calculator", "mulch-calculator"],
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(

@@ -102,10 +102,13 @@ export const topicHubs: TopicHub[] = [
       "shed-roofing-cost-guide",
       "diy-shed-permit-basics",
       "gravel-base-for-shed-guide",
+      "concrete-for-shed-base",
       "how-much-gravel-do-i-need",
+      "how-much-gravel-for-a-driveway",
       "how-much-concrete-do-i-need-for-a-slab",
       "concrete-slab-thickness-guide",
       "concrete-slab-cost-guide",
+      "concrete-slab-cost-by-size",
     ],
     nextLinks: [
       {
