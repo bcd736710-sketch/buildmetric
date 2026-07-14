@@ -289,4 +289,142 @@ export const guideContentBySlug: Record<string, GuideContent> = {
       },
     ],
   },
+  "mulch-vs-gravel": {
+    quickAnswer:
+      "Mulch is usually better for planting beds and soil health, while gravel is better for paths, drainage zones, and longer-lasting hardscape areas.",
+    primaryTool: {
+      href: "/tools/mulch-calculator",
+      label: "Calculate mulch",
+    },
+    secondaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Calculate gravel",
+    },
+    sections: [
+      {
+        heading: "Choose mulch for planting beds",
+        body: "Mulch helps hold soil moisture, reduce weeds, moderate soil temperature, and improve the look of planted beds. Organic mulch can break down over time, so it may need refreshing.",
+      },
+      {
+        heading: "Choose gravel for paths and drainage",
+        body: "Gravel is useful for walkways, shed approaches, drainage strips, and areas where you want a firmer surface. It does not feed soil like organic mulch, but it can last longer with good edging.",
+      },
+      {
+        heading: "Compare maintenance before buying",
+        body: "Mulch may fade, decompose, or move during heavy rain. Gravel can collect leaves, migrate into lawns, or need occasional raking. The easier choice depends on how the space will be used.",
+      },
+      {
+        heading: "Estimate each material separately",
+        body: "Mulch is often planned by depth and bag size, while gravel may also need a weight estimate in tons. Use the right calculator for the material instead of treating them as interchangeable.",
+      },
+    ],
+  },
+  "gravel-base-for-shed-guide": {
+    quickAnswer:
+      "A gravel shed base needs a clear footprint, practical depth, compacted layers, edging, and drainage planning before you estimate cubic yards or tons.",
+    primaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Calculate gravel base",
+    },
+    secondaryTool: {
+      href: "/tools/shed-cost-calculator",
+      label: "Estimate shed cost",
+    },
+    sections: [
+      {
+        heading: "Start with the shed footprint",
+        body: "Measure the shed length and width, then decide whether the gravel base should extend beyond the walls. A small border can improve drainage and make installation easier.",
+      },
+      {
+        heading: "Pick a depth before estimating",
+        body: "Depth has a large effect on gravel volume. A shed base often needs more than a light decorative path, especially when the gravel will be compacted for support.",
+      },
+      {
+        heading: "Plan for compaction and edging",
+        body: "Loose gravel settles as it is compacted. Edging, timbers, or a framed perimeter help keep the base in place and make the finished pad easier to level.",
+      },
+      {
+        heading: "Think about drainage first",
+        body: "A good base should move water away from the shed, not trap it underneath. Site slope, soil type, fabric, and outlet paths all affect the final design.",
+      },
+    ],
+  },
+  "fence-gate-cost-guide": {
+    quickAnswer:
+      "Fence gates add cost through hardware, stronger posts, framing, hinges, latches, and labor. Count gates early so the fence budget is not based on linear feet alone.",
+    primaryTool: {
+      href: "/tools/fence-cost-calculator",
+      label: "Estimate fence cost",
+    },
+    sections: [
+      {
+        heading: "Gate count changes the estimate",
+        body: "A simple fence with no gates is easier to price than a layout with several access points. Each gate can add hardware, framing, post work, and installation time.",
+      },
+      {
+        heading: "Gate width matters",
+        body: "A narrow walk gate is different from a wider equipment gate. Wider gates may need stronger posts, better bracing, heavier hinges, and more careful alignment.",
+      },
+      {
+        heading: "Material affects gate cost",
+        body: "Wood, vinyl, and chain link gates use different hardware and construction methods. Matching the gate to the fence material usually looks cleaner but can change the budget.",
+      },
+      {
+        heading: "Plan access before final layout",
+        body: "Place gates where people, tools, trash bins, pets, and maintenance equipment actually need to move. A cheaper layout can become frustrating if access is poor.",
+      },
+    ],
+  },
+  "concrete-slab-cost-guide": {
+    quickAnswer:
+      "Concrete slab cost starts with volume, but the real budget also depends on thickness, waste, base preparation, forms, reinforcement, finishing, and delivery.",
+    primaryTool: {
+      href: "/tools/concrete-slab-calculator",
+      label: "Calculate concrete volume",
+    },
+    sections: [
+      {
+        heading: "Volume is the first cost driver",
+        body: "Length, width, and thickness determine concrete volume. Once you know cubic yards, you can compare ready-mix quotes, bagged concrete, or local supply pricing.",
+      },
+      {
+        heading: "Thickness changes more than material",
+        body: "A thicker slab uses more concrete and may also affect excavation, base depth, reinforcement, and finishing time. Choose thickness based on the project, not only price.",
+      },
+      {
+        heading: "Include base prep and forms",
+        body: "Gravel base, compaction, form boards, stakes, screws, vapor barrier, reinforcement, and tools can all add cost before concrete is placed.",
+      },
+      {
+        heading: "Add waste and delivery realities",
+        body: "Small measurement differences, uneven subgrade, spillage, and ordering minimums can change the final cost. A planning estimate should include a realistic buffer.",
+      },
+    ],
+  },
+  "paint-coverage-by-room": {
+    quickAnswer:
+      "Paint coverage by room depends on wall area, number of coats, product coverage, openings, surface texture, and whether primer or strong color changes are involved.",
+    primaryTool: {
+      href: "/tools/paint-calculator",
+      label: "Calculate paint by room",
+    },
+    sections: [
+      {
+        heading: "Bedrooms and living rooms",
+        body: "Bedrooms and living rooms often have larger continuous wall areas. Measure each wall, subtract large openings if needed, and plan for two coats when changing color.",
+      },
+      {
+        heading: "Bathrooms and kitchens",
+        body: "Bathrooms and kitchens may have less paintable wall area because of cabinets, tile, mirrors, and fixtures. They may also need paints suited for moisture and cleaning.",
+      },
+      {
+        heading: "Hallways and small spaces",
+        body: "Small spaces can still use more paint than expected if they have many corners, doors, trim interruptions, or textured surfaces. Measure instead of guessing by room name alone.",
+      },
+      {
+        heading: "Use coverage as a range",
+        body: "A label coverage number is a good starting point, but real use changes with surface condition, roller nap, primer, repairs, and color shift. Round up before buying.",
+      },
+    ],
+  },
 };

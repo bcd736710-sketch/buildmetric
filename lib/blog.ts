@@ -368,6 +368,56 @@ export const blogPosts: BlogPost[] = [
     readingTime: "5 min read",
     relatedTools: ["paint-calculator"],
   },
+  {
+    slug: "mulch-vs-gravel",
+    title: "Mulch vs Gravel: Which Is Better for Your Yard?",
+    description:
+      "Compare mulch and gravel for garden beds, paths, drainage, maintenance, cost, and long-term yard planning.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "6 min read",
+    relatedTools: ["mulch-calculator", "gravel-calculator"],
+  },
+  {
+    slug: "gravel-base-for-shed-guide",
+    title: "Gravel Base for Shed Guide",
+    description:
+      "Plan a practical gravel shed base by estimating depth, footprint, compaction, edging, and drainage needs.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "6 min read",
+    relatedTools: ["gravel-calculator", "shed-cost-calculator"],
+  },
+  {
+    slug: "fence-gate-cost-guide",
+    title: "Fence Gate Cost Guide",
+    description:
+      "Understand how gate count, width, hardware, posts, and material choices affect a backyard fence budget.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["fence-cost-calculator"],
+  },
+  {
+    slug: "concrete-slab-cost-guide",
+    title: "Concrete Slab Cost Guide",
+    description:
+      "Plan a concrete slab budget by estimating volume, thickness, waste, base prep, forms, reinforcement, and finishing.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "6 min read",
+    relatedTools: ["concrete-slab-calculator"],
+  },
+  {
+    slug: "paint-coverage-by-room",
+    title: "Paint Coverage by Room",
+    description:
+      "Estimate paint coverage for bedrooms, bathrooms, kitchens, living rooms, and small repainting projects.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["paint-calculator"],
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(

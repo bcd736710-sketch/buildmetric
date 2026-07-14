@@ -72,9 +72,9 @@ export const topicHubs: TopicHub[] = [
         description: "Estimate mulch volume from bed area and depth.",
       },
       {
-        href: "/blog/best-soil-mix-for-raised-garden-beds",
-        label: "Choose a soil mix",
-        description: "Understand simple raised bed soil mix options.",
+        href: "/blog/mulch-vs-gravel",
+        label: "Compare mulch and gravel",
+        description: "Choose the right material for beds, paths, and drainage.",
       },
     ],
   },
@@ -101,9 +101,11 @@ export const topicHubs: TopicHub[] = [
       "shed-foundation-cost-guide",
       "shed-roofing-cost-guide",
       "diy-shed-permit-basics",
+      "gravel-base-for-shed-guide",
       "how-much-gravel-do-i-need",
       "how-much-concrete-do-i-need-for-a-slab",
       "concrete-slab-thickness-guide",
+      "concrete-slab-cost-guide",
     ],
     nextLinks: [
       {
@@ -141,9 +143,9 @@ export const topicHubs: TopicHub[] = [
         description: "Estimate paint from wall area, coats, and coverage.",
       },
       {
-        href: "/blog/paint-coverage-guide",
-        label: "Understand paint coverage",
-        description: "See why coverage varies by wall and product.",
+        href: "/blog/paint-coverage-by-room",
+        label: "Estimate by room",
+        description: "Plan paint coverage for common room types.",
       },
       {
         href: "/tools",
