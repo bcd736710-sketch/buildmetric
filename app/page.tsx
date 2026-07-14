@@ -41,7 +41,7 @@ export default function HomePage() {
             <div className="mt-10 grid max-w-2xl grid-cols-3 gap-3">
               {[
                 [String(calculators.length), "calculators"],
-                ["25", "guides"],
+                [String(blogPosts.length), "guides"],
                 ["0", "accounts"],
               ].map(([value, label]) => (
                 <div

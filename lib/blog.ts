@@ -268,6 +268,106 @@ export const blogPosts: BlogPost[] = [
     readingTime: "6 min read",
     relatedTools: ["chicken-run-size-calculator", "chicken-coop-size-calculator"],
   },
+  {
+    slug: "how-much-mulch-do-i-need",
+    title: "How Much Mulch Do I Need?",
+    description:
+      "Estimate mulch volume for landscape beds and understand how depth, area, bags, and cubic yards work together.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["mulch-calculator", "raised-garden-bed-soil-calculator"],
+  },
+  {
+    slug: "mulch-depth-guide",
+    title: "Mulch Depth Guide",
+    description:
+      "Choose a practical mulch depth for garden beds, trees, shrubs, and landscape refresh projects.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["mulch-calculator"],
+  },
+  {
+    slug: "how-much-gravel-do-i-need",
+    title: "How Much Gravel Do I Need?",
+    description:
+      "Calculate gravel volume and tons for paths, pads, shed bases, and simple backyard projects.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["gravel-calculator"],
+  },
+  {
+    slug: "gravel-depth-guide",
+    title: "Gravel Depth Guide",
+    description:
+      "Choose gravel depth for paths, landscape areas, shed bases, and compacted backyard pads.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["gravel-calculator"],
+  },
+  {
+    slug: "how-much-does-a-fence-cost",
+    title: "How Much Does a Fence Cost?",
+    description:
+      "Plan a fence budget by understanding linear feet, materials, gates, terrain, and local project factors.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "6 min read",
+    relatedTools: ["fence-cost-calculator"],
+  },
+  {
+    slug: "wood-vs-vinyl-vs-chain-link-fence-cost",
+    title: "Wood vs Vinyl vs Chain Link Fence Cost",
+    description:
+      "Compare common fence material choices by budget, maintenance, privacy, and backyard use case.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "6 min read",
+    relatedTools: ["fence-cost-calculator"],
+  },
+  {
+    slug: "how-much-concrete-do-i-need-for-a-slab",
+    title: "How Much Concrete Do I Need for a Slab?",
+    description:
+      "Estimate concrete slab volume in cubic yards from length, width, thickness, and waste allowance.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["concrete-slab-calculator", "shed-cost-calculator"],
+  },
+  {
+    slug: "concrete-slab-thickness-guide",
+    title: "Concrete Slab Thickness Guide",
+    description:
+      "Understand how slab thickness affects concrete volume, cost, durability, and project planning.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-14",
+    readingTime: "6 min read",
+    relatedTools: ["concrete-slab-calculator"],
+  },
+  {
+    slug: "how-much-paint-do-i-need",
+    title: "How Much Paint Do I Need?",
+    description:
+      "Estimate paint gallons from wall area, coats, and coverage before starting a room or home project.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
+    slug: "paint-coverage-guide",
+    title: "Paint Coverage Guide",
+    description:
+      "Understand paint coverage per gallon and the factors that change how much paint a project really needs.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-14",
+    readingTime: "5 min read",
+    relatedTools: ["paint-calculator"],
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { Container } from "@/components/container";
+import { blogPosts } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 
 export function Footer() {
@@ -23,7 +24,9 @@ export function Footer() {
               Backyard calculators
             </div>
             <div className="rounded-2xl border border-line bg-surface p-4">
-              <span className="block font-semibold text-ink">25 guides</span>
+              <span className="block font-semibold text-ink">
+                {blogPosts.length} guides
+              </span>
               SEO content library
             </div>
             <div className="rounded-2xl border border-line bg-surface p-4">
