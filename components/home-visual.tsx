@@ -15,7 +15,7 @@ export function HomeVisual() {
                 Backyard planning kit
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-ink">
-                Five focused planning tools
+                Ten focused planning tools
               </h2>
             </div>
             <div className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-brand">

@@ -7,7 +7,30 @@ import { blogPosts } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 
 export default function HomePage() {
+  const featuredCalculators = calculators.slice(-6).reverse();
   const featuredGuides = blogPosts.slice(-4).reverse();
+  const toolCategories = [
+    {
+      label: "Garden DIY",
+      href: "/garden-diy",
+      description: "Soil, mulch, and planting material planning.",
+    },
+    {
+      label: "Shed Planning",
+      href: "/shed-planning",
+      description: "Costs, gravel bases, and concrete slabs.",
+    },
+    {
+      label: "Backyard Chickens",
+      href: "/backyard-chickens",
+      description: "Coop, run, and feed planning tools.",
+    },
+    {
+      label: "Home Improvement",
+      href: "/home-improvement",
+      description: "Paint and practical household estimates.",
+    },
+  ];
 
   return (
     <>
@@ -26,16 +49,16 @@ export default function HomePage() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/tools/chicken-coop-size-calculator"
+                href="/tools"
                 className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                Try the calculator
+                Browse calculators
               </Link>
               <Link
-                href="/tools"
+                href="/tools/paint-calculator"
                 className="inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                Browse tools
+                Try paint calculator
               </Link>
               <Link
                 href="/backyard-diy"
@@ -65,6 +88,27 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <section className="border-b border-line bg-white py-12">
+        <Container>
+          <div className="grid gap-4 md:grid-cols-4">
+            {toolCategories.map((category) => (
+              <Link
+                key={category.href}
+                href={category.href}
+                className="rounded-3xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-ink hover:bg-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                  {category.label}
+                </p>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {category.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="py-16 sm:py-20">
         <Container>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -84,7 +128,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {calculators.map((calculator) => (
+            {featuredCalculators.map((calculator) => (
               <ToolCard key={calculator.slug} calculator={calculator} />
             ))}
           </div>
@@ -182,6 +226,40 @@ export default function HomePage() {
             {featuredGuides.map((post, index) => (
               <BlogCard key={post.slug} post={post} index={index} />
             ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-surface py-16 sm:py-20">
+        <Container className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Feedback
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+              See something unclear? Help improve the next version.
+            </h2>
+          </div>
+          <div className="rounded-3xl border border-line bg-white p-7 shadow-sm">
+            <p className="leading-8 text-muted">
+              BuildMetric is growing calculator by calculator. If an estimate,
+              formula, unit label, or guide could be clearer, send a short note
+              with the page URL.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex justify-center rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                Contact BuildMetric
+              </Link>
+              <Link
+                href="/editorial-policy"
+                className="inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                Editorial policy
+              </Link>
+            </div>
           </div>
         </Container>
       </section>
