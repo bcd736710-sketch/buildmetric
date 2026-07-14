@@ -84,6 +84,12 @@ export default function AboutPage() {
               >
                 View methodology
               </Link>
+              <Link
+                href="/editorial-policy"
+                className="inline-flex justify-center rounded-full px-4 py-3 text-sm font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                Editorial policy
+              </Link>
             </div>
           </div>
         </Container>

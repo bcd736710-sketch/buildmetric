@@ -27,6 +27,7 @@ export function GET() {
     `- Blog directory: ${absoluteUrl("/blog")}`,
     `- Backyard DIY hub: ${absoluteUrl("/backyard-diy")}`,
     `- Methodology: ${absoluteUrl("/methodology")}`,
+    `- Editorial policy: ${absoluteUrl("/editorial-policy")}`,
     `- About: ${absoluteUrl("/about")}`,
     "",
     "## Topic Hubs",

@@ -86,6 +86,7 @@ export function Footer() {
               {[
                 ["About", "/about"],
                 ["Methodology", "/methodology"],
+                ["Editorial Policy", "/editorial-policy"],
                 ["Privacy", "/privacy-policy"],
               ].map(([label, href]) => (
                 <Link
