@@ -22,10 +22,10 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate recommended indoor coop space and outdoor run space for your backyard chicken flock.",
     formulaSummary: [
-      "Indoor coop space = number of chickens × space per chicken",
+      "Indoor coop space = number of chickens x space per chicken",
       "Small chickens use 3 sq ft each, medium chickens use 4 sq ft each, and large chickens use 5 sq ft each",
       "Walk-in coops add a 25% indoor space allowance",
-      "Run space = number of chickens × 10 sq ft",
+      "Run space = number of chickens x 10 sq ft",
     ],
     assumptions: [
       "The result is a planning estimate, not a building code requirement.",
@@ -72,8 +72,8 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate minimum and comfortable outdoor run space for your backyard chicken flock.",
     formulaSummary: [
-      "Minimum run space = number of chickens × minimum sq ft per chicken",
-      "Comfortable run space = number of chickens × roomier sq ft per chicken",
+      "Minimum run space = number of chickens x minimum sq ft per chicken",
+      "Comfortable run space = number of chickens x roomier sq ft per chicken",
       "Surface type adjusts the target because dirt, mixed ground, and grass wear differently",
     ],
     assumptions: [
@@ -121,9 +121,9 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate daily, weekly, and monthly chicken feed needs for your flock.",
     formulaSummary: [
-      "Daily feed = number of chickens × feed per chicken per day",
-      "Weekly feed = daily feed × 7",
-      "Monthly feed = daily feed × 30",
+      "Daily feed = number of chickens x feed per chicken per day",
+      "Weekly feed = daily feed x 7",
+      "Monthly feed = daily feed x 30",
       "Bag count = monthly feed divided by selected bag size, rounded up",
     ],
     assumptions: [
@@ -171,10 +171,10 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Calculate how much soil you need to fill a raised garden bed.",
     formulaSummary: [
-      "Soil volume = bed length × bed width × soil depth",
+      "Soil volume = bed length x bed width x soil depth",
       "Depth is converted from inches to feet before calculating cubic feet",
-      "Cubic yards = cubic feet ÷ 27",
-      "Bag count = cubic feet ÷ bag size, rounded up",
+      "Cubic yards = cubic feet / 27",
+      "Bag count = cubic feet / bag size, rounded up",
     ],
     assumptions: [
       "Soil can settle after watering, planting, and the first few weeks of use.",
@@ -221,8 +221,8 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate a simple DIY shed budget from shed size and finish level.",
     formulaSummary: [
-      "Shed area = length × width",
-      "Base project cost = shed area × selected cost per square foot",
+      "Shed area = length x width",
+      "Base project cost = shed area x selected cost per square foot",
       "Estimated total = base project cost + selected foundation allowance",
     ],
     assumptions: [
@@ -270,10 +270,10 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate mulch volume in cubic feet, cubic yards, and bag count for garden beds and landscape areas.",
     formulaSummary: [
-      "Mulch volume = area length × area width × mulch depth",
+      "Mulch volume = area length x area width x mulch depth",
       "Depth is converted from inches to feet before calculating cubic feet",
-      "Cubic yards = cubic feet ÷ 27",
-      "Bag count = cubic feet ÷ bag size, rounded up",
+      "Cubic yards = cubic feet / 27",
+      "Bag count = cubic feet / bag size, rounded up",
     ],
     assumptions: [
       "Mulch depth is a planning choice; many beds use about 2 to 3 inches.",
@@ -315,10 +315,10 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate gravel volume and approximate tons for paths, pads, shed bases, and landscaping projects.",
     formulaSummary: [
-      "Gravel volume = length × width × depth",
+      "Gravel volume = length x width x depth",
       "Depth is converted from inches to feet before calculating cubic feet",
-      "Cubic yards = cubic feet ÷ 27",
-      "Approximate tons = cubic yards × selected gravel density",
+      "Cubic yards = cubic feet / 27",
+      "Approximate tons = cubic yards x selected gravel density",
     ],
     assumptions: [
       "Gravel density varies by stone type, moisture, and supplier.",
@@ -360,8 +360,8 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate a simple backyard fence budget from linear feet, material type, and gate count.",
     formulaSummary: [
-      "Fence material cost = total linear feet × selected material cost per foot",
-      "Gate cost = number of gates × gate allowance",
+      "Fence material cost = total linear feet x selected material cost per foot",
+      "Gate cost = number of gates x gate allowance",
       "Estimated total = fence material cost + gate cost",
     ],
     assumptions: [
@@ -404,9 +404,9 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate concrete volume in cubic yards and bags for patios, shed bases, and small slabs.",
     formulaSummary: [
-      "Slab volume = length × width × thickness",
+      "Slab volume = length x width x thickness",
       "Thickness is converted from inches to feet before calculating cubic feet",
-      "Cubic yards = cubic feet ÷ 27",
+      "Cubic yards = cubic feet / 27",
       "Final estimate can include a selected waste allowance",
     ],
     assumptions: [
@@ -449,7 +449,7 @@ export const calculators: CalculatorSummary[] = [
     description:
       "Estimate paint gallons from wall area, number of coats, and coverage per gallon.",
     formulaSummary: [
-      "Paint needed = paintable area × number of coats ÷ coverage per gallon",
+      "Paint needed = paintable area x number of coats / coverage per gallon",
       "Gallons to buy are rounded up to the next whole gallon",
       "Large openings can be subtracted for a tighter estimate",
     ],

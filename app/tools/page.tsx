@@ -5,6 +5,10 @@ import { ToolCard } from "@/components/tool-card";
 import { getPostsForTool } from "@/lib/blog";
 import { calculators } from "@/lib/calculators";
 
+const calculatorCategories = Array.from(
+  new Set(calculators.map((calculator) => calculator.category)),
+);
+
 export const metadata: Metadata = {
   title: "DIY Calculators",
   description:
@@ -56,10 +60,40 @@ export default function ToolsPage() {
 
       <section className="py-12 sm:py-16">
         <Container>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {calculators.map((calculator) => (
-              <ToolCard key={calculator.slug} calculator={calculator} />
-            ))}
+          <div className="grid gap-10">
+            {calculatorCategories.map((category) => {
+              const categoryTools = calculators.filter(
+                (calculator) => calculator.category === category,
+              );
+              const guideCount = new Set(
+                categoryTools.flatMap((calculator) =>
+                  getPostsForTool(calculator.slug).map((post) => post.slug),
+                ),
+              ).size;
+
+              return (
+                <section key={category}>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                        {category}
+                      </p>
+                      <h2 className="mt-3 text-3xl font-semibold text-ink">
+                        {categoryTools.length} planning tools
+                      </h2>
+                    </div>
+                    <p className="text-sm font-medium text-muted">
+                      {guideCount} related guides
+                    </p>
+                  </div>
+                  <div className="mt-6 grid gap-5 md:grid-cols-2">
+                    {categoryTools.map((calculator) => (
+                      <ToolCard key={calculator.slug} calculator={calculator} />
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         </Container>
       </section>
