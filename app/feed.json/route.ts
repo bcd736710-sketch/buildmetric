@@ -1,4 +1,5 @@
 import { blogPosts } from "@/lib/blog";
+import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -28,6 +29,13 @@ export function GET() {
     ],
     items: sortedPosts.map((post) => {
       const url = absoluteUrl(`/blog/${post.slug}`);
+      const relatedTools = post.relatedTools
+        .map((toolSlug) => calculatorBySlug[toolSlug])
+        .filter(Boolean)
+        .map((tool) => ({
+          name: tool.name,
+          url: absoluteUrl(`/tools/${tool.slug}`),
+        }));
 
       return {
         id: url,
@@ -38,6 +46,10 @@ export function GET() {
         date_published: new Date(post.publishedAt).toISOString(),
         date_modified: new Date(post.publishedAt).toISOString(),
         tags: [post.category, ...post.relatedTools],
+        _buildmetric: {
+          category: post.category,
+          related_tools: relatedTools,
+        },
       };
     }),
   };

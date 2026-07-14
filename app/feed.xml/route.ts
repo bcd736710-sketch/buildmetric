@@ -1,4 +1,5 @@
 import { blogPosts } from "@/lib/blog";
+import { calculatorBySlug } from "@/lib/calculators";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -26,14 +27,22 @@ export function GET() {
   const items = sortedPosts
     .map((post) => {
       const url = absoluteUrl(`/blog/${post.slug}`);
+      const relatedTools = post.relatedTools
+        .map((toolSlug) => calculatorBySlug[toolSlug])
+        .filter(Boolean);
+      const relatedToolNames = relatedTools.map((tool) => tool.name).join(", ");
+      const description = relatedToolNames
+        ? `${post.description} Related calculators: ${relatedToolNames}.`
+        : post.description;
 
       return [
         "<item>",
         `<title>${escapeXml(post.title)}</title>`,
         `<link>${escapeXml(url)}</link>`,
         `<guid isPermaLink="true">${escapeXml(url)}</guid>`,
-        `<description>${escapeXml(post.description)}</description>`,
+        `<description>${escapeXml(description)}</description>`,
         `<category>${escapeXml(post.category)}</category>`,
+        ...relatedTools.map((tool) => `<category>${escapeXml(tool.name)}</category>`),
         `<pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>`,
         "</item>",
       ].join("");

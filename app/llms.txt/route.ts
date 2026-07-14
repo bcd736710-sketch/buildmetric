@@ -32,6 +32,7 @@ export function GET() {
     `- Contact: ${absoluteUrl("/contact")}`,
     `- RSS feed: ${absoluteUrl("/feed.xml")}`,
     `- JSON feed: ${absoluteUrl("/feed.json")}`,
+    `- Humans text: ${absoluteUrl("/humans.txt")}`,
     `- About: ${absoluteUrl("/about")}`,
     "",
     "## Topic Hubs",

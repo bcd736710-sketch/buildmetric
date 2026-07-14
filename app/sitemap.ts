@@ -60,6 +60,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${siteConfig.url}/humans.txt`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.2,
+    },
     ...topicHubs.map((hub) => ({
       url: `${siteConfig.url}/${hub.slug}`,
       lastModified: new Date(),
