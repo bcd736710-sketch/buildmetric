@@ -3,6 +3,33 @@ import Link from "next/link";
 import { BlogCard } from "@/components/blog-card";
 import { Container } from "@/components/container";
 import { blogCategories, blogPosts } from "@/lib/blog";
+import { calculators } from "@/lib/calculators";
+
+const categoryLinks: Record<
+  string,
+  { href: string; label: string; description: string }
+> = {
+  "Backyard Chickens": {
+    href: "/backyard-chickens",
+    label: "Open chicken hub",
+    description: "Coop, run, feed, bedding, and predator planning.",
+  },
+  "Garden DIY": {
+    href: "/garden-diy",
+    label: "Open garden hub",
+    description: "Raised beds, soil, mulch, and garden materials.",
+  },
+  "Backyard DIY": {
+    href: "/backyard-diy",
+    label: "Open backyard hub",
+    description: "Sheds, fences, gravel, concrete, and outdoor projects.",
+  },
+  "Home Improvement": {
+    href: "/home-improvement",
+    label: "Open home hub",
+    description: "Paint coverage and common homeowner estimates.",
+  },
+};
 
 export const metadata: Metadata = {
   title: "DIY Planning Guides",
@@ -22,6 +49,16 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const latestPosts = blogPosts.slice(-6).reverse();
+  const calculatorsWithGuides = calculators
+    .map((calculator) => ({
+      calculator,
+      guideCount: blogPosts.filter((post) =>
+        post.relatedTools.includes(calculator.slug),
+      ).length,
+    }))
+    .filter((item) => item.guideCount > 0)
+    .sort((a, b) => b.guideCount - a.guideCount)
+    .slice(0, 6);
 
   return (
     <>
@@ -78,7 +115,7 @@ export default function BlogPage() {
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {blogCategories.map((category) => (
-              <a
+              <Link
                 key={category}
                 href={`#${category.toLowerCase().replaceAll(" ", "-")}`}
                 className="rounded-3xl border border-line bg-white p-5 text-sm font-semibold text-ink shadow-sm transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
@@ -91,7 +128,50 @@ export default function BlogPage() {
                   }{" "}
                   guides
                 </span>
-              </a>
+                <span className="mt-3 block text-xs font-medium leading-5 text-muted">
+                  {categoryLinks[category]?.description}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line bg-white py-12 sm:py-16">
+        <Container>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                Calculator clusters
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-ink">
+                Jump from guides to the tools they support.
+              </h2>
+            </div>
+            <Link
+              href="/tools"
+              className="rounded-full px-2 py-1 text-sm font-semibold text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            >
+              View all calculators
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {calculatorsWithGuides.map(({ calculator, guideCount }) => (
+              <Link
+                key={calculator.slug}
+                href={`/tools/${calculator.slug}`}
+                className="rounded-3xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-ink hover:bg-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                  {calculator.category}
+                </p>
+                <h3 className="mt-3 text-xl font-semibold text-ink">
+                  {calculator.name}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {guideCount} related guides
+                </p>
+              </Link>
             ))}
           </div>
         </Container>
@@ -143,6 +223,14 @@ export default function BlogPage() {
                       {posts.length} focused guides
                     </h2>
                   </div>
+                  {categoryLinks[category] ? (
+                    <Link
+                      href={categoryLinks[category].href}
+                      className="rounded-full px-2 py-1 text-sm font-semibold text-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                    >
+                      {categoryLinks[category].label}
+                    </Link>
+                  ) : null}
                 </div>
 
                 <div className="mt-8 grid gap-5 lg:grid-cols-2">

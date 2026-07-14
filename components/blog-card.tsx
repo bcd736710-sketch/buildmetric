@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { BlogPost } from "@/lib/blog";
+import { calculatorBySlug } from "@/lib/calculators";
 
 type BlogCardProps = {
   post: BlogPost;
@@ -7,6 +8,11 @@ type BlogCardProps = {
 };
 
 export function BlogCard({ post, index }: BlogCardProps) {
+  const relatedTools = post.relatedTools
+    .map((toolSlug) => calculatorBySlug[toolSlug])
+    .filter(Boolean)
+    .slice(0, 2);
+
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -22,7 +28,17 @@ export function BlogCard({ post, index }: BlogCardProps) {
         {post.title}
       </h2>
       <p className="mt-4 leading-8 text-muted">{post.description}</p>
-      <p className="mt-8 text-sm font-semibold text-ink">{post.readingTime}</p>
+      <div className="mt-6 flex flex-wrap gap-2">
+        {relatedTools.map((tool) => (
+          <span
+            key={tool.slug}
+            className="rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-muted"
+          >
+            {tool.name.replace(" Calculator", "")}
+          </span>
+        ))}
+      </div>
+      <p className="mt-6 text-sm font-semibold text-ink">{post.readingTime}</p>
     </Link>
   );
 }
