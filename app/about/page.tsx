@@ -71,12 +71,20 @@ export default function AboutPage() {
               more garden, woodworking, and home improvement tools planned over
               time.
             </p>
-            <Link
-              href="/tools"
-              className="mt-6 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            >
-              Browse tools
-            </Link>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/tools"
+                className="inline-flex justify-center rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                Browse tools
+              </Link>
+              <Link
+                href="/methodology"
+                className="inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                View methodology
+              </Link>
+            </div>
           </div>
         </Container>
       </section>
