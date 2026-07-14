@@ -85,6 +85,7 @@ export function Footer() {
             <div className="mt-4 grid gap-3">
               {[
                 ["About", "/about"],
+                ["Contact", "/contact"],
                 ["Methodology", "/methodology"],
                 ["Editorial Policy", "/editorial-policy"],
                 ["Privacy", "/privacy-policy"],

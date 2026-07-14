@@ -79,8 +79,14 @@ export default function AboutPage() {
                 Browse tools
               </Link>
               <Link
-                href="/methodology"
+                href="/contact"
                 className="inline-flex justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                Contact us
+              </Link>
+              <Link
+                href="/methodology"
+                className="inline-flex justify-center rounded-full px-4 py-3 text-sm font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
                 View methodology
               </Link>

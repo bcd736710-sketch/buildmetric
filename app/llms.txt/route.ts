@@ -29,6 +29,7 @@ export function GET() {
     `- Backyard DIY hub: ${absoluteUrl("/backyard-diy")}`,
     `- Methodology: ${absoluteUrl("/methodology")}`,
     `- Editorial policy: ${absoluteUrl("/editorial-policy")}`,
+    `- Contact: ${absoluteUrl("/contact")}`,
     `- RSS feed: ${absoluteUrl("/feed.xml")}`,
     `- JSON feed: ${absoluteUrl("/feed.json")}`,
     `- About: ${absoluteUrl("/about")}`,
