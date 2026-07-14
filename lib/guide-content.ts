@@ -643,4 +643,228 @@ export const guideContentBySlug: Record<string, GuideContent> = {
       },
     ],
   },
+  "paint-calculator-for-living-rooms": {
+    quickAnswer:
+      "Living room paint is estimated from total wall area, coats, and coverage per gallon. Large rooms and color changes usually make two coats safer.",
+    primaryTool: {
+      href: "/tools/paint-calculator",
+      label: "Calculate living room paint",
+    },
+    sections: [
+      {
+        heading: "Measure the main wall surfaces",
+        body: "Living rooms often have long continuous walls. Measure each wall, multiply width by height, and add the areas together before subtracting large openings.",
+      },
+      {
+        heading: "Account for windows and openings",
+        body: "Large windows, patio doors, fireplaces, built-ins, and wide room openings can reduce paintable area. For a rough estimate, leaving them in adds a small buffer.",
+      },
+      {
+        heading: "Plan coats by color change",
+        body: "Two coats are common when changing colors or painting over uneven walls. A similar color over clean paint may need less, but coverage still depends on the product.",
+      },
+      {
+        heading: "Buy enough for touch-ups",
+        body: "Living rooms see regular use, so keeping a labeled touch-up amount can help later. Round up carefully before buying.",
+      },
+    ],
+  },
+  "paint-calculator-for-kitchens": {
+    quickAnswer:
+      "Kitchen paint estimates depend on visible wall area, cabinets, tile, appliances, coats, and washable paint coverage.",
+    primaryTool: {
+      href: "/tools/paint-calculator",
+      label: "Calculate kitchen paint",
+    },
+    sections: [
+      {
+        heading: "Measure only paintable walls",
+        body: "Kitchens often have cabinets, tile backsplash, appliances, windows, and doors. Measure the wall areas that will actually be painted.",
+      },
+      {
+        heading: "Watch for patching and stains",
+        body: "Grease, repairs, water marks, and old holes can affect coverage. Primer may be needed before paint in problem areas.",
+      },
+      {
+        heading: "Use product coverage carefully",
+        body: "Kitchen paints may be chosen for washability or moisture resistance. Check the label coverage instead of relying on a generic number.",
+      },
+      {
+        heading: "Estimate trim separately",
+        body: "Cabinet trim, doors, baseboards, and window casing can use different paint and should be estimated separately from wall gallons.",
+      },
+    ],
+  },
+  "how-much-gravel-for-a-patio-base": {
+    quickAnswer:
+      "A patio gravel base is estimated from patio length, width, and base depth. Compaction, soil, drainage, and edging can change the final amount.",
+    primaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Calculate patio base gravel",
+    },
+    secondaryTool: {
+      href: "/tools/concrete-slab-calculator",
+      label: "Estimate concrete slab",
+    },
+    sections: [
+      {
+        heading: "Start with the patio footprint",
+        body: "Measure the finished patio length and width. If the base extends beyond the finished surface, include that extra footprint in the gravel estimate.",
+      },
+      {
+        heading: "Choose a base depth",
+        body: "A patio base depth depends on soil, climate, drainage, and surface material. Pavers, concrete, and compacted gravel patios can have different needs.",
+      },
+      {
+        heading: "Plan for compaction",
+        body: "Loose gravel settles when compacted, so the delivered amount may need to account for compaction and uneven subgrade.",
+      },
+      {
+        heading: "Solve drainage early",
+        body: "A good patio base should move water away from structures. Slope, edge restraint, fabric, and outlet paths matter before ordering material.",
+      },
+    ],
+  },
+  "gravel-for-dog-run-guide": {
+    quickAnswer:
+      "Gravel for a dog run should be estimated by area and depth, but comfort, drainage, cleaning, edging, and pet suitability matter as much as volume.",
+    primaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Calculate dog run gravel",
+    },
+    secondaryTool: {
+      href: "/tools/fence-cost-calculator",
+      label: "Estimate dog run fence",
+    },
+    sections: [
+      {
+        heading: "Measure the run area",
+        body: "Start with the dog run length and width. Include any entry area or widened section where traffic will be heavier.",
+      },
+      {
+        heading: "Choose material with comfort in mind",
+        body: "Not every gravel is comfortable for paws. Rounded or smaller material may be easier underfoot than sharp stone, but local options vary.",
+      },
+      {
+        heading: "Drainage is the main reason",
+        body: "A dog run surface should drain well and be easy to clean. Soil, slope, fabric, base layers, and edging all affect performance.",
+      },
+      {
+        heading: "Plan the fence together",
+        body: "Surface and fence design work together. Gate placement, cleaning access, dig prevention, and drainage paths should be planned before ordering gravel.",
+      },
+    ],
+  },
+  "concrete-patio-calculator-guide": {
+    quickAnswer:
+      "Concrete patio volume equals length times width times thickness, with a waste allowance added before ordering or buying bags.",
+    primaryTool: {
+      href: "/tools/concrete-slab-calculator",
+      label: "Calculate patio concrete",
+    },
+    sections: [
+      {
+        heading: "Measure the patio size",
+        body: "Use the planned finished patio length and width. For irregular patios, break the layout into rectangles and add the areas.",
+      },
+      {
+        heading: "Choose slab thickness",
+        body: "Thickness affects cubic yards directly. The right thickness depends on patio use, base prep, soil, reinforcement, and local guidance.",
+      },
+      {
+        heading: "Add a waste allowance",
+        body: "Small concrete pours can run short because of uneven base, form dimensions, and spillage. A small waste allowance is common for planning.",
+      },
+      {
+        heading: "Remember non-concrete materials",
+        body: "Forms, gravel base, reinforcement, control joints, finishing tools, curing products, and delivery can all affect the patio budget.",
+      },
+    ],
+  },
+  "concrete-walkway-calculator-guide": {
+    quickAnswer:
+      "Concrete walkway estimates use path length, width, and thickness. Curves and irregular sections should be broken into smaller pieces.",
+    primaryTool: {
+      href: "/tools/concrete-slab-calculator",
+      label: "Calculate walkway concrete",
+    },
+    secondaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Estimate gravel base",
+    },
+    sections: [
+      {
+        heading: "Measure path sections",
+        body: "For straight walkways, multiply length by width. For curved routes, estimate shorter sections or use an average width.",
+      },
+      {
+        heading: "Pick thickness and base depth",
+        body: "Walkway thickness and base preparation depend on soil, traffic, drainage, and freeze-thaw conditions in your area.",
+      },
+      {
+        heading: "Include waste for curves",
+        body: "Curved forms, irregular edges, and small pours can increase waste. A buffer helps avoid running short during the pour.",
+      },
+      {
+        heading: "Plan access and finishing",
+        body: "A walkway may need broom finishing, control joints, curing, and a clear route for moving concrete to the forms.",
+      },
+    ],
+  },
+  "vinyl-fence-cost-guide": {
+    quickAnswer:
+      "Vinyl fence cost depends on linear feet, height, panel style, posts, gates, terrain, and whether installation is DIY or hired.",
+    primaryTool: {
+      href: "/tools/fence-cost-calculator",
+      label: "Estimate vinyl fence cost",
+    },
+    sections: [
+      {
+        heading: "Measure linear feet first",
+        body: "Add each fence run together before pricing panels. Corners, slopes, and transitions can change the final material count.",
+      },
+      {
+        heading: "Height and style affect price",
+        body: "Privacy panels, picket styles, decorative caps, and taller fencing can all change cost per foot.",
+      },
+      {
+        heading: "Gates need separate attention",
+        body: "Vinyl gates may need reinforced posts, hardware, latches, and careful alignment. Count every gate early.",
+      },
+      {
+        heading: "Consider long-term maintenance",
+        body: "Vinyl often reduces painting or staining work, but upfront cost, repairs, appearance, and local climate still matter.",
+      },
+    ],
+  },
+  "mulch-for-flower-beds": {
+    quickAnswer:
+      "Mulch for flower beds is estimated from bed area and depth. Many beds use about 2 to 3 inches, adjusted for plant size and moisture needs.",
+    primaryTool: {
+      href: "/tools/mulch-calculator",
+      label: "Calculate flower bed mulch",
+    },
+    secondaryTool: {
+      href: "/tools/raised-garden-bed-soil-calculator",
+      label: "Estimate bed soil",
+    },
+    sections: [
+      {
+        heading: "Measure each flower bed",
+        body: "Measure length and width for rectangular beds. For curved beds, break the area into smaller sections or estimate an average width.",
+      },
+      {
+        heading: "Choose a depth for the plants",
+        body: "A 2 to 3 inch layer is common, but delicate plants, seedlings, and crowns may need mulch kept thinner nearby.",
+      },
+      {
+        heading: "Keep mulch away from stems",
+        body: "Do not pile mulch against plant stems, crowns, or tree trunks. Leave breathing room to reduce moisture problems.",
+      },
+      {
+        heading: "Plan refreshes separately",
+        body: "A first installation may need more mulch than a light seasonal refresh. Estimate the depth you actually need this time.",
+      },
+    ],
+  },
 };

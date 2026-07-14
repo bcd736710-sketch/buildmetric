@@ -498,6 +498,86 @@ export const blogPosts: BlogPost[] = [
     readingTime: "5 min read",
     relatedTools: ["gravel-calculator", "mulch-calculator"],
   },
+  {
+    slug: "paint-calculator-for-living-rooms",
+    title: "Paint Calculator for Living Rooms",
+    description:
+      "Estimate living room paint gallons by measuring wall area, openings, coats, coverage, and color changes.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
+    slug: "paint-calculator-for-kitchens",
+    title: "Paint Calculator for Kitchens",
+    description:
+      "Estimate kitchen paint needs around cabinets, tile, doors, windows, wall repairs, and washable paint choices.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
+    slug: "how-much-gravel-for-a-patio-base",
+    title: "How Much Gravel for a Patio Base?",
+    description:
+      "Estimate gravel for a patio base by planning footprint, depth, compaction, edging, and drainage.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "6 min read",
+    relatedTools: ["gravel-calculator", "concrete-slab-calculator"],
+  },
+  {
+    slug: "gravel-for-dog-run-guide",
+    title: "Gravel for Dog Run Guide",
+    description:
+      "Plan gravel depth and material needs for a dog run while considering drainage, comfort, cleaning, and edging.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["gravel-calculator", "fence-cost-calculator"],
+  },
+  {
+    slug: "concrete-patio-calculator-guide",
+    title: "Concrete Patio Calculator Guide",
+    description:
+      "Estimate concrete for a patio by planning length, width, slab thickness, waste, forms, and base prep.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "6 min read",
+    relatedTools: ["concrete-slab-calculator"],
+  },
+  {
+    slug: "concrete-walkway-calculator-guide",
+    title: "Concrete Walkway Calculator Guide",
+    description:
+      "Estimate concrete for a walkway from path length, width, thickness, curves, waste, and finishing needs.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["concrete-slab-calculator", "gravel-calculator"],
+  },
+  {
+    slug: "vinyl-fence-cost-guide",
+    title: "Vinyl Fence Cost Guide",
+    description:
+      "Estimate vinyl fence cost by length, height, panels, posts, gates, terrain, and maintenance expectations.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["fence-cost-calculator"],
+  },
+  {
+    slug: "mulch-for-flower-beds",
+    title: "Mulch for Flower Beds",
+    description:
+      "Estimate mulch for flower beds and choose a practical depth for weed control, moisture, and plant health.",
+    category: "Garden DIY",
+    publishedAt: "2026-07-15",
+    readingTime: "5 min read",
+    relatedTools: ["mulch-calculator", "raised-garden-bed-soil-calculator"],
+  },
 ];
 
 export const blogPostBySlug = Object.fromEntries(
