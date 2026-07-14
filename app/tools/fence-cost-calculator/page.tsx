@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { FenceCostCalculator } from "@/components/fence-cost-calculator";
+import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { ToolNextSteps } from "@/components/tool-next-steps";
 import { calculatorBySlug } from "@/lib/calculators";
@@ -35,6 +36,7 @@ export default function FenceCostCalculatorPage() {
       <Explanation title="How fence cost is estimated" body="The calculator multiplies fence length by a planning cost per linear foot for the selected material, then adds a gate allowance. It is intended for early budget planning." example="For 120 feet of wood fence with one gate, the estimate is $3,360 for fence material plus $250 for the gate, or $3,610 total." />
       <FaqSection title="Fence cost questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
+      <RelatedGuides toolSlug={calculator.slug} />
       <RelatedTools currentSlug={calculator.slug} />
     </>
   );
