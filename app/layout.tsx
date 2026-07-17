@@ -16,7 +16,10 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
   },
   verification: {
-    google: "KZHn52r1HB9-ff1UmPuhMcJEQyhUpSCceal7icrKEDw",
+    google: [
+      "KZHn52r1HB9-ff1UmPuhMcJEQyhUpSCceal7icrKEDw",
+      "NVovzWT0yCiXKftowwkpMsHpUUmhZZkb9zCod4MEi-w",
+    ],
     other: {
       "msvalidate.01": "33D5684FC661A2807740B2027FAB673E",
     },
