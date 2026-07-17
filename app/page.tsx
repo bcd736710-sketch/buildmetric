@@ -42,24 +42,25 @@ export default function HomePage() {
               BuildMetric DIY planning tools
             </p>
             <h1 className="max-w-4xl text-5xl font-semibold leading-tight tracking-normal text-ink sm:text-6xl lg:text-7xl">
-              Smart DIY Calculators for Your Backyard Projects
+              Backyard DIY calculators and material checklists.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-              Plan smarter, estimate costs, and build with confidence using
-              focused calculators and clear homeowner guides.
+              Estimate gravel, concrete, mulch, paint, fence, shed, garden, and
+              chicken coop materials before you buy. Built for homeowners who
+              want clear numbers, practical guides, and no sign-up wall.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/tools"
+                href="/start-here"
                 className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                Browse calculators
+                Start here
               </Link>
               <Link
                 href="/tools/paint-calculator"
                 className="inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                Try paint calculator
+                Try a calculator
               </Link>
               <Link
                 href="/backyard-diy"
@@ -72,7 +73,7 @@ export default function HomePage() {
               {[
                 [String(calculators.length), "calculators"],
                 [String(blogPosts.length), "guides"],
-                ["0", "accounts"],
+                ["Free", "no account"],
               ].map(([value, label]) => (
                 <div
                   key={label}

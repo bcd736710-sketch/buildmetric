@@ -16,12 +16,12 @@ export function Header() {
             BuildMetric
           </span>
         </Link>
-        <nav aria-label="Main navigation" className="flex items-center gap-6">
+        <nav aria-label="Main navigation" className="flex items-center gap-3 sm:gap-5">
           <Link
             className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/"
+            href="/backyard-diy"
           >
-            Home
+            Backyard DIY
           </Link>
           <Link
             className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
@@ -30,16 +30,22 @@ export function Header() {
             Tools
           </Link>
           <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            className="hidden rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 sm:inline-flex"
             href="/blog"
           >
             Blog
           </Link>
           <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/contact"
+            className="hidden rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 md:inline-flex"
+            href="/methodology"
           >
-            Contact
+            Methodology
+          </Link>
+          <Link
+            className="hidden rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 sm:inline-flex"
+            href="/start-here"
+          >
+            Start estimating
           </Link>
         </nav>
       </Container>

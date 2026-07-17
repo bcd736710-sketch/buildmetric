@@ -5,7 +5,7 @@ BuildMetric is currently focused on SEO-driven DIY calculators and supporting gu
 ## Current Site Inventory
 
 - Tools: 10
-- Articles: 34
+- Articles: 67
 - Primary categories: Backyard Chickens, Garden DIY, Backyard DIY, Shed Planning, Home Improvement
 - Production domain: https://buildmetriccalc.com
 - Deployment: Vercel via GitHub

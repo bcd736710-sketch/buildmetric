@@ -27,7 +27,7 @@ export function Footer() {
               <span className="block font-semibold text-ink">
                 {blogPosts.length} guides
               </span>
-              SEO content library
+              Planning library
             </div>
             <div className="rounded-2xl border border-line bg-surface p-4">
               <span className="block font-semibold text-ink">Free</span>
