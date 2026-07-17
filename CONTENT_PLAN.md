@@ -4,11 +4,12 @@ BuildMetric is currently focused on SEO-driven DIY calculators and supporting gu
 
 ## Current Site Inventory
 
-- Tools: 5
+- Tools: 10
 - Articles: 25
-- Primary categories: Backyard Chickens, Garden DIY, Backyard DIY
-- Deployment: Netlify
-- Search setup: Bing Webmaster Tools, sitemap submitted
+- Primary categories: Backyard Chickens, Garden DIY, Backyard DIY, Shed Planning, Home Improvement
+- Production domain: https://buildmetriccalc.com
+- Deployment: Vercel via GitHub
+- Search setup: Google Search Console and Bing Webmaster Tools verified; sitemap submitted and accepted
 
 ## Content Clusters
 
@@ -71,6 +72,11 @@ Next ideas:
 Primary tool:
 
 - Shed Cost Calculator
+- Mulch Calculator
+- Gravel Calculator
+- Fence Cost Calculator
+- Concrete Slab Calculator
+- Paint Calculator
 
 Published guides:
 
@@ -101,9 +107,9 @@ For every new article:
 - Confirm the article appears in `/sitemap.xml`
 - Run `pnpm run lint`
 - Run `pnpm run build`
-- Deploy through Netlify
-- Resubmit `https://buildmetric.netlify.app/sitemap.xml` in Bing Webmaster Tools
-- Request indexing for high-priority URLs when quota is available
+- Deploy through Vercel from the GitHub `main` branch
+- Confirm `https://buildmetriccalc.com/sitemap.xml` includes the new URL
+- Request indexing only for high-priority URLs when quota is available
 
 ## Indexing Tracker
 
@@ -137,4 +143,4 @@ Use this table manually after deployment.
 
 Do not add payments, accounts, databases, comments, or a CMS yet.
 
-The next useful phase is to monitor Bing indexing for a few days, improve pages that get impressions, and add only tightly related guides after the current pages are stable.
+The next useful phase is to monitor Google and Bing indexing, improve pages that get impressions, and add tightly related commercial-intent guides around the strongest calculators.

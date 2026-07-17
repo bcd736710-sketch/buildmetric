@@ -1,6 +1,10 @@
 # BuildMetric
 
-BuildMetric is an SEO-driven DIY calculator and planning tools website for English-speaking homeowners. Phase 1 focuses on a small, fast, deployable MVP with one backyard project tool: the Chicken Coop Size Calculator.
+BuildMetric is an SEO-driven DIY calculator and planning website for English-speaking homeowners. It focuses on simple, fast, trustworthy calculators and practical guides for backyard, garden, shed, painting, concrete, gravel, mulch, fencing, and related home projects.
+
+Production site: https://buildmetriccalc.com
+
+Repository: https://github.com/bcd736710-sketch/buildmetric.git
 
 ## Tech Stack
 
@@ -8,7 +12,7 @@ BuildMetric is an SEO-driven DIY calculator and planning tools website for Engli
 - React
 - TypeScript
 - Tailwind CSS
-- Vercel-ready deployment
+- Vercel deployment
 
 ## Run Locally
 
@@ -42,7 +46,7 @@ Set the public site URL before deploying so canonical URLs, Open Graph data,
 JSON-LD, `robots.txt`, and `sitemap.xml` point to the correct domain:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://buildmetriccalc.com
 ```
 
 ## Project Structure
@@ -51,19 +55,23 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 app/
   layout.tsx
   page.tsx
+  blog/
+  backyard-diy/
+  backyard-chickens/
+  garden-diy/
+  shed-planning/
+  home-improvement/
   tools/
     page.tsx
     chicken-coop-size-calculator/
       page.tsx
 components/
-  chicken-coop-calculator.tsx
   container.tsx
   footer.tsx
   header.tsx
   tool-card.tsx
 lib/
   calculators.ts
-  chicken-coop.ts
   site.ts
 ```
 
@@ -79,17 +87,17 @@ Keep each calculator simple: clear inputs, readable formulas, useful outputs, an
 
 ## Deploy to Vercel
 
-1. Push the project to a Git repository.
-2. Import the repository in Vercel.
-3. Add `NEXT_PUBLIC_SITE_URL` in Vercel project environment variables.
-4. Use the default Next.js settings.
-5. Deploy.
+1. Push changes to the GitHub `main` branch.
+2. Let Vercel deploy the imported GitHub repository.
+3. Keep `NEXT_PUBLIC_SITE_URL` set to `https://buildmetriccalc.com`.
+4. Confirm the production domain and sitemap after deployment.
 
-No database, authentication, or payment provider is required for Phase 1.
+No database, authentication, or payment provider is currently required.
 
-## Phase 1 Limitations
+## Current Product Notes
 
-- Only one calculator is implemented.
-- Coop style is captured as a planning input but does not change the formula yet.
-- Related article links are intentionally not published until article pages exist.
-- Newsletter, monetization, accounts, payments, and database-backed content are intentionally excluded.
+- The site is static-first and SEO-first.
+- The production domain is `https://buildmetriccalc.com`.
+- The Vercel preview domain is only a fallback/debugging alias.
+- Google Search Console and Bing Webmaster Tools are configured for the production domain.
+- Newsletter, monetization, accounts, payments, and database-backed content are intentionally excluded for now.

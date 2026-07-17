@@ -1,11 +1,11 @@
 # Bing Webmaster URL submission checklist
 
-Production site: https://buildmetric-iota.vercel.app
+Production site: https://buildmetriccalc.com
 
 Sitemap to submit:
 
 ```text
-https://buildmetric-iota.vercel.app/sitemap.xml
+https://buildmetriccalc.com/sitemap.xml
 ```
 
 ## How to use this file
@@ -20,73 +20,73 @@ https://buildmetric-iota.vercel.app/sitemap.xml
 ## Priority 1: core pages
 
 ```text
-https://buildmetric-iota.vercel.app/
-https://buildmetric-iota.vercel.app/tools
-https://buildmetric-iota.vercel.app/blog
-https://buildmetric-iota.vercel.app/contact
-https://buildmetric-iota.vercel.app/methodology
-https://buildmetric-iota.vercel.app/editorial-policy
-https://buildmetric-iota.vercel.app/privacy-policy
-https://buildmetric-iota.vercel.app/backyard-diy
-https://buildmetric-iota.vercel.app/garden-diy
-https://buildmetric-iota.vercel.app/shed-planning
-https://buildmetric-iota.vercel.app/home-improvement
-https://buildmetric-iota.vercel.app/backyard-chickens
+https://buildmetriccalc.com/
+https://buildmetriccalc.com/tools
+https://buildmetriccalc.com/blog
+https://buildmetriccalc.com/contact
+https://buildmetriccalc.com/methodology
+https://buildmetriccalc.com/editorial-policy
+https://buildmetriccalc.com/privacy-policy
+https://buildmetriccalc.com/backyard-diy
+https://buildmetriccalc.com/garden-diy
+https://buildmetriccalc.com/shed-planning
+https://buildmetriccalc.com/home-improvement
+https://buildmetriccalc.com/backyard-chickens
 ```
 
 ## Priority 2: calculator pages
 
 ```text
-https://buildmetric-iota.vercel.app/tools/paint-calculator
-https://buildmetric-iota.vercel.app/tools/gravel-calculator
-https://buildmetric-iota.vercel.app/tools/concrete-slab-calculator
-https://buildmetric-iota.vercel.app/tools/fence-cost-calculator
-https://buildmetric-iota.vercel.app/tools/mulch-calculator
-https://buildmetric-iota.vercel.app/tools/shed-cost-calculator
-https://buildmetric-iota.vercel.app/tools/raised-garden-bed-soil-calculator
-https://buildmetric-iota.vercel.app/tools/chicken-coop-size-calculator
-https://buildmetric-iota.vercel.app/tools/chicken-run-size-calculator
-https://buildmetric-iota.vercel.app/tools/chicken-feed-calculator
+https://buildmetriccalc.com/tools/paint-calculator
+https://buildmetriccalc.com/tools/gravel-calculator
+https://buildmetriccalc.com/tools/concrete-slab-calculator
+https://buildmetriccalc.com/tools/fence-cost-calculator
+https://buildmetriccalc.com/tools/mulch-calculator
+https://buildmetriccalc.com/tools/shed-cost-calculator
+https://buildmetriccalc.com/tools/raised-garden-bed-soil-calculator
+https://buildmetriccalc.com/tools/chicken-coop-size-calculator
+https://buildmetriccalc.com/tools/chicken-run-size-calculator
+https://buildmetriccalc.com/tools/chicken-feed-calculator
 ```
 
 ## Priority 3: newest high-intent articles
 
 ```text
-https://buildmetric-iota.vercel.app/blog/paint-calculator-for-living-rooms
-https://buildmetric-iota.vercel.app/blog/paint-calculator-for-kitchens
-https://buildmetric-iota.vercel.app/blog/how-much-gravel-for-a-patio-base
-https://buildmetric-iota.vercel.app/blog/gravel-for-dog-run-guide
-https://buildmetric-iota.vercel.app/blog/concrete-patio-calculator-guide
-https://buildmetric-iota.vercel.app/blog/concrete-walkway-calculator-guide
-https://buildmetric-iota.vercel.app/blog/vinyl-fence-cost-guide
-https://buildmetric-iota.vercel.app/blog/mulch-for-flower-beds
-https://buildmetric-iota.vercel.app/blog/concrete-slab-cost-by-size
-https://buildmetric-iota.vercel.app/blog/how-much-gravel-for-a-driveway
-https://buildmetric-iota.vercel.app/blog/mulch-calculator-by-area
-https://buildmetric-iota.vercel.app/blog/paint-calculator-for-bedrooms
-https://buildmetric-iota.vercel.app/blog/wood-fence-cost-per-foot
-https://buildmetric-iota.vercel.app/blog/chain-link-fence-cost-guide
-https://buildmetric-iota.vercel.app/blog/concrete-for-shed-base
-https://buildmetric-iota.vercel.app/blog/gravel-path-depth-guide
+https://buildmetriccalc.com/blog/paint-calculator-for-living-rooms
+https://buildmetriccalc.com/blog/paint-calculator-for-kitchens
+https://buildmetriccalc.com/blog/how-much-gravel-for-a-patio-base
+https://buildmetriccalc.com/blog/gravel-for-dog-run-guide
+https://buildmetriccalc.com/blog/concrete-patio-calculator-guide
+https://buildmetriccalc.com/blog/concrete-walkway-calculator-guide
+https://buildmetriccalc.com/blog/vinyl-fence-cost-guide
+https://buildmetriccalc.com/blog/mulch-for-flower-beds
+https://buildmetriccalc.com/blog/concrete-slab-cost-by-size
+https://buildmetriccalc.com/blog/how-much-gravel-for-a-driveway
+https://buildmetriccalc.com/blog/mulch-calculator-by-area
+https://buildmetriccalc.com/blog/paint-calculator-for-bedrooms
+https://buildmetriccalc.com/blog/wood-fence-cost-per-foot
+https://buildmetriccalc.com/blog/chain-link-fence-cost-guide
+https://buildmetriccalc.com/blog/concrete-for-shed-base
+https://buildmetriccalc.com/blog/gravel-path-depth-guide
 ```
 
 ## Priority 4: other key guide articles
 
 ```text
-https://buildmetric-iota.vercel.app/blog/how-much-mulch-do-i-need
-https://buildmetric-iota.vercel.app/blog/mulch-depth-guide
-https://buildmetric-iota.vercel.app/blog/how-much-gravel-do-i-need
-https://buildmetric-iota.vercel.app/blog/gravel-depth-guide
-https://buildmetric-iota.vercel.app/blog/how-much-does-a-fence-cost
-https://buildmetric-iota.vercel.app/blog/wood-vs-vinyl-vs-chain-link-fence-cost
-https://buildmetric-iota.vercel.app/blog/how-much-concrete-do-i-need-for-a-slab
-https://buildmetric-iota.vercel.app/blog/concrete-slab-thickness-guide
-https://buildmetric-iota.vercel.app/blog/concrete-slab-cost-guide
-https://buildmetric-iota.vercel.app/blog/how-much-paint-do-i-need
-https://buildmetric-iota.vercel.app/blog/paint-coverage-guide
-https://buildmetric-iota.vercel.app/blog/paint-coverage-by-room
-https://buildmetric-iota.vercel.app/blog/gravel-base-for-shed-guide
-https://buildmetric-iota.vercel.app/blog/fence-gate-cost-guide
+https://buildmetriccalc.com/blog/how-much-mulch-do-i-need
+https://buildmetriccalc.com/blog/mulch-depth-guide
+https://buildmetriccalc.com/blog/how-much-gravel-do-i-need
+https://buildmetriccalc.com/blog/gravel-depth-guide
+https://buildmetriccalc.com/blog/how-much-does-a-fence-cost
+https://buildmetriccalc.com/blog/wood-vs-vinyl-vs-chain-link-fence-cost
+https://buildmetriccalc.com/blog/how-much-concrete-do-i-need-for-a-slab
+https://buildmetriccalc.com/blog/concrete-slab-thickness-guide
+https://buildmetriccalc.com/blog/concrete-slab-cost-guide
+https://buildmetriccalc.com/blog/how-much-paint-do-i-need
+https://buildmetriccalc.com/blog/paint-coverage-guide
+https://buildmetriccalc.com/blog/paint-coverage-by-room
+https://buildmetriccalc.com/blog/gravel-base-for-shed-guide
+https://buildmetriccalc.com/blog/fence-gate-cost-guide
 ```
 
 ## Suggested daily submission order
@@ -96,10 +96,10 @@ Day 1:
 - Submit the sitemap.
 - Submit all Priority 1 core pages.
 - Submit these calculator pages:
-  - https://buildmetric-iota.vercel.app/tools/paint-calculator
-  - https://buildmetric-iota.vercel.app/tools/gravel-calculator
-  - https://buildmetric-iota.vercel.app/tools/concrete-slab-calculator
-  - https://buildmetric-iota.vercel.app/tools/fence-cost-calculator
+  - https://buildmetriccalc.com/tools/paint-calculator
+  - https://buildmetriccalc.com/tools/gravel-calculator
+  - https://buildmetriccalc.com/tools/concrete-slab-calculator
+  - https://buildmetriccalc.com/tools/fence-cost-calculator
 
 Day 2:
 
@@ -111,26 +111,26 @@ Day 3:
 - Submit the rest of Priority 3.
 - Submit Priority 4 older high-intent guide posts.
 
-After buying and connecting a custom domain, repeat this process for the new domain. Also update Vercel environment settings and any canonical/site URL configuration so search engines see the custom domain as the main site.
+The custom domain is already connected. Keep submissions focused on `https://buildmetriccalc.com` and avoid resubmitting old Vercel preview or legacy domains.
 
 ## Tracking table
 
 | URL | Submitted date | Bing status | Notes |
 | --- | --- | --- | --- |
-| https://buildmetric-iota.vercel.app/sitemap.xml |  |  | Sitemap |
-| https://buildmetric-iota.vercel.app/ |  |  | Core page |
-| https://buildmetric-iota.vercel.app/tools |  |  | Core page |
-| https://buildmetric-iota.vercel.app/blog |  |  | Core page |
-| https://buildmetric-iota.vercel.app/contact |  |  | Core page |
-| https://buildmetric-iota.vercel.app/tools/paint-calculator |  |  | Calculator |
-| https://buildmetric-iota.vercel.app/tools/gravel-calculator |  |  | Calculator |
-| https://buildmetric-iota.vercel.app/tools/concrete-slab-calculator |  |  | Calculator |
-| https://buildmetric-iota.vercel.app/tools/fence-cost-calculator |  |  | Calculator |
-| https://buildmetric-iota.vercel.app/blog/paint-calculator-for-living-rooms |  |  | New guide |
-| https://buildmetric-iota.vercel.app/blog/how-much-gravel-for-a-patio-base |  |  | New guide |
-| https://buildmetric-iota.vercel.app/blog/concrete-patio-calculator-guide |  |  | New guide |
-| https://buildmetric-iota.vercel.app/blog/vinyl-fence-cost-guide |  |  | New guide |
-| https://buildmetric-iota.vercel.app/blog/how-much-mulch-do-i-need |  |  | Existing guide |
-| https://buildmetric-iota.vercel.app/blog/how-much-gravel-do-i-need |  |  | Existing guide |
-| https://buildmetric-iota.vercel.app/blog/how-much-does-a-fence-cost |  |  | Existing guide |
-| https://buildmetric-iota.vercel.app/blog/how-much-concrete-do-i-need-for-a-slab |  |  | Existing guide |
+| https://buildmetriccalc.com/sitemap.xml |  |  | Sitemap |
+| https://buildmetriccalc.com/ |  |  | Core page |
+| https://buildmetriccalc.com/tools |  |  | Core page |
+| https://buildmetriccalc.com/blog |  |  | Core page |
+| https://buildmetriccalc.com/contact |  |  | Core page |
+| https://buildmetriccalc.com/tools/paint-calculator |  |  | Calculator |
+| https://buildmetriccalc.com/tools/gravel-calculator |  |  | Calculator |
+| https://buildmetriccalc.com/tools/concrete-slab-calculator |  |  | Calculator |
+| https://buildmetriccalc.com/tools/fence-cost-calculator |  |  | Calculator |
+| https://buildmetriccalc.com/blog/paint-calculator-for-living-rooms |  |  | New guide |
+| https://buildmetriccalc.com/blog/how-much-gravel-for-a-patio-base |  |  | New guide |
+| https://buildmetriccalc.com/blog/concrete-patio-calculator-guide |  |  | New guide |
+| https://buildmetriccalc.com/blog/vinyl-fence-cost-guide |  |  | New guide |
+| https://buildmetriccalc.com/blog/how-much-mulch-do-i-need |  |  | Existing guide |
+| https://buildmetriccalc.com/blog/how-much-gravel-do-i-need |  |  | Existing guide |
+| https://buildmetriccalc.com/blog/how-much-does-a-fence-cost |  |  | Existing guide |
+| https://buildmetriccalc.com/blog/how-much-concrete-do-i-need-for-a-slab |  |  | Existing guide |
