@@ -21,7 +21,10 @@ export const metadata: Metadata = {
       "NVovzWT0yCiXKftowwkpMsHpUUmhZZkb9zCod4MEi-w",
     ],
     other: {
-      "msvalidate.01": "33D5684FC661A2807740B2027FAB673E",
+      "msvalidate.01": [
+        "33D5684FC661A2807740B2027FAB673E",
+        "285C044377F9CFB06B672A0D6D302E6F",
+      ],
     },
   },
   alternates: {
