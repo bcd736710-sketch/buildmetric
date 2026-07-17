@@ -5,7 +5,7 @@ BuildMetric is currently focused on SEO-driven DIY calculators and supporting gu
 ## Current Site Inventory
 
 - Tools: 10
-- Articles: 28
+- Articles: 34
 - Primary categories: Backyard Chickens, Garden DIY, Backyard DIY, Shed Planning, Home Improvement
 - Production domain: https://buildmetriccalc.com
 - Deployment: Vercel via GitHub
@@ -91,16 +91,59 @@ Next ideas:
 - Raised Garden Bed Irrigation Basics
 - Raised Garden Bed Watering Guide
 
-### Backyard DIY
+### Gravel
+
+Primary tool:
+
+- Gravel Calculator
+
+Published guides:
+
+- How Much Gravel Do I Need?
+- Gravel Depth Guide
+- Gravel Base for Shed Guide
+- How Much Gravel for a Driveway?
+- Gravel Path Depth Guide
+- How Much Gravel for a Patio Base?
+- Gravel for Dog Run Guide
+- Gravel Types Guide
+- Gravel Delivery Cost Guide
+
+Next ideas:
+
+- Gravel Driveway Cost Guide
+- Crushed Stone vs Pea Gravel
+- Gravel Pad Compaction Guide
+
+### Concrete
+
+Primary tool:
+
+- Concrete Slab Calculator
+
+Published guides:
+
+- How Much Concrete Do I Need for a Slab?
+- Concrete Slab Thickness Guide
+- Concrete Slab Cost Guide
+- Concrete Slab Cost by Size
+- Concrete for Shed Base
+- Concrete Patio Calculator Guide
+- Concrete Walkway Calculator Guide
+- Concrete Bag Calculator Guide
+- DIY Concrete Slab Checklist
+
+Next ideas:
+
+- Ready Mix vs Bagged Concrete
+- Concrete Forms for Small Slabs
+- Concrete Curing Guide
+
+### Shed
 
 Primary tool:
 
 - Shed Cost Calculator
-- Mulch Calculator
-- Gravel Calculator
-- Fence Cost Calculator
-- Concrete Slab Calculator
-- Paint Calculator
 
 Published guides:
 
@@ -111,6 +154,10 @@ Published guides:
 - DIY Shed Permit Basics
 - Shed Roofing Cost Guide
 - 8x10 Shed Cost Guide
+- Concrete for Shed Base
+- Gravel Base for Shed Guide
+- Shed Foundation Options Guide
+- Shed Size Planning Guide
 
 Next ideas:
 
@@ -119,6 +166,29 @@ Next ideas:
 - Shed Ramp Planning Guide
 - Shed Ventilation Guide
 - Shed Flooring Options Guide
+
+### Backyard DIY
+
+Primary tool:
+
+- Mulch Calculator
+- Fence Cost Calculator
+
+Published guides:
+
+- How Much Does a Fence Cost?
+- Wood vs Vinyl vs Chain Link Fence Cost
+- Fence Gate Cost Guide
+- Wood Fence Cost per Foot
+- Chain Link Fence Cost Guide
+- Vinyl Fence Cost Guide
+- Mulch vs Gravel
+
+Next ideas:
+
+- Fence Post Spacing Guide
+- Fence Permit Basics
+- Mulch vs Rock Cost Guide
 
 ## Publishing Checklist
 

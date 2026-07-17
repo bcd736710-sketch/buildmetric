@@ -845,6 +845,66 @@ export const guideContentBySlug: Record<string, GuideContent> = {
       },
     ],
   },
+  "gravel-types-guide": {
+    quickAnswer:
+      "The best gravel type depends on the job. Crushed stone is useful for compacted bases, pea gravel is smoother for light paths, and decorative gravel works best where appearance matters more than load.",
+    primaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Calculate gravel volume",
+    },
+    secondaryTool: {
+      href: "/blog/gravel-depth-guide",
+      label: "Read gravel depth guide",
+    },
+    sections: [
+      {
+        heading: "Match gravel to the project",
+        body: "A driveway, shed base, patio base, drainage strip, and garden path do not need the same material. Start with the job the gravel has to do, then estimate volume after choosing depth.",
+      },
+      {
+        heading: "Crushed stone for compacted bases",
+        body: "Angular crushed stone can lock together better than rounded gravel, which makes it useful for shed bases, patio bases, and compacted pads. Local names and sizes vary, so confirm with the supplier.",
+      },
+      {
+        heading: "Pea gravel and decorative stone",
+        body: "Pea gravel and decorative stone can look cleaner for walkways and landscape areas, but they may move under wheels or heavy traffic. Edging matters more when the gravel is rounded.",
+      },
+      {
+        heading: "Ask about density before ordering",
+        body: "Different gravel types can weigh different amounts per cubic yard. If the supplier sells by the ton, use your volume estimate as a first pass and confirm the conversion locally.",
+      },
+    ],
+  },
+  "gravel-delivery-cost-guide": {
+    quickAnswer:
+      "Gravel delivery cost depends on distance, minimum order size, truck access, dump location, material type, and whether spreading or equipment is included.",
+    primaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Estimate gravel amount",
+    },
+    secondaryTool: {
+      href: "/blog/how-much-gravel-do-i-need",
+      label: "Read gravel estimate guide",
+    },
+    sections: [
+      {
+        heading: "Volume is only part of the order",
+        body: "A gravel calculator helps estimate cubic yards and tons, but delivery fees can make a small order surprisingly expensive. Ask suppliers about minimums before comparing material prices.",
+      },
+      {
+        heading: "Access affects the quote",
+        body: "Delivery is easier when a truck can safely reach the dump location. Narrow driveways, low branches, soft ground, slopes, and overhead wires can change what the supplier is willing to do.",
+      },
+      {
+        heading: "Plan the dump spot",
+        body: "A pile dropped far from the project adds labor or equipment time. Before delivery day, choose a clear, firm location that keeps the material close without blocking essential access.",
+      },
+      {
+        heading: "Include spreading and compaction",
+        body: "Some projects need more than delivery. Wheelbarrows, rakes, plate compactors, edging, landscape fabric, and hired help can affect the final budget as much as the stone.",
+      },
+    ],
+  },
   "concrete-patio-calculator-guide": {
     quickAnswer:
       "Concrete patio volume equals length times width times thickness, with a waste allowance added before ordering or buying bags.",
@@ -901,6 +961,66 @@ export const guideContentBySlug: Record<string, GuideContent> = {
       },
     ],
   },
+  "concrete-bag-calculator-guide": {
+    quickAnswer:
+      "For small projects, convert slab volume into cubic feet, then divide by the yield listed on the concrete bag. Round up and add a small buffer for uneven forms and waste.",
+    primaryTool: {
+      href: "/tools/concrete-slab-calculator",
+      label: "Calculate concrete volume",
+    },
+    secondaryTool: {
+      href: "/blog/how-much-concrete-do-i-need-for-a-slab",
+      label: "Read slab estimate guide",
+    },
+    sections: [
+      {
+        heading: "Start with cubic feet",
+        body: "Bagged concrete is often easier to compare by cubic feet of yield. Measure length and width in feet, convert thickness from inches to feet, then multiply the three numbers.",
+      },
+      {
+        heading: "Use the yield on the exact bag",
+        body: "Bag sizes and yields vary. A smaller repair bag and a larger concrete mix bag may cover very different volumes, so check the label before deciding how many to buy.",
+      },
+      {
+        heading: "Know when bags stop making sense",
+        body: "Bagged concrete can be practical for small pads, posts, and repairs. Larger slabs may become heavy, slow, and expensive compared with ready-mix delivery or a short-load option.",
+      },
+      {
+        heading: "Add waste before buying",
+        body: "Forms, uneven base, spillage, and mixing loss can use more material than the clean math suggests. Round up, then keep a realistic buffer for the project size.",
+      },
+    ],
+  },
+  "diy-concrete-slab-checklist": {
+    quickAnswer:
+      "A DIY concrete slab needs measured forms, compacted base, reinforcement decisions, tools, enough concrete, finishing plan, curing plan, and safe site access before pour day.",
+    primaryTool: {
+      href: "/tools/concrete-slab-calculator",
+      label: "Estimate slab concrete",
+    },
+    secondaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Estimate gravel base",
+    },
+    sections: [
+      {
+        heading: "Prepare the base first",
+        body: "A slab is only as good as the ground below it. Plan excavation, compacted gravel, drainage, form height, and finished slope before ordering concrete.",
+      },
+      {
+        heading: "Decide on reinforcement and joints",
+        body: "Some slabs need wire mesh, rebar, fiber mix, control joints, or thicker edges. The right choice depends on load, soil, size, and local practice.",
+      },
+      {
+        heading: "Have tools ready before concrete arrives",
+        body: "Forms, stakes, screws, level, screed board, shovel, rake, float, edger, broom, gloves, boots, and curing materials should be ready before mixing or delivery starts.",
+      },
+      {
+        heading: "Plan finishing and curing",
+        body: "Concrete work does not end when the forms are full. Finishing timing, weather, protection, curing, and when to remove forms all affect the finished slab.",
+      },
+    ],
+  },
   "vinyl-fence-cost-guide": {
     quickAnswer:
       "Vinyl fence cost depends on linear feet, height, panel style, posts, gates, terrain, and whether installation is DIY or hired.",
@@ -954,6 +1074,66 @@ export const guideContentBySlug: Record<string, GuideContent> = {
       {
         heading: "Plan refreshes separately",
         body: "A first installation may need more mulch than a light seasonal refresh. Estimate the depth you actually need this time.",
+      },
+    ],
+  },
+  "shed-foundation-options-guide": {
+    quickAnswer:
+      "Common shed foundations include gravel pads, concrete slabs, blocks, skids, and piers. The best choice depends on drainage, shed size, budget, soil, and local requirements.",
+    primaryTool: {
+      href: "/tools/shed-cost-calculator",
+      label: "Estimate shed cost",
+    },
+    secondaryTool: {
+      href: "/tools/gravel-calculator",
+      label: "Calculate gravel pad",
+    },
+    sections: [
+      {
+        heading: "Gravel pads are common for small sheds",
+        body: "A framed gravel pad can drain well and cost less than concrete. It still needs excavation, fabric or separation, edging, compaction, and enough depth for the site.",
+      },
+      {
+        heading: "Concrete slabs add durability and cost",
+        body: "Concrete can create a firm, durable base, but it usually raises cost and planning complexity. Forms, base prep, reinforcement, finish, and permits may all matter.",
+      },
+      {
+        heading: "Blocks, skids, and piers have limits",
+        body: "Simpler supports may work for some light sheds, but they can be sensitive to leveling, settling, frost, drainage, and local rules. Check the shed manufacturer guidance before choosing.",
+      },
+      {
+        heading: "Choose foundation before pricing the shed",
+        body: "Foundation type can change the real project budget. Estimate the shed shell and foundation together instead of treating the base as an afterthought.",
+      },
+    ],
+  },
+  "shed-size-planning-guide": {
+    quickAnswer:
+      "Choose shed size by listing what you need to store, leaving access aisles, checking door width, allowing future storage, and confirming the footprint fits local rules and yard space.",
+    primaryTool: {
+      href: "/tools/shed-cost-calculator",
+      label: "Estimate shed size cost",
+    },
+    secondaryTool: {
+      href: "/blog/10x12-shed-cost-guide",
+      label: "Compare 10x12 shed cost",
+    },
+    sections: [
+      {
+        heading: "Start with the storage list",
+        body: "List the largest items first: mower, bikes, bins, tools, garden supplies, seasonal gear, or workshop benches. A shed that fits the items but not the access path can still feel too small.",
+      },
+      {
+        heading: "Leave room to move",
+        body: "Plan aisles, door swing, shelves, wall hooks, and space to pull items out. A slightly larger shed may be more useful than a cheaper shed that is packed too tightly.",
+      },
+      {
+        heading: "Check yard and rule limits",
+        body: "Before choosing size, confirm setbacks, permit thresholds, HOA limits, easements, utilities, drainage, and the path for delivery or construction access.",
+      },
+      {
+        heading: "Price size and foundation together",
+        body: "Larger sheds need more framing, siding, roofing, flooring, and foundation material. Use a cost estimate early so the plan fits both the yard and the budget.",
       },
     ],
   },

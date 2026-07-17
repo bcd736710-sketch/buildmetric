@@ -28,6 +28,7 @@ export default function ConcreteSlabCalculatorPage() {
       <ToolHero calculatorName={calculator.name} description={calculator.description} />
       <ToolSection calculator={<ConcreteSlabCalculator />} guideTitle="Estimate concrete before you pour." guideBody="Concrete projects need enough material on hand. Calculate cubic yards first, then add a small waste allowance for uneven base, forms, and ordering margin." />
       <Explanation title="How concrete slab volume is calculated" body="The calculator multiplies length by width by slab thickness. Thickness is converted from inches to feet, cubic feet are divided by 27 for cubic yards, and a waste percentage can be added." example="For a 10 by 12 foot slab at 4 inches thick, the estimate is 1.48 cubic yards. With 10% waste, plan about 1.63 cubic yards." />
+      <ConcretePlanningGuide />
       <FaqSection title="Concrete slab calculator questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
       <RelatedGuides toolSlug={calculator.slug} />
@@ -46,6 +47,36 @@ function ToolSection({ calculator, guideTitle, guideBody }: { calculator: ReactN
 
 function Explanation({ title, body, example }: { title: string; body: string; example: string }) {
   return <section className="border-t border-line py-12 sm:py-16"><Container className="grid gap-12 lg:grid-cols-[0.75fr_1fr]"><div><p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">Explanation</p><h2 className="mt-3 text-3xl font-semibold text-ink">{title}</h2></div><div className="space-y-8 text-muted"><div><h3 className="text-xl font-semibold text-ink">How the calculation works</h3><p className="mt-3 leading-8">{body}</p></div><div><h3 className="text-xl font-semibold text-ink">Example calculation</h3><p className="mt-3 leading-8">{example}</p></div></div></Container></section>;
+}
+
+function ConcretePlanningGuide() {
+  const guides = [
+    { href: "/blog/concrete-bag-calculator-guide", title: "Convert volume into concrete bags", body: "Small slabs and pads may be easier with bagged concrete, but bag yield matters." },
+    { href: "/blog/diy-concrete-slab-checklist", title: "Prepare for pour day", body: "Forms, gravel base, reinforcement, tools, finishing, and curing need a plan before concrete arrives." },
+    { href: "/blog/concrete-slab-thickness-guide", title: "Choose slab thickness", body: "Thickness affects volume, cost, strength, base prep, and project suitability." },
+    { href: "/blog/concrete-slab-cost-by-size", title: "Compare common slab sizes", body: "Use size examples to understand how footprint and thickness move the budget." },
+  ];
+
+  return (
+    <section className="border-t border-line py-12 sm:py-16">
+      <Container>
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">Pour planning</p>
+          <h2 className="mt-3 text-3xl font-semibold text-ink">Plan the slab beyond cubic yards.</h2>
+          <p className="mt-4 leading-8 text-muted">Concrete quantity is only the first number. Thickness, bags versus delivery, base prep, forms, tools, and curing all affect the finished slab.</p>
+        </div>
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {guides.map((guide) => (
+            <Link key={guide.href} href={guide.href} className="rounded-3xl border border-line bg-surface p-6 transition hover:border-ink hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20">
+              <h3 className="text-xl font-semibold text-ink">{guide.title}</h3>
+              <p className="mt-3 leading-7 text-muted">{guide.body}</p>
+              <span className="mt-5 inline-flex text-sm font-semibold text-ink">Read guide</span>
+            </Link>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
 }
 
 function FaqSection({ title }: { title: string }) {

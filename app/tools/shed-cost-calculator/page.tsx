@@ -283,6 +283,62 @@ export default function ShedCostCalculatorPage() {
         </Container>
       </section>
 
+      <section className="border-t border-line bg-white py-12 sm:py-16">
+        <Container>
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+              Shed planning
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-ink">
+              Decide size and foundation before pricing materials.
+            </h2>
+            <p className="mt-4 leading-8 text-muted">
+              The shed shell is only part of the budget. Size, storage layout,
+              access, foundation type, and site preparation can change the real
+              project cost.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {[
+              {
+                href: "/blog/shed-size-planning-guide",
+                title: "Choose a practical shed size",
+                body: "Plan storage, aisle space, doors, future use, and yard fit before committing to a footprint.",
+              },
+              {
+                href: "/blog/shed-foundation-options-guide",
+                title: "Compare foundation options",
+                body: "Gravel pads, concrete slabs, blocks, skids, and piers all affect cost and site prep.",
+              },
+              {
+                href: "/blog/diy-shed-materials-list",
+                title: "Build the materials list",
+                body: "Framing, siding, roofing, trim, fasteners, doors, windows, and finish details all add up.",
+              },
+              {
+                href: "/blog/diy-shed-permit-basics",
+                title: "Check permits and setbacks",
+                body: "Rules can affect shed size, location, height, foundation, and whether approval is needed.",
+              },
+            ].map((guide) => (
+              <Link
+                key={guide.href}
+                href={guide.href}
+                className="rounded-3xl border border-line bg-surface p-6 transition hover:border-ink hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                <h3 className="text-xl font-semibold text-ink">
+                  {guide.title}
+                </h3>
+                <p className="mt-3 leading-7 text-muted">{guide.body}</p>
+                <span className="mt-5 inline-flex text-sm font-semibold text-ink">
+                  Read guide
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="border-t border-line bg-surface py-12 sm:py-16">
         <Container>
           <div className="max-w-3xl">

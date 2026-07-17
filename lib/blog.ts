@@ -569,6 +569,26 @@ export const blogPosts: BlogPost[] = [
     relatedTools: ["gravel-calculator", "fence-cost-calculator"],
   },
   {
+    slug: "gravel-types-guide",
+    title: "Gravel Types Guide",
+    description:
+      "Compare common gravel types for driveways, paths, shed bases, patios, drainage, and decorative yard projects.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["gravel-calculator"],
+  },
+  {
+    slug: "gravel-delivery-cost-guide",
+    title: "Gravel Delivery Cost Guide",
+    description:
+      "Understand how gravel delivery, minimum orders, access, dump location, and spreading can affect the real project budget.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["gravel-calculator"],
+  },
+  {
     slug: "concrete-patio-calculator-guide",
     title: "Concrete Patio Calculator Guide",
     description:
@@ -586,6 +606,26 @@ export const blogPosts: BlogPost[] = [
     category: "Backyard DIY",
     publishedAt: "2026-07-15",
     readingTime: "5 min read",
+    relatedTools: ["concrete-slab-calculator", "gravel-calculator"],
+  },
+  {
+    slug: "concrete-bag-calculator-guide",
+    title: "Concrete Bag Calculator Guide",
+    description:
+      "Estimate how many concrete bags a small slab, pad, footing, or repair project may need before buying materials.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["concrete-slab-calculator"],
+  },
+  {
+    slug: "diy-concrete-slab-checklist",
+    title: "DIY Concrete Slab Checklist",
+    description:
+      "Plan forms, base prep, reinforcement, tools, ordering, pouring, finishing, and curing before a small concrete slab project.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
     relatedTools: ["concrete-slab-calculator", "gravel-calculator"],
   },
   {
@@ -607,6 +647,26 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-07-15",
     readingTime: "5 min read",
     relatedTools: ["mulch-calculator", "raised-garden-bed-soil-calculator"],
+  },
+  {
+    slug: "shed-foundation-options-guide",
+    title: "Shed Foundation Options Guide",
+    description:
+      "Compare gravel pads, concrete slabs, blocks, skids, and piers before choosing a shed foundation.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator", "gravel-calculator", "concrete-slab-calculator"],
+  },
+  {
+    slug: "shed-size-planning-guide",
+    title: "Shed Size Planning Guide",
+    description:
+      "Choose a practical shed size by planning storage, access, yard space, foundation, doors, and future use.",
+    category: "Backyard DIY",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["shed-cost-calculator"],
   },
 ];
 
