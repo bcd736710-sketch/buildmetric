@@ -1,24 +1,17 @@
 # BuildMetric Handoff
 
-This document is for a brand-new Codex session with no prior context. It summarizes what we are building, what is already done, what is currently blocked or pending, and what mistakes should not be repeated.
+This file is for a brand-new Codex session with no prior context. Read this first before doing anything.
 
-## Project
+## What We Are Building
 
-BuildMetric is an SEO-driven DIY calculator and planning tools website for English-speaking homeowners, mainly targeting the United States, Canada, the United Kingdom, and Australia.
+BuildMetric is an English DIY calculator and planning website for homeowners, mainly targeting the United States, Canada, the United Kingdom, and Australia.
 
-Positioning:
+The product direction:
 
-- Simple, accurate, beautiful online tools for DIY planning.
-- Professional, trustworthy, minimal, modern, and premium.
-- Inspired by Apple-style clarity, but still practical and SEO-focused.
-- Avoid farm-style visuals, cartoon UI, and overly colorful interfaces.
-
-Founder constraints:
-
-- Solo founder.
-- Limited time and budget.
-- Prioritize simplicity, maintainability, SEO, and deployability.
-- Do not over-engineer.
+- Simple, accurate, beautiful calculators for backyard, garden, shed, painting, concrete, gravel, mulch, fencing, and similar home projects.
+- SEO-first, static-first, fast, trustworthy, and easy to maintain.
+- Premium and clean visual style, not cartoonish, not farm-style, not over-decorated.
+- The founder is solo, budget-conscious, and wants practical next steps toward monetization.
 
 Tech stack:
 
@@ -26,8 +19,8 @@ Tech stack:
 - React
 - TypeScript
 - Tailwind CSS
-- Static-first pages
-- Deployed from GitHub to Vercel
+- Static-first routes
+- GitHub -> Vercel deployment
 
 Workspace:
 
@@ -35,16 +28,22 @@ Workspace:
 C:\Users\27823\Documents\dulizhan
 ```
 
-Production URL currently in use:
+Primary production domain:
 
 ```text
-https://buildmetric-iota.vercel.app
+https://buildmetriccalc.com
 ```
 
-GitHub repo:
+Temporary Vercel domain:
 
 ```text
-https://github.com/q7-7/buildmetric.git
+https://buildmetric-new.vercel.app
+```
+
+Current GitHub repository:
+
+```text
+https://github.com/bcd736710-sketch/buildmetric.git
 ```
 
 Main branch:
@@ -53,29 +52,27 @@ Main branch:
 main
 ```
 
-## Current Site State
+## What Has Been Completed
 
-The site is live on Vercel and builds successfully.
+Core site:
 
-Core routes:
-
-- `/`
-- `/tools`
-- `/blog`
-- `/about`
-- `/methodology`
-- `/editorial-policy`
-- `/privacy-policy`
-- `/backyard-diy`
-- `/backyard-chickens`
-- `/garden-diy`
-- `/shed-planning`
-- `/home-improvement`
-- `/robots.txt`
-- `/sitemap.xml`
-- `/llms.txt`
-- `/feed.xml`
-- `/feed.json`
+- Homepage.
+- Tools index.
+- Blog index and guide pages.
+- About, Methodology, Editorial Policy, Privacy, Affiliate Disclosure, Partnerships, Contact.
+- Topic hubs:
+  - `/backyard-diy`
+  - `/backyard-chickens`
+  - `/garden-diy`
+  - `/shed-planning`
+  - `/home-improvement`
+- SEO utility routes:
+  - `/robots.txt`
+  - `/sitemap.xml`
+  - `/llms.txt`
+  - `/feed.xml`
+  - `/feed.json`
+  - `/humans.txt`
 
 Current calculators:
 
@@ -90,272 +87,305 @@ Current calculators:
 - `/tools/concrete-slab-calculator`
 - `/tools/paint-calculator`
 
-Current build output generates 65 static routes.
-
-## What Has Been Completed
-
-Initial MVP:
-
-- Next.js + TypeScript + Tailwind project setup.
-- Header, footer, navigation, shared layout.
-- Homepage.
-- Tools directory.
-- Chicken Coop Size Calculator.
-- SEO metadata, canonical URLs, Open Graph, structured data, sitemap, robots.
-- README.
-
-SEO and deployment fixes:
-
-- Replaced hard-coded production URLs with `NEXT_PUBLIC_SITE_URL` / shared site config.
-- Fixed fake related article links.
-- Added `aria-live="polite"` to calculator results.
-- Fixed footer encoding artifact.
-- Improved focus-visible styles.
-- Verified lint and production build.
-
-Deployment:
-
-- GitHub repo created and pushed.
-- Netlify was tried first, but the free team build minutes were exhausted.
-- Vercel is now the preferred host and is working.
-- Vercel project URL is `https://buildmetric-iota.vercel.app`.
-- Vercel project has `NEXT_PUBLIC_SITE_URL` set to:
-
-```text
-https://buildmetric-iota.vercel.app
-```
-
 SEO/GEO foundation:
 
-- Added `/sitemap.xml`.
-- Added `/robots.txt`.
-- Added `/llms.txt`.
-- Added `/feed.xml`.
-- Added `/feed.json`.
-- Added Organization, WebSite, SiteNavigation, WebApplication, FAQ, article, and breadcrumb-style structured data where relevant.
-- Added methodology and editorial policy pages to support trust.
-- Added topic hub pages for topical authority.
-- Added calculator formula summaries and assumptions.
-- Added related guides to all newer tool pages so tools are not isolated.
-
-Content:
-
-- Blog index exists.
-- 35 blog pages currently exist.
-- Tool pages include calculator, explanation, formula logic, examples, FAQ, next steps, related tools, and related guides.
-- Topic hubs connect related tools and articles.
-
-Visual/UI:
-
-- Site has been improved from overly plain MVP toward a more premium, Apple-like planning tools style.
-- Homepage uses a stronger hero with tool preview.
-- UI is still intentionally minimal and performance-focused.
-
-## Current Verification Status
-
-Recent checks passed:
+- Canonical URLs.
+- Open Graph metadata.
+- Organization, WebSite, WebApplication, FAQ, Article, and related structured data where relevant.
+- Sitemap now uses the formal domain after Vercel environment update.
+- Internal links between topic hubs, guides, tools, and footer.
+- Related guides and practical explanations on calculator pages.
+- Contact flow added with the founder email:
 
 ```text
-pnpm run lint
-pnpm run build
+qg231024@outlook.com
 ```
 
-Important: `npm` may not be available in PATH in this environment. Use bundled pnpm if needed:
+Verification and deployment:
 
-```powershell
-$env:PATH="C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;$env:PATH"; & "C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd" run lint
+- New GitHub account/repo is active.
+- Local repo remote points to `bcd736710-sketch/buildmetric`.
+- Vercel project `buildmetric-new` imports the new GitHub repo.
+- Formal domain `buildmetriccalc.com` was bought through Aliyun/HiChina.
+- Aliyun DNS is configured and active:
+  - `@` A record -> `216.198.79.1`
+  - `www` CNAME -> `cname.vercel-dns.com`
+- Vercel shows:
+  - `buildmetriccalc.com` Valid Configuration
+  - `buildmetric-new.vercel.app` Valid Configuration
+- `https://buildmetriccalc.com` opens successfully.
+- `https://buildmetriccalc.com/sitemap.xml` opens successfully and lists URLs using the formal domain.
+
+Search console status:
+
+- Google Search Console property for `https://buildmetriccalc.com/` is verified.
+- Google sitemap `/sitemap.xml` shows success and discovered 82 pages.
+- Bing Webmaster Tools site for `https://buildmetriccalc.com/` is verified.
+- Bing sitemap `https://buildmetriccalc.com/sitemap.xml` shows success and discovered 82 URLs.
+
+Latest relevant commits:
+
+```text
+cb1f4b7 Add Bing verification for custom domain
+c3f3e40 Add Google verification for custom domain
+de375f8 Add Google Search Console verification
+7cc26f6 Prepare site for monetization
+2cfbe1c Add project routes to topic hubs
 ```
 
-```powershell
-$env:PATH="C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;$env:PATH"; & "C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd" run build
+Verification meta tags currently in `app/layout.tsx`:
+
+Google:
+
+```text
+KZHn52r1HB9-ff1UmPuhMcJEQyhUpSCceal7icrKEDw
+NVovzWT0yCiXKftowwkpMsHpUUmhZZkb9zCod4MEi-w
 ```
 
-## Current Blockers / Open Issues
+Bing:
 
-No code blocker is active right now.
+```text
+33D5684FC661A2807740B2027FAB673E
+285C044377F9CFB06B672A0D6D302E6F
+```
 
-Operational items still pending:
+## Current State
 
-- Bing indexing is in progress. The sitemap has been submitted and discovered 35 URLs.
-- Some individual URLs were manually requested for indexing, but Bing request quota may run out daily.
-- Google Search Console is not set up because the founder is in China and does not have a Google account. This is not fatal for now.
-- A custom domain has not been purchased yet. Attempts to buy through Namecheap/Porkbun had payment friction with PayPal/bank card.
-- Netlify should not be used right now because the team build minutes are exhausted. Vercel is the active deployment path.
+There is no active code blocker.
 
-## Next Recommended Steps
+The major setup phase is done:
 
-Best next step:
+- Domain purchased.
+- DNS connected.
+- Vercel production working.
+- Google Search Console verified.
+- Bing Webmaster verified.
+- Sitemaps accepted by both Google and Bing.
 
-1. Review the deployed Vercel site after the latest push.
-2. Confirm the 5 newer tool pages show related guides near the bottom:
-   - `/tools/mulch-calculator`
-   - `/tools/gravel-calculator`
-   - `/tools/fence-cost-calculator`
-   - `/tools/concrete-slab-calculator`
-   - `/tools/paint-calculator`
-3. If those look good, continue improving all calculator pages with practical UX features:
-   - Saved/shareable result URLs.
-   - Print-friendly result summaries.
-   - Better unit labels and assumptions.
-   - Clearer "minimum vs comfortable" guidance when inputs change.
-4. Then deepen content clusters:
-   - Add more targeted blog posts around each calculator.
-   - Add comparison/intention articles like "mulch vs gravel", "paint coverage by room", "concrete slab thickness guide".
-   - Keep all content tied to calculator pages with internal links.
-5. When a custom domain is purchased, update:
-   - `NEXT_PUBLIC_SITE_URL` in Vercel.
-   - Bing Webmaster property.
-   - sitemap submission.
-   - canonical URLs via rebuild.
+The project is now moving from technical setup into:
 
-Do not pause development just because Bing has not indexed everything yet. Indexing takes time. Keep improving useful pages and internal links.
+- Waiting for search engines to crawl and index.
+- Improving content quality and internal linking.
+- Preparing monetization.
+- Adding more high-intent calculators and guides.
 
-## Important Mistakes To Avoid
+Important: indexing is not instant. Google and Bing may take days or weeks to show impressions or indexed pages. Do not keep repeatedly resubmitting the same sitemap or constantly changing domains.
 
-Do not use Netlify as the primary deployment target right now.
+## Current Pending Items
 
-- Netlify free team build minutes were exhausted.
-- Live site may still serve traffic, but production deploys can be blocked.
-- Use Vercel instead.
+Search/indexing:
 
-Do not submit a sitemap under the wrong Bing property.
+- Let Google and Bing process the formal domain sitemap.
+- If indexing request quota is available, request indexing only for a few priority pages:
+  - `https://buildmetriccalc.com/`
+  - `https://buildmetriccalc.com/tools`
+  - `https://buildmetriccalc.com/blog`
+  - `https://buildmetriccalc.com/tools/paint-calculator`
+  - `https://buildmetriccalc.com/tools/gravel-calculator`
+- Do not mass-submit dozens of URLs every day.
 
-- If the Bing property is `https://buildmetric-iota.vercel.app/`, the sitemap must be:
+Product/content:
+
+- Improve calculator UX where it helps conversion and usefulness.
+- Add more content clusters around commercial-intent topics.
+- Add more practical calculators before trying to monetize heavily.
+- Review older docs that may still mention old domains and update them to the formal domain.
+
+Monetization:
+
+- Monetization has not really started yet.
+- Good future options:
+  - Affiliate links for DIY tools/materials.
+  - Sponsored placements later.
+  - Printable planning PDFs later.
+  - Email capture later.
+  - Ads only after traffic is meaningful.
+
+## Next Recommended Plan
+
+Best next session plan:
+
+1. Update old project docs to use `https://buildmetriccalc.com` and the new GitHub repo.
+2. Check `README.md`, `BING_SUBMISSION_URLS.md`, and any docs for old references:
+   - `buildmetric-iota.vercel.app`
+   - `buildmetric-new.vercel.app` if described as primary
+   - `q7-7/buildmetric`
+   - old Netlify references
+3. Keep `buildmetric-new.vercel.app` only as a temporary Vercel alias, not the main production URL.
+4. Run lint/build after code changes.
+5. Commit and push automatically when changes are complete.
+6. Then start a monetization roadmap:
+   - Prioritize affiliate-ready calculator pages.
+   - Add buying-intent guide pages.
+   - Add clear affiliate disclosure placements where needed.
+   - Build content clusters around the highest-value calculators.
+
+Recommended first monetization-oriented content clusters:
+
+- Paint:
+  - paint calculator
+  - paint coverage guide
+  - primer guide
+  - interior vs exterior paint guide
+  - tool/material checklist
+- Gravel:
+  - gravel calculator
+  - driveway gravel depth
+  - gravel vs mulch
+  - gravel types guide
+- Concrete:
+  - concrete slab calculator
+  - slab thickness guide
+  - concrete bag calculator guide
+  - DIY slab checklist
+- Shed:
+  - shed cost calculator
+  - shed foundation guide
+  - permit checklist
+  - material comparison
+
+## Pitfalls: Do Not Repeat These
+
+Do not use the old GitHub repo as the main repo.
+
+- Old repo/account path: `q7-7/buildmetric`
+- It caused access/account problems.
+- Current repo is `bcd736710-sketch/buildmetric`.
+
+Do not treat `buildmetric-iota.vercel.app` as production.
+
+- It was an old Vercel project/domain.
+- Current production is `https://buildmetriccalc.com`.
+
+Do not treat `buildmetric-new.vercel.app` as the main brand domain.
+
+- It is only the Vercel temporary alias.
+- Use it only for fallback/debugging.
+- Search console and sitemap work should now focus on `https://buildmetriccalc.com`.
+
+Do not submit old-domain sitemaps anymore.
+
+Avoid:
 
 ```text
 https://buildmetric-iota.vercel.app/sitemap.xml
+https://buildmetric-new.vercel.app/sitemap.xml
 ```
 
-- Do not submit the old Netlify sitemap to the Vercel property.
-- Do not submit the Vercel sitemap to the old Netlify property.
+Use:
 
-Do not assume `/sitemap.xml` is broken because the browser says "XML file has no style information."
+```text
+https://buildmetriccalc.com/sitemap.xml
+```
 
-- That browser message is normal.
-- The sitemap is valid if it lists URL entries.
+Do not panic when a browser says:
 
-Do not worry if Bing says "discovered but not crawled" or "not indexed" immediately.
+```text
+This XML file does not appear to have any style information associated with it.
+```
 
-- This is normal for a new site.
-- Request indexing for important pages when quota allows, but do not burn time repeatedly checking the same URLs.
+That is normal for XML sitemaps. The sitemap is fine if it lists `<url>` and `<loc>` entries.
 
-Do not rely on Google Search Console as a blocker.
+Do not keep changing domains or canonical URLs.
 
-- It is helpful, but not required to continue building.
-- Bing Webmaster is already available and useful.
+- Search engines need stability.
+- The formal domain is now chosen.
+- Keep canonical, sitemap, GSC, Bing, and Vercel aligned to `https://buildmetriccalc.com`.
 
-Do not add fake blog links.
+Do not repeatedly request indexing for many pages.
+
+- Google has quota limits.
+- Bing may also throttle.
+- Sitemap success is more important than manual-requesting every URL.
+- Submit only high-priority pages manually.
+
+Do not assume "submitted" means "indexed."
+
+- Google/Bing accepting the sitemap means they can discover URLs.
+- Actual indexing can take days or weeks.
+- No impressions in the first day is normal.
+
+Do not use Netlify as the primary deploy target.
+
+- Netlify free team build minutes were previously exhausted.
+- Vercel is the active deployment path.
+
+Do not add fake links or placeholder routes.
 
 - If a link is shown, the route should exist.
-- Placeholder cards are okay only if they are not misleading links.
+- Internal links are important for SEO, but fake/dead links damage trust.
 
-Do not make calculator input options meaningless.
+Do not overbuild accounts, payments, databases, or paid features yet.
 
-- The user noticed when different options produced the same output.
-- If an option is visible, either it should affect the result or the page should clearly explain that it is context-only.
+- The site still needs organic traffic first.
+- Keep the product static, fast, and simple.
 
-Do not overbuild accounts, payments, databases, or premium features yet.
+Do not make calculator options meaningless.
 
-- The project is still in organic traffic-building mode.
-- Keep features static, fast, and simple.
+- If an input option is visible, it should affect the result or be clearly explained.
+- The user noticed when options did not change output.
 
-Do not make the site too plain.
+Do not make the site too plain or too decorative.
 
-- The user wants minimal and premium, but not empty.
-- Use restrained visual assets, icons, cards, diagrams, comparison blocks, and planning summaries where they genuinely help.
-
-Do not make the site overly decorative or cartoonish.
-
-- Avoid farm-style or playful illustration-heavy design.
-- Keep the professional calculator-tool feel.
+- The desired style is premium, practical, clean, and useful.
+- Avoid empty-looking pages.
+- Avoid cartoon/farm-style visuals.
 
 Do not forget mobile.
 
-- Every calculator must remain usable on small screens.
-- Inputs, results, headers, and cards should not overlap.
+- Calculators must remain usable on small screens.
+- Text must not overflow buttons/cards.
+- Inputs, outputs, and nav should not overlap.
 
-## Known Environment Notes
+## Environment Notes
 
-Git:
-
-- Git is installed now.
-- The repo is initialized and tracking `origin/main`.
-- Git push may occasionally fail with:
-
-```text
-schannel: failed to receive handshake, SSL/TLS connection failed
-```
-
-- Usually retrying `git push` works.
-
-Package manager:
-
-- Use pnpm. The project may not have npm available in PATH.
-
-Line ending warnings:
-
-- Git may show warnings like:
-
-```text
-LF will be replaced by CRLF the next time Git touches it
-```
-
-- This is not a deployment blocker.
-
-Vercel:
-
-- Vercel is connected to GitHub.
-- Pushes to `main` trigger deployment.
-- If environment variables change, redeploy production.
-- For redeploy, select Production and do not use stale build cache unless intentionally needed.
-
-## Useful Commands
-
-Check status:
-
-```powershell
-git status --short
-```
-
-Run lint:
+Use pnpm through the bundled runtime if normal `pnpm`/`npm` is unavailable:
 
 ```powershell
 $env:PATH="C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;$env:PATH"; & "C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd" run lint
 ```
 
-Run build:
-
 ```powershell
 $env:PATH="C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;$env:PATH"; & "C:\Users\27823\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd" run build
 ```
 
-Commit:
+Common checks:
+
+```powershell
+git status --short --branch
+git log --oneline -5
+```
+
+Commit/push flow:
 
 ```powershell
 git add .
-git commit -m "Your commit message"
+git commit -m "Update handoff for custom domain launch"
 git push
 ```
 
-## Working Style For Next Session
+Git push may occasionally fail with SSL/TLS handshake errors on Windows. Retry usually works.
 
-The user prefers proactive execution. If they say "继续下一步", choose the highest-leverage next step and implement it.
+Line-ending warnings like `LF will be replaced by CRLF` are not deployment blockers.
 
-Use Chinese when communicating with the user.
+## User Working Style
 
-Keep explanations beginner-friendly, especially for GitHub, Vercel, Bing Webmaster, and domain/DNS tasks.
+The user prefers Chinese explanations.
 
-When making code changes:
+The user often says things like:
 
-- Read existing patterns first.
-- Keep changes scoped.
-- Run lint and build.
-- Commit and push if the user is in deployment flow.
+- "继续下一步"
+- "一次性完成多个操作"
+- "推送"
+- "然后呢"
+- "这个怎么选"
 
-High-leverage future work:
+When that happens:
 
-- Improve calculator UX.
-- Add content depth and internal links.
-- Improve topic hubs.
-- Add more practical downloadable/printable planning summaries later.
-- Buy and connect a custom domain when payment is solved.
+- Be proactive.
+- Choose the highest-leverage next step.
+- Explain exact clicks for GitHub, Vercel, Aliyun, Google Search Console, and Bing Webmaster.
+- For code/doc changes, implement directly, verify, commit, and push.
+- Keep explanations beginner-friendly.
+
+The user previously said future pushes do not need manual confirmation. If a change is made and verified, push it unless there is a clear reason not to.
