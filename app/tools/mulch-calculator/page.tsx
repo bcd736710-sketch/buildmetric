@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { MaterialChecklist } from "@/components/material-checklist";
 import { MulchCalculator } from "@/components/mulch-calculator";
 import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
@@ -33,6 +34,7 @@ export default function MulchCalculatorPage() {
       <ToolHero calculatorName={calculator.name} description={calculator.description} />
       <ToolSection calculator={<MulchCalculator />} guideTitle="A quick mulch estimate starts with depth." guideBody="Most landscape beds use a simple volume formula. Measure the bed area, choose a practical depth, then compare cubic yards with bag counts before buying." />
       <Explanation title="How mulch quantity is calculated" body="The calculator multiplies length by width by mulch depth. Depth is converted from inches to feet before calculating cubic feet. Cubic yards are calculated by dividing cubic feet by 27, and bag count rounds up." example="For a 12 by 8 foot bed at 3 inches deep, the estimate is 24 cubic feet, or 0.89 cubic yards. With 2 cubic foot bags, plan for 12 bags." />
+      <MaterialChecklist toolSlug={calculator.slug} />
       <FaqSection title="Mulch calculator questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
       <RelatedGuides toolSlug={calculator.slug} />

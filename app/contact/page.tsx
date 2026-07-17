@@ -116,6 +116,15 @@ export default function ContactPage() {
               Please include the page URL and a short description when your
               message is about a specific calculator or guide.
             </p>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              Backup email:{" "}
+              <a
+                href={`mailto:${siteConfig.backupContactEmail}`}
+                className="font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+              >
+                {siteConfig.backupContactEmail}
+              </a>
+            </p>
             <div className="mt-6 grid gap-3">
               {emailActions.map((action) => (
                 <a

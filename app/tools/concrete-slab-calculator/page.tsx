@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ConcreteSlabCalculator } from "@/components/concrete-slab-calculator";
 import { Container } from "@/components/container";
+import { MaterialChecklist } from "@/components/material-checklist";
 import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { ToolNextSteps } from "@/components/tool-next-steps";
@@ -29,6 +30,7 @@ export default function ConcreteSlabCalculatorPage() {
       <ToolSection calculator={<ConcreteSlabCalculator />} guideTitle="Estimate concrete before you pour." guideBody="Concrete projects need enough material on hand. Calculate cubic yards first, then add a small waste allowance for uneven base, forms, and ordering margin." />
       <Explanation title="How concrete slab volume is calculated" body="The calculator multiplies length by width by slab thickness. Thickness is converted from inches to feet, cubic feet are divided by 27 for cubic yards, and a waste percentage can be added." example="For a 10 by 12 foot slab at 4 inches thick, the estimate is 1.48 cubic yards. With 10% waste, plan about 1.63 cubic yards." />
       <ConcretePlanningGuide />
+      <MaterialChecklist toolSlug={calculator.slug} />
       <FaqSection title="Concrete slab calculator questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
       <RelatedGuides toolSlug={calculator.slug} />

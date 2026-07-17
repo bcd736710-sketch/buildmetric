@@ -65,3 +65,10 @@ BuildMetric helps homeowners plan backyard DIY projects with simple calculators 
 - Check Google Search Console for impressions and indexed pages.
 - Improve pages that receive impressions but low clicks.
 - Add new content only around calculators that show early traction.
+
+## Affiliate Readiness
+
+- Paint, gravel, concrete slab, shed cost, and mulch calculator pages now include neutral materials checklist sections.
+- These sections are ready for future affiliate links, but currently do not recommend specific retailers or products.
+- Add real affiliate links only after joining a program and confirming the disclosure language is still accurate.
+- Keep recommendations tied to project needs, not generic product stuffing.

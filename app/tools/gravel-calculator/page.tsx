@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { GravelCalculator } from "@/components/gravel-calculator";
+import { MaterialChecklist } from "@/components/material-checklist";
 import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { ToolNextSteps } from "@/components/tool-next-steps";
@@ -34,6 +35,7 @@ export default function GravelCalculatorPage() {
       <ToolSection calculator={<GravelCalculator />} guideTitle="Plan volume before ordering stone." guideBody="Gravel projects are easier when you estimate both cubic yards and tons. Depth, compaction, and gravel type can all change the final order." />
       <Explanation title="How gravel quantity is calculated" body="The calculator multiplies length by width by gravel depth. Depth is converted from inches to feet. Cubic yards are cubic feet divided by 27, then tons are estimated from the selected gravel density." example="For a 12 by 8 foot area at 4 inches deep, the estimate is 32 cubic feet, or 1.19 cubic yards. Standard gravel is about 1.66 tons." />
       <GravelPlanningGuide />
+      <MaterialChecklist toolSlug={calculator.slug} />
       <FaqSection title="Gravel calculator questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
       <RelatedGuides toolSlug={calculator.slug} />

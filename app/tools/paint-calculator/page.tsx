@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { MaterialChecklist } from "@/components/material-checklist";
 import { PaintCalculator } from "@/components/paint-calculator";
 import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
@@ -29,6 +30,7 @@ export default function PaintCalculatorPage() {
       <ToolSection calculator={<PaintCalculator />} guideTitle="Estimate gallons before you shop." guideBody="Paint needs depend on wall area, coverage, coats, surface texture, and color change. Use this as a practical first estimate before checking product labels." />
       <Explanation title="How paint quantity is calculated" body="The calculator multiplies paintable wall area by the number of coats, then divides by the selected coverage per gallon. Gallons to buy are rounded up." example="For 400 square feet of wall area with two coats at 350 square feet per gallon, the estimate is 2.29 gallons, so plan to buy 3 gallons." />
       <PaintBuyingGuide />
+      <MaterialChecklist toolSlug={calculator.slug} />
       <FaqSection title="Paint calculator questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
       <RelatedGuides toolSlug={calculator.slug} />

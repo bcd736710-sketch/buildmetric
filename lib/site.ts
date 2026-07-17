@@ -7,7 +7,8 @@ function normalizeSiteUrl(url: string) {
 export const siteConfig = {
   name: "BuildMetric",
   url: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? fallbackSiteUrl),
-  contactEmail: "qg231024@outlook.com",
+  contactEmail: "bcd736710@gmail.com",
+  backupContactEmail: "qg231024@outlook.com",
   description:
     "BuildMetric helps homeowners plan backyard DIY projects with simple calculators, material estimates, and practical planning guides.",
   tagline: "Smart DIY calculators and material checklists for backyard projects.",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ShedCostCalculator } from "@/components/shed-cost-calculator";
 import { Container } from "@/components/container";
+import { MaterialChecklist } from "@/components/material-checklist";
 import { RelatedGuides } from "@/components/related-guides";
 import { RelatedTools } from "@/components/related-tools";
 import { ToolNextSteps } from "@/components/tool-next-steps";
@@ -219,6 +220,8 @@ export default function ShedCostCalculatorPage() {
           </div>
         </Container>
       </section>
+
+      <MaterialChecklist toolSlug={calculator.slug} />
 
       <section className="border-t border-line bg-surface py-12 sm:py-16">
         <Container>
