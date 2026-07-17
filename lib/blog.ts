@@ -519,6 +519,36 @@ export const blogPosts: BlogPost[] = [
     relatedTools: ["paint-calculator"],
   },
   {
+    slug: "paint-primer-guide",
+    title: "Paint Primer Guide",
+    description:
+      "Decide when primer is worth using and how to estimate primer separately from finish paint.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
+    slug: "interior-vs-exterior-paint-guide",
+    title: "Interior vs Exterior Paint Guide",
+    description:
+      "Compare interior and exterior paint by durability, cleanup, surface needs, sheen, and project fit before you buy.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
+    slug: "paint-tools-and-materials-checklist",
+    title: "Paint Tools and Materials Checklist",
+    description:
+      "Plan the paint, primer, rollers, brushes, tape, drop cloths, trays, patching supplies, and cleanup items for a room project.",
+    category: "Home Improvement",
+    publishedAt: "2026-07-18",
+    readingTime: "6 min read",
+    relatedTools: ["paint-calculator"],
+  },
+  {
     slug: "how-much-gravel-for-a-patio-base",
     title: "How Much Gravel for a Patio Base?",
     description:

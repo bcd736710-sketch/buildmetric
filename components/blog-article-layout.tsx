@@ -24,6 +24,12 @@ const planningChecklists: Record<string, string[]> = {
     "Check foundation, drainage, durability, and maintenance needs before choosing a final plan.",
     "Use calculator results as a starting budget, then compare with local material prices.",
   ],
+  "Home Improvement": [
+    "Measure the real surfaces you plan to paint, including walls, trim, doors, and repaired areas separately.",
+    "Check product coverage, dry time, sheen, primer needs, and surface preparation before buying.",
+    "Plan supplies such as tape, rollers, brushes, trays, drop cloths, sanding blocks, and cleanup materials.",
+    "Use calculator results as a planning baseline, then compare with the label on the exact paint you choose.",
+  ],
 };
 
 type BlogArticleLayoutProps = {

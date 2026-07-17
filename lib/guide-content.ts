@@ -695,6 +695,96 @@ export const guideContentBySlug: Record<string, GuideContent> = {
       },
     ],
   },
+  "paint-primer-guide": {
+    quickAnswer:
+      "Primer is useful for bare drywall, patched areas, stains, porous surfaces, and strong color changes. Estimate primer separately because coverage and coat count may differ from finish paint.",
+    primaryTool: {
+      href: "/tools/paint-calculator",
+      label: "Estimate paint gallons",
+    },
+    secondaryTool: {
+      href: "/blog/how-much-paint-do-i-need",
+      label: "Read paint estimate guide",
+    },
+    sections: [
+      {
+        heading: "When primer is worth using",
+        body: "Primer is most useful when the surface is new, repaired, stained, glossy, uneven, or changing from a very dark color to a lighter one. It helps create a more even base so the finish paint can cover more predictably.",
+      },
+      {
+        heading: "Estimate primer separately",
+        body: "Primer is not always a one-for-one match with paint. A room might need one coat of primer and two coats of finish paint, or primer only on patched areas. Use the same wall area as a starting point, then adjust for the surfaces that truly need primer.",
+      },
+      {
+        heading: "Check primer coverage on the label",
+        body: "Primer coverage can vary by product and surface. Bare drywall, raw wood, masonry, and repaired patches may absorb more material than previously painted walls, so the label range matters more than a generic average.",
+      },
+      {
+        heading: "Do not use primer as a shortcut for prep",
+        body: "Primer helps with adhesion and coverage, but it does not replace cleaning, sanding glossy spots, filling holes, removing loose paint, or letting repairs dry. Better prep usually makes both primer and paint perform better.",
+      },
+    ],
+  },
+  "interior-vs-exterior-paint-guide": {
+    quickAnswer:
+      "Interior paint is made for indoor walls, cleanup, appearance, and lower odor. Exterior paint is made for weather, sunlight, expansion, moisture, and tougher outdoor exposure.",
+    primaryTool: {
+      href: "/tools/paint-calculator",
+      label: "Calculate paint needs",
+    },
+    secondaryTool: {
+      href: "/blog/paint-coverage-guide",
+      label: "Read coverage guide",
+    },
+    sections: [
+      {
+        heading: "Use paint made for the surface",
+        body: "Interior and exterior paints are designed for different conditions. Interior paint focuses on indoor appearance, washability, and application. Exterior paint is built to handle weather, sun, temperature swings, and moisture.",
+      },
+      {
+        heading: "Coverage still depends on prep",
+        body: "Both paint types list coverage per gallon, but rough siding, porous trim, patched drywall, and major color changes can reduce real coverage. Measure the project area first, then compare the estimate with the exact product label.",
+      },
+      {
+        heading: "Sheen changes the final result",
+        body: "Flat, eggshell, satin, semi-gloss, and gloss finishes handle light, cleaning, and imperfections differently. Kitchens, baths, trim, doors, and exterior details often need a tougher finish than low-traffic walls.",
+      },
+      {
+        heading: "Buy for the project conditions",
+        body: "Before choosing paint, think about moisture, sunlight, traffic, cleaning, surface material, temperature, and whether primer is needed. The cheapest gallon is not always the lowest-cost project if it needs more coats.",
+      },
+    ],
+  },
+  "paint-tools-and-materials-checklist": {
+    quickAnswer:
+      "A basic room painting project usually needs paint, possible primer, rollers, brushes, trays, tape, drop cloths, patching supplies, sanding tools, a ladder, and cleanup materials.",
+    primaryTool: {
+      href: "/tools/paint-calculator",
+      label: "Estimate paint first",
+    },
+    secondaryTool: {
+      href: "/blog/paint-primer-guide",
+      label: "Check primer needs",
+    },
+    sections: [
+      {
+        heading: "Start with paint and primer",
+        body: "Estimate wall paint first, then decide whether primer is needed for the whole room or only for patched and stained areas. Trim, doors, ceilings, and accent walls may need separate paint types or sheens.",
+      },
+      {
+        heading: "Plan application tools",
+        body: "Most rooms need roller covers, a roller frame, an extension pole, angled brushes, trays or liners, and possibly a small detail brush. Match roller nap to the wall texture so coverage and finish look consistent.",
+      },
+      {
+        heading: "Do not forget prep supplies",
+        body: "A clean paint job often depends on supplies that are easy to overlook: painter tape, drop cloths, spackle, putty knife, sanding block, caulk, rags, buckets, mild cleaner, and a sturdy ladder.",
+      },
+      {
+        heading: "Budget for cleanup and touch-ups",
+        body: "Keep labels, color names, sheen, room names, and leftover paint organized for future touch-ups. If using disposable liners or covers, include them in the shopping list before the first trip.",
+      },
+    ],
+  },
   "how-much-gravel-for-a-patio-base": {
     quickAnswer:
       "A patio gravel base is estimated from patio length, width, and base depth. Compaction, soil, drainage, and edging can change the final amount.",

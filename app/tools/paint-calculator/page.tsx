@@ -28,6 +28,7 @@ export default function PaintCalculatorPage() {
       <ToolHero calculatorName={calculator.name} description={calculator.description} />
       <ToolSection calculator={<PaintCalculator />} guideTitle="Estimate gallons before you shop." guideBody="Paint needs depend on wall area, coverage, coats, surface texture, and color change. Use this as a practical first estimate before checking product labels." />
       <Explanation title="How paint quantity is calculated" body="The calculator multiplies paintable wall area by the number of coats, then divides by the selected coverage per gallon. Gallons to buy are rounded up." example="For 400 square feet of wall area with two coats at 350 square feet per gallon, the estimate is 2.29 gallons, so plan to buy 3 gallons." />
+      <PaintBuyingGuide />
       <FaqSection title="Paint calculator questions" />
       <ToolNextSteps toolSlug={calculator.slug} />
       <RelatedGuides toolSlug={calculator.slug} />
@@ -46,6 +47,66 @@ function ToolSection({ calculator, guideTitle, guideBody }: { calculator: ReactN
 
 function Explanation({ title, body, example }: { title: string; body: string; example: string }) {
   return <section className="border-t border-line py-12 sm:py-16"><Container className="grid gap-12 lg:grid-cols-[0.75fr_1fr]"><div><p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">Explanation</p><h2 className="mt-3 text-3xl font-semibold text-ink">{title}</h2></div><div className="space-y-8 text-muted"><div><h3 className="text-xl font-semibold text-ink">How the calculation works</h3><p className="mt-3 leading-8">{body}</p></div><div><h3 className="text-xl font-semibold text-ink">Example calculation</h3><p className="mt-3 leading-8">{example}</p></div></div></Container></section>;
+}
+
+function PaintBuyingGuide() {
+  const guides = [
+    {
+      href: "/blog/paint-primer-guide",
+      title: "Check whether primer belongs in the estimate",
+      body: "Primer can change both the shopping list and the final finish, especially on patches, stains, bare drywall, or strong color changes.",
+    },
+    {
+      href: "/blog/interior-vs-exterior-paint-guide",
+      title: "Choose the right paint type before comparing gallons",
+      body: "Interior and exterior paint are built for different conditions, so match the product to the surface before relying on coverage numbers.",
+    },
+    {
+      href: "/blog/paint-tools-and-materials-checklist",
+      title: "Build the full materials list",
+      body: "Rollers, brushes, tape, trays, drop cloths, patching supplies, and cleanup items often matter as much as the paint itself.",
+    },
+    {
+      href: "/blog/paint-coverage-guide",
+      title: "Use product coverage carefully",
+      body: "Coverage per gallon changes with texture, sheen, color change, primer, and wall condition.",
+    },
+  ];
+
+  return (
+    <section className="border-t border-line py-12 sm:py-16">
+      <Container>
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+            Before you buy
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold text-ink">
+            Turn gallons into a practical paint shopping plan.
+          </h2>
+          <p className="mt-4 leading-8 text-muted">
+            A gallon estimate is the starting point. Primer, paint type, surface
+            condition, tools, and room details can all change what belongs in
+            the cart.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {guides.map((guide) => (
+            <Link
+              key={guide.href}
+              href={guide.href}
+              className="rounded-3xl border border-line bg-surface p-6 transition hover:border-ink hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+            >
+              <h3 className="text-xl font-semibold text-ink">{guide.title}</h3>
+              <p className="mt-3 leading-7 text-muted">{guide.body}</p>
+              <span className="mt-5 inline-flex text-sm font-semibold text-ink">
+                Read guide
+              </span>
+            </Link>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
 }
 
 function FaqSection({ title }: { title: string }) {

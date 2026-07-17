@@ -5,13 +5,37 @@ BuildMetric is currently focused on SEO-driven DIY calculators and supporting gu
 ## Current Site Inventory
 
 - Tools: 10
-- Articles: 25
+- Articles: 28
 - Primary categories: Backyard Chickens, Garden DIY, Backyard DIY, Shed Planning, Home Improvement
 - Production domain: https://buildmetriccalc.com
 - Deployment: Vercel via GitHub
 - Search setup: Google Search Console and Bing Webmaster Tools verified; sitemap submitted and accepted
 
 ## Content Clusters
+
+### Paint
+
+Primary tool:
+
+- Paint Calculator
+
+Published guides:
+
+- How Much Paint Do I Need?
+- Paint Coverage Guide
+- Paint Coverage by Room
+- Paint Calculator for Bedrooms
+- Paint Calculator for Living Rooms
+- Paint Calculator for Kitchens
+- Paint Primer Guide
+- Interior vs Exterior Paint Guide
+- Paint Tools and Materials Checklist
+
+Next ideas:
+
+- How Many Coats of Paint?
+- Paint Sheen Guide
+- Ceiling Paint Calculator Guide
 
 ### Backyard Chickens
 
