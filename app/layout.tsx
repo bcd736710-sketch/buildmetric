@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "@/components/footer";
 import { GoogleAnalytics } from "@/components/google-analytics";
+import { GoogleAnalyticsPageView } from "@/components/google-analytics-page-view";
 import { Header } from "@/components/header";
 import { siteConfig } from "@/lib/site";
 
@@ -138,6 +139,7 @@ export default function RootLayout({
         <GoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
       </head>
       <body className="min-h-screen bg-white text-ink antialiased">
+        <GoogleAnalyticsPageView measurementId={siteConfig.googleAnalyticsId} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}

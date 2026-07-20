@@ -18,9 +18,13 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
         dangerouslySetInnerHTML={{
           __html: `
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${measurementId}');
+          window.gtag = function gtag(){window.dataLayer.push(arguments);}
+          window.gtag('js', new Date());
+          window.gtag('config', '${measurementId}', {
+            page_path: window.location.pathname,
+            page_location: window.location.href,
+            page_title: document.title
+          });
         `,
         }}
       />
