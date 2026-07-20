@@ -11,6 +11,7 @@ import {
   type CoopStyle,
 } from "@/lib/chicken-coop";
 import { getNumberParam, getStringParam } from "@/lib/calculator-url";
+import { selectNumberOnFocus } from "@/lib/input-behavior";
 import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ChickenCoopCalculator() {
@@ -68,6 +69,7 @@ export function ChickenCoopCalculator() {
             max={500}
             type="number"
             value={chickens}
+            onFocus={selectNumberOnFocus}
             onChange={(event) =>
               setChickens(Math.max(1, Number(event.target.value) || 1))
             }

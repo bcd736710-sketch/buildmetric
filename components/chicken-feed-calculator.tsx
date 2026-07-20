@@ -11,6 +11,7 @@ import {
   type FeedWasteLevel,
 } from "@/lib/chicken-feed";
 import { getNumberParam, getStringParam } from "@/lib/calculator-url";
+import { selectNumberOnFocus } from "@/lib/input-behavior";
 import { poundsToKilograms } from "@/lib/units";
 
 export function ChickenFeedCalculator() {
@@ -66,6 +67,7 @@ export function ChickenFeedCalculator() {
             max={500}
             type="number"
             value={chickens}
+            onFocus={selectNumberOnFocus}
             onChange={(event) =>
               setChickens(Math.max(1, Number(event.target.value) || 1))
             }

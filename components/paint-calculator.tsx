@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { CalculatorActions } from "@/components/calculator-actions";
 import { CalculatorAssumptions } from "@/components/calculator-assumptions";
 import { getNumberParam, getStringParam } from "@/lib/calculator-url";
+import { selectNumberOnFocus } from "@/lib/input-behavior";
 import { calculatePaint, paintCoatOptions, type PaintCoats } from "@/lib/paint";
 
 export function PaintCalculator() {
@@ -87,7 +88,7 @@ function NumberInput({ label, value, onChange }: { label: string; value: number;
   return (
     <label className="grid gap-2">
       <span className="text-sm font-semibold text-ink">{label}</span>
-      <input min={0} type="number" value={value} onChange={(event) => onChange(Math.max(0, Number(event.target.value) || 0))} className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10" />
+      <input min={0} type="number" value={value} onFocus={selectNumberOnFocus} onChange={(event) => onChange(Math.max(0, Number(event.target.value) || 0))} className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10" />
     </label>
   );
 }

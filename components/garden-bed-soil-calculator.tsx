@@ -9,6 +9,7 @@ import {
   type SoilBagSize,
 } from "@/lib/garden-bed-soil";
 import { getNumberParam, getStringParam } from "@/lib/calculator-url";
+import { selectNumberOnFocus } from "@/lib/input-behavior";
 import { cubicFeetToLiters } from "@/lib/units";
 
 export function GardenBedSoilCalculator() {
@@ -138,6 +139,7 @@ function NumberInput({
         min={0}
         type="number"
         value={value}
+        onFocus={selectNumberOnFocus}
         onChange={(event) => onChange(Math.max(0, Number(event.target.value) || 0))}
         className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
       />

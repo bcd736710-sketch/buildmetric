@@ -9,6 +9,7 @@ import {
   mulchBagSizeOptions,
   type MulchBagSize,
 } from "@/lib/mulch";
+import { selectNumberOnFocus } from "@/lib/input-behavior";
 
 export function MulchCalculator() {
   const [lengthFeet, setLengthFeet] = useState(() =>
@@ -106,6 +107,7 @@ function NumberInput({ label, value, onChange }: { label: string; value: number;
         min={0}
         type="number"
         value={value}
+        onFocus={selectNumberOnFocus}
         onChange={(event) => onChange(Math.max(0, Number(event.target.value) || 0))}
         className="h-12 rounded-2xl border border-line bg-white px-4 text-base text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
       />

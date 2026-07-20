@@ -8,8 +8,13 @@ import { calculators } from "@/lib/calculators";
 import { projectPaths } from "@/lib/project-paths";
 
 export default function HomePage() {
-  const featuredCalculators = calculators.slice(-6).reverse();
   const featuredGuides = blogPosts.slice(-4).reverse();
+  const featuredCalculators = calculators.slice(-6).reverse();
+  const starterProjects = [
+    ["Fence", "/tools/fence-cost-calculator"],
+    ["Garden Bed", "/tools/raised-garden-bed-soil-calculator"],
+    ["Chicken Coop", "/tools/chicken-coop-size-calculator"],
+  ];
   const toolCategories = [
     {
       label: "Garden DIY",
@@ -42,46 +47,43 @@ export default function HomePage() {
               BuildMetric DIY planning tools
             </p>
             <h1 className="max-w-4xl text-5xl font-semibold leading-tight tracking-normal text-ink sm:text-6xl lg:text-7xl">
-              Backyard DIY calculators and material checklists.
+              Plan your DIY projects without guessing materials or costs.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-              Estimate gravel, concrete, mulch, paint, fence, shed, garden, and
-              chicken coop materials before you buy. Built for homeowners who
-              want clear numbers, practical guides, and no sign-up wall.
+              Calculate how much material you need before you start building.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/start-here"
                 className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                Start here
+                Calculate my project
               </Link>
               <Link
-                href="/tools/paint-calculator"
+                href="/start-here"
                 className="inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                Try a calculator
+                Start planning
               </Link>
               <Link
-                href="/backyard-diy"
+                href="/tools"
                 className="inline-flex items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-brand transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
               >
-                View planning hub
+                Estimate materials
               </Link>
             </div>
-            <div className="mt-10 grid max-w-2xl grid-cols-3 gap-3">
-              {[
-                [String(calculators.length), "calculators"],
-                [String(blogPosts.length), "guides"],
-                ["Free", "no account"],
-              ].map(([value, label]) => (
-                <div
-                  key={label}
-                  className="rounded-3xl border border-white/70 bg-white/70 p-4 shadow-sm backdrop-blur"
+            <div className="mt-10 grid max-w-2xl gap-3 sm:grid-cols-3">
+              {starterProjects.map(([label, href]) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="rounded-3xl border border-white/70 bg-white/70 p-4 text-sm font-semibold text-ink shadow-sm backdrop-blur transition hover:border-ink hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
                 >
-                  <p className="text-3xl font-semibold text-ink">{value}</p>
-                  <p className="mt-1 text-sm font-medium text-muted">{label}</p>
-                </div>
+                  {label}
+                  <span className="mt-2 block text-sm font-medium text-muted">
+                    Start with this project
+                  </span>
+                </Link>
               ))}
             </div>
           </div>

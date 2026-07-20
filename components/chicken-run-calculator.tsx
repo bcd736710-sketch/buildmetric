@@ -9,6 +9,7 @@ import {
   type RunSurface,
 } from "@/lib/chicken-run";
 import { getNumberParam, getStringParam } from "@/lib/calculator-url";
+import { selectNumberOnFocus } from "@/lib/input-behavior";
 import { squareFeetToSquareMeters } from "@/lib/units";
 
 export function ChickenRunCalculator() {
@@ -59,6 +60,7 @@ export function ChickenRunCalculator() {
             max={500}
             type="number"
             value={chickens}
+            onFocus={selectNumberOnFocus}
             onChange={(event) =>
               setChickens(Math.max(1, Number(event.target.value) || 1))
             }
