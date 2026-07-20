@@ -10,6 +10,7 @@ type CheckState = {
   pageViewQueued: boolean;
   analyticsCheckQueued: boolean;
   collectRequestSent: boolean;
+  googleRequests: string[];
 };
 
 const initialState: CheckState = {
@@ -20,6 +21,7 @@ const initialState: CheckState = {
   pageViewQueued: false,
   analyticsCheckQueued: false,
   collectRequestSent: false,
+  googleRequests: [],
 };
 
 function getGtagCommand(entry: unknown) {
@@ -62,8 +64,23 @@ export function AnalyticsChecker() {
       const hasDataLayer = Array.isArray(window.dataLayer);
       const dataLayerEntries: unknown[] = hasDataLayer ? window.dataLayer! : [];
       const performanceEntries = performance.getEntriesByType("resource");
-      const collectRequestSent = performanceEntries.some((entry) =>
-        entry.name.includes("google-analytics.com/g/collect"),
+      const googleRequests = performanceEntries
+        .map((entry) => entry.name)
+        .filter((name) => name.includes("google"))
+        .map((name) => {
+          try {
+            const url = new URL(name);
+
+            return `${url.hostname}${url.pathname}`;
+          } catch {
+            return name;
+          }
+        });
+      const collectRequestSent = googleRequests.some(
+        (name) =>
+          name.includes("/g/collect") ||
+          name.includes("/j/collect") ||
+          name.includes("/collect"),
       );
 
       setState({
@@ -87,6 +104,7 @@ export function AnalyticsChecker() {
           );
         }),
         collectRequestSent,
+        googleRequests: Array.from(new Set(googleRequests)).slice(0, 8),
       });
     };
 
@@ -162,6 +180,22 @@ export function AnalyticsChecker() {
       <p className="mt-6 text-sm text-stone">
         Measurement ID: G-47C9NCOM3K
       </p>
+      <div className="mt-8 rounded-lg border border-line bg-white p-5">
+        <h2 className="text-lg font-black text-ink">Detected Google requests</h2>
+        {state.googleRequests.length > 0 ? (
+          <ul className="mt-3 space-y-2 text-sm text-stone">
+            {state.googleRequests.map((request) => (
+              <li className="break-all font-mono" key={request}>
+                {request}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm text-red-700">
+            No Google network requests were visible to this browser page.
+          </p>
+        )}
+      </div>
     </div>
   );
 }
