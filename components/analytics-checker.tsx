@@ -18,6 +18,23 @@ const initialState: CheckState = {
   pageViewQueued: false,
 };
 
+function getGtagCommand(entry: unknown) {
+  if (Array.isArray(entry)) {
+    return entry[0];
+  }
+
+  if (
+    entry &&
+    typeof entry === "object" &&
+    "0" in entry &&
+    typeof (entry as { 0?: unknown })[0] === "string"
+  ) {
+    return (entry as { 0: string })[0];
+  }
+
+  return null;
+}
+
 export function AnalyticsChecker() {
   const [state, setState] = useState<CheckState>(initialState);
 
@@ -36,9 +53,11 @@ export function AnalyticsChecker() {
         googleScriptTag: Boolean(googleScript),
         googleScriptLoaded: Boolean(googleScript && !googleScript.dataset.failed),
         pageViewQueued: dataLayerEntries.some(
-          (entry) =>
-            Array.isArray(entry) &&
-            (entry[0] === "event" || entry[0] === "config"),
+          (entry) => {
+            const command = getGtagCommand(entry);
+
+            return command === "event" || command === "config";
+          },
         ),
       });
     };
