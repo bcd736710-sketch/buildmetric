@@ -13,6 +13,12 @@ type CheckState = {
   googleRequests: string[];
 };
 
+type ServerTestState = {
+  loading: boolean;
+  message: string;
+  ok: boolean | null;
+};
+
 const initialState: CheckState = {
   dataLayer: false,
   gtag: false,
@@ -46,6 +52,11 @@ function getGtagValue(entry: unknown, index: number) {
 
 export function AnalyticsChecker() {
   const [state, setState] = useState<CheckState>(initialState);
+  const [serverTest, setServerTest] = useState<ServerTestState>({
+    loading: false,
+    message: "Not run yet.",
+    ok: null,
+  });
 
   useEffect(() => {
     if (typeof window.gtag === "function") {
@@ -145,6 +156,36 @@ export function AnalyticsChecker() {
     ["GA collect request sent", state.collectRequestSent],
   ];
 
+  async function runServerTest() {
+    setServerTest({
+      loading: true,
+      message: "Sending server-side test event...",
+      ok: null,
+    });
+
+    try {
+      const response = await fetch("/api/analytics-test", {
+        method: "POST",
+      });
+      const result = (await response.json()) as {
+        ok?: boolean;
+        message?: string;
+      };
+
+      setServerTest({
+        loading: false,
+        message: result.message ?? "Server-side test finished.",
+        ok: Boolean(result.ok),
+      });
+    } catch {
+      setServerTest({
+        loading: false,
+        message: "Server-side test request failed in this browser.",
+        ok: false,
+      });
+    }
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <p className="text-sm font-semibold uppercase text-leaf">
@@ -195,6 +236,31 @@ export function AnalyticsChecker() {
             No Google network requests were visible to this browser page.
           </p>
         )}
+      </div>
+      <div className="mt-8 rounded-lg border border-line bg-white p-5">
+        <h2 className="text-lg font-black text-ink">Server-side GA test</h2>
+        <p className="mt-3 text-sm text-stone">
+          This bypasses the browser and asks Vercel to send a test event to GA.
+        </p>
+        <button
+          className="mt-4 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
+          disabled={serverTest.loading}
+          onClick={runServerTest}
+          type="button"
+        >
+          {serverTest.loading ? "Sending..." : "Run server-side test"}
+        </button>
+        <p
+          className={
+            serverTest.ok === null
+              ? "mt-4 text-sm text-stone"
+              : serverTest.ok
+                ? "mt-4 text-sm font-semibold text-leaf"
+                : "mt-4 text-sm font-semibold text-red-700"
+          }
+        >
+          {serverTest.message}
+        </p>
       </div>
     </div>
   );
