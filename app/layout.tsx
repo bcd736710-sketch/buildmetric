@@ -134,12 +134,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <GoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
+      </head>
       <body className="min-h-screen bg-white text-ink antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
-        <GoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
         <Header />
         <main>{children}</main>
         <Footer />
