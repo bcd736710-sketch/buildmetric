@@ -8,6 +8,8 @@ type CheckState = {
   googleScriptTag: boolean;
   googleScriptLoaded: boolean;
   pageViewQueued: boolean;
+  analyticsCheckQueued: boolean;
+  collectRequestSent: boolean;
 };
 
 const initialState: CheckState = {
@@ -16,20 +18,25 @@ const initialState: CheckState = {
   googleScriptTag: false,
   googleScriptLoaded: false,
   pageViewQueued: false,
+  analyticsCheckQueued: false,
+  collectRequestSent: false,
 };
 
 function getGtagCommand(entry: unknown) {
+  return getGtagValue(entry, 0);
+}
+
+function getGtagValue(entry: unknown, index: number) {
   if (Array.isArray(entry)) {
-    return entry[0];
+    return entry[index];
   }
 
   if (
     entry &&
     typeof entry === "object" &&
-    "0" in entry &&
-    typeof (entry as { 0?: unknown })[0] === "string"
+    String(index) in entry
   ) {
-    return (entry as { 0: string })[0];
+    return (entry as Record<string, unknown>)[String(index)];
   }
 
   return null;
@@ -39,6 +46,14 @@ export function AnalyticsChecker() {
   const [state, setState] = useState<CheckState>(initialState);
 
   useEffect(() => {
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "analytics_check", {
+        event_category: "diagnostics",
+        event_label: "analytics_check_page",
+        send_to: "G-47C9NCOM3K",
+      });
+    }
+
     const runCheck = () => {
       const scripts = Array.from(document.scripts);
       const googleScript = scripts.find((script) =>
@@ -46,6 +61,10 @@ export function AnalyticsChecker() {
       );
       const hasDataLayer = Array.isArray(window.dataLayer);
       const dataLayerEntries: unknown[] = hasDataLayer ? window.dataLayer! : [];
+      const performanceEntries = performance.getEntriesByType("resource");
+      const collectRequestSent = performanceEntries.some((entry) =>
+        entry.name.includes("google-analytics.com/g/collect"),
+      );
 
       setState({
         dataLayer: hasDataLayer,
@@ -59,6 +78,15 @@ export function AnalyticsChecker() {
             return command === "event" || command === "config";
           },
         ),
+        analyticsCheckQueued: dataLayerEntries.some((entry) => {
+          const command = getGtagCommand(entry);
+
+          return (
+            command === "event" &&
+            getGtagValue(entry, 1) === "analytics_check"
+          );
+        }),
+        collectRequestSent,
       });
     };
 
@@ -81,9 +109,11 @@ export function AnalyticsChecker() {
 
     runCheck();
     const timer = window.setTimeout(runCheck, 2500);
+    const lateTimer = window.setTimeout(runCheck, 6000);
 
     return () => {
       window.clearTimeout(timer);
+      window.clearTimeout(lateTimer);
     };
   }, []);
 
@@ -93,6 +123,8 @@ export function AnalyticsChecker() {
     ["window.dataLayer exists", state.dataLayer],
     ["window.gtag exists", state.gtag],
     ["page_view/config queued", state.pageViewQueued],
+    ["analytics_check event queued", state.analyticsCheckQueued],
+    ["GA collect request sent", state.collectRequestSent],
   ];
 
   return (
