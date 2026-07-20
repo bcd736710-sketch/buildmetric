@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "@/components/footer";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { Header } from "@/components/header";
 import { siteConfig } from "@/lib/site";
 
@@ -138,6 +139,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
+        <GoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
         <Header />
         <main>{children}</main>
         <Footer />
