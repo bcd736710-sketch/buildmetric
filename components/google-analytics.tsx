@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 type GoogleAnalyticsProps = {
   measurementId: string;
 };
@@ -9,12 +11,15 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
 
   return (
     <>
-      <script
+      <Script
+        id="google-analytics-loader"
         async
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        strategy="afterInteractive"
       />
-      <script
+      <Script
         id="google-analytics"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
           window.dataLayer = window.dataLayer || [];

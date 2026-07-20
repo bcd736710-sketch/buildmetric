@@ -136,10 +136,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <GoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
-      </head>
       <body className="min-h-screen bg-white text-ink antialiased">
+        <GoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
         <GoogleAnalyticsPageView measurementId={siteConfig.googleAnalyticsId} />
         <script
           type="application/ld+json"
