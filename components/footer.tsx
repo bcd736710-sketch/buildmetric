@@ -1,102 +1,78 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { Container } from "@/components/container";
-import { blogPosts } from "@/lib/blog";
-import { calculators } from "@/lib/calculators";
+import { PurchaseButton } from "@/components/purchase-button";
+import { chickenCoopPlan } from "@/lib/product";
 
 export function Footer() {
   return (
     <footer className="border-t border-line bg-white py-12">
-      <Container className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+      <Container className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
         <div className="max-w-md">
           <div className="flex items-center gap-3">
             <BrandMark />
             <p className="text-lg font-semibold text-ink">BuildMetric</p>
           </div>
-          <p className="mt-3 leading-7 text-muted">
-            Simple, accurate, and beautiful online tools for DIY homeowners.
+          <p className="mt-4 leading-7 text-muted">
+            A focused independent site for {chickenCoopPlan.name}.
           </p>
-          <div className="mt-6 grid gap-3 text-sm text-muted sm:grid-cols-3">
-            <div className="rounded-2xl border border-line bg-surface p-4">
-              <span className="block font-semibold text-ink">
-                {calculators.length} tools
-              </span>
-              Backyard calculators
-            </div>
-            <div className="rounded-2xl border border-line bg-surface p-4">
-              <span className="block font-semibold text-ink">
-                {blogPosts.length} guides
-              </span>
-              Planning library
-            </div>
-            <div className="rounded-2xl border border-line bg-surface p-4">
-              <span className="block font-semibold text-ink">Free</span>
-              No account needed
-            </div>
+          <div className="mt-6">
+            <PurchaseButton product={chickenCoopPlan} />
           </div>
         </div>
+
         <div className="grid gap-8 sm:grid-cols-3">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-              Explore
-            </p>
+            <p className="text-sm font-bold uppercase text-brand">Product</p>
             <div className="mt-4 grid gap-3">
               {[
-                ["Home", "/"],
-                ["Backyard DIY", "/backyard-diy"],
-                ["Tools", "/tools"],
-                ["Blog", "/blog"],
-              ].map(([label, href]) => (
-                <Link
-                  key={href}
-                  className="rounded-full text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-                  href={href}
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-              Topics
-            </p>
-            <div className="mt-4 grid gap-3">
-              {[
-                ["Backyard Chickens", "/backyard-chickens"],
-                ["Garden DIY", "/garden-diy"],
-                ["Shed Planning", "/shed-planning"],
-                ["Home Improvement", "/home-improvement"],
-              ].map(([label, href]) => (
-                <Link
-                  key={href}
-                  className="rounded-full text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-                  href={href}
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-              Site
-            </p>
-            <div className="mt-4 grid gap-3">
-              {[
-                ["About", "/about"],
+                ["The Plan", "/#the-plan"],
+                ["What's Included", "/#whats-included"],
+                ["FAQ", "/#faq"],
                 ["Contact", "/contact"],
-                ["Partnerships", "/partnerships"],
-                ["Methodology", "/methodology"],
+              ].map(([label, href]) => (
+                <Link
+                  className="text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  href={href}
+                  key={href}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm font-bold uppercase text-brand">Content</p>
+            <div className="mt-4 grid gap-3">
+              {[
+                ["Blog", "/blog"],
+                ["Backyard Chickens", "/backyard-chickens"],
                 ["Editorial Policy", "/editorial-policy"],
-                ["Affiliate Disclosure", "/affiliate-disclosure"],
+              ].map(([label, href]) => (
+                <Link
+                  className="text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  href={href}
+                  key={href}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm font-bold uppercase text-brand">Site</p>
+            <div className="mt-4 grid gap-3">
+              {[
                 ["Privacy", "/privacy-policy"],
+                ["Affiliate Disclosure", "/affiliate-disclosure"],
                 ["RSS Feed", "/feed.xml"],
               ].map(([label, href]) => (
                 <Link
-                  key={href}
-                  className="rounded-full text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
+                  className="text-sm font-medium text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
                   href={href}
+                  key={href}
                 >
                   {label}
                 </Link>

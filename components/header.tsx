@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { Container } from "@/components/container";
+import { PurchaseButton } from "@/components/purchase-button";
+import { chickenCoopPlan } from "@/lib/product";
 
 export function Header() {
   return (
@@ -16,37 +18,29 @@ export function Header() {
             BuildMetric
           </span>
         </Link>
-        <nav aria-label="Main navigation" className="flex items-center gap-3 sm:gap-5">
+        <nav aria-label="Main navigation" className="flex items-center gap-2 sm:gap-4">
           <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/backyard-diy"
+            className="hidden rounded-full px-2 py-1 text-sm font-semibold text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 sm:inline-flex"
+            href="/#the-plan"
           >
-            Backyard DIY
+            The Plan
           </Link>
           <Link
-            className="rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            href="/tools"
+            className="hidden rounded-full px-2 py-1 text-sm font-semibold text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 md:inline-flex"
+            href="/#whats-included"
           >
-            Tools
+            What&apos;s Included
           </Link>
           <Link
-            className="hidden rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 sm:inline-flex"
-            href="/blog"
+            className="hidden rounded-full px-2 py-1 text-sm font-semibold text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 sm:inline-flex"
+            href="/#faq"
           >
-            Blog
+            FAQ
           </Link>
-          <Link
-            className="hidden rounded-full px-2 py-1 text-sm font-medium text-muted transition hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 md:inline-flex"
-            href="/methodology"
-          >
-            Methodology
-          </Link>
-          <Link
-            className="hidden rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 sm:inline-flex"
-            href="/start-here"
-          >
-            Start estimating
-          </Link>
+          <PurchaseButton
+            className="min-h-10 px-4 py-2"
+            product={chickenCoopPlan}
+          />
         </nav>
       </Container>
     </header>
