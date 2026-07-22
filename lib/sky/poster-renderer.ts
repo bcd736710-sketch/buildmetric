@@ -6,6 +6,8 @@ import { skyProductConfig } from "@/lib/sky/product-config";
 import type { SkyComputation } from "@/lib/sky/astronomy";
 import { createArtworkScene } from "@/lib/sky/artwork-scene";
 import { createArtworkSvg } from "@/lib/sky/artwork-svg";
+import { createCosmicSignatureScene } from "@/lib/sky/cosmic-signature-scene";
+import { createCosmicSignatureSvg } from "@/lib/sky/cosmic-signature-svg";
 
 const { width, dpi } = skyProductConfig.output;
 
@@ -37,6 +39,10 @@ const fontFiles = [
 ];
 
 export function createPosterSvg(config: MomentConfig, sky: SkyComputation) {
+  if (config.productType === "cosmic-signature") {
+    return createCosmicSignatureSvg(createCosmicSignatureScene(config, sky));
+  }
+
   return createArtworkSvg(createArtworkScene(config, sky));
 }
 

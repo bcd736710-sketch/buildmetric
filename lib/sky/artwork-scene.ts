@@ -8,7 +8,7 @@ import type { MomentConfig, SkyPosterStyle } from "@/lib/sky/moment";
 import { posterStyles } from "@/lib/sky/moment";
 import { skyProductConfig } from "@/lib/sky/product-config";
 
-export type ArtworkType = "your-sky";
+export type ArtworkType = "your-sky" | "cosmic-signature";
 
 export type ArtworkOutputSpec = "a3-portrait-300dpi";
 
@@ -55,7 +55,7 @@ export type ArtworkBody = SkyBody & {
 };
 
 export type ArtworkScene = {
-  type: ArtworkType;
+  type: "your-sky";
   output: ArtworkOutputSpec;
   config: MomentConfig;
   skyData: SkyComputation;
@@ -69,7 +69,7 @@ export type ArtworkScene = {
   coordinateLine: string;
 };
 
-export const supportedArtworkTypes: ArtworkType[] = ["your-sky"];
+export const supportedArtworkTypes: ArtworkType[] = ["your-sky", "cosmic-signature"];
 export const supportedOutputSpecs: ArtworkOutputSpec[] = ["a3-portrait-300dpi"];
 
 const composition: ArtworkComposition = {
@@ -248,7 +248,7 @@ function moonPhaseName(degrees: number) {
 export function createArtworkScene(
   config: MomentConfig,
   skyData: SkyComputation,
-  type: ArtworkType = "your-sky",
+  type: "your-sky" = "your-sky",
   output: ArtworkOutputSpec = "a3-portrait-300dpi",
 ): ArtworkScene {
   return {

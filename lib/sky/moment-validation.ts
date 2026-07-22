@@ -93,7 +93,7 @@ export function validateRenderRequest(input: unknown): RenderRequest {
   }
 
   const moment = resolveMomentConfig({
-    productType: "your-sky",
+    productType: artworkType as MomentConfig["productType"],
     placeName: cleanText(momentInput.placeName, defaultMomentConfig.placeName, 100),
     country: cleanText(momentInput.country, defaultMomentConfig.country, 80),
     latitude,

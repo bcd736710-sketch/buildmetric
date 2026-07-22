@@ -4,6 +4,8 @@ import { useMemo, useState, useTransition } from "react";
 import { computeSky, type SkyComputation } from "@/lib/sky/astronomy";
 import { createArtworkScene } from "@/lib/sky/artwork-scene";
 import { createArtworkSvg } from "@/lib/sky/artwork-svg";
+import { createCosmicSignatureScene } from "@/lib/sky/cosmic-signature-scene";
+import { createCosmicSignatureSvg } from "@/lib/sky/cosmic-signature-svg";
 import {
   defaultMomentConfig,
   posterStyles,
@@ -146,6 +148,66 @@ function PosterPreview({ config, sky }: { config: MomentConfig; sky: SkyComputat
       role="img"
       style={{ backgroundImage: `url("${previewUrl}")` }}
     />
+  );
+}
+
+function CosmicSignaturePreview({
+  config,
+  sky,
+}: {
+  config: MomentConfig;
+  sky: SkyComputation;
+}) {
+  const previewUrl = useMemo(() => {
+    const signatureConfig = resolveMomentConfig({
+      ...config,
+      productType: "cosmic-signature",
+      title: "YOUR COSMIC SIGNATURE",
+      message: "Built from your exact date, time, and location.",
+    });
+    return svgDataUrl(
+      createCosmicSignatureSvg(createCosmicSignatureScene(signatureConfig, sky)),
+    );
+  }, [config, sky]);
+
+  return (
+    <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-brand/24 bg-white/[0.045] p-4">
+      <div
+        aria-label="Your Cosmic Signature preview"
+        className="mx-auto aspect-[3508/4961] w-full max-w-[19rem] rounded-[1.1rem] border border-white/10 bg-cover bg-center shadow-soft"
+        role="img"
+        style={{ backgroundImage: `url("${previewUrl}")` }}
+      />
+      <div className="mt-5">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand">
+          We found something that belongs to this moment.
+        </p>
+        <h3 className="mt-3 text-2xl font-black text-starlight">
+          Every moment leaves a celestial signature.
+        </h3>
+        <p className="mt-2 text-lg font-semibold text-starlight/78">
+          This one is yours.
+        </p>
+        <p className="mt-4 text-xs font-bold uppercase tracking-[0.22em] text-starlight/58">
+          YOUR COSMIC SIGNATURE
+        </p>
+        <p className="mt-3 text-sm leading-6 text-starlight/64">
+          A visual portrait of the celestial arrangement connected to the moment
+          you chose.
+        </p>
+        <p className="mt-2 text-sm leading-6 text-starlight/54">
+          Built from your exact date, time, and location.
+        </p>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <button className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-bold text-midnight transition hover:bg-starlight">
+            Add My Cosmic Signature - $14.99
+          </button>
+          <button className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 px-5 py-3 text-sm font-bold text-starlight transition hover:border-brand hover:bg-brand/10">
+            Continue with My Sky
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -462,6 +524,8 @@ export function SkyExperience() {
                       <p className="mt-3 text-xs text-brand">Updating your sky...</p>
                     )}
                   </div>
+
+                  <CosmicSignaturePreview config={config} sky={sky} />
                 </div>
               </div>
             )}

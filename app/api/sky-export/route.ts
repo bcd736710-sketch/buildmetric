@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { computeSky } from "@/lib/sky/astronomy";
 import { createArtworkScene } from "@/lib/sky/artwork-scene";
 import { createArtworkSvg } from "@/lib/sky/artwork-svg";
+import { createCosmicSignatureScene } from "@/lib/sky/cosmic-signature-scene";
+import { createCosmicSignatureSvg } from "@/lib/sky/cosmic-signature-svg";
 import { validateRenderRequest } from "@/lib/sky/moment-validation";
 import {
   renderPosterPdf,
@@ -52,14 +54,20 @@ export async function POST(request: NextRequest) {
 
   try {
     const renderRequest = validateRenderRequest(body);
-    const sky = computeSky(renderRequest.moment);
-    const scene = createArtworkScene(
-      renderRequest.moment,
-      sky,
-      renderRequest.artworkType,
-      renderRequest.output,
-    );
-    const png = renderPosterPng(createArtworkSvg(scene));
+    const moment = {
+      ...renderRequest.moment,
+      productType: renderRequest.artworkType,
+    };
+    const sky = computeSky(moment);
+    const scene =
+      renderRequest.artworkType === "cosmic-signature"
+        ? createCosmicSignatureScene(moment, sky)
+        : createArtworkScene(moment, sky, renderRequest.artworkType, renderRequest.output);
+    const svg =
+      scene.type === "cosmic-signature"
+        ? createCosmicSignatureSvg(scene)
+        : createArtworkSvg(scene);
+    const png = renderPosterPng(svg);
 
     if (renderRequest.format === "pdf") {
       const pdf = await renderPosterPdf(png);
@@ -70,6 +78,7 @@ export async function POST(request: NextRequest) {
             "content-type": "application/pdf",
             "cache-control": "no-store",
             "x-artwork-output": scene.output,
+            "x-artwork-type": scene.type,
             "x-ratelimit-remaining": String(limit.remaining),
           },
         },
@@ -81,6 +90,7 @@ export async function POST(request: NextRequest) {
         "content-type": "image/png",
         "cache-control": "no-store",
         "x-artwork-output": scene.output,
+        "x-artwork-type": scene.type,
         "x-ratelimit-remaining": String(limit.remaining),
       },
     });
