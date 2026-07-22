@@ -9,10 +9,17 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@vercel/analytics": "^2.0.1",
+    "astronomy-engine": "^2.1.19",
+    "d3-celestial": "^0.7.35",
     "next": "16.2.10",
+    "pdf-lib": "^1.17.1",
     "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react-dom": "19.2.7",
+    "tz-lookup": "^6.1.25"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.2.10",

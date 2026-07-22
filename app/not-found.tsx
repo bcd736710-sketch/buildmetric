@@ -3,33 +3,25 @@ import { Container } from "@/components/container";
 
 export default function NotFound() {
   return (
-    <section className="border-b border-line bg-surface py-20 sm:py-28">
+    <section className="bg-midnight py-20 text-starlight sm:py-28">
       <Container>
         <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
             Page not found
           </p>
-          <h1 className="mt-4 text-5xl font-semibold leading-tight text-ink sm:text-6xl">
-            This estimate is not available.
+          <h1 className="mt-5 text-5xl font-black leading-tight sm:text-6xl">
+            This moment is not in our sky.
           </h1>
-          <p className="mt-6 text-lg leading-8 text-muted">
-            The page may have moved, or the URL may be incomplete. Start with
-            the calculator library or the backyard DIY planning hub.
+          <p className="mt-6 text-lg leading-8 text-starlight/64">
+            The page may have moved, or the link may be incomplete. Start again
+            with a date, time, and place.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/tools"
-              className="inline-flex justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            >
-              Browse calculators
-            </Link>
-            <Link
-              href="/backyard-diy"
-              className="inline-flex justify-center rounded-full border border-line bg-white px-6 py-3 text-sm font-semibold text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
-            >
-              Open backyard hub
-            </Link>
-          </div>
+          <Link
+            href="/#create"
+            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-starlight px-6 py-3 text-sm font-bold text-midnight transition hover:bg-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/30"
+          >
+            Choose Your Moment
+          </Link>
         </div>
       </Container>
     </section>

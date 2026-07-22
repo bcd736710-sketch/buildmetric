@@ -5,15 +5,16 @@ function normalizeSiteUrl(url: string) {
 }
 
 export const siteConfig = {
-  name: "BuildMetric",
+  name: "The Sky Remembers",
+  brandName: "THE SKY REMEMBERS",
   url: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? fallbackSiteUrl),
   contactEmail: "bcd736710@gmail.com",
   backupContactEmail: "qg231024@outlook.com",
   googleAnalyticsId:
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-47C9NCOM3K",
   description:
-    "BuildMetric helps homeowners plan backyard DIY projects with simple calculators, material estimates, and practical planning guides.",
-  tagline: "Smart DIY calculators and material checklists for backyard projects.",
+    "The Sky Remembers creates personalized celestial artwork from a meaningful date, time, and place.",
+  tagline: "Personalized star maps for meaningful moments.",
   audience:
-    "English-speaking DIY homeowners in the United States, Canada, the United Kingdom, and Australia.",
+    "People looking for meaningful personalized digital artwork, anniversary gifts, memorial keepsakes, and celestial prints.",
 };

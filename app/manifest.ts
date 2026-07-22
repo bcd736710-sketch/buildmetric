@@ -2,15 +2,15 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "BuildMetric",
-    short_name: "BuildMetric",
+    name: "The Sky Remembers",
+    short_name: "Sky Remembers",
     description:
-      "Backyard DIY calculators and material planning guides for homeowners.",
+      "Personalized celestial artwork from a meaningful date, time, and place.",
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#256f5a",
+    background_color: "#050713",
+    theme_color: "#050713",
     icons: [
       {
         src: "/icon.svg",
@@ -18,6 +18,6 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/svg+xml",
       },
     ],
-    categories: ["utilities", "productivity", "lifestyle"],
+    categories: ["art", "lifestyle", "personalization"],
   };
 }
