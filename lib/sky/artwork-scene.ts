@@ -99,10 +99,10 @@ function styleTokens(styleId: SkyPosterStyle): ArtworkStyleTokens {
       starHalo: "rgba(180, 205, 255, 0.42)",
       deepTone: "#07081d",
       textAccent: "#d8ddff",
-      frameOpacity: 0.48,
+      frameOpacity: 0.38,
       constellationOpacity: 0.12,
       labelOpacity: 0.18,
-      milkyWayOpacity: 0.16,
+      milkyWayOpacity: 0.2,
       paperOpacity: 0.18,
     };
   }
@@ -111,27 +111,27 @@ function styleTokens(styleId: SkyPosterStyle): ArtworkStyleTokens {
     return {
       ...style,
       id: styleId,
-      starHalo: "rgba(108, 73, 37, 0.24)",
+      starHalo: "rgba(92, 60, 32, 0.18)",
       deepTone: "#e7d7b8",
-      textAccent: "#573a22",
-      frameOpacity: 0.62,
-      constellationOpacity: 0.2,
-      labelOpacity: 0.28,
-      milkyWayOpacity: 0.11,
-      paperOpacity: 0.28,
+      textAccent: "#4f351f",
+      frameOpacity: 0.72,
+      constellationOpacity: 0.28,
+      labelOpacity: 0.34,
+      milkyWayOpacity: 0.13,
+      paperOpacity: 0.34,
     };
   }
 
   return {
     ...style,
     id: styleId,
-    starHalo: "rgba(221, 178, 91, 0.34)",
+    starHalo: "rgba(221, 190, 128, 0.28)",
     deepTone: "#02030a",
-    textAccent: "#e2bd73",
-    frameOpacity: 0.52,
-    constellationOpacity: 0.1,
-    labelOpacity: 0.16,
-    milkyWayOpacity: 0.12,
+    textAccent: "#e7c982",
+    frameOpacity: 0.58,
+    constellationOpacity: 0.12,
+    labelOpacity: 0.17,
+    milkyWayOpacity: 0.16,
     paperOpacity: 0.12,
   };
 }
@@ -151,29 +151,48 @@ function prepareStars(stars: SkyStar[], styleId: SkyPosterStyle): ArtworkStar[] 
       const vintage = styleId === "vintage-observatory";
       const baseRadius =
         tier === "brightest"
-          ? 9.5 - star.magnitude * 0.9
+          ? vintage
+            ? 7.6 - star.magnitude * 0.7
+            : 8.7 - star.magnitude * 0.72
           : tier === "medium"
-            ? 5.2 - star.magnitude * 0.45
-            : 2.1 - Math.max(0, star.magnitude - 4.5) * 0.2;
+            ? vintage
+              ? 3.8 - star.magnitude * 0.26
+              : 4.5 - star.magnitude * 0.34
+            : vintage
+              ? 1.45 - Math.max(0, star.magnitude - 4.5) * 0.1
+              : 1.75 - Math.max(0, star.magnitude - 4.5) * 0.13;
       const opacity =
         tier === "brightest"
           ? vintage
-            ? 0.78
-            : 0.92
+            ? 0.84
+            : styleId === "midnight-gold"
+              ? 0.96
+              : 0.9
           : tier === "medium"
             ? vintage
-              ? 0.46
-              : 0.62
+              ? 0.55
+              : styleId === "midnight-gold"
+                ? 0.7
+                : 0.6
             : vintage
-              ? 0.22
-              : 0.34;
+              ? 0.27
+              : styleId === "midnight-gold"
+                ? 0.36
+                : 0.31;
 
       return {
         ...star,
         tier,
-        radius: Number(Math.max(vintage ? 1.5 : 1.8, Math.min(12, baseRadius)).toFixed(2)),
+        radius: Number(Math.max(vintage ? 1.1 : 1.45, Math.min(vintage ? 9 : 10.5, baseRadius)).toFixed(2)),
         opacity,
-        glowOpacity: tier === "brightest" && !vintage ? 0.24 : tier === "medium" && !vintage ? 0.06 : 0,
+        glowOpacity:
+          tier === "brightest" && !vintage
+            ? styleId === "midnight-gold"
+              ? 0.18
+              : 0.22
+            : tier === "medium" && !vintage
+              ? 0.035
+              : 0,
       };
     });
 }
@@ -196,7 +215,7 @@ function prepareBodies(bodies: SkyBody[]): ArtworkBody[] {
         display,
         radius:
           display === "featured-moon"
-            ? 48
+            ? 38
             : display === "featured-planet"
               ? 14
               : 7,
