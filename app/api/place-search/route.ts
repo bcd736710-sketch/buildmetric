@@ -1,77 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
-import tzLookup from "tz-lookup";
+import { getPlaceProvider } from "@/lib/sky/geocoding";
+import { checkRateLimit, getClientKey } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
-type NominatimResult = {
-  display_name: string;
-  lat: string;
-  lon: string;
-  address?: {
-    country?: string;
-    city?: string;
-    town?: string;
-    village?: string;
-    state?: string;
-  };
-};
-
-export type PlaceSearchResult = {
-  placeName: string;
-  country: string;
-  latitude: number;
-  longitude: number;
-  timezone: string;
-};
-
 export async function GET(request: NextRequest) {
-  const query = request.nextUrl.searchParams.get("q")?.trim();
+  const query = request.nextUrl.searchParams.get("q")?.trim() ?? "";
 
-  if (!query || query.length < 2) {
-    return NextResponse.json({ results: [] });
-  }
-
-  const endpoint = new URL("https://nominatim.openstreetmap.org/search");
-  endpoint.searchParams.set("q", query);
-  endpoint.searchParams.set("format", "jsonv2");
-  endpoint.searchParams.set("addressdetails", "1");
-  endpoint.searchParams.set("limit", "5");
-
-  const response = await fetch(endpoint, {
-    headers: {
-      "accept-language": "en",
-      "user-agent": "TheSkyRemembers/1.0 (bcd736710@gmail.com)",
-    },
-    next: {
-      revalidate: 86400,
-    },
-  }).catch(() => null);
-
-  if (!response?.ok) {
+  if (query.length < 3) {
     return NextResponse.json(
-      { error: "Place search is temporarily unavailable." },
-      { status: 502 },
+      { error: "Enter at least 3 characters before searching.", results: [] },
+      { status: 400 },
     );
   }
 
-  const data = (await response.json()) as NominatimResult[];
-  const results = data.map((item): PlaceSearchResult => {
-    const latitude = Number(item.lat);
-    const longitude = Number(item.lon);
-    const address = item.address ?? {};
-    const locality =
-      address.city ?? address.town ?? address.village ?? address.state;
-
-    return {
-      placeName: locality
-        ? `${locality}, ${address.country ?? item.display_name}`
-        : item.display_name,
-      country: address.country ?? "",
-      latitude,
-      longitude,
-      timezone: tzLookup(latitude, longitude),
-    };
+  const limit = checkRateLimit(getClientKey(request, "place-search"), {
+    limit: 8,
+    windowMs: 60_000,
   });
 
-  return NextResponse.json({ results });
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "Please wait a moment before searching again.", results: [] },
+      {
+        status: 429,
+        headers: {
+          "retry-after": String(Math.ceil((limit.resetAt - Date.now()) / 1000)),
+        },
+      },
+    );
+  }
+
+  try {
+    const results = await getPlaceProvider().search(query);
+    return NextResponse.json(
+      { results },
+      {
+        headers: {
+          "cache-control": "public, s-maxage=86400, stale-while-revalidate=604800",
+          "x-ratelimit-remaining": String(limit.remaining),
+        },
+      },
+    );
+  } catch {
+    return NextResponse.json(
+      { error: "Place search is temporarily unavailable.", results: [] },
+      { status: 502 },
+    );
+  }
 }

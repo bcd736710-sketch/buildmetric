@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { computeSky, type SkyComputation } from "@/lib/sky/astronomy";
+import { createArtworkScene } from "@/lib/sky/artwork-scene";
+import { createArtworkSvg } from "@/lib/sky/artwork-svg";
 import {
   defaultMomentConfig,
   posterStyles,
@@ -18,7 +20,12 @@ type PlaceSearchResult = {
   latitude: number;
   longitude: number;
   timezone: string;
+  provider?: string;
 };
+
+function svgDataUrl(svg: string) {
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
 
 function StepSignal({
   active,
@@ -59,35 +66,60 @@ function AwakeningSky({
   stage: "date" | "time" | "place" | "editor";
   sky: SkyComputation;
 }) {
-  const stagePower = { date: 0.25, time: 0.48, place: 0.72, editor: 1 }[stage];
-  const stars = sky.stars.slice(0, Math.round(140 * stagePower));
+  const stagePower = { date: 0.16, time: 0.42, place: 0.78, editor: 1 }[stage];
+  const starCount = { date: 46, time: 120, place: 260, editor: 340 }[stage];
+  const stars = sky.stars.slice(0, starCount);
   const moon = sky.bodies.find((body) => body.body === "Moon" && body.aboveHorizon);
+  const milkyWayOpacity = { date: 0.02, time: 0.045, place: 0.09, editor: 0.12 }[stage];
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
-        className="absolute inset-0 transition duration-1000"
+        className="absolute inset-0 transition duration-[1600ms]"
         style={{
-          background: `radial-gradient(circle at 50% 36%, rgba(205,168,97,${0.1 * stagePower}), transparent 28%), radial-gradient(circle at 30% 72%, rgba(143,199,255,${0.12 * stagePower}), transparent 32%)`,
+          background: `radial-gradient(circle at 50% 34%, rgba(205,168,97,${0.09 * stagePower}), transparent 27%), radial-gradient(circle at 26% 76%, rgba(143,199,255,${0.16 * stagePower}), transparent 34%), radial-gradient(circle at 78% 62%, rgba(117,93,180,${0.12 * stagePower}), transparent 30%)`,
         }}
       />
+      <svg className="absolute inset-0 h-full w-full opacity-80" viewBox="0 0 100 100">
+        {sky.milkyWay.polygons.slice(0, 5).map((polygon, index) => {
+          const points = polygon
+            .filter((point) => point.aboveHorizon)
+            .slice(0, 140)
+            .map((point) => `${point.x * 100},${point.y * 100}`)
+            .join(" ");
+
+          return points ? (
+            <polygon
+              fill="#d9c18a"
+              key={index}
+              opacity={milkyWayOpacity}
+              points={points}
+            />
+          ) : null;
+        })}
+      </svg>
       {stars.map((star, index) => (
         <span
-          className="absolute rounded-full bg-starlight transition-all duration-700"
+          className="absolute rounded-full bg-starlight transition-all duration-[1300ms]"
           key={star.id}
           style={{
             left: `${star.x * 100}%`,
             top: `${star.y * 100}%`,
-            width: Math.max(1.4, 4.8 - star.magnitude * 0.45),
-            height: Math.max(1.4, 4.8 - star.magnitude * 0.45),
-            opacity: Math.min(0.9, (0.18 + index / 260) * stagePower),
-            transitionDelay: `${(index % 28) * 24}ms`,
+            width: Math.max(1.2, star.major ? 5.8 - star.magnitude * 0.5 : 3.2 - star.magnitude * 0.22),
+            height: Math.max(1.2, star.major ? 5.8 - star.magnitude * 0.5 : 3.2 - star.magnitude * 0.22),
+            opacity: star.major
+              ? Math.min(0.95, 0.28 + stagePower * 0.68)
+              : Math.min(0.58, (0.1 + index / 640) * stagePower),
+            boxShadow: star.major
+              ? `0 0 ${18 + stagePower * 30}px rgba(213, 173, 97, ${0.14 + stagePower * 0.18})`
+              : undefined,
+            transitionDelay: `${(index % 36) * 26}ms`,
           }}
         />
       ))}
       {moon && (
         <span
-          className="absolute rounded-full bg-brand shadow-[0_0_60px_rgba(205,168,97,0.35)] transition duration-1000"
+          className="absolute rounded-full bg-brand shadow-[0_0_70px_rgba(205,168,97,0.28)] transition duration-[1600ms]"
           style={{
             left: `${moon.x * 100}%`,
             top: `${moon.y * 100}%`,
@@ -102,122 +134,18 @@ function AwakeningSky({
 }
 
 function PosterPreview({ config, sky }: { config: MomentConfig; sky: SkyComputation }) {
-  const style = posterStyles[config.style];
-  const bodyMarks = sky.bodies.filter((body) => body.body !== "Sun" && body.aboveHorizon);
-  const lineSegments = sky.constellationLines
-    .flatMap((constellation) => constellation.segments)
-    .slice(0, 82);
+  const previewUrl = useMemo(
+    () => svgDataUrl(createArtworkSvg(createArtworkScene(config, sky))),
+    [config, sky],
+  );
 
   return (
     <div
-      className="relative mx-auto aspect-[3508/4961] w-full max-w-[25rem] overflow-hidden rounded-[2rem] border border-white/10 shadow-soft"
-      style={{ background: style.background, color: style.foreground }}
-    >
-      <div
-        className="absolute left-1/2 top-[37%] h-[60%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{ background: style.skyGlow }}
-      />
-      <div
-        className="absolute left-1/2 top-[37%] h-[60%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full border"
-        style={{ borderColor: style.accent, opacity: 0.7 }}
-      />
-      <div className="absolute left-1/2 top-[37%] h-[45%] w-[64%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-current opacity-15" />
-
-      <svg className="absolute inset-x-[8%] top-[13%] h-[52%] w-[84%]" viewBox="0 0 100 100">
-        {sky.milkyWay.polygons.slice(0, 4).map((polygon, index) => {
-          const points = polygon
-            .filter((point) => point.aboveHorizon)
-            .slice(0, 120)
-            .map((point) => `${point.x * 100},${point.y * 100}`)
-            .join(" ");
-          return points ? (
-            <polygon
-              fill={style.secondaryAccent}
-              key={index}
-              opacity="0.07"
-              points={points}
-            />
-          ) : null;
-        })}
-        {lineSegments.map((segment, index) => {
-          const points = segment
-            .filter((point) => point.aboveHorizon)
-            .map((point) => `${point.x * 100},${point.y * 100}`)
-            .join(" ");
-          return points ? (
-            <polyline
-              fill="none"
-              key={index}
-              opacity="0.18"
-              points={points}
-              stroke={style.foreground}
-              strokeLinecap="round"
-              strokeWidth="0.22"
-            />
-          ) : null;
-        })}
-      </svg>
-
-      {sky.stars.slice(0, 520).map((star) => (
-        <span
-          className="absolute rounded-full"
-          key={star.id}
-          style={{
-            left: `${8 + star.x * 84}%`,
-            top: `${13 + star.y * 52}%`,
-            width: Math.max(1.1, 5.2 - star.magnitude * 0.54),
-            height: Math.max(1.1, 5.2 - star.magnitude * 0.54),
-            background: star.major ? style.accent : style.foreground,
-            opacity: star.major ? 0.9 : Math.max(0.28, 0.74 - star.magnitude * 0.06),
-          }}
-        />
-      ))}
-
-      {bodyMarks.map((body) => (
-        <span
-          className="absolute rounded-full"
-          key={body.body}
-          title={body.body}
-          style={{
-            left: `${8 + body.x * 84}%`,
-            top: `${13 + body.y * 52}%`,
-            width: body.body === "Moon" ? 18 : 8,
-            height: body.body === "Moon" ? 18 : 8,
-            background: body.body === "Moon" ? style.accent : style.foreground,
-            opacity: 0.88,
-          }}
-        />
-      ))}
-
-      {sky.constellationLabels
-        .filter((label) => label.aboveHorizon && label.rank <= 2)
-        .slice(0, 8)
-        .map((label) => (
-          <span
-            className="absolute -translate-x-1/2 text-[9px] uppercase tracking-[0.16em] opacity-25"
-            key={label.id}
-            style={{ left: `${8 + label.x * 84}%`, top: `${13 + label.y * 52}%` }}
-          >
-            {label.id}
-          </span>
-        ))}
-
-      <div className="absolute inset-x-8 bottom-10 text-center">
-        <p className="font-serif text-3xl font-bold">{config.title}</p>
-        <p className="mt-3 text-xs uppercase tracking-[0.22em] opacity-70">
-          {config.placeName}, {config.country}
-        </p>
-        <p className="mt-2 text-xs opacity-60">
-          {config.localDate} - {config.localTime} - {config.timezone}
-        </p>
-        <p className="mt-2 text-[10px] opacity-45">
-          {config.latitude.toFixed(4)}, {config.longitude.toFixed(4)}
-        </p>
-        <p className="mt-5 font-serif text-lg" style={{ color: style.accent }}>
-          {config.message}
-        </p>
-      </div>
-    </div>
+      aria-label={`${config.title} personalized star map preview`}
+      className="mx-auto aspect-[3508/4961] w-full max-w-[25rem] rounded-[1.35rem] border border-white/10 bg-cover bg-center shadow-soft"
+      role="img"
+      style={{ backgroundImage: `url("${previewUrl}")` }}
+    />
   );
 }
 
@@ -227,37 +155,10 @@ export function SkyExperience() {
   const [placeQuery, setPlaceQuery] = useState(defaultMomentConfig.placeName);
   const [placeResults, setPlaceResults] = useState<PlaceSearchResult[]>([]);
   const [placeError, setPlaceError] = useState("");
+  const [placeSearching, setPlaceSearching] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const sky = useMemo(() => computeSky(config), [config]);
-
-  useEffect(() => {
-    if (placeQuery.trim().length < 3 || step !== "place") {
-      return;
-    }
-
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => {
-      fetch(`/api/place-search?q=${encodeURIComponent(placeQuery)}`, {
-        signal: controller.signal,
-      })
-        .then((response) => response.json())
-        .then((data: { results?: PlaceSearchResult[]; error?: string }) => {
-          setPlaceError(data.error ?? "");
-          setPlaceResults(data.results ?? []);
-        })
-        .catch((error: unknown) => {
-          if ((error as Error).name !== "AbortError") {
-            setPlaceError("Place search is temporarily unavailable.");
-          }
-        });
-    }, 320);
-
-    return () => {
-      controller.abort();
-      window.clearTimeout(timeout);
-    };
-  }, [placeQuery, step]);
 
   function patchMoment(patch: Partial<MomentConfig>) {
     startTransition(() => {
@@ -287,6 +188,32 @@ export function SkyExperience() {
     setStep("editor");
   }
 
+  async function searchPlaces() {
+    const query = placeQuery.trim();
+    if (query.length < 3) {
+      setPlaceError("Enter at least 3 characters, then search.");
+      setPlaceResults([]);
+      return;
+    }
+
+    setPlaceSearching(true);
+    setPlaceError("");
+
+    try {
+      const response = await fetch(`/api/place-search?q=${encodeURIComponent(query)}`);
+      const data = (await response.json()) as {
+        results?: PlaceSearchResult[];
+        error?: string;
+      };
+      setPlaceResults(data.results ?? []);
+      setPlaceError(data.error ?? (data.results?.length ? "" : "No places found. Try a nearby city."));
+    } catch {
+      setPlaceError("Place search is temporarily unavailable.");
+    } finally {
+      setPlaceSearching(false);
+    }
+  }
+
   return (
     <div className="bg-midnight text-starlight">
       <section
@@ -303,10 +230,10 @@ export function SkyExperience() {
               What did the universe look like at your moment?
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-8 text-starlight/72">
-              Reconstruct the celestial arrangement of your moment.
+              Turn a real sky from a real moment into a personal piece of celestial art.
             </p>
             <p className="mt-5 max-w-xl text-base leading-7 text-brand/90">
-              Some moments hold more than a beautiful sky.
+              Date, time, and place wake the stars before the sky settles into your print.
             </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -331,7 +258,7 @@ export function SkyExperience() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-4 shadow-soft backdrop-blur-xl sm:p-6">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-4 shadow-soft backdrop-blur-xl transition-all duration-1000 sm:p-6">
             {step !== "editor" ? (
               <div className="min-h-[460px] rounded-[1.5rem] border border-white/10 bg-midnight/70 p-6">
                 {step === "date" && (
@@ -365,7 +292,7 @@ export function SkyExperience() {
                       Time
                     </p>
                     <h2 className="mt-4 text-3xl font-black">
-                      The sky slowly calibrates.
+                      The sky finds the exact hour.
                     </h2>
                     <div className="mt-7 grid gap-3 sm:grid-cols-2">
                       {(Object.keys(timeAccuracyOptions) as TimeAccuracy[]).map((key) => (
@@ -408,19 +335,37 @@ export function SkyExperience() {
                       Place
                     </p>
                     <h2 className="mt-4 text-3xl font-black">
-                      The world begins to light up.
+                      The whole world lights this moment.
                     </h2>
-                    <input
-                      className="mt-8 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-5 py-4 text-lg text-starlight outline-none focus:border-brand"
-                      onChange={(event) => {
-                        setPlaceQuery(event.target.value);
-                        if (event.target.value.trim().length < 3) {
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                      <input
+                        className="min-h-14 flex-1 rounded-2xl border border-white/10 bg-white/[0.08] px-5 py-4 text-lg text-starlight outline-none focus:border-brand"
+                        onChange={(event) => {
+                          setPlaceQuery(event.target.value);
                           setPlaceResults([]);
-                        }
-                      }}
-                      placeholder="Search a city, town, or place"
-                      value={placeQuery}
-                    />
+                          setPlaceError("");
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                            void searchPlaces();
+                          }
+                        }}
+                        placeholder="Search a city, town, or place"
+                        value={placeQuery}
+                      />
+                      <button
+                        className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-starlight px-6 py-3 text-sm font-bold text-midnight transition hover:bg-brand disabled:cursor-not-allowed disabled:opacity-50"
+                        disabled={placeSearching}
+                        onClick={() => void searchPlaces()}
+                      >
+                        {placeSearching ? "Searching..." : "Search"}
+                      </button>
+                    </div>
+                    <p className="mt-3 text-xs leading-5 text-starlight/46">
+                      Search runs only when you ask, so the public geocoding
+                      service is not used as high-frequency autocomplete.
+                    </p>
                     <div className="mt-4 grid gap-3">
                       {placeResults.map((place) => (
                         <button
@@ -448,10 +393,10 @@ export function SkyExperience() {
                 <PosterPreview config={config} sky={sky} />
                 <div className="rounded-[1.5rem] border border-white/10 bg-midnight/70 p-5">
                   <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand">
-                    We found your horizon
+                    Framed from your sky
                   </p>
                   <h2 className="mt-3 text-3xl font-black">
-                    Your moment has been found.
+                    Your moment is ready to become artwork.
                   </h2>
 
                   <label className="mt-6 block text-sm font-bold text-starlight/72">
@@ -485,7 +430,15 @@ export function SkyExperience() {
                           key={styleKey}
                           onClick={() => patchMoment({ style: styleKey })}
                         >
-                          <span className="font-bold">{posterStyles[styleKey].name}</span>
+                          <span className="flex items-center gap-3 font-bold">
+                            <span
+                              className="h-5 w-5 rounded-full border border-white/20"
+                              style={{
+                                background: `linear-gradient(135deg, ${posterStyles[styleKey].background}, ${posterStyles[styleKey].accent})`,
+                              }}
+                            />
+                            {posterStyles[styleKey].name}
+                          </span>
                           <span className="mt-1 block text-sm leading-6 text-starlight/56">
                             {posterStyles[styleKey].description}
                           </span>
@@ -496,10 +449,14 @@ export function SkyExperience() {
 
                   <div className="mt-7 rounded-2xl border border-brand/30 bg-brand/10 p-4">
                     <p className="text-sm leading-6 text-starlight/70">
-                      {sky.visibility.statement}
+                      The final file uses the same composition as this preview:
+                      real star positions, restrained constellation linework,
+                      moon phase, planet markers, and Milky Way geometry.
                     </p>
                     <p className="mt-3 text-xs leading-5 text-starlight/46">
-                      UTC instant: {config.utcInstant}. Catalog: {sky.catalog.renderedStarCount} rendered stars from {sky.catalog.starCount} catalog stars.
+                      {sky.catalog.renderedStarCount} stars arranged for {config.placeName}.
+                      Technical visibility and UTC data stay in the system, not
+                      as dominant poster text.
                     </p>
                     {isPending && (
                       <p className="mt-3 text-xs text-brand">Updating your sky...</p>

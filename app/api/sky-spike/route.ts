@@ -4,14 +4,8 @@ import { defaultMomentConfig } from "@/lib/sky/moment";
 
 export const runtime = "nodejs";
 
-const verificationToken = "sky-rendering-check";
-
-export function GET(request: Request) {
-  const url = new URL(request.url);
-  if (
-    process.env.NODE_ENV === "production" &&
-    url.searchParams.get("verify") !== verificationToken
-  ) {
+export function GET() {
+  if (process.env.NODE_ENV === "production") {
     return new NextResponse(null, { status: 404 });
   }
 
