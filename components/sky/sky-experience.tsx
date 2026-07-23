@@ -44,6 +44,7 @@ type PostRevealState =
   | "cosmic-signature-revealed"
   | "purchase-selection";
 type CustomizePanel = "title" | "message" | "style" | null;
+type CosmicRevealPhase = "moon" | "partial" | "full" | "poster";
 
 const PRODUCT_PRICE = 14.99;
 
@@ -102,16 +103,27 @@ function StepProgress({
   step,
   config,
   placeConfirmed,
+  dateConfirmed,
+  timeConfirmed,
+  onStepSelect,
 }: {
   step: CreateStep;
   config: MomentConfig;
   placeConfirmed: boolean;
+  dateConfirmed: boolean;
+  timeConfirmed: boolean;
+  onStepSelect: (step: Exclude<CreateStep, "editor">) => void;
 }) {
   const activeIndex = currentStepIndex(step);
   const values = {
     date: config.localDate,
-    time: config.localTime,
+    time: timeConfirmed ? config.localTime : "Waiting for time",
     place: placeConfirmed ? config.placeName : "Waiting for place",
+  };
+  const completed = {
+    date: dateConfirmed,
+    time: timeConfirmed,
+    place: placeConfirmed,
   };
 
   return (
@@ -119,18 +131,19 @@ function StepProgress({
       <div className="flex items-center justify-center gap-4 text-[0.68rem] font-black uppercase tracking-[0.2em] sm:gap-7">
         {createSteps.map((item, index) => {
           const active = index === activeIndex && step !== "editor";
-          const complete =
-            index < activeIndex || (item.id === "place" && placeConfirmed);
+          const complete = completed[item.id];
           return (
-            <div
-              className={`min-w-0 text-center transition duration-500 ${
+            <button
+              className={`min-w-0 rounded-xl px-2 py-1 text-center transition duration-500 ${
                 active
                   ? "text-brand"
                   : complete
-                    ? "text-starlight/78"
-                    : "text-starlight/44"
+                    ? "text-starlight/78 hover:text-brand"
+                    : "text-starlight/44 hover:text-starlight/68"
               }`}
               key={item.id}
+              onClick={() => onStepSelect(item.id)}
+              type="button"
             >
               <span className="block">
                 0{index + 1} {item.label} {complete ? "✓" : ""}
@@ -138,7 +151,7 @@ function StepProgress({
               <span className="mt-1 block max-w-[8rem] truncate text-[0.68rem] font-semibold normal-case tracking-normal opacity-55">
                 {active || complete ? values[item.id] : "Awaiting"}
               </span>
-            </div>
+            </button>
           );
         })}
       </div>
@@ -182,28 +195,32 @@ function lightingForTime(localTime: string) {
 }
 
 function AwakeningEarth({
-  stage,
   sky,
   config,
   placeConfirmed,
+  dateConfirmed,
+  timeConfirmed,
 }: {
-  stage: CreateStep;
   sky: SkyComputation;
   config: MomentConfig;
   placeConfirmed: boolean;
+  dateConfirmed: boolean;
+  timeConfirmed: boolean;
 }) {
-  const stagePower = { date: 0.18, time: 0.44, place: 0.72, editor: 1 }[stage];
-  const starCount = { date: 54, time: 110, place: 180, editor: 240 }[stage];
+  const stagePower =
+    0.2 + (dateConfirmed ? 0.2 : 0) + (timeConfirmed ? 0.3 : 0) + (placeConfirmed ? 0.3 : 0);
+  const starCount = 240;
+  const starVisibility = stagePower;
   const stars = sky.stars.slice(0, starCount);
-  const targetLongitude = placeConfirmed ? config.longitude : -18 + stagePower * 28;
+  const targetLongitude = config.longitude;
   const targetLatitude = placeConfirmed ? clamp(config.latitude * 0.38, -22, 28) : 8;
   const [displayCenter, setDisplayCenter] = useState({
-    latitude: targetLatitude,
-    longitude: targetLongitude,
+    latitude: 8,
+    longitude: -30,
   });
   const displayCenterRef = useRef(displayCenter);
-  const dateAwake = stage !== "date";
-  const timeAwake = stage === "place" || stage === "editor";
+  const dateAwake = dateConfirmed;
+  const timeAwake = timeConfirmed;
   const projection = globeProjection(displayCenter.longitude, displayCenter.latitude);
   const geoPainter = geoPath(projection);
   const landD = geoPainter(realLand) ?? "";
@@ -214,10 +231,32 @@ function AwakeningEarth({
   const lightOpacity = dateAwake ? 0.26 : 0.08;
 
   useEffect(() => {
+    if (placeConfirmed) return;
+
+    let frame = 0;
+    let previous = performance.now();
+
+    function tick(now: number) {
+      const deltaSeconds = (now - previous) / 1000;
+      previous = now;
+      setDisplayCenter((current) => ({
+        latitude: 8,
+        longitude: current.longitude + deltaSeconds * 1.8,
+      }));
+      frame = window.requestAnimationFrame(tick);
+    }
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [placeConfirmed]);
+
+  useEffect(() => {
+    if (!placeConfirmed) return;
+
     let frame = 0;
     const start = performance.now();
     const from = displayCenterRef.current;
-    const duration = placeConfirmed ? 1900 : 900;
+    const duration = 1900;
     const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
 
     function tick(now: number) {
@@ -235,7 +274,7 @@ function AwakeningEarth({
 
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [placeConfirmed, targetLatitude, targetLongitude]);
+  }, [config.latitude, config.longitude, placeConfirmed, targetLatitude, targetLongitude]);
 
   useEffect(() => {
     displayCenterRef.current = displayCenter;
@@ -269,8 +308,10 @@ function AwakeningEarth({
             width: Math.max(1.2, star.major ? 5.8 - star.magnitude * 0.5 : 3.2 - star.magnitude * 0.22),
             height: Math.max(1.2, star.major ? 5.8 - star.magnitude * 0.5 : 3.2 - star.magnitude * 0.22),
             opacity: star.major
-              ? Math.min(0.95, 0.28 + stagePower * 0.68)
-              : Math.min(0.58, (0.1 + index / 640) * stagePower),
+              ? Math.min(0.95, 0.22 + starVisibility * 0.72)
+              : index / starCount <= starVisibility
+                ? Math.min(0.58, (0.08 + index / 720) * starVisibility)
+                : 0,
             boxShadow: star.major
               ? `0 0 ${18 + stagePower * 30}px rgba(213, 173, 97, ${0.14 + stagePower * 0.18})`
               : undefined,
@@ -437,6 +478,22 @@ function CosmicSignaturePreview({
   );
 }
 
+function CosmicStructureReveal({ phase }: { phase: CosmicRevealPhase }) {
+  return (
+    <div className={`sky-signature-structure sky-signature-${phase}`} aria-hidden="true">
+      <span className="sky-structure-moon" />
+      <span className="sky-structure-ring sky-structure-ring-1" />
+      <span className="sky-structure-ring sky-structure-ring-2" />
+      <span className="sky-structure-ring sky-structure-ring-3" />
+      <span className="sky-structure-axis sky-structure-axis-a" />
+      <span className="sky-structure-axis sky-structure-axis-b" />
+      <span className="sky-structure-planet sky-structure-planet-a" />
+      <span className="sky-structure-planet sky-structure-planet-b" />
+      <span className="sky-structure-planet sky-structure-planet-c" />
+    </div>
+  );
+}
+
 function PurchaseSummary({
   selection,
   summaryRef,
@@ -506,11 +563,15 @@ export function SkyExperience() {
   const [placeResults, setPlaceResults] = useState<PlaceSearchResult[]>([]);
   const [placeError, setPlaceError] = useState("");
   const [placeSearching, setPlaceSearching] = useState(false);
+  const [dateConfirmed, setDateConfirmed] = useState(false);
+  const [timeConfirmed, setTimeConfirmed] = useState(false);
   const [placeConfirmed, setPlaceConfirmed] = useState(false);
   const [purchaseSelection, setPurchaseSelection] = useState<PurchaseSelection>(null);
   const [postRevealState, setPostRevealState] =
     useState<PostRevealState>("sky-revealing");
   const [activeCustomize, setActiveCustomize] = useState<CustomizePanel>(null);
+  const [cosmicRevealPhase, setCosmicRevealPhase] =
+    useState<CosmicRevealPhase>("moon");
   const [isPending, startTransition] = useTransition();
   const purchaseSummaryRef = useRef<HTMLDivElement | null>(null);
 
@@ -534,6 +595,22 @@ export function SkyExperience() {
     setPlaceConfirmed(true);
   }
 
+  function confirmDate() {
+    setDateConfirmed(true);
+    setStep("time");
+  }
+
+  function confirmTime() {
+    setTimeConfirmed(true);
+    setStep("place");
+  }
+
+  function editCreateStep(nextStep: Exclude<CreateStep, "editor">) {
+    setStep(nextStep);
+    setPlaceResults([]);
+    setPlaceError("");
+  }
+
   function choosePurchase(selection: Exclude<PurchaseSelection, null>) {
     setPurchaseSelection(selection);
     setPostRevealState("purchase-selection");
@@ -548,14 +625,19 @@ export function SkyExperience() {
   function confirmSky() {
     setActiveCustomize(null);
     setPostRevealState("sky-confirmed");
+    setCosmicRevealPhase("moon");
     window.setTimeout(() => setPostRevealState("meteor-reveal"), 450);
     window.setTimeout(() => setPostRevealState("cosmic-signature-revealed"), 7400);
+    window.setTimeout(() => setCosmicRevealPhase("partial"), 8400);
+    window.setTimeout(() => setCosmicRevealPhase("full"), 9800);
+    window.setTimeout(() => setCosmicRevealPhase("poster"), 11400);
   }
 
   function revealSky() {
     setPostRevealState("sky-revealing");
     setActiveCustomize(null);
     setPurchaseSelection(null);
+    setCosmicRevealPhase("moon");
     setStep("editor");
   }
 
@@ -645,7 +727,7 @@ export function SkyExperience() {
           />
           <button
             className="mt-6 inline-flex min-h-16 w-full items-center justify-center rounded-full bg-brand px-8 text-base font-black uppercase tracking-[0.14em] text-midnight shadow-[0_0_44px_rgba(205,168,97,0.24)] transition hover:bg-starlight"
-            onClick={() => setStep("time")}
+            onClick={confirmDate}
           >
             Continue to Time
           </button>
@@ -673,7 +755,7 @@ export function SkyExperience() {
           />
           <button
             className="mt-6 inline-flex min-h-16 w-full items-center justify-center rounded-full bg-brand px-8 text-base font-black uppercase tracking-[0.14em] text-midnight shadow-[0_0_44px_rgba(205,168,97,0.24)] transition hover:bg-starlight"
-            onClick={() => setStep("place")}
+            onClick={confirmTime}
           >
             Continue to Place
           </button>
@@ -757,9 +839,10 @@ export function SkyExperience() {
         {step !== "editor" && (
           <AwakeningEarth
             config={config}
+            dateConfirmed={dateConfirmed}
             placeConfirmed={placeConfirmed}
             sky={sky}
-            stage={step}
+            timeConfirmed={timeConfirmed}
           />
         )}
         <div className="relative mx-auto flex min-h-[calc(100vh+10rem)] max-w-7xl flex-col px-6 py-12 lg:px-8">
@@ -782,8 +865,11 @@ export function SkyExperience() {
                 </p>
                 <StepProgress
                   config={config}
+                  dateConfirmed={dateConfirmed}
+                  onStepSelect={editCreateStep}
                   placeConfirmed={placeConfirmed}
                   step={step}
+                  timeConfirmed={timeConfirmed}
                 />
               </div>
 
@@ -813,7 +899,7 @@ export function SkyExperience() {
                     } ${postRevealState === "sky-confirmed" ? "sky-artwork-confirmed" : ""}`}
                   >
                     <PosterPreview
-                      className="max-w-[min(29rem,78vw)] transition duration-700"
+                      className="h-[min(76vh,52rem)] !w-auto max-w-[88vw] transition duration-700"
                       config={config}
                       sky={sky}
                     />
@@ -954,51 +1040,64 @@ export function SkyExperience() {
                 postRevealState === "purchase-selection") && (
                 <div className="sky-cosmic-reveal flex w-full flex-1 flex-col items-center justify-center py-10">
                   <div className="sky-cosmic-artwork w-full">
-                    <CosmicSignaturePreview
-                      className="max-w-[min(28rem,78vw)]"
-                      config={config}
-                      sky={sky}
-                    />
-                  </div>
-                  <div className="sky-soft-enter mt-8 max-w-3xl">
-                    <p className="text-xs font-black uppercase tracking-[0.26em] text-brand">
-                      Your Cosmic Signature
-                    </p>
-                    <p className="mt-4 text-lg leading-8 text-starlight/72">
-                      A visual portrait of the celestial arrangement connected to
-                      the moment you chose.
-                    </p>
-                    <p className="mt-2 text-base leading-7 text-starlight/56">
-                      Built from your exact date, time, and location.
-                    </p>
-                    <p className="mt-3 text-sm font-bold text-brand/80">
-                      Style follows Your Sky: {posterStyles[config.style].name}
-                    </p>
-                    {purchaseSelection === "bundle" && (
-                      <p className="mt-5 rounded-full border border-brand/28 bg-brand/12 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.18em] text-brand">
-                        Cosmic Signature Added
-                      </p>
+                    {cosmicRevealPhase !== "poster" && (
+                      <CosmicStructureReveal phase={cosmicRevealPhase} />
                     )}
-                    {purchaseSelection === "sky" && (
-                      <p className="mt-5 rounded-full border border-white/12 bg-white/[0.05] px-5 py-3 text-center text-sm font-bold text-starlight/60">
-                        Continuing with Your Sky only
-                      </p>
-                    )}
-                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                      <button
-                        className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-midnight transition hover:bg-starlight"
-                        onClick={() => choosePurchase("bundle")}
-                      >
-                        Add My Cosmic Signature - {formatPrice(PRODUCT_PRICE)}
-                      </button>
-                      <button
-                        className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/15 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-starlight transition hover:border-brand hover:bg-brand/10"
-                        onClick={() => choosePurchase("sky")}
-                      >
-                        Continue with My Sky
-                      </button>
+                    <div
+                      className={
+                        cosmicRevealPhase === "poster"
+                          ? "sky-cosmic-poster-visible"
+                          : "sky-cosmic-poster-hidden"
+                      }
+                    >
+                      <CosmicSignaturePreview
+                        className="h-[min(74vh,50rem)] !w-auto max-w-[88vw]"
+                        config={config}
+                        sky={sky}
+                      />
                     </div>
                   </div>
+                  {cosmicRevealPhase === "poster" && (
+                    <div className="sky-soft-enter mt-8 max-w-3xl">
+                      <p className="text-xs font-black uppercase tracking-[0.26em] text-brand">
+                        Your Cosmic Signature
+                      </p>
+                      <p className="mt-4 text-lg leading-8 text-starlight/72">
+                        A visual portrait of the celestial arrangement connected to
+                        the moment you chose.
+                      </p>
+                      <p className="mt-2 text-base leading-7 text-starlight/56">
+                        Built from your exact date, time, and location.
+                      </p>
+                      <p className="mt-3 text-sm font-bold text-brand/80">
+                        Style follows Your Sky: {posterStyles[config.style].name}
+                      </p>
+                      {purchaseSelection === "bundle" && (
+                        <p className="mt-5 rounded-full border border-brand/28 bg-brand/12 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.18em] text-brand">
+                          Cosmic Signature Added
+                        </p>
+                      )}
+                      {purchaseSelection === "sky" && (
+                        <p className="mt-5 rounded-full border border-white/12 bg-white/[0.05] px-5 py-3 text-center text-sm font-bold text-starlight/60">
+                          Continuing with Your Sky only
+                        </p>
+                      )}
+                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                        <button
+                          className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-midnight transition hover:bg-starlight"
+                          onClick={() => choosePurchase("bundle")}
+                        >
+                          Add My Cosmic Signature - {formatPrice(PRODUCT_PRICE)}
+                        </button>
+                        <button
+                          className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/15 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-starlight transition hover:border-brand hover:bg-brand/10"
+                          onClick={() => choosePurchase("sky")}
+                        >
+                          Continue with My Sky
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   {postRevealState === "purchase-selection" && (
                     <PurchaseSummary
                       selection={purchaseSelection}
