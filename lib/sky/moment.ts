@@ -283,7 +283,7 @@ export const defaultMomentConfig: MomentConfig = resolveMomentConfig({
   style: "midnight-gold",
   artworkFormat: "digital",
   artStyle: "classic",
-  colorPalette: "midnight-gold",
+  colorPalette: "deep-black",
   mapStyle: "classic",
   projection: "sky-dome",
   elements: {

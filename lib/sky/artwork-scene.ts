@@ -181,22 +181,59 @@ function applyEditorTokens(
   }
 
   if (config.artStyle === "minimal") {
-    next.constellationOpacity *= 0.28;
-    next.labelOpacity *= 0.35;
-    next.milkyWayOpacity *= 0.45;
-    next.frameOpacity *= 0.72;
+    Object.assign(next, {
+      background: "#080b10",
+      foreground: "#f2c849",
+      muted: "#927b36",
+      accent: "#f6d761",
+      secondaryAccent: "#b99731",
+      skyGlow: "rgba(246, 215, 97, 0.16)",
+      deepTone: "#080b10",
+      textAccent: "#f6d761",
+      starHalo: "rgba(246, 215, 97, 0.26)",
+    });
+    next.constellationOpacity *= 1.32;
+    next.labelOpacity *= 1.25;
+    next.milkyWayOpacity *= 0.72;
+    next.frameOpacity *= 1.3;
+    next.paperOpacity *= 0.58;
   }
 
   if (config.artStyle === "luminous") {
-    next.constellationOpacity *= 1.2;
-    next.milkyWayOpacity *= 1.5;
-    next.paperOpacity *= 0.8;
+    Object.assign(next, {
+      background: "#07100f",
+      foreground: "#c2ffb3",
+      muted: "#7fb279",
+      accent: "#b7ff9c",
+      secondaryAccent: "#7fdb84",
+      skyGlow: "rgba(183, 255, 156, 0.24)",
+      deepTone: "#07100f",
+      textAccent: "#b7ff9c",
+      starHalo: "rgba(183, 255, 156, 0.38)",
+    });
+    next.constellationOpacity *= 1.45;
+    next.milkyWayOpacity *= 1.75;
+    next.labelOpacity *= 1.1;
+    next.frameOpacity *= 1.1;
+    next.paperOpacity *= 0.62;
   }
 
   if (config.artStyle === "archival") {
-    next.frameOpacity *= 1.18;
-    next.constellationOpacity *= 1.35;
-    next.labelOpacity *= 1.35;
+    Object.assign(next, {
+      background: "#070a0f",
+      foreground: "#f7f7f2",
+      muted: "#b4b8bc",
+      accent: "#f7f7f2",
+      secondaryAccent: "#989da3",
+      skyGlow: "rgba(255, 255, 255, 0.12)",
+      deepTone: "#070a0f",
+      textAccent: "#f7f7f2",
+      starHalo: "rgba(255, 255, 255, 0.24)",
+    });
+    next.frameOpacity *= 1.42;
+    next.constellationOpacity *= 1.5;
+    next.labelOpacity *= 1.45;
+    next.paperOpacity *= 0.85;
   }
 
   if (config.mapStyle === "minimal") {

@@ -23,7 +23,6 @@ import {
   resolveMomentConfig,
   type SkyArtStyle,
   type SkyColorPalette,
-  type SkyMapStyle,
   type MomentConfig,
   type SkyPosterStyle,
 } from "@/lib/sky/moment";
@@ -82,18 +81,61 @@ const paletteOptions: {
   },
 ];
 
-const artStyleOptions: { id: SkyArtStyle; label: string; note: string }[] = [
-  { id: "classic", label: "Classic", note: "Balanced celestial print detail." },
-  { id: "minimal", label: "Minimal", note: "Quieter lines and fewer labels." },
-  { id: "luminous", label: "Luminous", note: "Softer glow and richer sky haze." },
-  { id: "archival", label: "Archival", note: "More instrument-like linework." },
-];
-
-const mapStyleOptions: { id: SkyMapStyle; label: string; note: string }[] = [
-  { id: "classic", label: "Classic", note: "Full celestial composition." },
-  { id: "minimal", label: "Minimal", note: "Reduced constellation structure." },
-  { id: "inverted", label: "Inverted", note: "Light/dark chart treatment." },
-  { id: "technical", label: "Technical", note: "Labels and calibration emphasized." },
+const artStyleOptions: {
+  id: SkyArtStyle;
+  label: string;
+  note: string;
+  preview: "classic" | "foil" | "glow" | "canvas";
+  patch: Partial<MomentConfig>;
+}[] = [
+  {
+    id: "classic",
+    label: "Classic",
+    note: "Black poster with a high-contrast white sky chart.",
+    preview: "classic",
+    patch: {
+      artStyle: "classic",
+      colorPalette: "deep-black",
+      style: "midnight-gold",
+      mapStyle: "classic",
+    },
+  },
+  {
+    id: "minimal",
+    label: "Foil",
+    note: "Warm gold chart treatment on deep black.",
+    preview: "foil",
+    patch: {
+      artStyle: "minimal",
+      colorPalette: "midnight-gold",
+      style: "midnight-gold",
+      mapStyle: "technical",
+    },
+  },
+  {
+    id: "luminous",
+    label: "Glow",
+    note: "Soft luminous green chart with darker print edges.",
+    preview: "glow",
+    patch: {
+      artStyle: "luminous",
+      colorPalette: "celestial-blue",
+      style: "celestial-dream",
+      mapStyle: "technical",
+    },
+  },
+  {
+    id: "archival",
+    label: "Canvas",
+    note: "Black-and-ivory chart with heavier gallery linework.",
+    preview: "canvas",
+    patch: {
+      artStyle: "archival",
+      colorPalette: "deep-black",
+      style: "midnight-gold",
+      mapStyle: "technical",
+    },
+  },
 ];
 
 function svgDataUrl(svg: string) {
@@ -578,25 +620,44 @@ function PurchaseSummary({
   );
 }
 
-function TinyMapGlyph({ variant }: { variant: SkyMapStyle }) {
+function ArtStylePreview({ variant }: { variant: "classic" | "foil" | "glow" | "canvas" }) {
+  const isLight = variant === "classic" || variant === "canvas";
+  const isFoil = variant === "foil";
+  const isGlow = variant === "glow";
+
   return (
-    <span className="relative block aspect-square rounded-lg bg-white">
-      <span className="absolute inset-[18%] rounded-full border border-slate-500" />
-      {variant !== "minimal" && (
-        <>
-          <span className="absolute left-1/2 top-[18%] h-[64%] border-l border-slate-400/70" />
-          <span className="absolute left-[18%] top-1/2 w-[64%] border-t border-slate-400/70" />
-        </>
-      )}
-      {variant === "technical" && (
-        <>
-          <span className="absolute inset-[28%] rounded-full border border-slate-400 border-dashed" />
-          <span className="absolute inset-[38%] rounded-full border border-slate-400" />
-        </>
-      )}
-      {variant === "inverted" && (
-        <span className="absolute inset-[24%] rounded-full bg-slate-950" />
-      )}
+    <span
+      className={`relative block aspect-[4/3] overflow-hidden rounded-md border ${
+        isLight ? "border-slate-300 bg-[#f4f0e8]" : "border-slate-800 bg-slate-950"
+      }`}
+    >
+      <span
+        className={`absolute left-1/2 top-1/2 h-[72%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full ${
+          isGlow
+            ? "bg-[#b9ffad]"
+            : isFoil
+              ? "bg-[#e3bd42]"
+              : isLight
+                ? "bg-[#f7f2e7]"
+                : "bg-[#f6f3eb]"
+        }`}
+      />
+      <span className="absolute left-[22%] top-1/2 w-[56%] border-t border-slate-500/35" />
+      <span className="absolute left-1/2 top-[18%] h-[64%] border-l border-slate-500/30" />
+      <span className="absolute inset-[24%] rounded-full border border-slate-500/40" />
+      <span className="absolute inset-[33%] rounded-full border border-slate-500/25" />
+      {Array.from({ length: 28 }, (_, index) => (
+        <span
+          className={`absolute h-0.5 w-0.5 rounded-full ${
+            isFoil || isGlow ? "bg-slate-950/70" : "bg-slate-950/65"
+          }`}
+          key={index}
+          style={{
+            left: `${18 + ((index * 17) % 63)}%`,
+            top: `${18 + ((index * 29) % 60)}%`,
+          }}
+        />
+      ))}
     </span>
   );
 }
@@ -676,13 +737,11 @@ function CustomizeEditor({
                 <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
                   Artwork Format
                 </h3>
-                <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
-                  <button className="rounded-lg bg-white px-4 py-3 text-sm font-bold shadow-sm">
-                    Digital
-                  </button>
-                  <button className="rounded-lg px-4 py-3 text-sm font-bold text-slate-400" disabled>
-                    Print Coming Soon
-                  </button>
+                <div className="mt-3 rounded-xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
+                  <p className="text-sm font-black text-slate-950">Digital Artwork</p>
+                  <p className="mt-1 text-xs font-semibold text-slate-500">
+                    High-resolution PNG and PDF files.
+                  </p>
                 </div>
               </div>
 
@@ -690,19 +749,20 @@ function CustomizeEditor({
                 <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
                   Art Style
                 </h3>
-                <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                <div className="mt-3 grid grid-cols-2 gap-3">
                   {artStyleOptions.map((option) => (
                     <button
-                      className={`rounded-lg px-3 py-3 text-left text-sm font-bold ${
+                      className={`rounded-xl border bg-white p-2 text-left text-sm font-bold shadow-sm transition ${
                         config.artStyle === option.id
-                          ? "bg-white shadow-sm ring-1 ring-slate-950"
-                          : "text-slate-500"
+                          ? "border-slate-950 ring-1 ring-slate-950"
+                          : "border-slate-200 text-slate-500 hover:border-slate-400"
                       }`}
                       key={option.id}
-                      onClick={() => patchMoment({ artStyle: option.id })}
+                      onClick={() => patchMoment(option.patch)}
                     >
-                      {option.label}
-                      <span className="mt-1 block text-xs font-medium text-slate-400">
+                      <ArtStylePreview variant={option.preview} />
+                      <span className="mt-3 block text-slate-950">{option.label}</span>
+                      <span className="mt-1 block text-xs font-semibold leading-5 text-slate-500">
                         {option.note}
                       </span>
                     </button>
@@ -739,87 +799,15 @@ function CustomizeEditor({
                   ))}
                 </div>
               </div>
-
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
-                  Map Style
-                </h3>
-                <div className="mt-3 grid grid-cols-4 gap-2 rounded-xl bg-slate-100 p-2">
-                  {mapStyleOptions.map((option) => (
-                    <button
-                      className={`rounded-lg p-1 text-center text-xs font-bold ${
-                        config.mapStyle === option.id
-                          ? "bg-white ring-2 ring-slate-950"
-                          : "text-slate-500"
-                      }`}
-                      key={option.id}
-                      onClick={() => patchMoment({ mapStyle: option.id })}
-                    >
-                      <TinyMapGlyph variant={option.id} />
-                      <span className="mt-2 block">{option.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
-                  Projection / Theme
-                </h3>
-                <div className="mt-3 rounded-xl bg-slate-100 p-1">
-                  <button className="w-full rounded-lg bg-white px-4 py-3 text-left text-sm font-bold shadow-sm">
-                    Sky Dome
-                    <span className="ml-2 text-xs font-medium text-slate-400">
-                      Currently supported
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
-                  Elements
-                </h3>
-                <div className="mt-3 space-y-2 rounded-xl bg-slate-100 p-3">
-                  {(
-                    [
-                      ["grid", "Grid"],
-                      ["constellations", "Constellations"],
-                      ["moon", "Moon"],
-                      ["planets", "Planets"],
-                      ["milkyWay", "Milky Way"],
-                    ] as const
-                  ).map(([key, label]) => (
-                    <label
-                      className="flex items-center justify-between rounded-lg bg-white px-4 py-3 text-sm font-bold"
-                      key={key}
-                    >
-                      {label}
-                      <input
-                        checked={config.elements[key]}
-                        onChange={(event) =>
-                          patchMoment({
-                            elements: {
-                              ...config.elements,
-                              [key]: event.target.checked,
-                            },
-                          })
-                        }
-                        type="checkbox"
-                      />
-                    </label>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
 
           {editorStep === "personalize" && (
-            <div className="mt-7 space-y-5">
+            <div className="mt-7 space-y-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <label className="block text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
                 Poster Title
                 <input
-                  className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-base normal-case tracking-normal outline-none focus:border-slate-950"
+                  className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-950 normal-case tracking-normal outline-none placeholder:text-slate-400 focus:border-slate-950"
                   onChange={(event) => patchMoment({ title: event.target.value })}
                   value={config.title}
                 />
@@ -827,7 +815,7 @@ function CustomizeEditor({
               <label className="block text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
                 Message
                 <input
-                  className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-base normal-case tracking-normal outline-none focus:border-slate-950"
+                  className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-950 normal-case tracking-normal outline-none placeholder:text-slate-400 focus:border-slate-950"
                   onChange={(event) => patchMoment({ message: event.target.value })}
                   value={config.message}
                 />
@@ -955,6 +943,21 @@ export function SkyExperience() {
       window.clearTimeout(customizeTimer);
     };
   }, [step]);
+
+  useEffect(() => {
+    if (
+      postRevealState !== "cosmic-signature-revealed" ||
+      cosmicRevealPhase !== "poster"
+    ) {
+      return;
+    }
+
+    const section = document.getElementById("create");
+    window.scrollTo({
+      top: section ? section.offsetTop : 0,
+      behavior: "smooth",
+    });
+  }, [cosmicRevealPhase, postRevealState]);
 
   const searchPlaces = useCallback(async (options?: { quiet?: boolean }) => {
     const query = placeQuery.trim();
@@ -1257,64 +1260,74 @@ export function SkyExperience() {
 
               {(postRevealState === "cosmic-signature-revealed" ||
                 postRevealState === "purchase-selection") && (
-                <div className="sky-cosmic-reveal flex w-full flex-1 flex-col items-center justify-center py-10">
-                  <div className="sky-cosmic-artwork w-full">
-                    {cosmicRevealPhase !== "poster" && (
-                      <CosmicStructureReveal phase={cosmicRevealPhase} />
-                    )}
-                    <div
-                      className={
-                        cosmicRevealPhase === "poster"
-                          ? "sky-cosmic-poster-visible"
-                          : "sky-cosmic-poster-hidden"
-                      }
-                    >
-                      <CosmicSignaturePreview
-                        className="h-[min(74vh,50rem)] !w-auto max-w-[88vw]"
-                        config={config}
-                        sky={sky}
-                      />
-                    </div>
-                  </div>
+                <div className="sky-cosmic-reveal -mx-6 flex min-h-[calc(100vh-5rem)] w-screen flex-1 flex-col items-center justify-center bg-[#efefed] px-6 py-10 text-slate-950 lg:-mx-8">
                   {cosmicRevealPhase === "poster" && (
-                    <div className="sky-soft-enter mt-8 max-w-3xl">
-                      <p className="text-xs font-black uppercase tracking-[0.26em] text-brand">
-                        Your Cosmic Signature
-                      </p>
-                      <p className="mt-4 text-lg leading-8 text-starlight/72">
-                        A visual portrait of the celestial arrangement connected to
-                        the moment you chose.
-                      </p>
-                      <p className="mt-2 text-base leading-7 text-starlight/56">
-                        Built from your exact date, time, and location.
-                      </p>
-                      <p className="mt-3 text-sm font-bold text-brand/80">
-                        Style follows Your Sky: {posterStyles[config.style].name}
-                      </p>
-                      {purchaseSelection === "bundle" && (
-                        <p className="mt-5 rounded-full border border-brand/28 bg-brand/12 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.18em] text-brand">
-                          Cosmic Signature Added
+                    <div className="sky-soft-enter grid w-full max-w-7xl items-center gap-12 text-left lg:grid-cols-[minmax(24rem,0.9fr)_minmax(26rem,0.95fr)]">
+                      <div className="order-2 max-w-xl lg:order-1">
+                        <p className="text-xs font-black uppercase tracking-[0.24em] text-[#9b7628]">
+                          Your Cosmic Signature
                         </p>
+                        <h2 className="mt-4 font-serif text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">
+                          A second artwork from the same moment.
+                        </h2>
+                        <p className="mt-5 text-lg leading-8 text-slate-600">
+                          Your Sky shows the stars above your place. Cosmic Signature
+                          turns the same date, time, and location into a companion
+                          chart: the moon phase, visible planets, bearings, and star
+                          field arranged as a separate celestial portrait.
+                        </p>
+                        <div className="mt-6 space-y-3 rounded-2xl border border-slate-200 bg-white p-5 text-left text-sm font-semibold leading-6 text-slate-700 shadow-sm">
+                          <p>Date and time: {config.localDate} / {config.localTime}</p>
+                          <p>Location: {config.placeName}</p>
+                          <p>Style follows Your Sky: {posterStyles[config.style].name}</p>
+                        </div>
+                        {purchaseSelection === "bundle" && (
+                          <p className="mt-5 rounded-full border border-[#c8a455]/45 bg-[#ead08a]/25 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.18em] text-[#806019]">
+                            Cosmic Signature Added
+                          </p>
+                        )}
+                        {purchaseSelection === "sky" && (
+                          <p className="mt-5 rounded-full border border-slate-200 bg-white px-5 py-3 text-center text-sm font-bold text-slate-500">
+                            Continuing with Your Sky only
+                          </p>
+                        )}
+                        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                          <button
+                            className="inline-flex min-h-14 items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-slate-800"
+                            onClick={() => choosePurchase("bundle")}
+                          >
+                            Add Cosmic Signature - {formatPrice(PRODUCT_PRICE)}
+                          </button>
+                          <button
+                            className="inline-flex min-h-14 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-slate-950 transition hover:border-slate-950"
+                            onClick={() => choosePurchase("sky")}
+                          >
+                            Continue with My Sky
+                          </button>
+                        </div>
+                      </div>
+                      <div className="order-1 flex justify-center lg:order-2">
+                        <CosmicSignaturePreview
+                          className="h-[min(80vh,58rem)] !w-auto max-w-[86vw] rounded-[1.1rem] border border-slate-200 shadow-[0_24px_80px_rgba(15,23,42,0.18)]"
+                          config={config}
+                          sky={sky}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {cosmicRevealPhase !== "poster" && (
+                    <div className="sky-cosmic-artwork w-full">
+                      <CosmicStructureReveal phase={cosmicRevealPhase} />
+                    </div>
+                  )}
+                  {cosmicRevealPhase === "poster" && (
+                    <div className="hidden">
+                      {purchaseSelection === "bundle" && (
+                        <span />
                       )}
                       {purchaseSelection === "sky" && (
-                        <p className="mt-5 rounded-full border border-white/12 bg-white/[0.05] px-5 py-3 text-center text-sm font-bold text-starlight/60">
-                          Continuing with Your Sky only
-                        </p>
+                        <span />
                       )}
-                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                        <button
-                          className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-midnight transition hover:bg-starlight"
-                          onClick={() => choosePurchase("bundle")}
-                        >
-                          Add My Cosmic Signature - {formatPrice(PRODUCT_PRICE)}
-                        </button>
-                        <button
-                          className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/15 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-starlight transition hover:border-brand hover:bg-brand/10"
-                          onClick={() => choosePurchase("sky")}
-                        >
-                          Continue with My Sky
-                        </button>
-                      </div>
                     </div>
                   )}
                   {postRevealState === "purchase-selection" && (
