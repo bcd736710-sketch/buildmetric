@@ -559,10 +559,14 @@ function CosmicStructureReveal({ phase }: { phase: CosmicRevealPhase }) {
 }
 
 function PurchaseSummary({
+  config,
   selection,
+  sky,
   summaryRef,
 }: {
+  config: MomentConfig;
   selection: PurchaseSelection;
+  sky: SkyComputation;
   summaryRef: RefObject<HTMLDivElement | null>;
 }) {
   const includesSignature = selection === "bundle";
@@ -570,49 +574,74 @@ function PurchaseSummary({
 
   return (
     <section
-      className="mx-auto w-full max-w-3xl py-16 sm:py-20"
+      className="mx-auto w-full max-w-6xl py-16 text-slate-950 sm:py-20"
       ref={summaryRef}
     >
-      <div className="rounded-[1.5rem] border border-brand/24 bg-white/[0.055] p-6 shadow-soft backdrop-blur-xl sm:p-8">
-        <p className="text-xs font-black uppercase tracking-[0.26em] text-brand">
+      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] sm:p-8">
+        <p className="text-xs font-black uppercase tracking-[0.26em] text-[#9b7628]">
           Your Selection
         </p>
-        <h2 className="mt-3 text-3xl font-black text-starlight sm:text-4xl">
-          {selection ? "Choose what to keep." : "Your artwork is waiting."}
+        <h2 className="mt-3 font-serif text-4xl font-bold text-slate-950">
+          Compare your two keepsakes.
         </h2>
-        <div className="mt-8 space-y-4">
-          <div className="flex items-center justify-between gap-6 border-b border-white/10 pb-4">
-            <div>
-              <p className="font-bold text-starlight">Your Sky</p>
-              <p className="mt-1 text-sm text-starlight/50">Personal celestial artwork</p>
+        <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+          One shows the sky you looked up to. The other preserves the hidden
+          celestial signature of that exact moment.
+        </p>
+        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <PosterPreview
+              className="h-[28rem] !w-auto rounded-lg border border-slate-200 shadow-sm"
+              config={config}
+              sky={sky}
+            />
+            <div className="mt-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="font-black text-slate-950">Your Sky</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
+                  A view of the stars above your chosen place, built from the
+                  date, time, and location you entered.
+                </p>
+              </div>
+              <p className="font-black text-slate-950">{formatPrice(PRODUCT_PRICE)}</p>
             </div>
-            <p className="font-black text-starlight">{formatPrice(PRODUCT_PRICE)}</p>
           </div>
           {includesSignature && (
-            <div className="flex items-center justify-between gap-6 border-b border-white/10 pb-4">
-              <div>
-                <p className="font-bold text-starlight">Your Cosmic Signature</p>
-                <p className="mt-1 text-sm text-starlight/50">The second artwork from this moment</p>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <CosmicSignaturePreview
+                className="h-[28rem] !w-auto rounded-lg border border-slate-200 shadow-sm"
+                config={config}
+                sky={sky}
+              />
+              <div className="mt-5 flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-black text-slate-950">Your Cosmic Signature</p>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    A companion chart of the same moment: moon phase, planet
+                    positions, bearings, and star patterns distilled into a
+                    personal celestial mark.
+                  </p>
+                </div>
+                <p className="font-black text-slate-950">{formatPrice(PRODUCT_PRICE)}</p>
               </div>
-              <p className="font-black text-starlight">{formatPrice(PRODUCT_PRICE)}</p>
             </div>
           )}
-          <div className="flex items-center justify-between gap-6 pt-2">
-            <p className="text-sm font-black uppercase tracking-[0.22em] text-brand">
+        </div>
+        <div className="mt-8 flex items-center justify-between gap-6 border-t border-slate-200 pt-6">
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-[#9b7628]">
               Total
             </p>
-            <p className="text-3xl font-black text-starlight">
+            <p className="text-3xl font-black text-slate-950">
               {formatPrice(total)}
             </p>
-          </div>
         </div>
         <button
-          className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full border border-white/15 px-6 text-sm font-black uppercase tracking-[0.16em] text-starlight/70"
+          className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full border border-slate-300 bg-slate-950 px-6 text-sm font-black uppercase tracking-[0.16em] text-white opacity-70"
           disabled
         >
           Continue to Checkout
         </button>
-        <p className="mt-3 text-center text-xs leading-5 text-starlight/42">
+        <p className="mt-3 text-center text-xs leading-5 text-slate-500">
           Checkout is the next step. Your selection is saved here for the purchase flow.
         </p>
       </div>
@@ -1268,13 +1297,17 @@ export function SkyExperience() {
                           Your Cosmic Signature
                         </p>
                         <h2 className="mt-4 font-serif text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">
-                          A second artwork from the same moment.
+                          The hidden signature of your moment.
                         </h2>
                         <p className="mt-5 text-lg leading-8 text-slate-600">
-                          Your Sky shows the stars above your place. Cosmic Signature
-                          turns the same date, time, and location into a companion
-                          chart: the moon phase, visible planets, bearings, and star
-                          field arranged as a separate celestial portrait.
+                          Your Sky is what you would have seen above you.
+                          Cosmic Signature is what the universe was quietly holding:
+                          the moon phase, planet positions, and star patterns of
+                          that exact date, time, and place.
+                        </p>
+                        <p className="mt-4 font-serif text-2xl font-bold text-slate-950">
+                          It is not another copy of your sky. It is the mark that
+                          moment left behind.
                         </p>
                         <div className="mt-6 space-y-3 rounded-2xl border border-slate-200 bg-white p-5 text-left text-sm font-semibold leading-6 text-slate-700 shadow-sm">
                           <p>Date and time: {config.localDate} / {config.localTime}</p>
@@ -1332,7 +1365,9 @@ export function SkyExperience() {
                   )}
                   {postRevealState === "purchase-selection" && (
                     <PurchaseSummary
+                      config={config}
                       selection={purchaseSelection}
+                      sky={sky}
                       summaryRef={purchaseSummaryRef}
                     />
                   )}

@@ -286,8 +286,8 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
       if (distance > starRadius) return "";
       const bright = star.magnitude < 1.5;
       const medium = star.magnitude < 3;
-      const size = bright ? 8.2 : medium ? 5.2 : 3.35;
-      const opacity = bright ? 0.98 : medium ? 0.86 : 0.66;
+      const size = bright ? 10.8 : medium ? 6.8 : 4.2;
+      const opacity = bright ? 1 : medium ? 0.94 : 0.76;
       const label =
         bright && index < 26
           ? `<text x="${(p.x + 13).toFixed(1)}" y="${(p.y - 9).toFixed(1)}" font-family="${sansFont}" font-size="13" fill="${palette.ink}" opacity="0.32" letter-spacing="1.4">${escapeXml(star.name)}</text>`
@@ -309,25 +309,25 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
       ),
     )
     .filter((path) => path.includes("L"))
-    .map((path) => `<path d="${path}" fill="none" stroke="${palette.fine}" stroke-width="1.15" opacity="0.46" />`)
+    .map((path) => `<path d="${path}" fill="none" stroke="${palette.fine}" stroke-width="1.55" opacity="0.58" />`)
     .join("");
   const altitudeRings = [0.22, 0.38, 0.54, 0.7, 0.86]
     .map(
       (scale, index) =>
-        `<circle cx="${cx}" cy="${cy}" r="${(starRadius * scale).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="${index === 4 ? 1.35 : 0.85}" opacity="${index === 4 ? 0.46 : 0.31}" />`,
+        `<circle cx="${cx}" cy="${cy}" r="${(starRadius * scale).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="${index === 4 ? 1.9 : 1.25}" opacity="${index === 4 ? 0.66 : 0.48}" />`,
     )
     .join("");
   const curvedGrid = Array.from({ length: 9 }, (_, index) => {
     const offset = (index - 4) * 0.2;
     const rx = starRadius * Math.sqrt(Math.max(0.1, 1 - offset * offset * 0.74));
     const y = cy + offset * starRadius;
-    return `<ellipse cx="${cx}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(starRadius * 0.08).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="0.65" opacity="0.24" />`;
+    return `<ellipse cx="${cx}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(starRadius * 0.08).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="1" opacity="0.38" />`;
   }).join("");
-  const spokes = Array.from({ length: 24 }, (_, index) => {
-    const angle = index * 15;
+  const spokes = Array.from({ length: 36 }, (_, index) => {
+    const angle = index * 10;
     const p1 = point(scene, angle, 165);
     const p2 = point(scene, angle, starRadius);
-    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.fine}" stroke-width="${index % 6 === 0 ? 0.9 : 0.55}" opacity="${index % 6 === 0 ? 0.32 : 0.19}" />`;
+    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.fine}" stroke-width="${index % 9 === 0 ? 1.25 : index % 3 === 0 ? 0.9 : 0.58}" opacity="${index % 9 === 0 ? 0.48 : index % 3 === 0 ? 0.34 : 0.24}" />`;
   }).join("");
   const outerTicks = Array.from({ length: 180 }, (_, index) => {
     const angle = index * 2;
@@ -381,7 +381,7 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
         ${stars}
         ${bodyMarks}
         <circle cx="${cx}" cy="${cy}" r="24" fill="none" stroke="${palette.accent}" stroke-width="4" opacity="0.62" />
-        <circle cx="${cx}" cy="${cy}" r="${starRadius}" fill="none" stroke="${palette.ink}" stroke-width="1.6" opacity="0.5" />
+        <circle cx="${cx}" cy="${cy}" r="${starRadius}" fill="none" stroke="${palette.ink}" stroke-width="2.2" opacity="0.64" />
       </g>
       <circle cx="${cx}" cy="${cy}" r="${innerRadius + 70}" fill="none" stroke="${palette.ink}" stroke-width="8" opacity="0.14" />
       <circle cx="${cx}" cy="${cy}" r="${innerRadius + 98}" fill="none" stroke="${palette.ink}" stroke-width="1.2" opacity="0.36" />
