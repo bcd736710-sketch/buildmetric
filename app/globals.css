@@ -241,6 +241,294 @@ button {
   }
 }
 
+.sky-post-reveal {
+  isolation: isolate;
+}
+
+.sky-artwork-arrival {
+  filter: saturate(0.92);
+  transition:
+    filter 1200ms ease,
+    opacity 1200ms ease,
+    transform 1200ms ease;
+}
+
+.sky-artwork-revealing {
+  animation: sky-artwork-reveal 3200ms cubic-bezier(0.2, 0.72, 0.16, 1) both;
+}
+
+.sky-artwork-settled {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sky-artwork-confirmed {
+  filter: brightness(0.58) saturate(0.78);
+  opacity: 0.42;
+  transform: scale(0.96);
+}
+
+.sky-soft-enter {
+  animation: sky-soft-enter 900ms ease-out both;
+}
+
+.sky-floating-control {
+  animation: sky-floating-control 420ms ease-out both;
+}
+
+.sky-meteor-stage {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(205, 168, 97, 0.08), transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(8, 10, 25, 0.36), rgba(0, 0, 0, 0.62) 72%);
+}
+
+.sky-confirmed-sky {
+  animation: sky-confirmed-fade 1600ms ease-in both;
+  filter: brightness(0.42) saturate(0.72);
+}
+
+.sky-meteor {
+  animation: sky-meteor-flight 1900ms cubic-bezier(0.16, 0.72, 0.18, 1) 1200ms both;
+  border-radius: 999px;
+  box-shadow:
+    0 0 16px rgba(247, 239, 216, 0.2),
+    0 0 42px rgba(205, 168, 97, 0.12);
+  height: 5px;
+  left: 13%;
+  opacity: 0;
+  position: absolute;
+  top: 16%;
+  transform: rotate(-22deg);
+  width: 40vw;
+  z-index: 2;
+}
+
+.sky-meteor::before {
+  border-radius: 999px;
+  content: "";
+  height: 12px;
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+}
+
+.sky-meteor::after {
+  border-radius: 999px;
+  content: "";
+  inset: -18px 0 -18px -28%;
+  position: absolute;
+}
+
+.sky-meteor-midnight-gold,
+.sky-meteor-vintage-observatory {
+  background: linear-gradient(90deg, transparent, rgba(205, 168, 97, 0.22), rgba(247, 239, 216, 0.9));
+}
+
+.sky-meteor-celestial-dream {
+  background: linear-gradient(90deg, transparent, rgba(143, 199, 255, 0.22), rgba(211, 205, 255, 0.9));
+  box-shadow:
+    0 0 16px rgba(211, 205, 255, 0.2),
+    0 0 42px rgba(143, 199, 255, 0.12);
+}
+
+.sky-meteor-midnight-gold::before,
+.sky-meteor-vintage-observatory::before {
+  background: #f7efd8;
+  box-shadow:
+    0 0 18px rgba(247, 239, 216, 0.72),
+    0 0 42px rgba(205, 168, 97, 0.34);
+}
+
+.sky-meteor-celestial-dream::before {
+  background: #e8e6ff;
+  box-shadow:
+    0 0 18px rgba(211, 205, 255, 0.72),
+    0 0 42px rgba(143, 199, 255, 0.34);
+}
+
+.sky-meteor-midnight-gold::after,
+.sky-meteor-vintage-observatory::after {
+  background: radial-gradient(ellipse at 88% 50%, rgba(205, 168, 97, 0.2), transparent 56%);
+}
+
+.sky-meteor-celestial-dream::after {
+  background: radial-gradient(ellipse at 88% 50%, rgba(143, 199, 255, 0.2), transparent 56%);
+}
+
+.sky-celestial-flash {
+  animation: sky-celestial-flash 900ms ease-out 3100ms both;
+  background: radial-gradient(circle, rgba(247, 239, 216, 0.26), rgba(205, 168, 97, 0.08) 24%, transparent 58%);
+  border-radius: 999px;
+  height: min(42vw, 28rem);
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: 45%;
+  transform: translate(-50%, -50%) scale(0.4);
+  width: min(42vw, 28rem);
+}
+
+.sky-meteor-line {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.sky-meteor-line-1 {
+  animation: sky-text-reveal 900ms ease-out 4100ms both;
+}
+
+.sky-meteor-line-2 {
+  animation: sky-text-reveal 900ms ease-out 5000ms both;
+}
+
+.sky-meteor-line-3 {
+  animation: sky-text-reveal 900ms ease-out 5900ms both;
+}
+
+.sky-cosmic-reveal {
+  animation: sky-cosmic-stage 900ms ease-out both;
+}
+
+.sky-cosmic-artwork {
+  animation: sky-cosmic-artwork 2400ms cubic-bezier(0.2, 0.72, 0.16, 1) both;
+  -webkit-mask-image: radial-gradient(circle at 50% 42%, #000 0 18%, rgba(0, 0, 0, 0.82) 36%, transparent 74%);
+  mask-image: radial-gradient(circle at 50% 42%, #000 0 18%, rgba(0, 0, 0, 0.82) 36%, transparent 74%);
+}
+
+@keyframes sky-artwork-reveal {
+  0% {
+    filter: brightness(0.08) blur(2px) saturate(0.62);
+    opacity: 0;
+    transform: scale(0.965);
+  }
+  42% {
+    opacity: 0.72;
+  }
+  100% {
+    filter: brightness(1) blur(0) saturate(0.92);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sky-soft-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sky-floating-control {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sky-confirmed-fade {
+  from {
+    opacity: 0.48;
+  }
+  to {
+    opacity: 0.18;
+  }
+}
+
+@keyframes sky-meteor-flight {
+  0% {
+    opacity: 0;
+    transform: translate3d(-8vw, -4vh, 0) rotate(-22deg) scaleX(0.62);
+  }
+  14% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.96;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(48vw, 30vh, 0) rotate(-22deg) scaleX(1.04);
+  }
+}
+
+@keyframes sky-celestial-flash {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes sky-text-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sky-cosmic-stage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sky-cosmic-artwork {
+  0% {
+    filter: brightness(0.12) blur(1.5px);
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  38% {
+    opacity: 0.44;
+  }
+  68% {
+    filter: brightness(0.7) blur(0.4px);
+  }
+  100% {
+    filter: brightness(1) blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-artwork-revealing,
+  .sky-soft-enter,
+  .sky-floating-control,
+  .sky-confirmed-sky,
+  .sky-meteor,
+  .sky-celestial-flash,
+  .sky-meteor-line-1,
+  .sky-meteor-line-2,
+  .sky-meteor-line-3,
+  .sky-cosmic-reveal,
+  .sky-cosmic-artwork {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
 @media print {
   header,
   footer,

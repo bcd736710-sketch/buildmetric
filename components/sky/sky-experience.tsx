@@ -35,6 +35,15 @@ type PlaceSearchResult = {
 };
 
 type PurchaseSelection = "sky" | "bundle" | null;
+type PostRevealState =
+  | "sky-revealing"
+  | "sky-revealed"
+  | "customizing"
+  | "sky-confirmed"
+  | "meteor-reveal"
+  | "cosmic-signature-revealed"
+  | "purchase-selection";
+type CustomizePanel = "title" | "message" | "style" | null;
 
 const PRODUCT_PRICE = 14.99;
 
@@ -499,6 +508,9 @@ export function SkyExperience() {
   const [placeSearching, setPlaceSearching] = useState(false);
   const [placeConfirmed, setPlaceConfirmed] = useState(false);
   const [purchaseSelection, setPurchaseSelection] = useState<PurchaseSelection>(null);
+  const [postRevealState, setPostRevealState] =
+    useState<PostRevealState>("sky-revealing");
+  const [activeCustomize, setActiveCustomize] = useState<CustomizePanel>(null);
   const [isPending, startTransition] = useTransition();
   const purchaseSummaryRef = useRef<HTMLDivElement | null>(null);
 
@@ -524,6 +536,7 @@ export function SkyExperience() {
 
   function choosePurchase(selection: Exclude<PurchaseSelection, null>) {
     setPurchaseSelection(selection);
+    setPostRevealState("purchase-selection");
     window.setTimeout(() => {
       purchaseSummaryRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -531,6 +544,36 @@ export function SkyExperience() {
       });
     }, 80);
   }
+
+  function confirmSky() {
+    setActiveCustomize(null);
+    setPostRevealState("sky-confirmed");
+    window.setTimeout(() => setPostRevealState("meteor-reveal"), 450);
+    window.setTimeout(() => setPostRevealState("cosmic-signature-revealed"), 7400);
+  }
+
+  function revealSky() {
+    setPostRevealState("sky-revealing");
+    setActiveCustomize(null);
+    setPurchaseSelection(null);
+    setStep("editor");
+  }
+
+  useEffect(() => {
+    if (step !== "editor") return;
+
+    const revealTimer = window.setTimeout(() => {
+      setPostRevealState("sky-revealed");
+    }, 3200);
+    const customizeTimer = window.setTimeout(() => {
+      setPostRevealState("customizing");
+    }, 4300);
+
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.clearTimeout(customizeTimer);
+    };
+  }, [step]);
 
   const searchPlaces = useCallback(async (options?: { quiet?: boolean }) => {
     const query = placeQuery.trim();
@@ -696,7 +739,7 @@ export function SkyExperience() {
               placeConfirmed ? "sky-reveal-ready" : ""
             }`}
             disabled={!placeConfirmed}
-            onClick={() => setStep("editor")}
+            onClick={revealSky}
           >
             Reveal My Sky
           </button>
@@ -711,12 +754,14 @@ export function SkyExperience() {
         className="relative min-h-[calc(100vh+10rem)] overflow-hidden border-b border-white/10"
         id="create"
       >
-        <AwakeningEarth
-          config={config}
-          placeConfirmed={placeConfirmed}
-          sky={sky}
-          stage={step}
-        />
+        {step !== "editor" && (
+          <AwakeningEarth
+            config={config}
+            placeConfirmed={placeConfirmed}
+            sky={sky}
+            stage={step}
+          />
+        )}
         <div className="relative mx-auto flex min-h-[calc(100vh+10rem)] max-w-7xl flex-col px-6 py-12 lg:px-8">
           {step !== "editor" ? (
             <div className="flex flex-1 flex-col items-center justify-between text-center">
@@ -754,131 +799,179 @@ export function SkyExperience() {
               </div>
             </div>
           ) : (
-            <div className="mx-auto w-full max-w-7xl transition-all duration-1000">
-              <section className="mx-auto flex min-h-[calc(100vh-7rem)] w-full max-w-5xl flex-col items-center justify-center py-14 text-center sm:py-20">
-                <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
-                  Framed from your sky
-                </p>
-                <h2 className="mt-4 text-4xl font-black leading-tight text-starlight sm:text-5xl">
-                  Your moment is ready to become artwork.
-                </h2>
-                <div className="mt-10 w-full">
-                  <PosterPreview
-                    className="max-w-[min(28rem,82vw)]"
-                    config={config}
-                    sky={sky}
-                  />
-                </div>
-              </section>
-
-              <section className="mx-auto w-full max-w-6xl py-14 sm:py-20">
-                <div className="mx-auto max-w-3xl text-center">
-                  <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
-                    Make it yours
-                  </p>
-                  <h2 className="mt-4 text-3xl font-black text-starlight sm:text-4xl">
-                    Tune the words and the atmosphere.
-                  </h2>
-                </div>
-
-                <div className="mt-9 rounded-[1.5rem] border border-white/10 bg-white/[0.055] p-5 shadow-soft backdrop-blur-xl sm:p-7">
-                  <div className="grid gap-5 md:grid-cols-2">
-                    <label className="block text-sm font-bold text-starlight/72">
-                      Poster title
-                      <input
-                        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
-                        onChange={(event) => patchMoment({ title: event.target.value })}
-                        value={config.title}
-                      />
-                    </label>
-
-                    <label className="block text-sm font-bold text-starlight/72">
-                      Message
-                      <input
-                        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
-                        onChange={(event) => patchMoment({ message: event.target.value })}
-                        value={config.message}
-                      />
-                    </label>
+            <div className="sky-post-reveal mx-auto flex min-h-[calc(100vh-6rem)] w-full max-w-6xl flex-col items-center justify-center py-10 text-center">
+              {(postRevealState === "sky-revealing" ||
+                postRevealState === "sky-revealed" ||
+                postRevealState === "customizing" ||
+                postRevealState === "sky-confirmed") && (
+                <div className="flex w-full flex-1 flex-col items-center justify-center">
+                  <div
+                    className={`sky-artwork-arrival w-full ${
+                      postRevealState === "sky-revealing"
+                        ? "sky-artwork-revealing"
+                        : "sky-artwork-settled"
+                    } ${postRevealState === "sky-confirmed" ? "sky-artwork-confirmed" : ""}`}
+                  >
+                    <PosterPreview
+                      className="max-w-[min(29rem,78vw)] transition duration-700"
+                      config={config}
+                      sky={sky}
+                    />
                   </div>
 
-                  <div className="mt-8">
-                    <p className="text-sm font-bold uppercase tracking-[0.2em] text-starlight/60">
-                      Style
-                    </p>
-                    <div className="mt-4 grid gap-4 md:grid-cols-3">
-                      {(Object.keys(posterStyles) as SkyPosterStyle[]).map((styleKey) => (
-                        <button
-                          className={`group rounded-[1.25rem] border p-3 text-left transition duration-300 ${
-                            config.style === styleKey
-                              ? "border-brand bg-brand/12 shadow-[0_0_38px_rgba(205,168,97,0.14)]"
-                              : "border-white/10 bg-white/[0.04] hover:border-brand/60 hover:bg-white/[0.07]"
-                          }`}
-                          key={styleKey}
-                          onClick={() => patchMoment({ style: styleKey })}
-                        >
-                          <StyleThumbnail config={config} sky={sky} styleKey={styleKey} />
-                          <span className="mt-4 block text-sm font-black uppercase tracking-[0.18em] text-starlight">
-                            {posterStyles[styleKey].name}
-                          </span>
-                          <span className="mt-2 block text-sm leading-5 text-starlight/52">
-                            {posterStyles[styleKey].description}
-                          </span>
-                        </button>
-                      ))}
+                  {postRevealState !== "sky-revealing" && (
+                    <div className="sky-soft-enter mt-7">
+                      <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
+                        This is your sky.
+                      </p>
+                      <h2 className="mt-3 text-3xl font-black text-starlight sm:text-4xl">
+                        Make it yours.
+                      </h2>
                     </div>
-                  </div>
+                  )}
 
-                  <details className="mt-7 rounded-2xl border border-white/10 bg-midnight/50 p-4">
-                    <summary className="cursor-pointer text-sm font-bold uppercase tracking-[0.18em] text-starlight/54">
-                      About this sky
-                    </summary>
-                    <p className="mt-4 text-sm leading-6 text-starlight/62">
-                      The final file uses the same composition as this preview:
-                      real star positions, restrained constellation linework,
-                      moon phase, planet markers, and Milky Way geometry.
-                    </p>
-                    <p className="mt-3 text-xs leading-5 text-starlight/42">
-                      {sky.catalog.renderedStarCount} stars arranged for {config.placeName}.
-                      Technical visibility and UTC data stay in the system, not
-                      as dominant poster text.
-                    </p>
-                    {isPending && (
-                      <p className="mt-3 text-xs text-brand">Updating your sky...</p>
-                    )}
-                  </details>
+                  {(postRevealState === "customizing" ||
+                    postRevealState === "sky-revealed") && (
+                    <div className="sky-soft-enter mt-6 w-full max-w-4xl">
+                      <div className="mx-auto inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.055] p-2 backdrop-blur-xl">
+                        {(["title", "message", "style"] as const).map((panel) => (
+                          <button
+                            className={`min-h-11 rounded-full px-5 text-xs font-black uppercase tracking-[0.18em] transition ${
+                              activeCustomize === panel
+                                ? "bg-brand text-midnight"
+                                : "text-starlight/62 hover:bg-white/[0.07] hover:text-starlight"
+                            }`}
+                            key={panel}
+                            onClick={() =>
+                              setActiveCustomize((current) =>
+                                current === panel ? null : panel,
+                              )
+                            }
+                          >
+                            {panel}
+                          </button>
+                        ))}
+                      </div>
+
+                      {activeCustomize && (
+                        <div className="sky-floating-control mx-auto mt-4 max-w-3xl rounded-[1.25rem] border border-white/10 bg-midnight/82 p-4 shadow-soft backdrop-blur-xl">
+                          {activeCustomize === "title" && (
+                            <label className="block text-left text-sm font-bold text-starlight/72">
+                              Title
+                              <input
+                                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
+                                onChange={(event) =>
+                                  patchMoment({ title: event.target.value })
+                                }
+                                value={config.title}
+                              />
+                            </label>
+                          )}
+                          {activeCustomize === "message" && (
+                            <label className="block text-left text-sm font-bold text-starlight/72">
+                              Message
+                              <input
+                                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
+                                onChange={(event) =>
+                                  patchMoment({ message: event.target.value })
+                                }
+                                value={config.message}
+                              />
+                            </label>
+                          )}
+                          {activeCustomize === "style" && (
+                            <div className="grid gap-3 sm:grid-cols-3">
+                              {(Object.keys(posterStyles) as SkyPosterStyle[]).map((styleKey) => (
+                                <button
+                                  className={`rounded-2xl border p-2 text-left transition ${
+                                    config.style === styleKey
+                                      ? "border-brand bg-brand/12"
+                                      : "border-white/10 bg-white/[0.04] hover:border-brand/60"
+                                  }`}
+                                  key={styleKey}
+                                  onClick={() => patchMoment({ style: styleKey })}
+                                >
+                                  <StyleThumbnail
+                                    config={config}
+                                    sky={sky}
+                                    styleKey={styleKey}
+                                  />
+                                  <span className="mt-3 block text-xs font-black uppercase tracking-[0.16em] text-starlight">
+                                    {posterStyles[styleKey].name}
+                                  </span>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      <button
+                        className="mt-6 inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-8 text-sm font-black uppercase tracking-[0.16em] text-midnight shadow-[0_0_38px_rgba(205,168,97,0.18)] transition hover:bg-starlight"
+                        onClick={confirmSky}
+                      >
+                        This Is My Sky
+                      </button>
+                      {isPending && (
+                        <p className="mt-3 text-xs text-brand">
+                          Updating your sky...
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </section>
+              )}
 
-              <section className="mx-auto w-full max-w-6xl py-16 text-center sm:py-24">
-                <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
-                  We found something that belongs to this moment.
-                </p>
-                <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-black leading-tight text-starlight sm:text-5xl">
-                  Every moment leaves a celestial signature.
-                </h2>
-                <p className="mt-4 text-xl font-semibold text-starlight/78">
-                  This one is yours.
-                </p>
-
-                <div className="mt-10 grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-                  <CosmicSignaturePreview
-                    className="max-w-[min(27rem,82vw)]"
-                    config={config}
-                    sky={sky}
+              {postRevealState === "meteor-reveal" && (
+                <div className="sky-meteor-stage relative flex min-h-[calc(100vh-8rem)] w-full items-center justify-center overflow-hidden">
+                  <div className="sky-confirmed-sky absolute inset-x-0 top-8 opacity-25">
+                    <PosterPreview
+                      className="max-w-[min(22rem,62vw)]"
+                      config={config}
+                      sky={sky}
+                    />
+                  </div>
+                  <div
+                    className={`sky-meteor sky-meteor-${config.style}`}
+                    aria-hidden="true"
                   />
-                  <div className="text-left">
-                    <p className="text-xs font-black uppercase tracking-[0.24em] text-starlight/48">
+                  <div className="sky-celestial-flash" aria-hidden="true" />
+                  <div className="relative z-10 mx-auto max-w-4xl px-6">
+                    <p className="sky-meteor-line sky-meteor-line-1 text-sm font-black uppercase tracking-[0.26em] text-brand">
+                      We found something that belongs to this moment.
+                    </p>
+                    <p className="sky-meteor-line sky-meteor-line-2 mt-6 text-2xl font-black uppercase tracking-[0.08em] text-starlight sm:text-4xl">
+                      Every moment leaves a celestial signature.
+                    </p>
+                    <p className="sky-meteor-line sky-meteor-line-3 mt-6 text-xl font-semibold text-starlight/78 sm:text-2xl">
+                      This one is yours.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {(postRevealState === "cosmic-signature-revealed" ||
+                postRevealState === "purchase-selection") && (
+                <div className="sky-cosmic-reveal flex w-full flex-1 flex-col items-center justify-center py-10">
+                  <div className="sky-cosmic-artwork w-full">
+                    <CosmicSignaturePreview
+                      className="max-w-[min(28rem,78vw)]"
+                      config={config}
+                      sky={sky}
+                    />
+                  </div>
+                  <div className="sky-soft-enter mt-8 max-w-3xl">
+                    <p className="text-xs font-black uppercase tracking-[0.26em] text-brand">
                       Your Cosmic Signature
                     </p>
                     <p className="mt-4 text-lg leading-8 text-starlight/72">
                       A visual portrait of the celestial arrangement connected to
                       the moment you chose.
                     </p>
-                    <p className="mt-3 text-base leading-7 text-starlight/56">
+                    <p className="mt-2 text-base leading-7 text-starlight/56">
                       Built from your exact date, time, and location.
                     </p>
-                    <p className="mt-4 text-sm font-bold text-brand/80">
+                    <p className="mt-3 text-sm font-bold text-brand/80">
                       Style follows Your Sky: {posterStyles[config.style].name}
                     </p>
                     {purchaseSelection === "bundle" && (
@@ -906,13 +999,14 @@ export function SkyExperience() {
                       </button>
                     </div>
                   </div>
+                  {postRevealState === "purchase-selection" && (
+                    <PurchaseSummary
+                      selection={purchaseSelection}
+                      summaryRef={purchaseSummaryRef}
+                    />
+                  )}
                 </div>
-              </section>
-
-              <PurchaseSummary
-                selection={purchaseSelection}
-                summaryRef={purchaseSummaryRef}
-              />
+              )}
             </div>
           )}
         </div>
