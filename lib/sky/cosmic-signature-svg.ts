@@ -3,6 +3,8 @@ import type {
   CosmicSignatureScene,
 } from "@/lib/sky/cosmic-signature-scene";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const serifFont = "'Cormorant Garamond', Georgia, 'Times New Roman', serif";
 const sansFont = "'Inter', Arial, Helvetica, sans-serif";
 
@@ -45,9 +47,47 @@ function ring(
   return `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${scene.style.fineLine}" stroke-width="${width}" opacity="${opacity}"${dash ? ` stroke-dasharray="${dash}"` : ""} />`;
 }
 
+function chartPalette(scene: CosmicSignatureScene) {
+  if (scene.style.id === "vintage-observatory") {
+    return {
+      disc: "#f4e3bd",
+      ink: "#221b14",
+      fine: "#6f5234",
+      muted: "#8c6f4e",
+      accent: "#9f7335",
+    };
+  }
+
+  if (scene.style.id === "celestial-dream") {
+    return {
+      disc: "#edf3ff",
+      ink: "#11182b",
+      fine: "#51617d",
+      muted: "#7d8aa4",
+      accent: "#6f86c2",
+    };
+  }
+
+  return {
+    disc: "#eee8dc",
+    ink: "#0b1018",
+    fine: "#283343",
+    muted: "#6d7480",
+    accent: "#ad842e",
+  };
+}
+
+function chartPoint(scene: CosmicSignatureScene, x: number, y: number, radius: number) {
+  return {
+    x: scene.composition.cx + (x - 0.5) * 2 * radius,
+    y: scene.composition.cy + (y - 0.5) * 2 * radius,
+  };
+}
+
 function renderDefs(scene: CosmicSignatureScene) {
   const vintage = scene.style.id === "vintage-observatory";
   const dream = scene.style.id === "celestial-dream";
+  const chartRadius = scene.composition.identityRing - 285;
 
   return `
     <defs>
@@ -75,6 +115,9 @@ function renderDefs(scene: CosmicSignatureScene) {
       </filter>
       <clipPath id="moon-clip">
         <circle cx="${scene.composition.cx}" cy="${scene.composition.cy}" r="${scene.composition.coreRadius * 0.68}" />
+      </clipPath>
+      <clipPath id="signature-chart-clip">
+        <circle cx="${scene.composition.cx}" cy="${scene.composition.cy}" r="${chartRadius}" />
       </clipPath>
     </defs>
   `;
@@ -223,6 +266,130 @@ function renderInstrument(scene: CosmicSignatureScene) {
   if (scene.style.id === "celestial-dream") return renderDreamEcho(scene);
   if (scene.style.id === "vintage-observatory") return renderVintagePlate(scene);
   return renderGoldDial(scene);
+}
+
+function renderReferenceSkyChart(scene: CosmicSignatureScene) {
+  const { cx, cy, identityRing } = scene.composition;
+  const palette = chartPalette(scene);
+  const chartRadius = identityRing - 285;
+  const innerRadius = chartRadius - 100;
+  const starRadius = chartRadius - 165;
+  const stars = scene.skyData.stars
+    .slice()
+    .sort((a, b) => a.magnitude - b.magnitude)
+    .slice(0, 1500)
+    .map((star, index) => {
+      const p = chartPoint(scene, star.x, star.y, starRadius);
+      const dx = p.x - cx;
+      const dy = p.y - cy;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance > starRadius) return "";
+      const bright = star.magnitude < 1.5;
+      const medium = star.magnitude < 3;
+      const size = bright ? 8.2 : medium ? 5.2 : 3.35;
+      const opacity = bright ? 0.98 : medium ? 0.86 : 0.66;
+      const label =
+        bright && index < 26
+          ? `<text x="${(p.x + 13).toFixed(1)}" y="${(p.y - 9).toFixed(1)}" font-family="${sansFont}" font-size="13" fill="${palette.ink}" opacity="0.32" letter-spacing="1.4">${escapeXml(star.name)}</text>`
+          : "";
+      return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${size}" fill="${palette.ink}" opacity="${opacity}" />${label}`;
+    })
+    .join("");
+  const constellationLines = scene.skyData.constellationLines
+    .flatMap((line) =>
+      line.segments.map((segment) =>
+        segment
+          .map((segmentPoint) => chartPoint(scene, segmentPoint.x, segmentPoint.y, starRadius))
+          .filter((segmentPoint) => Math.hypot(segmentPoint.x - cx, segmentPoint.y - cy) <= starRadius)
+          .map(
+            (segmentPoint, index) =>
+              `${index === 0 ? "M" : "L"} ${segmentPoint.x.toFixed(1)} ${segmentPoint.y.toFixed(1)}`,
+          )
+          .join(" "),
+      ),
+    )
+    .filter((path) => path.includes("L"))
+    .map((path) => `<path d="${path}" fill="none" stroke="${palette.fine}" stroke-width="1.15" opacity="0.46" />`)
+    .join("");
+  const altitudeRings = [0.22, 0.38, 0.54, 0.7, 0.86]
+    .map(
+      (scale, index) =>
+        `<circle cx="${cx}" cy="${cy}" r="${(starRadius * scale).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="${index === 4 ? 1.35 : 0.85}" opacity="${index === 4 ? 0.46 : 0.31}" />`,
+    )
+    .join("");
+  const curvedGrid = Array.from({ length: 9 }, (_, index) => {
+    const offset = (index - 4) * 0.2;
+    const rx = starRadius * Math.sqrt(Math.max(0.1, 1 - offset * offset * 0.74));
+    const y = cy + offset * starRadius;
+    return `<ellipse cx="${cx}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(starRadius * 0.08).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="0.65" opacity="0.24" />`;
+  }).join("");
+  const spokes = Array.from({ length: 24 }, (_, index) => {
+    const angle = index * 15;
+    const p1 = point(scene, angle, 165);
+    const p2 = point(scene, angle, starRadius);
+    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.fine}" stroke-width="${index % 6 === 0 ? 0.9 : 0.55}" opacity="${index % 6 === 0 ? 0.32 : 0.19}" />`;
+  }).join("");
+  const outerTicks = Array.from({ length: 180 }, (_, index) => {
+    const angle = index * 2;
+    const major = index % 15 === 0;
+    const mid = index % 5 === 0;
+    const p1 = point(scene, angle, innerRadius + (major ? 18 : mid ? 32 : 45));
+    const p2 = point(scene, angle, innerRadius + 68);
+    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.ink}" stroke-width="${major ? 1.8 : mid ? 1 : 0.55}" opacity="${major ? 0.46 : mid ? 0.32 : 0.18}" />`;
+  }).join("");
+  const degreeLabels = Array.from({ length: 12 }, (_, index) => {
+    const angle = index * 30;
+    const p = point(scene, angle, innerRadius + 96);
+    return `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="${serifFont}" font-size="24" fill="${palette.ink}" opacity="0.48">${angle}</text>`;
+  }).join("");
+  const cardinalLabels = [
+    ["N", 0],
+    ["E", 90],
+    ["S", 180],
+    ["W", 270],
+  ]
+    .map(([label, angle]) => {
+      const p = point(scene, Number(angle), innerRadius + 158);
+      return `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="${sansFont}" font-size="28" font-weight="700" fill="${palette.ink}" opacity="0.62" letter-spacing="5">${label}</text>`;
+    })
+    .join("");
+  const bodyMarks = scene.bodies
+    .map((body) => {
+      const p = point(scene, body.angle, Math.min(starRadius - 54, body.radius - 190));
+      return `
+        <g opacity="${body.prominence}">
+          <line x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" stroke="${palette.accent}" stroke-width="1.1" opacity="0.24" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${body.body === "Sun" ? 18 : 12}" fill="${body.body === "Sun" ? palette.accent : "none"}" stroke="${palette.ink}" stroke-width="2.2" opacity="0.82" />
+          <text x="${p.x.toFixed(1)}" y="${(p.y + 38).toFixed(1)}" text-anchor="middle" font-family="${sansFont}" font-size="20" fill="${palette.ink}" opacity="0.58" letter-spacing="2">${body.glyph}</text>
+        </g>
+      `;
+    })
+    .join("");
+
+  return `
+    <g>
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius + 62}" fill="none" stroke="${palette.accent}" stroke-width="10" opacity="0.16" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius}" fill="${palette.disc}" opacity="0.96" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius}" fill="none" stroke="${palette.ink}" stroke-width="3.6" opacity="0.62" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius - 34}" fill="none" stroke="${palette.ink}" stroke-width="1.4" opacity="0.38" />
+      <g clip-path="url(#signature-chart-clip)">
+        <rect x="${cx - chartRadius}" y="${cy - chartRadius}" width="${chartRadius * 2}" height="${chartRadius * 2}" fill="${palette.disc}" />
+        ${altitudeRings}
+        ${curvedGrid}
+        ${spokes}
+        ${constellationLines}
+        ${stars}
+        ${bodyMarks}
+        <circle cx="${cx}" cy="${cy}" r="24" fill="none" stroke="${palette.accent}" stroke-width="4" opacity="0.62" />
+        <circle cx="${cx}" cy="${cy}" r="${starRadius}" fill="none" stroke="${palette.ink}" stroke-width="1.6" opacity="0.5" />
+      </g>
+      <circle cx="${cx}" cy="${cy}" r="${innerRadius + 70}" fill="none" stroke="${palette.ink}" stroke-width="8" opacity="0.14" />
+      <circle cx="${cx}" cy="${cy}" r="${innerRadius + 98}" fill="none" stroke="${palette.ink}" stroke-width="1.2" opacity="0.36" />
+      ${outerTicks}
+      ${degreeLabels}
+      ${cardinalLabels}
+    </g>
+  `;
 }
 
 function renderPrecisionCodex(scene: CosmicSignatureScene) {
@@ -475,10 +642,6 @@ export function createCosmicSignatureSvg(scene: CosmicSignatureScene) {
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   ${renderBackground(scene)}
   ${renderIdentity(scene)}
-  ${renderPrecisionCodex(scene)}
-  ${renderInstrument(scene)}
-  ${renderAxes(scene)}
-  ${scene.bodies.map((body) => renderBody(scene, body)).join("")}
-  ${renderMoon(scene)}
+  ${renderReferenceSkyChart(scene)}
 </svg>`;
 }

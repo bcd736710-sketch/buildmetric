@@ -40,7 +40,6 @@ type PlaceSearchResult = {
 type PurchaseSelection = "sky" | "bundle" | null;
 type PostRevealState =
   | "sky-revealing"
-  | "sky-revealed"
   | "customizing"
   | "sky-confirmed"
   | "meteor-reveal"
@@ -948,15 +947,11 @@ export function SkyExperience() {
   useEffect(() => {
     if (step !== "editor") return;
 
-    const revealTimer = window.setTimeout(() => {
-      setPostRevealState("sky-revealed");
-    }, 3200);
     const customizeTimer = window.setTimeout(() => {
       setPostRevealState("customizing");
-    }, 4300);
+    }, 2200);
 
     return () => {
-      window.clearTimeout(revealTimer);
       window.clearTimeout(customizeTimer);
     };
   }, [step]);
@@ -1191,7 +1186,6 @@ export function SkyExperience() {
           ) : (
             <div className="sky-post-reveal mx-auto flex min-h-[calc(100vh-6rem)] w-full max-w-6xl flex-col items-center justify-center py-10 text-center">
               {(postRevealState === "sky-revealing" ||
-                postRevealState === "sky-revealed" ||
                 postRevealState === "sky-confirmed") && (
                 <div className="flex w-full flex-1 flex-col items-center justify-center">
                   <div
@@ -1219,16 +1213,6 @@ export function SkyExperience() {
                     </div>
                   )}
 
-                  {postRevealState === "sky-revealed" && (
-                    <div className="sky-soft-enter mt-6 w-full max-w-4xl">
-                      <button
-                        className="mt-6 inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-8 text-sm font-black uppercase tracking-[0.16em] text-midnight shadow-[0_0_38px_rgba(205,168,97,0.18)] transition hover:bg-starlight"
-                        onClick={() => setPostRevealState("customizing")}
-                      >
-                        Customize My Sky
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
 
