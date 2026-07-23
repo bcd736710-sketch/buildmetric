@@ -1,6 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { geoGraticule10, geoOrthographic, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import landTopology from "world-atlas/land-110m.json";
@@ -25,6 +33,10 @@ type PlaceSearchResult = {
   timezone: string;
   provider?: string;
 };
+
+type PurchaseSelection = "sky" | "bundle" | null;
+
+const PRODUCT_PRICE = 14.99;
 
 function svgDataUrl(svg: string) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
@@ -331,7 +343,19 @@ function AwakeningEarth({
   );
 }
 
-function PosterPreview({ config, sky }: { config: MomentConfig; sky: SkyComputation }) {
+function formatPrice(value: number) {
+  return `$${value.toFixed(2)}`;
+}
+
+function PosterPreview({
+  config,
+  sky,
+  className = "max-w-[25rem]",
+}: {
+  config: MomentConfig;
+  sky: SkyComputation;
+  className?: string;
+}) {
   const previewUrl = useMemo(
     () => svgDataUrl(createArtworkSvg(createArtworkScene(config, sky))),
     [config, sky],
@@ -340,8 +364,34 @@ function PosterPreview({ config, sky }: { config: MomentConfig; sky: SkyComputat
   return (
     <div
       aria-label={`${config.title} personalized star map preview`}
-      className="mx-auto aspect-[3508/4961] w-full max-w-[25rem] rounded-[1.35rem] border border-white/10 bg-cover bg-center shadow-soft"
+      className={`mx-auto aspect-[3508/4961] w-full rounded-[1.35rem] border border-white/10 bg-cover bg-center shadow-soft ${className}`}
       role="img"
+      style={{ backgroundImage: `url("${previewUrl}")` }}
+    />
+  );
+}
+
+function StyleThumbnail({
+  config,
+  sky,
+  styleKey,
+}: {
+  config: MomentConfig;
+  sky: SkyComputation;
+  styleKey: SkyPosterStyle;
+}) {
+  const previewUrl = useMemo(() => {
+    const styleConfig = resolveMomentConfig({
+      ...config,
+      style: styleKey,
+    });
+    return svgDataUrl(createArtworkSvg(createArtworkScene(styleConfig, sky)));
+  }, [config, sky, styleKey]);
+
+  return (
+    <span
+      aria-hidden="true"
+      className="block aspect-[3508/4961] w-full rounded-xl border border-white/10 bg-cover bg-center shadow-[0_18px_45px_rgba(0,0,0,0.28)]"
       style={{ backgroundImage: `url("${previewUrl}")` }}
     />
   );
@@ -350,9 +400,11 @@ function PosterPreview({ config, sky }: { config: MomentConfig; sky: SkyComputat
 function CosmicSignaturePreview({
   config,
   sky,
+  className = "max-w-[25rem]",
 }: {
   config: MomentConfig;
   sky: SkyComputation;
+  className?: string;
 }) {
   const previewUrl = useMemo(() => {
     const signatureConfig = resolveMomentConfig({
@@ -367,43 +419,74 @@ function CosmicSignaturePreview({
   }, [config, sky]);
 
   return (
-    <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-brand/24 bg-white/[0.045] p-4">
-      <div
-        aria-label="Your Cosmic Signature preview"
-        className="mx-auto aspect-[3508/4961] w-full max-w-[19rem] rounded-[1.1rem] border border-white/10 bg-cover bg-center shadow-soft"
-        role="img"
-        style={{ backgroundImage: `url("${previewUrl}")` }}
-      />
-      <div className="mt-5">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand">
-          We found something that belongs to this moment.
+    <div
+      aria-label="Your Cosmic Signature preview"
+      className={`mx-auto aspect-[3508/4961] w-full rounded-[1.2rem] border border-white/10 bg-cover bg-center shadow-soft ${className}`}
+      role="img"
+      style={{ backgroundImage: `url("${previewUrl}")` }}
+    />
+  );
+}
+
+function PurchaseSummary({
+  selection,
+  summaryRef,
+}: {
+  selection: PurchaseSelection;
+  summaryRef: RefObject<HTMLDivElement | null>;
+}) {
+  const includesSignature = selection === "bundle";
+  const total = PRODUCT_PRICE + (includesSignature ? PRODUCT_PRICE : 0);
+
+  return (
+    <section
+      className="mx-auto w-full max-w-3xl py-16 sm:py-20"
+      ref={summaryRef}
+    >
+      <div className="rounded-[1.5rem] border border-brand/24 bg-white/[0.055] p-6 shadow-soft backdrop-blur-xl sm:p-8">
+        <p className="text-xs font-black uppercase tracking-[0.26em] text-brand">
+          Your Selection
         </p>
-        <h3 className="mt-3 text-2xl font-black text-starlight">
-          Every moment leaves a celestial signature.
-        </h3>
-        <p className="mt-2 text-lg font-semibold text-starlight/78">
-          This one is yours.
-        </p>
-        <p className="mt-4 text-xs font-bold uppercase tracking-[0.22em] text-starlight/58">
-          YOUR COSMIC SIGNATURE
-        </p>
-        <p className="mt-3 text-sm leading-6 text-starlight/64">
-          A visual portrait of the celestial arrangement connected to the moment
-          you chose.
-        </p>
-        <p className="mt-2 text-sm leading-6 text-starlight/54">
-          Built from your exact date, time, and location.
-        </p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <button className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-bold text-midnight transition hover:bg-starlight">
-            Add My Cosmic Signature - $14.99
-          </button>
-          <button className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 px-5 py-3 text-sm font-bold text-starlight transition hover:border-brand hover:bg-brand/10">
-            Continue with My Sky
-          </button>
+        <h2 className="mt-3 text-3xl font-black text-starlight sm:text-4xl">
+          {selection ? "Choose what to keep." : "Your artwork is waiting."}
+        </h2>
+        <div className="mt-8 space-y-4">
+          <div className="flex items-center justify-between gap-6 border-b border-white/10 pb-4">
+            <div>
+              <p className="font-bold text-starlight">Your Sky</p>
+              <p className="mt-1 text-sm text-starlight/50">Personal celestial artwork</p>
+            </div>
+            <p className="font-black text-starlight">{formatPrice(PRODUCT_PRICE)}</p>
+          </div>
+          {includesSignature && (
+            <div className="flex items-center justify-between gap-6 border-b border-white/10 pb-4">
+              <div>
+                <p className="font-bold text-starlight">Your Cosmic Signature</p>
+                <p className="mt-1 text-sm text-starlight/50">The second artwork from this moment</p>
+              </div>
+              <p className="font-black text-starlight">{formatPrice(PRODUCT_PRICE)}</p>
+            </div>
+          )}
+          <div className="flex items-center justify-between gap-6 pt-2">
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-brand">
+              Total
+            </p>
+            <p className="text-3xl font-black text-starlight">
+              {formatPrice(total)}
+            </p>
+          </div>
         </div>
+        <button
+          className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full border border-white/15 px-6 text-sm font-black uppercase tracking-[0.16em] text-starlight/70"
+          disabled
+        >
+          Continue to Checkout
+        </button>
+        <p className="mt-3 text-center text-xs leading-5 text-starlight/42">
+          Checkout is the next step. Your selection is saved here for the purchase flow.
+        </p>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -415,7 +498,9 @@ export function SkyExperience() {
   const [placeError, setPlaceError] = useState("");
   const [placeSearching, setPlaceSearching] = useState(false);
   const [placeConfirmed, setPlaceConfirmed] = useState(false);
+  const [purchaseSelection, setPurchaseSelection] = useState<PurchaseSelection>(null);
   const [isPending, startTransition] = useTransition();
+  const purchaseSummaryRef = useRef<HTMLDivElement | null>(null);
 
   const sky = useMemo(() => computeSky(config), [config]);
 
@@ -435,6 +520,16 @@ export function SkyExperience() {
     setPlaceQuery(place.placeName);
     setPlaceResults([]);
     setPlaceConfirmed(true);
+  }
+
+  function choosePurchase(selection: Exclude<PurchaseSelection, null>) {
+    setPurchaseSelection(selection);
+    window.setTimeout(() => {
+      purchaseSummaryRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 80);
   }
 
   const searchPlaces = useCallback(async (options?: { quiet?: boolean }) => {
@@ -659,58 +754,74 @@ export function SkyExperience() {
               </div>
             </div>
           ) : (
-            <div className="mx-auto w-full max-w-6xl rounded-[2rem] border border-white/10 bg-white/[0.06] p-4 shadow-soft backdrop-blur-xl transition-all duration-1000 sm:p-6">
-              <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-                <PosterPreview config={config} sky={sky} />
-                <div className="rounded-[1.5rem] border border-white/10 bg-midnight/70 p-5">
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand">
-                    Framed from your sky
+            <div className="mx-auto w-full max-w-7xl transition-all duration-1000">
+              <section className="mx-auto flex min-h-[calc(100vh-7rem)] w-full max-w-5xl flex-col items-center justify-center py-14 text-center sm:py-20">
+                <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
+                  Framed from your sky
+                </p>
+                <h2 className="mt-4 text-4xl font-black leading-tight text-starlight sm:text-5xl">
+                  Your moment is ready to become artwork.
+                </h2>
+                <div className="mt-10 w-full">
+                  <PosterPreview
+                    className="max-w-[min(28rem,82vw)]"
+                    config={config}
+                    sky={sky}
+                  />
+                </div>
+              </section>
+
+              <section className="mx-auto w-full max-w-6xl py-14 sm:py-20">
+                <div className="mx-auto max-w-3xl text-center">
+                  <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
+                    Make it yours
                   </p>
-                  <h2 className="mt-3 text-3xl font-black">
-                    Your moment is ready to become artwork.
+                  <h2 className="mt-4 text-3xl font-black text-starlight sm:text-4xl">
+                    Tune the words and the atmosphere.
                   </h2>
+                </div>
 
-                  <label className="mt-6 block text-sm font-bold text-starlight/72">
-                    Poster title
-                    <input
-                      className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none focus:border-brand"
-                      onChange={(event) => patchMoment({ title: event.target.value })}
-                      value={config.title}
-                    />
-                  </label>
+                <div className="mt-9 rounded-[1.5rem] border border-white/10 bg-white/[0.055] p-5 shadow-soft backdrop-blur-xl sm:p-7">
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <label className="block text-sm font-bold text-starlight/72">
+                      Poster title
+                      <input
+                        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
+                        onChange={(event) => patchMoment({ title: event.target.value })}
+                        value={config.title}
+                      />
+                    </label>
 
-                  <label className="mt-4 block text-sm font-bold text-starlight/72">
-                    Message
-                    <input
-                      className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none focus:border-brand"
-                      onChange={(event) => patchMoment({ message: event.target.value })}
-                      value={config.message}
-                    />
-                  </label>
+                    <label className="block text-sm font-bold text-starlight/72">
+                      Message
+                      <input
+                        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
+                        onChange={(event) => patchMoment({ message: event.target.value })}
+                        value={config.message}
+                      />
+                    </label>
+                  </div>
 
-                  <div className="mt-6">
-                    <p className="text-sm font-bold text-starlight/72">Style</p>
-                    <div className="mt-3 grid gap-3">
+                  <div className="mt-8">
+                    <p className="text-sm font-bold uppercase tracking-[0.2em] text-starlight/60">
+                      Style
+                    </p>
+                    <div className="mt-4 grid gap-4 md:grid-cols-3">
                       {(Object.keys(posterStyles) as SkyPosterStyle[]).map((styleKey) => (
                         <button
-                          className={`rounded-2xl border p-4 text-left transition ${
+                          className={`group rounded-[1.25rem] border p-3 text-left transition duration-300 ${
                             config.style === styleKey
-                              ? "border-brand bg-brand/12"
-                              : "border-white/10 bg-white/[0.06] hover:border-brand/70"
+                              ? "border-brand bg-brand/12 shadow-[0_0_38px_rgba(205,168,97,0.14)]"
+                              : "border-white/10 bg-white/[0.04] hover:border-brand/60 hover:bg-white/[0.07]"
                           }`}
                           key={styleKey}
                           onClick={() => patchMoment({ style: styleKey })}
                         >
-                          <span className="flex items-center gap-3 font-bold">
-                            <span
-                              className="h-5 w-5 rounded-full border border-white/20"
-                              style={{
-                                background: `linear-gradient(135deg, ${posterStyles[styleKey].background}, ${posterStyles[styleKey].accent})`,
-                              }}
-                            />
+                          <StyleThumbnail config={config} sky={sky} styleKey={styleKey} />
+                          <span className="mt-4 block text-sm font-black uppercase tracking-[0.18em] text-starlight">
                             {posterStyles[styleKey].name}
                           </span>
-                          <span className="mt-1 block text-sm leading-6 text-starlight/56">
+                          <span className="mt-2 block text-sm leading-5 text-starlight/52">
                             {posterStyles[styleKey].description}
                           </span>
                         </button>
@@ -718,13 +829,16 @@ export function SkyExperience() {
                     </div>
                   </div>
 
-                  <div className="mt-7 rounded-2xl border border-brand/30 bg-brand/10 p-4">
-                    <p className="text-sm leading-6 text-starlight/70">
+                  <details className="mt-7 rounded-2xl border border-white/10 bg-midnight/50 p-4">
+                    <summary className="cursor-pointer text-sm font-bold uppercase tracking-[0.18em] text-starlight/54">
+                      About this sky
+                    </summary>
+                    <p className="mt-4 text-sm leading-6 text-starlight/62">
                       The final file uses the same composition as this preview:
                       real star positions, restrained constellation linework,
                       moon phase, planet markers, and Milky Way geometry.
                     </p>
-                    <p className="mt-3 text-xs leading-5 text-starlight/46">
+                    <p className="mt-3 text-xs leading-5 text-starlight/42">
                       {sky.catalog.renderedStarCount} stars arranged for {config.placeName}.
                       Technical visibility and UTC data stay in the system, not
                       as dominant poster text.
@@ -732,11 +846,73 @@ export function SkyExperience() {
                     {isPending && (
                       <p className="mt-3 text-xs text-brand">Updating your sky...</p>
                     )}
-                  </div>
-
-                  <CosmicSignaturePreview config={config} sky={sky} />
+                  </details>
                 </div>
-              </div>
+              </section>
+
+              <section className="mx-auto w-full max-w-6xl py-16 text-center sm:py-24">
+                <p className="text-xs font-black uppercase tracking-[0.28em] text-brand">
+                  We found something that belongs to this moment.
+                </p>
+                <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-black leading-tight text-starlight sm:text-5xl">
+                  Every moment leaves a celestial signature.
+                </h2>
+                <p className="mt-4 text-xl font-semibold text-starlight/78">
+                  This one is yours.
+                </p>
+
+                <div className="mt-10 grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+                  <CosmicSignaturePreview
+                    className="max-w-[min(27rem,82vw)]"
+                    config={config}
+                    sky={sky}
+                  />
+                  <div className="text-left">
+                    <p className="text-xs font-black uppercase tracking-[0.24em] text-starlight/48">
+                      Your Cosmic Signature
+                    </p>
+                    <p className="mt-4 text-lg leading-8 text-starlight/72">
+                      A visual portrait of the celestial arrangement connected to
+                      the moment you chose.
+                    </p>
+                    <p className="mt-3 text-base leading-7 text-starlight/56">
+                      Built from your exact date, time, and location.
+                    </p>
+                    <p className="mt-4 text-sm font-bold text-brand/80">
+                      Style follows Your Sky: {posterStyles[config.style].name}
+                    </p>
+                    {purchaseSelection === "bundle" && (
+                      <p className="mt-5 rounded-full border border-brand/28 bg-brand/12 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.18em] text-brand">
+                        Cosmic Signature Added
+                      </p>
+                    )}
+                    {purchaseSelection === "sky" && (
+                      <p className="mt-5 rounded-full border border-white/12 bg-white/[0.05] px-5 py-3 text-center text-sm font-bold text-starlight/60">
+                        Continuing with Your Sky only
+                      </p>
+                    )}
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                      <button
+                        className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-midnight transition hover:bg-starlight"
+                        onClick={() => choosePurchase("bundle")}
+                      >
+                        Add My Cosmic Signature - {formatPrice(PRODUCT_PRICE)}
+                      </button>
+                      <button
+                        className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/15 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-starlight transition hover:border-brand hover:bg-brand/10"
+                        onClick={() => choosePurchase("sky")}
+                      >
+                        Continue with My Sky
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <PurchaseSummary
+                selection={purchaseSelection}
+                summaryRef={purchaseSummaryRef}
+              />
             </div>
           )}
         </div>
