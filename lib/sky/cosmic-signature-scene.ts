@@ -15,7 +15,7 @@ export type CosmicSignatureBody = {
 };
 
 export type CosmicSignatureAxis = {
-  id: "north" | "east" | "south" | "west" | "zenith" | "sun-bearing";
+  id: "north" | "east" | "south" | "west" | "sun-bearing" | "moon-bearing";
   label: string;
   angle: number;
   radius: number;
@@ -174,26 +174,27 @@ function prepareBodies(skyData: SkyComputation): CosmicSignatureBody[] {
     }));
 }
 
-function prepareAxes(config: MomentConfig, skyData: SkyComputation): CosmicSignatureAxis[] {
+function prepareAxes(skyData: SkyComputation): CosmicSignatureAxis[] {
   const sun = skyData.bodies.find((body) => body.body === "Sun");
+  const moon = skyData.bodies.find((body) => body.body === "Moon");
   return [
     { id: "north", label: "N", angle: 0, radius: 1276, opacity: 0.9 },
     { id: "east", label: "E", angle: 90, radius: 1276, opacity: 0.72 },
     { id: "south", label: "S", angle: 180, radius: 1276, opacity: 0.9 },
     { id: "west", label: "W", angle: 270, radius: 1276, opacity: 0.72 },
     {
-      id: "zenith",
-      label: "Z",
-      angle: normalizeDegrees(180 - config.latitude),
-      radius: 1212,
-      opacity: 0.5,
-    },
-    {
       id: "sun-bearing",
       label: "SOL",
       angle: sun?.azimuth ?? 0,
       radius: 1170,
       opacity: 0.42,
+    },
+    {
+      id: "moon-bearing",
+      label: "LUN",
+      angle: moon?.azimuth ?? 0,
+      radius: 1130,
+      opacity: 0.38,
     },
   ];
 }
@@ -227,7 +228,7 @@ export function createCosmicSignatureScene(
       angle: moon?.azimuth ?? 0,
     },
     bodies: prepareBodies(skyData),
-    axes: prepareAxes(config, skyData),
+    axes: prepareAxes(skyData),
     momentLine: `${formatDate(config.localDate)} / ${config.localTime}`,
     placeLine: config.placeName,
     coordinateLine: `${formatCoordinate(config.latitude, "N", "S")} / ${formatCoordinate(
