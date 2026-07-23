@@ -21,6 +21,9 @@ import {
   defaultMomentConfig,
   posterStyles,
   resolveMomentConfig,
+  type SkyArtStyle,
+  type SkyColorPalette,
+  type SkyMapStyle,
   type MomentConfig,
   type SkyPosterStyle,
 } from "@/lib/sky/moment";
@@ -43,10 +46,56 @@ type PostRevealState =
   | "meteor-reveal"
   | "cosmic-signature-revealed"
   | "purchase-selection";
-type CustomizePanel = "title" | "message" | "style" | null;
 type CosmicRevealPhase = "moon" | "partial" | "full" | "poster";
+type EditorStep = "style" | "personalize" | "complete";
 
 const PRODUCT_PRICE = 14.99;
+
+const paletteOptions: {
+  id: SkyColorPalette;
+  label: string;
+  swatch: string;
+  style: SkyPosterStyle;
+}[] = [
+  {
+    id: "midnight-gold",
+    label: "Midnight Gold",
+    swatch: "linear-gradient(135deg, #050711, #d2aa5d)",
+    style: "midnight-gold",
+  },
+  {
+    id: "celestial-blue",
+    label: "Celestial Blue",
+    swatch: "linear-gradient(135deg, #314867, #d6e1ff)",
+    style: "celestial-dream",
+  },
+  {
+    id: "deep-black",
+    label: "Deep Black",
+    swatch: "linear-gradient(135deg, #05070c, #f7f3e8)",
+    style: "midnight-gold",
+  },
+  {
+    id: "observatory-ivory",
+    label: "Observatory Ivory",
+    swatch: "linear-gradient(135deg, #efe3c9, #7d512c)",
+    style: "vintage-observatory",
+  },
+];
+
+const artStyleOptions: { id: SkyArtStyle; label: string; note: string }[] = [
+  { id: "classic", label: "Classic", note: "Balanced celestial print detail." },
+  { id: "minimal", label: "Minimal", note: "Quieter lines and fewer labels." },
+  { id: "luminous", label: "Luminous", note: "Softer glow and richer sky haze." },
+  { id: "archival", label: "Archival", note: "More instrument-like linework." },
+];
+
+const mapStyleOptions: { id: SkyMapStyle; label: string; note: string }[] = [
+  { id: "classic", label: "Classic", note: "Full celestial composition." },
+  { id: "minimal", label: "Minimal", note: "Reduced constellation structure." },
+  { id: "inverted", label: "Inverted", note: "Light/dark chart treatment." },
+  { id: "technical", label: "Technical", note: "Labels and calibration emphasized." },
+];
 
 function svgDataUrl(svg: string) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
@@ -421,32 +470,6 @@ function PosterPreview({
   );
 }
 
-function StyleThumbnail({
-  config,
-  sky,
-  styleKey,
-}: {
-  config: MomentConfig;
-  sky: SkyComputation;
-  styleKey: SkyPosterStyle;
-}) {
-  const previewUrl = useMemo(() => {
-    const styleConfig = resolveMomentConfig({
-      ...config,
-      style: styleKey,
-    });
-    return svgDataUrl(createArtworkSvg(createArtworkScene(styleConfig, sky)));
-  }, [config, sky, styleKey]);
-
-  return (
-    <span
-      aria-hidden="true"
-      className="block aspect-[3508/4961] w-full rounded-xl border border-white/10 bg-cover bg-center shadow-[0_18px_45px_rgba(0,0,0,0.28)]"
-      style={{ backgroundImage: `url("${previewUrl}")` }}
-    />
-  );
-}
-
 function CosmicSignaturePreview({
   config,
   sky,
@@ -556,6 +579,287 @@ function PurchaseSummary({
   );
 }
 
+function TinyMapGlyph({ variant }: { variant: SkyMapStyle }) {
+  return (
+    <span className="relative block aspect-square rounded-lg bg-white">
+      <span className="absolute inset-[18%] rounded-full border border-slate-500" />
+      {variant !== "minimal" && (
+        <>
+          <span className="absolute left-1/2 top-[18%] h-[64%] border-l border-slate-400/70" />
+          <span className="absolute left-[18%] top-1/2 w-[64%] border-t border-slate-400/70" />
+        </>
+      )}
+      {variant === "technical" && (
+        <>
+          <span className="absolute inset-[28%] rounded-full border border-slate-400 border-dashed" />
+          <span className="absolute inset-[38%] rounded-full border border-slate-400" />
+        </>
+      )}
+      {variant === "inverted" && (
+        <span className="absolute inset-[24%] rounded-full bg-slate-950" />
+      )}
+    </span>
+  );
+}
+
+function CustomizeEditor({
+  config,
+  sky,
+  editorStep,
+  setEditorStep,
+  patchMoment,
+  confirmSky,
+}: {
+  config: MomentConfig;
+  sky: SkyComputation;
+  editorStep: EditorStep;
+  setEditorStep: (step: EditorStep) => void;
+  patchMoment: (patch: Partial<MomentConfig>) => void;
+  confirmSky: () => void;
+}) {
+  const nextLabel =
+    editorStep === "style"
+      ? "Continue to Personalize"
+      : editorStep === "personalize"
+        ? "Review My Sky"
+        : "This Is My Sky";
+  const nextAction =
+    editorStep === "style"
+      ? () => setEditorStep("personalize")
+      : editorStep === "personalize"
+        ? () => setEditorStep("complete")
+        : confirmSky;
+
+  return (
+    <div className="fixed inset-0 z-20 grid bg-[#ececec] pt-[4.1rem] text-slate-950 lg:grid-cols-[minmax(0,1fr)_28rem]">
+      <section className="flex min-h-0 items-center justify-center overflow-auto bg-[#ededed] px-8 py-8">
+        <PosterPreview
+          className="h-[min(84vh,58rem)] !w-auto max-w-[68vw] rounded-none border-0 shadow-[0_24px_80px_rgba(15,23,42,0.22)]"
+          config={config}
+          sky={sky}
+        />
+      </section>
+
+      <aside className="flex min-h-0 flex-col border-l border-slate-200 bg-white shadow-[-20px_0_60px_rgba(15,23,42,0.06)]">
+        <div className="border-b border-slate-200 px-6 py-5">
+          <div className="flex gap-4 text-sm font-bold">
+            <button className="border-b-2 border-slate-950 pb-2 text-slate-950">
+              Your Sky
+            </button>
+            <button className="pb-2 text-slate-300" disabled>
+              Cosmic Signature
+            </button>
+          </div>
+          <div className="mt-5 grid grid-cols-3 text-xs font-semibold uppercase tracking-[0.08em] text-slate-400">
+            {(["style", "personalize", "complete"] as const).map((item, index) => (
+              <button
+                className={editorStep === item ? "text-slate-950" : "text-slate-400"}
+                key={item}
+                onClick={() => setEditorStep(item)}
+              >
+                {index + 1}. {item}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
+          <h2 className="font-serif text-3xl font-bold text-slate-950">
+            Create your sky
+          </h2>
+          <p className="mt-2 text-sm font-semibold text-slate-600">
+            Digital artwork from {formatPrice(PRODUCT_PRICE)}
+          </p>
+
+          {editorStep === "style" && (
+            <div className="mt-7 space-y-7">
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                  Artwork Format
+                </h3>
+                <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                  <button className="rounded-lg bg-white px-4 py-3 text-sm font-bold shadow-sm">
+                    Digital
+                  </button>
+                  <button className="rounded-lg px-4 py-3 text-sm font-bold text-slate-400" disabled>
+                    Print Coming Soon
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                  Art Style
+                </h3>
+                <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                  {artStyleOptions.map((option) => (
+                    <button
+                      className={`rounded-lg px-3 py-3 text-left text-sm font-bold ${
+                        config.artStyle === option.id
+                          ? "bg-white shadow-sm ring-1 ring-slate-950"
+                          : "text-slate-500"
+                      }`}
+                      key={option.id}
+                      onClick={() => patchMoment({ artStyle: option.id })}
+                    >
+                      {option.label}
+                      <span className="mt-1 block text-xs font-medium text-slate-400">
+                        {option.note}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                  Color Palette
+                </h3>
+                <div className="mt-3 grid grid-cols-4 gap-3 rounded-xl bg-slate-100 p-3">
+                  {paletteOptions.map((option) => (
+                    <button
+                      className={`rounded-xl p-2 text-center text-xs font-semibold ${
+                        config.colorPalette === option.id
+                          ? "bg-white ring-2 ring-slate-950"
+                          : "text-slate-500"
+                      }`}
+                      key={option.id}
+                      onClick={() =>
+                        patchMoment({
+                          colorPalette: option.id,
+                          style: option.style,
+                        })
+                      }
+                    >
+                      <span
+                        className="mx-auto block h-14 w-14 rounded-full"
+                        style={{ background: option.swatch }}
+                      />
+                      <span className="mt-2 block">{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                  Map Style
+                </h3>
+                <div className="mt-3 grid grid-cols-4 gap-2 rounded-xl bg-slate-100 p-2">
+                  {mapStyleOptions.map((option) => (
+                    <button
+                      className={`rounded-lg p-1 text-center text-xs font-bold ${
+                        config.mapStyle === option.id
+                          ? "bg-white ring-2 ring-slate-950"
+                          : "text-slate-500"
+                      }`}
+                      key={option.id}
+                      onClick={() => patchMoment({ mapStyle: option.id })}
+                    >
+                      <TinyMapGlyph variant={option.id} />
+                      <span className="mt-2 block">{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                  Projection / Theme
+                </h3>
+                <div className="mt-3 rounded-xl bg-slate-100 p-1">
+                  <button className="w-full rounded-lg bg-white px-4 py-3 text-left text-sm font-bold shadow-sm">
+                    Sky Dome
+                    <span className="ml-2 text-xs font-medium text-slate-400">
+                      Currently supported
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                  Elements
+                </h3>
+                <div className="mt-3 space-y-2 rounded-xl bg-slate-100 p-3">
+                  {(
+                    [
+                      ["grid", "Grid"],
+                      ["constellations", "Constellations"],
+                      ["moon", "Moon"],
+                      ["planets", "Planets"],
+                      ["milkyWay", "Milky Way"],
+                    ] as const
+                  ).map(([key, label]) => (
+                    <label
+                      className="flex items-center justify-between rounded-lg bg-white px-4 py-3 text-sm font-bold"
+                      key={key}
+                    >
+                      {label}
+                      <input
+                        checked={config.elements[key]}
+                        onChange={(event) =>
+                          patchMoment({
+                            elements: {
+                              ...config.elements,
+                              [key]: event.target.checked,
+                            },
+                          })
+                        }
+                        type="checkbox"
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {editorStep === "personalize" && (
+            <div className="mt-7 space-y-5">
+              <label className="block text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                Poster Title
+                <input
+                  className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-base normal-case tracking-normal outline-none focus:border-slate-950"
+                  onChange={(event) => patchMoment({ title: event.target.value })}
+                  value={config.title}
+                />
+              </label>
+              <label className="block text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+                Message
+                <input
+                  className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-base normal-case tracking-normal outline-none focus:border-slate-950"
+                  onChange={(event) => patchMoment({ message: event.target.value })}
+                  value={config.message}
+                />
+              </label>
+            </div>
+          )}
+
+          {editorStep === "complete" && (
+            <div className="mt-7 rounded-xl bg-slate-100 p-4 text-sm leading-6 text-slate-600">
+              <p className="font-bold text-slate-950">Review your artwork.</p>
+              <p className="mt-2">
+                The preview on the left reflects your current palette, map style,
+                visible elements, title, and message.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="border-t border-slate-200 bg-white p-6">
+          <button
+            className="min-h-14 w-full rounded-full bg-slate-950 px-6 text-sm font-black uppercase tracking-[0.14em] text-white transition hover:bg-slate-800"
+            onClick={nextAction}
+          >
+            {nextLabel}
+          </button>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
 export function SkyExperience() {
   const [step, setStep] = useState<CreateStep>("date");
   const [config, setConfig] = useState<MomentConfig>(defaultMomentConfig);
@@ -569,9 +873,9 @@ export function SkyExperience() {
   const [purchaseSelection, setPurchaseSelection] = useState<PurchaseSelection>(null);
   const [postRevealState, setPostRevealState] =
     useState<PostRevealState>("sky-revealing");
-  const [activeCustomize, setActiveCustomize] = useState<CustomizePanel>(null);
   const [cosmicRevealPhase, setCosmicRevealPhase] =
     useState<CosmicRevealPhase>("moon");
+  const [editorStep, setEditorStep] = useState<EditorStep>("style");
   const [isPending, startTransition] = useTransition();
   const purchaseSummaryRef = useRef<HTMLDivElement | null>(null);
 
@@ -623,7 +927,7 @@ export function SkyExperience() {
   }
 
   function confirmSky() {
-    setActiveCustomize(null);
+    setEditorStep("style");
     setPostRevealState("sky-confirmed");
     setCosmicRevealPhase("moon");
     window.setTimeout(() => setPostRevealState("meteor-reveal"), 450);
@@ -635,9 +939,9 @@ export function SkyExperience() {
 
   function revealSky() {
     setPostRevealState("sky-revealing");
-    setActiveCustomize(null);
     setPurchaseSelection(null);
     setCosmicRevealPhase("moon");
+    setEditorStep("style");
     setStep("editor");
   }
 
@@ -888,7 +1192,6 @@ export function SkyExperience() {
             <div className="sky-post-reveal mx-auto flex min-h-[calc(100vh-6rem)] w-full max-w-6xl flex-col items-center justify-center py-10 text-center">
               {(postRevealState === "sky-revealing" ||
                 postRevealState === "sky-revealed" ||
-                postRevealState === "customizing" ||
                 postRevealState === "sky-confirmed") && (
                 <div className="flex w-full flex-1 flex-col items-center justify-center">
                   <div
@@ -916,96 +1219,28 @@ export function SkyExperience() {
                     </div>
                   )}
 
-                  {(postRevealState === "customizing" ||
-                    postRevealState === "sky-revealed") && (
+                  {postRevealState === "sky-revealed" && (
                     <div className="sky-soft-enter mt-6 w-full max-w-4xl">
-                      <div className="mx-auto inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.055] p-2 backdrop-blur-xl">
-                        {(["title", "message", "style"] as const).map((panel) => (
-                          <button
-                            className={`min-h-11 rounded-full px-5 text-xs font-black uppercase tracking-[0.18em] transition ${
-                              activeCustomize === panel
-                                ? "bg-brand text-midnight"
-                                : "text-starlight/62 hover:bg-white/[0.07] hover:text-starlight"
-                            }`}
-                            key={panel}
-                            onClick={() =>
-                              setActiveCustomize((current) =>
-                                current === panel ? null : panel,
-                              )
-                            }
-                          >
-                            {panel}
-                          </button>
-                        ))}
-                      </div>
-
-                      {activeCustomize && (
-                        <div className="sky-floating-control mx-auto mt-4 max-w-3xl rounded-[1.25rem] border border-white/10 bg-midnight/82 p-4 shadow-soft backdrop-blur-xl">
-                          {activeCustomize === "title" && (
-                            <label className="block text-left text-sm font-bold text-starlight/72">
-                              Title
-                              <input
-                                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
-                                onChange={(event) =>
-                                  patchMoment({ title: event.target.value })
-                                }
-                                value={config.title}
-                              />
-                            </label>
-                          )}
-                          {activeCustomize === "message" && (
-                            <label className="block text-left text-sm font-bold text-starlight/72">
-                              Message
-                              <input
-                                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-starlight outline-none transition focus:border-brand"
-                                onChange={(event) =>
-                                  patchMoment({ message: event.target.value })
-                                }
-                                value={config.message}
-                              />
-                            </label>
-                          )}
-                          {activeCustomize === "style" && (
-                            <div className="grid gap-3 sm:grid-cols-3">
-                              {(Object.keys(posterStyles) as SkyPosterStyle[]).map((styleKey) => (
-                                <button
-                                  className={`rounded-2xl border p-2 text-left transition ${
-                                    config.style === styleKey
-                                      ? "border-brand bg-brand/12"
-                                      : "border-white/10 bg-white/[0.04] hover:border-brand/60"
-                                  }`}
-                                  key={styleKey}
-                                  onClick={() => patchMoment({ style: styleKey })}
-                                >
-                                  <StyleThumbnail
-                                    config={config}
-                                    sky={sky}
-                                    styleKey={styleKey}
-                                  />
-                                  <span className="mt-3 block text-xs font-black uppercase tracking-[0.16em] text-starlight">
-                                    {posterStyles[styleKey].name}
-                                  </span>
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-
                       <button
                         className="mt-6 inline-flex min-h-14 items-center justify-center rounded-full bg-brand px-8 text-sm font-black uppercase tracking-[0.16em] text-midnight shadow-[0_0_38px_rgba(205,168,97,0.18)] transition hover:bg-starlight"
-                        onClick={confirmSky}
+                        onClick={() => setPostRevealState("customizing")}
                       >
-                        This Is My Sky
+                        Customize My Sky
                       </button>
-                      {isPending && (
-                        <p className="mt-3 text-xs text-brand">
-                          Updating your sky...
-                        </p>
-                      )}
                     </div>
                   )}
                 </div>
+              )}
+
+              {postRevealState === "customizing" && (
+                <CustomizeEditor
+                  config={config}
+                  confirmSky={confirmSky}
+                  editorStep={editorStep}
+                  patchMoment={patchMoment}
+                  setEditorStep={setEditorStep}
+                  sky={sky}
+                />
               )}
 
               {postRevealState === "meteor-reveal" && (

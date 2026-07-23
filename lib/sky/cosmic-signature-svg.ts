@@ -225,6 +225,61 @@ function renderInstrument(scene: CosmicSignatureScene) {
   return renderGoldDial(scene);
 }
 
+function renderPrecisionCodex(scene: CosmicSignatureScene) {
+  const { cx, cy, identityRing, orientationRing, planetRing } = scene.composition;
+  const vintage = scene.style.id === "vintage-observatory";
+  const fine = scene.style.fineLine;
+  const ink = scene.style.ink;
+  const calibrationRings = Array.from({ length: 10 }, (_, index) => {
+    const radius = 520 + index * 86;
+    const opacity = vintage ? 0.09 + index * 0.012 : 0.045 + index * 0.008;
+    const dash = index % 3 === 0 ? "12 18" : index % 3 === 1 ? "3 18" : "";
+    return ring(scene, radius, opacity, index % 4 === 0 ? 1.1 : 0.7, dash);
+  }).join("");
+  const radialFine = Array.from({ length: 72 }, (_, index) => {
+    const angle = index * 5;
+    const major = index % 6 === 0;
+    const inner = major ? 430 : 610;
+    const outer = major ? identityRing + 36 : orientationRing + 44;
+    const p1 = point(scene, angle, inner);
+    const p2 = point(scene, angle, outer);
+    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${fine}" stroke-width="${major ? 0.8 : 0.45}" opacity="${major ? 0.12 : 0.055}" />`;
+  }).join("");
+  const coordinateCurves = scene.bodies
+    .map((body, index) => {
+      const spread = 22 + Math.abs(body.altitude) * 0.18;
+      return `<path d="${arcPath(scene, body.radius + 70 + index * 10, body.angle - spread, body.angle + spread * 1.4)}" fill="none" stroke="${index % 2 ? ink : fine}" stroke-width="${index % 2 ? 0.9 : 1.2}" opacity="${body.prominence * (vintage ? 0.18 : 0.12)}" />`;
+    })
+    .join("");
+  const relationshipLines = scene.bodies
+    .flatMap((body, index) =>
+      scene.bodies.slice(index + 1).map((other, pairIndex) => {
+        const p1 = point(scene, body.angle, body.radius);
+        const p2 = point(scene, other.angle, other.radius);
+        const strong = body.body === "Sun" || other.body === "Sun" || pairIndex % 3 === 0;
+        return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${strong ? fine : ink}" stroke-width="${strong ? 0.8 : 0.45}" opacity="${strong ? 0.13 : 0.055}" />`;
+      }),
+    )
+    .join("");
+  const microMarks = Array.from({ length: 144 }, (_, index) => {
+    const angle = index * 2.5;
+    const radius = planetRing - 88 + (index % 6) * 28;
+    const p = point(scene, angle, radius);
+    return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${index % 12 === 0 ? 2.4 : 1.2}" fill="${ink}" opacity="${index % 12 === 0 ? 0.18 : 0.075}" />`;
+  }).join("");
+
+  return `
+    <g>
+      <circle cx="${cx}" cy="${cy}" r="${identityRing + 120}" fill="none" stroke="${fine}" stroke-width="1" opacity="${vintage ? 0.16 : 0.1}" />
+      ${calibrationRings}
+      ${radialFine}
+      ${coordinateCurves}
+      ${relationshipLines}
+      ${microMarks}
+    </g>
+  `;
+}
+
 function moonPhaseOverlay(scene: CosmicSignatureScene) {
   const { cx, cy, coreRadius } = scene.composition;
   const illum = scene.moon.illumination;
@@ -420,6 +475,7 @@ export function createCosmicSignatureSvg(scene: CosmicSignatureScene) {
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   ${renderBackground(scene)}
   ${renderIdentity(scene)}
+  ${renderPrecisionCodex(scene)}
   ${renderInstrument(scene)}
   ${renderAxes(scene)}
   ${scene.bodies.map((body) => renderBody(scene, body)).join("")}

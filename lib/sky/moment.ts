@@ -5,6 +5,24 @@ export type SkyPosterStyle =
   | "celestial-dream"
   | "vintage-observatory";
 
+export type SkyArtworkFormat = "digital" | "print";
+export type SkyArtStyle = "classic" | "minimal" | "luminous" | "archival";
+export type SkyColorPalette =
+  | "midnight-gold"
+  | "celestial-blue"
+  | "deep-black"
+  | "observatory-ivory";
+export type SkyMapStyle = "classic" | "minimal" | "inverted" | "technical";
+export type SkyProjection = "sky-dome";
+
+export type SkyElementToggles = {
+  grid: boolean;
+  constellations: boolean;
+  moon: boolean;
+  planets: boolean;
+  milkyWay: boolean;
+};
+
 export type TimeAccuracy =
   | "morning"
   | "afternoon"
@@ -29,6 +47,12 @@ export type MomentConfig = MomentPlace & {
   title: string;
   message: string;
   style: SkyPosterStyle;
+  artworkFormat: SkyArtworkFormat;
+  artStyle: SkyArtStyle;
+  colorPalette: SkyColorPalette;
+  mapStyle: SkyMapStyle;
+  projection: SkyProjection;
+  elements: SkyElementToggles;
 };
 
 export const timeAccuracyOptions: Record<
@@ -131,6 +155,12 @@ function timeParts(time: string) {
   return { hour, minute };
 }
 
+function defaultPaletteForStyle(style: SkyPosterStyle): SkyColorPalette {
+  if (style === "celestial-dream") return "celestial-blue";
+  if (style === "vintage-observatory") return "observatory-ivory";
+  return "midnight-gold";
+}
+
 function zonedParts(date: Date, timezone: string) {
   const formatter = new Intl.DateTimeFormat("en-US", {
     timeZone: timezone,
@@ -188,7 +218,27 @@ export function localMomentToUtcInstant(
 }
 
 export function resolveMomentConfig(
-  config: Omit<MomentConfig, "utcInstant"> & { utcInstant?: string },
+  config: Omit<
+    MomentConfig,
+    | "utcInstant"
+    | "artworkFormat"
+    | "artStyle"
+    | "colorPalette"
+    | "mapStyle"
+    | "projection"
+    | "elements"
+  > &
+    Partial<
+      Pick<
+        MomentConfig,
+        | "artworkFormat"
+        | "artStyle"
+        | "colorPalette"
+        | "mapStyle"
+        | "projection"
+        | "elements"
+      >
+    > & { utcInstant?: string },
 ): MomentConfig {
   const today = new Date().toISOString().slice(0, 10);
   const localDate =
@@ -206,6 +256,18 @@ export function resolveMomentConfig(
     ...config,
     localDate,
     localTime,
+    artworkFormat: config.artworkFormat ?? "digital",
+    artStyle: config.artStyle ?? "classic",
+    colorPalette: config.colorPalette ?? defaultPaletteForStyle(config.style),
+    mapStyle: config.mapStyle ?? "classic",
+    projection: config.projection ?? "sky-dome",
+    elements: config.elements ?? {
+      grid: true,
+      constellations: true,
+      moon: true,
+      planets: true,
+      milkyWay: true,
+    },
     utcInstant: localMomentToUtcInstant(localDate, localTime, config.timezone),
   };
 }
@@ -219,4 +281,16 @@ export const defaultMomentConfig: MomentConfig = resolveMomentConfig({
   title: "A moment worth remembering",
   message: "The sky remembers.",
   style: "midnight-gold",
+  artworkFormat: "digital",
+  artStyle: "classic",
+  colorPalette: "midnight-gold",
+  mapStyle: "classic",
+  projection: "sky-dome",
+  elements: {
+    grid: true,
+    constellations: true,
+    moon: true,
+    planets: true,
+    milkyWay: true,
+  },
 });

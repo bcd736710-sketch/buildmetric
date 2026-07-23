@@ -182,9 +182,13 @@ function renderBackground(scene: ArtworkScene) {
     <circle cx="${sky.cx}" cy="${sky.cy}" r="${sky.r}" fill="url(#sky-ground)" />
     ${!vintage ? `<circle cx="${sky.cx}" cy="${sky.cy}" r="${sky.r}" fill="url(#haze)" opacity="${gold ? 0.88 : 1}" />` : ""}
     ${renderFrame(scene)}
-    <circle cx="${sky.cx}" cy="${sky.cy}" r="${sky.r - 300}" fill="none" stroke="${scene.style.foreground}" stroke-width="${vintage ? 1.6 : 1.25}" opacity="${vintage ? 0.2 : dream ? 0.055 : 0.075}" />
+    ${
+      scene.config.elements.grid
+        ? `<circle cx="${sky.cx}" cy="${sky.cy}" r="${sky.r - 300}" fill="none" stroke="${scene.style.foreground}" stroke-width="${vintage ? 1.6 : 1.25}" opacity="${vintage ? 0.2 : dream ? 0.055 : 0.075}" />
     <circle cx="${sky.cx}" cy="${sky.cy}" r="${sky.r - 660}" fill="none" stroke="${scene.style.foreground}" stroke-width="${vintage ? 1.2 : 1}" opacity="${vintage ? 0.13 : dream ? 0.04 : 0.055}" />
-    <path d="M ${sky.cx - sky.r} ${sky.cy} H ${sky.cx + sky.r} M ${sky.cx} ${sky.cy - sky.r} V ${sky.cy + sky.r}" stroke="${scene.style.foreground}" stroke-width="${vintage ? 1.4 : 1}" opacity="${vintage ? 0.11 : 0.055}" />
+    <path d="M ${sky.cx - sky.r} ${sky.cy} H ${sky.cx + sky.r} M ${sky.cx} ${sky.cy - sky.r} V ${sky.cy + sky.r}" stroke="${scene.style.foreground}" stroke-width="${vintage ? 1.4 : 1}" opacity="${vintage ? 0.11 : 0.055}" />`
+        : ""
+    }
   `;
 }
 
@@ -290,6 +294,11 @@ function moonPath(scene: ArtworkScene, x: number, y: number, radius: number) {
 
 function renderBodies(scene: ArtworkScene) {
   return scene.bodies
+    .filter((body) =>
+      body.display === "featured-moon"
+        ? scene.config.elements.moon
+        : scene.config.elements.planets,
+    )
     .map((body) => {
       const x = posterX(scene, body.x);
       const y = posterY(scene, body.y);
@@ -375,12 +384,12 @@ export function createArtworkSvg(scene: ArtworkScene) {
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   ${renderBackground(scene)}
   <g clip-path="url(#sky-disc)">
-    ${renderMilkyWay(scene)}
-    ${renderConstellationLines(scene)}
+    ${scene.config.elements.milkyWay ? renderMilkyWay(scene) : ""}
+    ${scene.config.elements.constellations ? renderConstellationLines(scene) : ""}
     ${renderStars(scene)}
-    ${renderBodies(scene)}
-    ${renderLabels(scene)}
-    ${renderMajorStarLabels(scene)}
+    ${scene.config.elements.moon || scene.config.elements.planets ? renderBodies(scene) : ""}
+    ${scene.config.elements.constellations ? renderLabels(scene) : ""}
+    ${scene.config.mapStyle === "technical" ? renderMajorStarLabels(scene) : ""}
     <circle cx="${sky.cx}" cy="${sky.cy}" r="${sky.r - 3}" fill="none" stroke="${scene.style.foreground}" stroke-width="1" opacity="${scene.style.id === "vintage-observatory" ? 0.18 : 0.08}" />
   </g>
   ${renderInfo(scene)}

@@ -136,6 +136,92 @@ function styleTokens(styleId: SkyPosterStyle): ArtworkStyleTokens {
   };
 }
 
+function applyEditorTokens(
+  tokens: ArtworkStyleTokens,
+  config: MomentConfig,
+): ArtworkStyleTokens {
+  const palette = config.colorPalette;
+  const next = { ...tokens };
+
+  if (palette === "celestial-blue") {
+    Object.assign(next, {
+      id: "celestial-dream" as SkyPosterStyle,
+      background: "#2f4264",
+      foreground: "#f4f7ff",
+      muted: "#b8c3dc",
+      accent: "#d6e1ff",
+      secondaryAccent: "#91a8d6",
+      skyGlow: "rgba(155, 181, 230, 0.22)",
+      deepTone: "#344763",
+      textAccent: "#e6edff",
+      starHalo: "rgba(190, 212, 255, 0.35)",
+    });
+  }
+
+  if (palette === "deep-black") {
+    Object.assign(next, {
+      id: "midnight-gold" as SkyPosterStyle,
+      background: "#05070c",
+      foreground: "#f7f3e8",
+      muted: "#a9a195",
+      accent: "#f0f0ea",
+      secondaryAccent: "#8f949b",
+      skyGlow: "rgba(255,255,255,0.1)",
+      deepTone: "#05070c",
+      textAccent: "#f7f3e8",
+      starHalo: "rgba(255,255,255,0.2)",
+    });
+  }
+
+  if (palette === "observatory-ivory") {
+    Object.assign(next, styleTokens("vintage-observatory"), {
+      background: "#efe3c9",
+      deepTone: "#efe3c9",
+    });
+  }
+
+  if (config.artStyle === "minimal") {
+    next.constellationOpacity *= 0.28;
+    next.labelOpacity *= 0.35;
+    next.milkyWayOpacity *= 0.45;
+    next.frameOpacity *= 0.72;
+  }
+
+  if (config.artStyle === "luminous") {
+    next.constellationOpacity *= 1.2;
+    next.milkyWayOpacity *= 1.5;
+    next.paperOpacity *= 0.8;
+  }
+
+  if (config.artStyle === "archival") {
+    next.frameOpacity *= 1.18;
+    next.constellationOpacity *= 1.35;
+    next.labelOpacity *= 1.35;
+  }
+
+  if (config.mapStyle === "minimal") {
+    next.constellationOpacity *= 0.45;
+    next.labelOpacity *= 0.4;
+  }
+
+  if (config.mapStyle === "technical") {
+    next.frameOpacity *= 1.25;
+    next.labelOpacity *= 1.55;
+    next.constellationOpacity *= 1.25;
+  }
+
+  if (config.mapStyle === "inverted") {
+    Object.assign(next, {
+      background: next.foreground,
+      foreground: next.background,
+      deepTone: next.foreground,
+      textAccent: next.background,
+    });
+  }
+
+  return next;
+}
+
 function starTier(star: SkyStar): ArtworkStar["tier"] {
   if (star.major || star.magnitude <= 1.2) return "brightest";
   if (star.magnitude <= 3.4) return "medium";
@@ -256,7 +342,7 @@ export function createArtworkScene(
     output,
     config,
     skyData,
-    style: styleTokens(config.style),
+    style: applyEditorTokens(styleTokens(config.style), config),
     composition,
     stars: prepareStars(skyData.stars, config.style),
     bodies: prepareBodies(skyData.bodies),
