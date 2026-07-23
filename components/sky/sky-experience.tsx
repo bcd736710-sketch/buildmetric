@@ -560,11 +560,13 @@ function CosmicStructureReveal({ phase }: { phase: CosmicRevealPhase }) {
 
 function PurchaseSummary({
   config,
+  onBack,
   selection,
   sky,
   summaryRef,
 }: {
   config: MomentConfig;
+  onBack: () => void;
   selection: PurchaseSelection;
   sky: SkyComputation;
   summaryRef: RefObject<HTMLDivElement | null>;
@@ -644,6 +646,12 @@ function PurchaseSummary({
         <p className="mt-3 text-center text-xs leading-5 text-slate-500">
           Checkout is the next step. Your selection is saved here for the purchase flow.
         </p>
+        <button
+          className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-slate-300 bg-white px-5 text-xs font-black uppercase tracking-[0.14em] text-slate-700 transition hover:border-slate-950 hover:text-slate-950"
+          onClick={onBack}
+        >
+          Back to Cosmic Signature
+        </button>
       </div>
     </section>
   );
@@ -695,6 +703,7 @@ function CustomizeEditor({
   config,
   sky,
   editorStep,
+  onBackToMoment,
   setEditorStep,
   patchMoment,
   confirmSky,
@@ -702,6 +711,7 @@ function CustomizeEditor({
   config: MomentConfig;
   sky: SkyComputation;
   editorStep: EditorStep;
+  onBackToMoment: () => void;
   setEditorStep: (step: EditorStep) => void;
   patchMoment: (patch: Partial<MomentConfig>) => void;
   confirmSky: () => void;
@@ -718,6 +728,18 @@ function CustomizeEditor({
       : editorStep === "personalize"
         ? () => setEditorStep("complete")
         : confirmSky;
+  const backLabel =
+    editorStep === "style"
+      ? "Back to Moment"
+      : editorStep === "personalize"
+        ? "Back to Style"
+        : "Back to Personalize";
+  const backAction =
+    editorStep === "style"
+      ? onBackToMoment
+      : editorStep === "personalize"
+        ? () => setEditorStep("style")
+        : () => setEditorStep("personalize");
 
   return (
     <div className="fixed inset-0 z-20 grid bg-[#ececec] pt-[4.1rem] text-slate-950 lg:grid-cols-[minmax(0,1fr)_28rem]">
@@ -865,6 +887,12 @@ function CustomizeEditor({
 
         <div className="border-t border-slate-200 bg-white p-6">
           <button
+            className="mb-3 min-h-11 w-full rounded-full border border-slate-300 bg-white px-6 text-xs font-black uppercase tracking-[0.14em] text-slate-600 transition hover:border-slate-950 hover:text-slate-950"
+            onClick={backAction}
+          >
+            {backLabel}
+          </button>
+          <button
             className="min-h-14 w-full rounded-full bg-slate-950 px-6 text-sm font-black uppercase tracking-[0.14em] text-white transition hover:bg-slate-800"
             onClick={nextAction}
           >
@@ -940,6 +968,32 @@ export function SkyExperience() {
         block: "start",
       });
     }, 80);
+  }
+
+  function backToMoment() {
+    setPostRevealState("sky-revealing");
+    setPurchaseSelection(null);
+    setCosmicRevealPhase("moon");
+    setStep("place");
+  }
+
+  function backToCustomize() {
+    setPurchaseSelection(null);
+    setCosmicRevealPhase("moon");
+    setEditorStep("style");
+    setPostRevealState("customizing");
+  }
+
+  function backToCosmicOffer() {
+    setPostRevealState("cosmic-signature-revealed");
+    setCosmicRevealPhase("poster");
+    window.setTimeout(() => {
+      const section = document.getElementById("create");
+      window.scrollTo({
+        top: section ? section.offsetTop : 0,
+        behavior: "smooth",
+      });
+    }, 40);
   }
 
   function confirmSky() {
@@ -1090,6 +1144,12 @@ export function SkyExperience() {
           >
             Continue to Place
           </button>
+          <button
+            className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/15 px-6 text-sm font-black uppercase tracking-[0.14em] text-starlight/70 transition hover:border-brand hover:text-brand"
+            onClick={() => editCreateStep("date")}
+          >
+            Back to Date
+          </button>
         </div>
       )}
 
@@ -1155,6 +1215,12 @@ export function SkyExperience() {
             onClick={revealSky}
           >
             Reveal My Sky
+          </button>
+          <button
+            className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/15 px-6 text-sm font-black uppercase tracking-[0.14em] text-starlight/70 transition hover:border-brand hover:text-brand"
+            onClick={() => editCreateStep("time")}
+          >
+            Back to Time
           </button>
         </div>
       )}
@@ -1253,6 +1319,7 @@ export function SkyExperience() {
                   config={config}
                   confirmSky={confirmSky}
                   editorStep={editorStep}
+                  onBackToMoment={backToMoment}
                   patchMoment={patchMoment}
                   setEditorStep={setEditorStep}
                   sky={sky}
@@ -1338,6 +1405,12 @@ export function SkyExperience() {
                             Continue with My Sky
                           </button>
                         </div>
+                        <button
+                          className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-slate-300 bg-white px-5 text-xs font-black uppercase tracking-[0.14em] text-slate-700 transition hover:border-slate-950 hover:text-slate-950"
+                          onClick={backToCustomize}
+                        >
+                          Back to Edit Style
+                        </button>
                       </div>
                       <div className="order-1 flex justify-center lg:order-2">
                         <CosmicSignaturePreview
@@ -1366,6 +1439,7 @@ export function SkyExperience() {
                   {postRevealState === "purchase-selection" && (
                     <PurchaseSummary
                       config={config}
+                      onBack={backToCosmicOffer}
                       selection={purchaseSelection}
                       sky={sky}
                       summaryRef={purchaseSummaryRef}
