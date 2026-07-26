@@ -235,6 +235,10 @@ function projectPlace(
   return { x: point[0], y: point[1] };
 }
 
+function shortestLongitudeDelta(from: number, to: number) {
+  return ((((to - from) % 360) + 540) % 360) - 180;
+}
+
 function lightingForTime(localTime: string) {
   const [hour = 12, minute = 0] = localTime.split(":").map(Number);
   const decimal = hour + minute / 60;
@@ -266,8 +270,7 @@ function AwakeningEarth({
   const starCount = 240;
   const starVisibility = stagePower;
   const stars = sky.stars.slice(0, starCount);
-  const targetLongitude = config.longitude;
-  const targetLatitude = placeConfirmed ? clamp(config.latitude * 0.38, -22, 28) : 8;
+  const targetLatitude = placeConfirmed ? clamp(config.latitude, -52, 52) : 8;
   const [displayCenter, setDisplayCenter] = useState({
     latitude: 8,
     longitude: -30,
@@ -278,7 +281,9 @@ function AwakeningEarth({
   const projection = globeProjection(displayCenter.longitude, displayCenter.latitude);
   const marker = projectPlace(config.latitude, config.longitude, projection);
   const lighting = lightingForTime(config.localTime);
-  const earthPhotoRotation = displayCenter.longitude * -0.12;
+  const earthPhotoRotation = displayCenter.longitude * -0.18;
+  const earthPhotoShiftX = clamp((displayCenter.longitude - 35) * -0.16, -18, 18);
+  const earthPhotoShiftY = clamp((displayCenter.latitude - 18) * 0.1, -6, 6);
 
   useEffect(() => {
     if (placeConfirmed) return;
@@ -306,7 +311,10 @@ function AwakeningEarth({
     let frame = 0;
     const start = performance.now();
     const from = displayCenterRef.current;
-    const duration = 1900;
+    const longitudeDelta = shortestLongitudeDelta(from.longitude, config.longitude);
+    const direction = longitudeDelta === 0 ? 1 : Math.sign(longitudeDelta);
+    const targetLongitude = from.longitude + longitudeDelta + direction * 360;
+    const duration = 2850;
     const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
 
     function tick(now: number) {
@@ -324,7 +332,7 @@ function AwakeningEarth({
 
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [config.latitude, config.longitude, placeConfirmed, targetLatitude, targetLongitude]);
+  }, [config.latitude, config.longitude, placeConfirmed, targetLatitude]);
 
   useEffect(() => {
     displayCenterRef.current = displayCenter;
@@ -386,7 +394,7 @@ function AwakeningEarth({
             className="sky-earth-photo absolute inset-0 rounded-full"
             style={{
               opacity: 0.82 + stagePower * 0.16,
-              transform: `rotate(${earthPhotoRotation}deg) scale(1.035)`,
+              transform: `translate(${earthPhotoShiftX}%, ${earthPhotoShiftY}%) rotate(${earthPhotoRotation}deg) scale(1.16)`,
             }}
           />
           <div className="absolute inset-[7%] rounded-full border border-aurora/5" />
