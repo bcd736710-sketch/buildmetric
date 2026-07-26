@@ -9,7 +9,9 @@ import {
   useState,
   useTransition,
 } from "react";
-import { geoOrthographic } from "d3-geo";
+import { geoGraticule10, geoOrthographic, geoPath } from "d3-geo";
+import { feature } from "topojson-client";
+import landTopology from "world-atlas/land-110m.json";
 import { computeSky, type SkyComputation } from "@/lib/sky/astronomy";
 import { createArtworkScene } from "@/lib/sky/artwork-scene";
 import { createArtworkSvg } from "@/lib/sky/artwork-svg";
@@ -147,6 +149,13 @@ const createSteps: { id: Exclude<CreateStep, "editor">; label: string }[] = [
   { id: "place", label: "Place" },
 ];
 
+const worldLandTopology = landTopology as unknown as Parameters<typeof feature>[0];
+const worldLandObject = (landTopology as unknown as {
+  objects: { land: Parameters<typeof feature>[1] };
+}).objects.land;
+const realLand = feature(worldLandTopology, worldLandObject);
+const graticule = geoGraticule10();
+
 function currentStepIndex(step: CreateStep) {
   if (step === "date") return 0;
   if (step === "time") return 1;
@@ -279,6 +288,9 @@ function AwakeningEarth({
   const dateAwake = dateConfirmed;
   const timeAwake = timeConfirmed;
   const projection = globeProjection(displayCenter.longitude, displayCenter.latitude);
+  const geoPainter = geoPath(projection);
+  const landD = geoPainter(realLand) ?? "";
+  const graticuleD = geoPainter(graticule) ?? "";
   const marker = projectPlace(config.latitude, config.longitude, projection);
   const lighting = lightingForTime(config.localTime);
   const earthPhotoRotation = displayCenter.longitude * -0.18;
@@ -393,10 +405,57 @@ function AwakeningEarth({
           <div
             className="sky-earth-photo absolute inset-0 rounded-full"
             style={{
-              opacity: 0.82 + stagePower * 0.16,
+              opacity: placeConfirmed ? 0.16 : 0.82 + stagePower * 0.16,
               transform: `translate(${earthPhotoShiftX}%, ${earthPhotoShiftY}%) rotate(${earthPhotoRotation}deg) scale(1.16)`,
             }}
           />
+          <svg
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full"
+            viewBox="0 0 100 100"
+          >
+            <defs>
+              <clipPath id="accurate-earth-disc">
+                <circle cx="50" cy="50" r="49" />
+              </clipPath>
+              <radialGradient id="accurate-earth-ocean" cx="34%" cy="28%" r="82%">
+                <stop offset="0%" stopColor="#38c7ee" />
+                <stop offset="44%" stopColor="#0a76a7" />
+                <stop offset="78%" stopColor="#063754" />
+                <stop offset="100%" stopColor="#01040a" />
+              </radialGradient>
+              <linearGradient id="accurate-earth-land" x1="18%" x2="78%" y1="18%" y2="86%">
+                <stop offset="0%" stopColor="#d6c080" />
+                <stop offset="35%" stopColor="#4f8d5e" />
+                <stop offset="64%" stopColor="#b99662" />
+                <stop offset="100%" stopColor="#344834" />
+              </linearGradient>
+            </defs>
+            <g clipPath="url(#accurate-earth-disc)">
+              <circle cx="50" cy="50" fill="url(#accurate-earth-ocean)" r="50" opacity={placeConfirmed ? 0.96 : 0.18} />
+              <path
+                d={graticuleD}
+                fill="none"
+                opacity={placeConfirmed ? 0.08 : 0.02}
+                stroke="#b8ecff"
+                strokeWidth="0.12"
+              />
+              <path
+                d={landD}
+                fill="url(#accurate-earth-land)"
+                opacity={placeConfirmed ? 0.9 : 0.12}
+                stroke="#d9f5df"
+                strokeOpacity={placeConfirmed ? 0.24 : 0.05}
+                strokeWidth="0.12"
+              />
+              <path
+                d={landD}
+                fill="#102519"
+                opacity={placeConfirmed ? 0.16 : 0.02}
+                transform="translate(0.65 0.45)"
+              />
+            </g>
+          </svg>
           <div className="absolute inset-[7%] rounded-full border border-aurora/5" />
           <div className="sky-earth-shade absolute inset-0 rounded-full" />
           {placeConfirmed && marker && (
