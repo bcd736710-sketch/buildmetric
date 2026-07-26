@@ -50,30 +50,30 @@ function ring(
 function chartPalette(scene: CosmicSignatureScene) {
   if (scene.style.id === "vintage-observatory") {
     return {
-      disc: "#f4e3bd",
-      ink: "#221b14",
-      fine: "#6f5234",
-      muted: "#8c6f4e",
-      accent: "#9f7335",
+      disc: "#191d24",
+      ink: "#f8fafc",
+      fine: "#aeb5c0",
+      muted: "#cbd5e1",
+      accent: "#ffffff",
     };
   }
 
   if (scene.style.id === "celestial-dream") {
     return {
-      disc: "#edf3ff",
-      ink: "#11182b",
-      fine: "#51617d",
-      muted: "#7d8aa4",
-      accent: "#6f86c2",
+      disc: "#151a23",
+      ink: "#f8fafc",
+      fine: "#aeb8c9",
+      muted: "#dbeafe",
+      accent: "#ffffff",
     };
   }
 
   return {
-    disc: "#eee8dc",
-    ink: "#0b1018",
-    fine: "#283343",
-    muted: "#6d7480",
-    accent: "#ad842e",
+    disc: "#161b23",
+    ink: "#f8fafc",
+    fine: "#b7bec8",
+    muted: "#d7dde6",
+    accent: "#ffffff",
   };
 }
 
@@ -87,7 +87,7 @@ function chartPoint(scene: CosmicSignatureScene, x: number, y: number, radius: n
 function renderDefs(scene: CosmicSignatureScene) {
   const vintage = scene.style.id === "vintage-observatory";
   const dream = scene.style.id === "celestial-dream";
-  const chartRadius = scene.composition.identityRing - 285;
+  const chartRadius = scene.composition.identityRing - 135;
 
   return `
     <defs>
@@ -132,29 +132,21 @@ function renderBackground(scene: CosmicSignatureScene) {
   if (vintage) {
     return `
       ${renderDefs(scene)}
-      <rect width="${width}" height="${height}" fill="#e8d5ad" />
-      <rect x="176" y="188" width="${width - 352}" height="${height - 376}" fill="url(#signature-ground)" opacity="0.78" />
+      <rect width="${width}" height="${height}" fill="#1c2028" />
+      <rect x="176" y="188" width="${width - 352}" height="${height - 376}" fill="#171b22" opacity="1" />
       <rect width="${width}" height="${height}" filter="url(#signature-grain)" />
-      <rect x="214" y="226" width="${width - 428}" height="${height - 452}" fill="none" stroke="${scene.style.ink}" stroke-width="2.2" opacity="0.18" />
-      <rect x="276" y="288" width="${width - 552}" height="${height - 576}" fill="none" stroke="${scene.style.fineLine}" stroke-width="1.2" opacity="0.22" />
-      <path d="M 410 520 C 970 454, 2530 454, 3098 520 M 410 4440 C 970 4510, 2530 4510, 3098 4440" fill="none" stroke="${scene.style.ink}" stroke-width="1" opacity="0.12" />
+      <rect x="176" y="188" width="${width - 352}" height="${height - 376}" fill="none" stroke="#f8fafc" stroke-width="22" opacity="0.94" />
+      <rect x="250" y="262" width="${width - 500}" height="${height - 524}" fill="none" stroke="#f8fafc" stroke-width="3.4" opacity="0.62" />
     `;
   }
 
   return `
     ${renderDefs(scene)}
-    <rect width="${width}" height="${height}" fill="${scene.style.background}" />
-    <circle cx="${cx}" cy="${cy}" r="${identityRing + 190}" fill="url(#signature-ground)" opacity="${dream ? 0.9 : 0.55}" />
-    ${
-      dream
-        ? `<path d="${arcPath(scene, identityRing + 150, 214, 28)}" fill="none" stroke="#8b7bd0" stroke-width="190" opacity="0.055" filter="url(#soft-glow)" />`
-        : ""
-    }
-    ${
-      gold
-        ? `<circle cx="${cx}" cy="${cy}" r="${identityRing + 26}" fill="none" stroke="#5b421f" stroke-width="76" opacity="0.075" />`
-        : ""
-    }
+    <rect width="${width}" height="${height}" fill="#1b2028" />
+    <rect x="176" y="188" width="${width - 352}" height="${height - 376}" fill="#151a22" opacity="1" />
+    <rect x="176" y="188" width="${width - 352}" height="${height - 376}" fill="none" stroke="#f8fafc" stroke-width="22" opacity="0.94" />
+    <rect x="250" y="262" width="${width - 500}" height="${height - 524}" fill="none" stroke="#f8fafc" stroke-width="3.4" opacity="0.62" />
+    <circle cx="${cx}" cy="${cy}" r="${identityRing + 150}" fill="url(#signature-ground)" opacity="${dream ? 0.2 : gold ? 0.13 : 0.11}" />
     <rect width="${width}" height="${height}" filter="url(#signature-grain)" />
   `;
 }
@@ -271,13 +263,13 @@ function renderInstrument(scene: CosmicSignatureScene) {
 function renderReferenceSkyChart(scene: CosmicSignatureScene) {
   const { cx, cy, identityRing } = scene.composition;
   const palette = chartPalette(scene);
-  const chartRadius = identityRing - 285;
-  const innerRadius = chartRadius - 100;
-  const starRadius = chartRadius - 165;
+  const chartRadius = identityRing - 135;
+  const innerRadius = chartRadius - 72;
+  const starRadius = chartRadius - 92;
   const stars = scene.skyData.stars
     .slice()
     .sort((a, b) => a.magnitude - b.magnitude)
-    .slice(0, 1500)
+    .slice(0, 2300)
     .map((star, index) => {
       const p = chartPoint(scene, star.x, star.y, starRadius);
       const dx = p.x - cx;
@@ -286,13 +278,9 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
       if (distance > starRadius) return "";
       const bright = star.magnitude < 1.5;
       const medium = star.magnitude < 3;
-      const size = bright ? 10.8 : medium ? 6.8 : 4.2;
-      const opacity = bright ? 1 : medium ? 0.94 : 0.76;
-      const label =
-        bright && index < 26
-          ? `<text x="${(p.x + 13).toFixed(1)}" y="${(p.y - 9).toFixed(1)}" font-family="${sansFont}" font-size="13" fill="${palette.ink}" opacity="0.32" letter-spacing="1.4">${escapeXml(star.name)}</text>`
-          : "";
-      return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${size}" fill="${palette.ink}" opacity="${opacity}" />${label}`;
+      const size = bright ? 8.4 : medium ? 4.8 : 2.9;
+      const opacity = bright ? 0.98 : medium ? 0.84 : 0.68;
+      return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${size}" fill="${palette.ink}" opacity="${opacity}" />`;
     })
     .join("");
   const constellationLines = scene.skyData.constellationLines
@@ -309,25 +297,25 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
       ),
     )
     .filter((path) => path.includes("L"))
-    .map((path) => `<path d="${path}" fill="none" stroke="${palette.fine}" stroke-width="1.55" opacity="0.58" />`)
+    .map((path) => `<path d="${path}" fill="none" stroke="${palette.fine}" stroke-width="1.25" opacity="0.54" />`)
     .join("");
-  const altitudeRings = [0.22, 0.38, 0.54, 0.7, 0.86]
+  const altitudeRings = [0.18, 0.32, 0.46, 0.6, 0.74, 0.88]
     .map(
       (scale, index) =>
-        `<circle cx="${cx}" cy="${cy}" r="${(starRadius * scale).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="${index === 4 ? 1.9 : 1.25}" opacity="${index === 4 ? 0.66 : 0.48}" />`,
+        `<circle cx="${cx}" cy="${cy}" r="${(starRadius * scale).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="${index === 5 ? 1.7 : 0.9}" opacity="${index === 5 ? 0.7 : 0.34}" />`,
     )
     .join("");
-  const curvedGrid = Array.from({ length: 9 }, (_, index) => {
-    const offset = (index - 4) * 0.2;
+  const curvedGrid = Array.from({ length: 11 }, (_, index) => {
+    const offset = (index - 5) * 0.16;
     const rx = starRadius * Math.sqrt(Math.max(0.1, 1 - offset * offset * 0.74));
     const y = cy + offset * starRadius;
-    return `<ellipse cx="${cx}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(starRadius * 0.08).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="1" opacity="0.38" />`;
+    return `<ellipse cx="${cx}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(starRadius * 0.07).toFixed(1)}" fill="none" stroke="${palette.fine}" stroke-width="0.8" opacity="0.32" />`;
   }).join("");
-  const spokes = Array.from({ length: 36 }, (_, index) => {
-    const angle = index * 10;
-    const p1 = point(scene, angle, 165);
+  const spokes = Array.from({ length: 48 }, (_, index) => {
+    const angle = index * 7.5;
+    const p1 = point(scene, angle, 24);
     const p2 = point(scene, angle, starRadius);
-    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.fine}" stroke-width="${index % 9 === 0 ? 1.25 : index % 3 === 0 ? 0.9 : 0.58}" opacity="${index % 9 === 0 ? 0.48 : index % 3 === 0 ? 0.34 : 0.24}" />`;
+    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.fine}" stroke-width="${index % 12 === 0 ? 1.1 : index % 4 === 0 ? 0.78 : 0.5}" opacity="${index % 12 === 0 ? 0.48 : index % 4 === 0 ? 0.32 : 0.2}" />`;
   }).join("");
   const outerTicks = Array.from({ length: 180 }, (_, index) => {
     const angle = index * 2;
@@ -335,12 +323,12 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
     const mid = index % 5 === 0;
     const p1 = point(scene, angle, innerRadius + (major ? 18 : mid ? 32 : 45));
     const p2 = point(scene, angle, innerRadius + 68);
-    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.ink}" stroke-width="${major ? 1.8 : mid ? 1 : 0.55}" opacity="${major ? 0.46 : mid ? 0.32 : 0.18}" />`;
+    return `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${palette.ink}" stroke-width="${major ? 1.55 : mid ? 0.9 : 0.48}" opacity="${major ? 0.5 : mid ? 0.32 : 0.2}" />`;
   }).join("");
   const degreeLabels = Array.from({ length: 12 }, (_, index) => {
     const angle = index * 30;
     const p = point(scene, angle, innerRadius + 96);
-    return `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="${serifFont}" font-size="24" fill="${palette.ink}" opacity="0.48">${angle}</text>`;
+    return `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="${serifFont}" font-size="22" fill="${palette.ink}" opacity="0.5">${angle}</text>`;
   }).join("");
   const cardinalLabels = [
     ["N", 0],
@@ -350,7 +338,7 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
   ]
     .map(([label, angle]) => {
       const p = point(scene, Number(angle), innerRadius + 158);
-      return `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="${sansFont}" font-size="28" font-weight="700" fill="${palette.ink}" opacity="0.62" letter-spacing="5">${label}</text>`;
+      return `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="${sansFont}" font-size="26" font-weight="700" fill="${palette.ink}" opacity="0.72" letter-spacing="5">${label}</text>`;
     })
     .join("");
   const bodyMarks = scene.bodies
@@ -358,9 +346,8 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
       const p = point(scene, body.angle, Math.min(starRadius - 54, body.radius - 190));
       return `
         <g opacity="${body.prominence}">
-          <line x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" stroke="${palette.accent}" stroke-width="1.1" opacity="0.24" />
-          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${body.body === "Sun" ? 18 : 12}" fill="${body.body === "Sun" ? palette.accent : "none"}" stroke="${palette.ink}" stroke-width="2.2" opacity="0.82" />
-          <text x="${p.x.toFixed(1)}" y="${(p.y + 38).toFixed(1)}" text-anchor="middle" font-family="${sansFont}" font-size="20" fill="${palette.ink}" opacity="0.58" letter-spacing="2">${body.glyph}</text>
+          <line x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" stroke="${palette.accent}" stroke-width="0.8" opacity="0.18" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${body.body === "Sun" ? 20 : 13}" fill="${palette.ink}" stroke="${palette.ink}" stroke-width="1.4" opacity="0.9" />
         </g>
       `;
     })
@@ -368,10 +355,10 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
 
   return `
     <g>
-      <circle cx="${cx}" cy="${cy}" r="${chartRadius + 62}" fill="none" stroke="${palette.accent}" stroke-width="10" opacity="0.16" />
-      <circle cx="${cx}" cy="${cy}" r="${chartRadius}" fill="${palette.disc}" opacity="0.96" />
-      <circle cx="${cx}" cy="${cy}" r="${chartRadius}" fill="none" stroke="${palette.ink}" stroke-width="3.6" opacity="0.62" />
-      <circle cx="${cx}" cy="${cy}" r="${chartRadius - 34}" fill="none" stroke="${palette.ink}" stroke-width="1.4" opacity="0.38" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius + 18}" fill="none" stroke="${palette.ink}" stroke-width="10" opacity="0.94" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius}" fill="${palette.disc}" opacity="1" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius}" fill="none" stroke="${palette.ink}" stroke-width="4.2" opacity="0.96" />
+      <circle cx="${cx}" cy="${cy}" r="${chartRadius - 34}" fill="none" stroke="${palette.ink}" stroke-width="1.2" opacity="0.28" />
       <g clip-path="url(#signature-chart-clip)">
         <rect x="${cx - chartRadius}" y="${cy - chartRadius}" width="${chartRadius * 2}" height="${chartRadius * 2}" fill="${palette.disc}" />
         ${altitudeRings}
@@ -380,11 +367,11 @@ function renderReferenceSkyChart(scene: CosmicSignatureScene) {
         ${constellationLines}
         ${stars}
         ${bodyMarks}
-        <circle cx="${cx}" cy="${cy}" r="24" fill="none" stroke="${palette.accent}" stroke-width="4" opacity="0.62" />
-        <circle cx="${cx}" cy="${cy}" r="${starRadius}" fill="none" stroke="${palette.ink}" stroke-width="2.2" opacity="0.64" />
+        <circle cx="${cx}" cy="${cy}" r="14" fill="${palette.ink}" opacity="0.95" />
+        <circle cx="${cx}" cy="${cy}" r="${starRadius}" fill="none" stroke="${palette.ink}" stroke-width="2" opacity="0.76" />
       </g>
-      <circle cx="${cx}" cy="${cy}" r="${innerRadius + 70}" fill="none" stroke="${palette.ink}" stroke-width="8" opacity="0.14" />
-      <circle cx="${cx}" cy="${cy}" r="${innerRadius + 98}" fill="none" stroke="${palette.ink}" stroke-width="1.2" opacity="0.36" />
+      <circle cx="${cx}" cy="${cy}" r="${innerRadius + 70}" fill="none" stroke="${palette.ink}" stroke-width="3.2" opacity="0.54" />
+      <circle cx="${cx}" cy="${cy}" r="${innerRadius + 98}" fill="none" stroke="${palette.ink}" stroke-width="1.1" opacity="0.44" />
       ${outerTicks}
       ${degreeLabels}
       ${cardinalLabels}
@@ -605,33 +592,29 @@ function renderIdentity(scene: CosmicSignatureScene) {
   const { width, cx, cy, identityRing } = scene.composition;
   const vintage = scene.style.id === "vintage-observatory";
   const dream = scene.style.id === "celestial-dream";
-  const topY = vintage ? 590 : 610;
-  const left = cx - identityRing + 120;
-  const right = cx + identityRing - 120;
+  const topY = 500;
+  const left = cx - identityRing + 155;
+  const right = cx + identityRing - 155;
 
   if (vintage) {
     return `
-      <text x="${width / 2}" y="${topY}" text-anchor="middle" font-family="${serifFont}" font-size="44" fill="${scene.style.ink}" opacity="0.62" letter-spacing="4">THE SKY REMEMBERS OBSERVATORY PLATE</text>
-      <line x1="${width / 2 - 760}" x2="${width / 2 + 760}" y1="${topY + 44}" y2="${topY + 44}" stroke="${scene.style.ink}" stroke-width="1" opacity="0.22" />
-      <text x="${width / 2}" y="${topY + 170}" text-anchor="middle" font-family="${serifFont}" font-size="112" font-weight="700" fill="${scene.style.ink}" letter-spacing="1.4">YOUR COSMIC SIGNATURE</text>
-      <text x="${width / 2}" y="${topY + 258}" text-anchor="middle" font-family="${serifFont}" font-size="40" fill="${scene.style.ink}" opacity="0.58">A celestial arrangement calculated for one date, hour, and place.</text>
-      <text x="${left}" y="${cy + identityRing + 360}" font-family="${serifFont}" font-size="36" fill="${scene.style.ink}" opacity="0.7">${escapeXml(scene.momentLine)}</text>
-      <text x="${right}" y="${cy + identityRing + 360}" text-anchor="end" font-family="${serifFont}" font-size="36" fill="${scene.style.ink}" opacity="0.7">${escapeXml(scene.coordinateLine)}</text>
-      <text x="${width / 2}" y="${cy + identityRing + 500}" text-anchor="middle" font-family="${serifFont}" font-size="72" fill="${scene.style.ink}" opacity="0.9">${escapeXml(scene.placeLine)}</text>
-      <text x="${width / 2}" y="${cy + identityRing + 642}" text-anchor="middle" font-family="${sansFont}" font-size="24" fill="${scene.style.ink}" opacity="0.44" letter-spacing="5">SUN MERCURY VENUS MARS JUPITER SATURN / MOON PHASE CENTERED</text>
+      <text x="${width / 2}" y="${topY}" text-anchor="middle" font-family="${sansFont}" font-size="26" fill="#f8fafc" opacity="0.5" letter-spacing="8">THE SKY REMEMBERS</text>
+      <text x="${width / 2}" y="${topY + 120}" text-anchor="middle" font-family="${serifFont}" font-size="104" font-weight="700" fill="#f8fafc" letter-spacing="1.2">YOUR COSMIC SIGNATURE</text>
+      <text x="${left}" y="${cy + identityRing + 280}" font-family="${sansFont}" font-size="32" fill="#f8fafc" opacity="0.76" letter-spacing="1.2">${escapeXml(scene.momentLine)}</text>
+      <text x="${right}" y="${cy + identityRing + 280}" text-anchor="end" font-family="${sansFont}" font-size="32" fill="#f8fafc" opacity="0.76" letter-spacing="1.2">${escapeXml(scene.coordinateLine)}</text>
+      <text x="${width / 2}" y="${cy + identityRing + 420}" text-anchor="middle" font-family="${serifFont}" font-size="66" fill="#f8fafc" opacity="0.92">${escapeXml(scene.placeLine)}</text>
+      <text x="${width / 2}" y="${cy + identityRing + 540}" text-anchor="middle" font-family="${sansFont}" font-size="23" fill="#f8fafc" opacity="0.42" letter-spacing="5">SKY CHART CALCULATED FROM YOUR EXACT DATE, TIME, AND LOCATION</text>
     `;
   }
 
   return `
-    <text x="${width / 2}" y="${topY}" text-anchor="middle" font-family="${sansFont}" font-size="28" fill="${scene.style.ink}" opacity="${dream ? 0.44 : 0.5}" letter-spacing="9">THE SKY REMEMBERS</text>
-    <text x="${width / 2}" y="${topY + 156}" text-anchor="middle" font-family="${serifFont}" font-size="${dream ? 112 : 116}" font-weight="700" fill="${scene.style.ink}" letter-spacing="2">YOUR COSMIC SIGNATURE</text>
-    <path d="${arcPath(scene, identityRing - 58, 292, 68)}" fill="none" stroke="${scene.style.fineLine}" stroke-width="${dream ? 2 : 1.4}" opacity="${dream ? 0.16 : 0.22}" />
-    <text x="${width / 2}" y="${topY + 250}" text-anchor="middle" font-family="${serifFont}" font-size="42" fill="${scene.style.ink}" opacity="${dream ? 0.62 : 0.68}">A visual portrait of the celestial arrangement connected to the moment you chose.</text>
-    <text x="${left}" y="${cy + identityRing + 350}" font-family="${sansFont}" font-size="33" fill="${scene.style.ink}" opacity="0.64" letter-spacing="2">${escapeXml(scene.momentLine)}</text>
-    <text x="${right}" y="${cy + identityRing + 350}" text-anchor="end" font-family="${sansFont}" font-size="33" fill="${scene.style.ink}" opacity="0.64" letter-spacing="2">${escapeXml(scene.coordinateLine)}</text>
-    <text x="${width / 2}" y="${cy + identityRing + 486}" text-anchor="middle" font-family="${serifFont}" font-size="70" fill="${scene.style.ink}" opacity="0.9">${escapeXml(scene.placeLine)}</text>
-    <line x1="${width / 2 - 540}" x2="${width / 2 + 540}" y1="${cy + identityRing + 594}" y2="${cy + identityRing + 594}" stroke="${scene.style.fineLine}" stroke-width="${dream ? 1 : 1.8}" opacity="${dream ? 0.18 : 0.26}" />
-    <text x="${width / 2}" y="${cy + identityRing + 698}" text-anchor="middle" font-family="${sansFont}" font-size="25" fill="${scene.style.ink}" opacity="0.38" letter-spacing="5">BUILT FROM YOUR EXACT DATE, TIME, AND LOCATION</text>
+    <text x="${width / 2}" y="${topY}" text-anchor="middle" font-family="${sansFont}" font-size="26" fill="#f8fafc" opacity="${dream ? 0.5 : 0.46}" letter-spacing="8">THE SKY REMEMBERS</text>
+    <text x="${width / 2}" y="${topY + 120}" text-anchor="middle" font-family="${serifFont}" font-size="${dream ? 102 : 106}" font-weight="700" fill="#f8fafc" letter-spacing="1.2">YOUR COSMIC SIGNATURE</text>
+    <text x="${left}" y="${cy + identityRing + 280}" font-family="${sansFont}" font-size="32" fill="#f8fafc" opacity="0.76" letter-spacing="1.2">${escapeXml(scene.momentLine)}</text>
+    <text x="${right}" y="${cy + identityRing + 280}" text-anchor="end" font-family="${sansFont}" font-size="32" fill="#f8fafc" opacity="0.76" letter-spacing="1.2">${escapeXml(scene.coordinateLine)}</text>
+    <text x="${width / 2}" y="${cy + identityRing + 420}" text-anchor="middle" font-family="${serifFont}" font-size="66" fill="#f8fafc" opacity="0.92">${escapeXml(scene.placeLine)}</text>
+    <line x1="${width / 2 - 540}" x2="${width / 2 + 540}" y1="${cy + identityRing + 500}" y2="${cy + identityRing + 500}" stroke="#f8fafc" stroke-width="1.3" opacity="0.32" />
+    <text x="${width / 2}" y="${cy + identityRing + 595}" text-anchor="middle" font-family="${sansFont}" font-size="23" fill="#f8fafc" opacity="0.42" letter-spacing="5">SKY CHART CALCULATED FROM YOUR EXACT DATE, TIME, AND LOCATION</text>
   `;
 }
 

@@ -19,7 +19,6 @@ import { createCosmicSignatureScene } from "@/lib/sky/cosmic-signature-scene";
 import { createCosmicSignatureSvg } from "@/lib/sky/cosmic-signature-svg";
 import {
   defaultMomentConfig,
-  posterStyles,
   resolveMomentConfig,
   type SkyArtStyle,
   type SkyColorPalette,
@@ -429,21 +428,52 @@ function AwakeningEarth({
               </clipPath>
             </defs>
             <g clipPath="url(#earth-disc)">
+              <defs>
+                <radialGradient id="earth-ocean" cx="36%" cy="30%" r="78%">
+                  <stop offset="0%" stopColor="#48c9e8" />
+                  <stop offset="42%" stopColor="#0d78a7" />
+                  <stop offset="78%" stopColor="#063c68" />
+                  <stop offset="100%" stopColor="#031627" />
+                </radialGradient>
+                <linearGradient id="earth-land" x1="18%" x2="76%" y1="18%" y2="86%">
+                  <stop offset="0%" stopColor="#d9c076" />
+                  <stop offset="28%" stopColor="#6ea25a" />
+                  <stop offset="54%" stopColor="#2f6f45" />
+                  <stop offset="78%" stopColor="#c39a5a" />
+                  <stop offset="100%" stopColor="#5d4f37" />
+                </linearGradient>
+                <filter id="earth-cloud-blur" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="0.35" />
+                </filter>
+              </defs>
+              <circle cx="50" cy="50" fill="url(#earth-ocean)" r="50" />
               <path
                 d={graticuleD}
                 fill="none"
-                opacity={dateAwake ? 0.035 : 0.018}
-                stroke="#8fc7ff"
+                opacity={dateAwake ? 0.055 : 0.025}
+                stroke="#b8ecff"
                 strokeWidth="0.12"
               />
               <path
                 d={landD}
-                fill="#476a63"
-                opacity={landOpacity}
-                stroke="#9fc7c3"
-                strokeOpacity={dateAwake ? 0.2 : 0.1}
-                strokeWidth="0.16"
+                fill="url(#earth-land)"
+                opacity={landOpacity + 0.18}
+                stroke="#d6f2d7"
+                strokeOpacity={dateAwake ? 0.32 : 0.14}
+                strokeWidth="0.13"
               />
+              <path
+                d={landD}
+                fill="#203426"
+                opacity={dateAwake ? 0.16 : 0.08}
+                transform="translate(1.1 0.8)"
+              />
+              <g filter="url(#earth-cloud-blur)" opacity={dateAwake ? 0.66 : 0.28}>
+                <ellipse cx="34" cy="33" fill="#ffffff" opacity="0.72" rx="18" ry="3.4" transform="rotate(9 34 33)" />
+                <ellipse cx="47" cy="48" fill="#ffffff" opacity="0.58" rx="25" ry="3.2" transform="rotate(-11 47 48)" />
+                <ellipse cx="62" cy="65" fill="#ffffff" opacity="0.46" rx="21" ry="2.8" transform="rotate(16 62 65)" />
+                <ellipse cx="73" cy="38" fill="#ffffff" opacity="0.34" rx="17" ry="2.3" transform="rotate(22 73 38)" />
+              </g>
               <g opacity={lightOpacity}>
                 {cityLights.map((light) => {
                   const p = projectPlace(light.lat, light.lon, projection);
@@ -1364,22 +1394,28 @@ export function SkyExperience() {
                           Your Cosmic Signature
                         </p>
                         <h2 className="mt-4 font-serif text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">
-                          The hidden signature of your moment.
+                          A second print: your moment as a precise star chart.
                         </h2>
                         <p className="mt-5 text-lg leading-8 text-slate-600">
-                          Your Sky is what you would have seen above you.
-                          Cosmic Signature is what the universe was quietly holding:
-                          the moon phase, planet positions, and star patterns of
-                          that exact date, time, and place.
+                          Your Sky is the artwork version of the sky above your
+                          place. Cosmic Signature is the technical companion: a
+                          black-and-white circular sky map calculated from the
+                          same date, time, location, and coordinates.
                         </p>
                         <p className="mt-4 font-serif text-2xl font-bold text-slate-950">
-                          It is not another copy of your sky. It is the mark that
-                          moment left behind.
+                          It shows the star field, constellation lines, compass
+                          directions, and the latitude / longitude printed on the
+                          poster.
                         </p>
                         <div className="mt-6 space-y-3 rounded-2xl border border-slate-200 bg-white p-5 text-left text-sm font-semibold leading-6 text-slate-700 shadow-sm">
                           <p>Date and time: {config.localDate} / {config.localTime}</p>
                           <p>Location: {config.placeName}</p>
-                          <p>Style follows Your Sky: {posterStyles[config.style].name}</p>
+                          <p>
+                            Coordinates: {Math.abs(config.latitude).toFixed(4)}
+                            {config.latitude >= 0 ? " N" : " S"} /{" "}
+                            {Math.abs(config.longitude).toFixed(4)}
+                            {config.longitude >= 0 ? " E" : " W"}
+                          </p>
                         </div>
                         {purchaseSelection === "bundle" && (
                           <p className="mt-5 rounded-full border border-[#c8a455]/45 bg-[#ead08a]/25 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.18em] text-[#806019]">

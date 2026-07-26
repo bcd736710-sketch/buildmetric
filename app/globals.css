@@ -59,14 +59,15 @@ button {
 
 .sky-earth {
   background:
-    radial-gradient(circle at var(--earth-light-x, 38%) var(--earth-light-y, 34%), rgba(143, 199, 255, 0.24), transparent 25%),
-    radial-gradient(circle at 42% 42%, rgba(52, 92, 111, 0.28), transparent 48%),
-    linear-gradient(115deg, rgba(12, 28, 49, 0.95), rgba(3, 7, 18, 0.98));
+    radial-gradient(circle at var(--earth-light-x, 38%) var(--earth-light-y, 34%), rgba(255, 249, 222, 0.3), transparent 22%),
+    radial-gradient(circle at 38% 34%, rgba(77, 208, 235, 0.34), transparent 38%),
+    radial-gradient(circle at 56% 58%, rgba(4, 83, 128, 0.9), rgba(1, 23, 42, 0.98) 74%);
   box-shadow:
-    inset -96px -44px 110px rgba(0, 0, 0, 0.78),
-    inset 34px 18px 70px rgba(143, 199, 255, 0.12),
-    0 0 0 1px rgba(143, 199, 255, 0.08),
-    0 0 150px rgba(31, 65, 110, 0.24);
+    inset -112px -58px 128px rgba(0, 0, 0, 0.82),
+    inset 44px 22px 74px rgba(255, 248, 218, 0.15),
+    0 0 0 2px rgba(90, 208, 255, 0.16),
+    0 0 34px rgba(0, 161, 255, 0.58),
+    0 0 156px rgba(0, 126, 255, 0.32);
   overflow: hidden;
   transition:
     --earth-light-x 2000ms ease,
@@ -80,10 +81,11 @@ button {
 
 .sky-earth-awake {
   box-shadow:
-    inset -88px -38px 104px rgba(0, 0, 0, 0.74),
-    inset 34px 18px 78px rgba(143, 199, 255, 0.15),
-    0 0 0 1px rgba(143, 199, 255, 0.1),
-    0 0 172px rgba(48, 91, 145, 0.27);
+    inset -104px -52px 124px rgba(0, 0, 0, 0.74),
+    inset 42px 18px 86px rgba(255, 248, 218, 0.16),
+    0 0 0 2px rgba(107, 217, 255, 0.18),
+    0 0 40px rgba(0, 174, 255, 0.66),
+    0 0 190px rgba(0, 128, 255, 0.36);
 }
 
 .sky-earth-arrived {
@@ -96,15 +98,16 @@ button {
   inset: 0;
   border-radius: inherit;
   background:
-    radial-gradient(circle at 36% 28%, rgba(143, 199, 255, 0.08), transparent 18%),
-    radial-gradient(circle at 56% 60%, rgba(39, 72, 88, 0.14), transparent 34%);
-  filter: blur(0.8px);
-  opacity: 0.24;
+    radial-gradient(circle at 23% 31%, rgba(255, 245, 205, 0.22), transparent 20%),
+    radial-gradient(circle at 39% 33%, rgba(107, 214, 255, 0.14), transparent 30%),
+    radial-gradient(circle at 56% 62%, rgba(9, 36, 57, 0.26), transparent 42%);
+  filter: blur(0.5px);
+  opacity: 0.38;
   transition: opacity 1800ms ease;
 }
 
 .sky-earth-awake::before {
-  opacity: 0.42;
+  opacity: 0.62;
 }
 
 .sky-earth::after {
@@ -115,11 +118,11 @@ button {
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.72) 0 calc(var(--earth-terminator, 44%) - 28%),
-      rgba(0, 0, 0, var(--earth-night-opacity, 0.66)) calc(var(--earth-terminator, 44%) - 7%),
-      rgba(255, 255, 255, 0.035) var(--earth-terminator, 44%),
-      rgba(0, 0, 0, 0.32) calc(var(--earth-terminator, 44%) + 21%),
-      rgba(0, 0, 0, 0.76) 100%
+      rgba(0, 0, 0, 0.16) 0 calc(var(--earth-terminator, 44%) - 30%),
+      rgba(0, 0, 0, 0.34) calc(var(--earth-terminator, 44%) - 10%),
+      rgba(255, 255, 255, 0.08) var(--earth-terminator, 44%),
+      rgba(0, 0, 0, var(--earth-night-opacity, 0.66)) calc(var(--earth-terminator, 44%) + 22%),
+      rgba(0, 0, 0, 0.84) 100%
     ),
     repeating-linear-gradient(
       0deg,
@@ -127,8 +130,8 @@ button {
       rgba(143, 199, 255, 0.035) 23px,
       transparent 24px 44px
     );
-  mix-blend-mode: screen;
-  opacity: 0.58;
+  mix-blend-mode: multiply;
+  opacity: 0.72;
   transition:
     background 2000ms ease,
     opacity 1800ms ease;
@@ -137,29 +140,29 @@ button {
 .sky-earth-drift {
   animation: sky-earth-drift 72s linear infinite;
   background:
-    radial-gradient(ellipse at 28% 34%, rgba(247, 239, 216, 0.035), transparent 18%),
-    radial-gradient(ellipse at 68% 58%, rgba(247, 239, 216, 0.024), transparent 20%),
+    radial-gradient(ellipse at 28% 34%, rgba(255, 255, 255, 0.07), transparent 18%),
+    radial-gradient(ellipse at 68% 58%, rgba(255, 255, 255, 0.05), transparent 20%),
     repeating-linear-gradient(
       12deg,
       transparent 0 28px,
-      rgba(247, 239, 216, 0.018) 29px,
+      rgba(255, 255, 255, 0.026) 29px,
       transparent 31px 62px
     );
-  opacity: 0.08;
+  opacity: 0.1;
   transition: opacity 1800ms ease;
 }
 
 .sky-earth-awake .sky-earth-drift {
-  opacity: 0.13;
+  opacity: 0.2;
 }
 
 .sky-earth-shade {
   background:
-    radial-gradient(circle at var(--earth-light-x, 38%) var(--earth-light-y, 34%), rgba(255, 255, 255, 0.12), transparent 20%),
-    radial-gradient(circle at 50% 50%, transparent 54%, rgba(5, 7, 19, 0.5) 76%, rgba(0, 0, 0, 0.86) 100%);
+    radial-gradient(circle at var(--earth-light-x, 38%) var(--earth-light-y, 34%), rgba(255, 255, 255, 0.2), transparent 18%),
+    radial-gradient(circle at 50% 50%, transparent 52%, rgba(3, 22, 37, 0.52) 74%, rgba(0, 0, 0, 0.9) 100%);
   box-shadow:
-    inset -82px -36px 96px rgba(0, 0, 0, 0.72),
-    inset 22px 8px 52px rgba(143, 199, 255, 0.1);
+    inset -90px -44px 108px rgba(0, 0, 0, 0.7),
+    inset 24px 10px 58px rgba(180, 235, 255, 0.13);
 }
 
 .sky-earth-marker::after {
