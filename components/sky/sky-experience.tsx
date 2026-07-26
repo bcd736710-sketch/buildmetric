@@ -9,9 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
-import { geoGraticule10, geoOrthographic, geoPath } from "d3-geo";
-import { feature } from "topojson-client";
-import landTopology from "world-atlas/land-110m.json";
+import { geoOrthographic } from "d3-geo";
 import { computeSky, type SkyComputation } from "@/lib/sky/astronomy";
 import { createArtworkScene } from "@/lib/sky/artwork-scene";
 import { createArtworkSvg } from "@/lib/sky/artwork-svg";
@@ -149,39 +147,6 @@ const createSteps: { id: Exclude<CreateStep, "editor">; label: string }[] = [
   { id: "place", label: "Place" },
 ];
 
-const cityLights = [
-  { name: "Tokyo", lat: 35.7, lon: 139.8, size: 0.62 },
-  { name: "Seoul", lat: 37.6, lon: 127, size: 0.42 },
-  { name: "Shanghai", lat: 31.2, lon: 121.5, size: 0.48 },
-  { name: "Delhi", lat: 28.6, lon: 77.2, size: 0.44 },
-  { name: "Mumbai", lat: 19.1, lon: 72.9, size: 0.38 },
-  { name: "Bangkok", lat: 13.8, lon: 100.5, size: 0.34 },
-  { name: "Jakarta", lat: -6.2, lon: 106.8, size: 0.32 },
-  { name: "Cairo", lat: 30, lon: 31.2, size: 0.34 },
-  { name: "Istanbul", lat: 41, lon: 29, size: 0.34 },
-  { name: "London", lat: 51.5, lon: -0.1, size: 0.42 },
-  { name: "Paris", lat: 48.9, lon: 2.3, size: 0.36 },
-  { name: "Berlin", lat: 52.5, lon: 13.4, size: 0.3 },
-  { name: "Lagos", lat: 6.5, lon: 3.4, size: 0.34 },
-  { name: "New York", lat: 40.7, lon: -74, size: 0.58 },
-  { name: "Boston", lat: 42.4, lon: -71.1, size: 0.28 },
-  { name: "Washington", lat: 38.9, lon: -77, size: 0.34 },
-  { name: "Chicago", lat: 41.9, lon: -87.6, size: 0.38 },
-  { name: "Toronto", lat: 43.7, lon: -79.4, size: 0.34 },
-  { name: "Los Angeles", lat: 34.1, lon: -118.2, size: 0.38 },
-  { name: "Mexico City", lat: 19.4, lon: -99.1, size: 0.36 },
-  { name: "Sao Paulo", lat: -23.5, lon: -46.6, size: 0.4 },
-  { name: "Buenos Aires", lat: -34.6, lon: -58.4, size: 0.34 },
-];
-
-const worldLandTopology = landTopology as unknown as Parameters<typeof feature>[0];
-const worldLandObject = (landTopology as unknown as {
-  objects: { land: Parameters<typeof feature>[1] };
-}).objects.land;
-const realLand = feature(worldLandTopology, worldLandObject);
-
-const graticule = geoGraticule10();
-
 function currentStepIndex(step: CreateStep) {
   if (step === "date") return 0;
   if (step === "time") return 1;
@@ -311,13 +276,8 @@ function AwakeningEarth({
   const dateAwake = dateConfirmed;
   const timeAwake = timeConfirmed;
   const projection = globeProjection(displayCenter.longitude, displayCenter.latitude);
-  const geoPainter = geoPath(projection);
-  const landD = geoPainter(realLand) ?? "";
-  const graticuleD = geoPainter(graticule) ?? "";
   const marker = projectPlace(config.latitude, config.longitude, projection);
   const lighting = lightingForTime(config.localTime);
-  const landOpacity = dateAwake ? 0.42 : 0.26;
-  const lightOpacity = dateAwake ? 0.26 : 0.08;
 
   useEffect(() => {
     if (placeConfirmed) return;
@@ -421,78 +381,10 @@ function AwakeningEarth({
             filter: `brightness(${0.7 + stagePower * 0.24}) saturate(${0.96 + stagePower * 0.18})`,
           }}
         >
-          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100">
-            <defs>
-              <clipPath id="earth-disc">
-                <circle cx="50" cy="50" r="49" />
-              </clipPath>
-            </defs>
-            <g clipPath="url(#earth-disc)">
-              <defs>
-                <radialGradient id="earth-ocean" cx="36%" cy="30%" r="78%">
-                  <stop offset="0%" stopColor="#48c9e8" />
-                  <stop offset="42%" stopColor="#0d78a7" />
-                  <stop offset="78%" stopColor="#063c68" />
-                  <stop offset="100%" stopColor="#031627" />
-                </radialGradient>
-                <linearGradient id="earth-land" x1="18%" x2="76%" y1="18%" y2="86%">
-                  <stop offset="0%" stopColor="#d9c076" />
-                  <stop offset="28%" stopColor="#6ea25a" />
-                  <stop offset="54%" stopColor="#2f6f45" />
-                  <stop offset="78%" stopColor="#c39a5a" />
-                  <stop offset="100%" stopColor="#5d4f37" />
-                </linearGradient>
-                <filter id="earth-cloud-blur" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="0.35" />
-                </filter>
-              </defs>
-              <circle cx="50" cy="50" fill="url(#earth-ocean)" r="50" />
-              <path
-                d={graticuleD}
-                fill="none"
-                opacity={dateAwake ? 0.055 : 0.025}
-                stroke="#b8ecff"
-                strokeWidth="0.12"
-              />
-              <path
-                d={landD}
-                fill="url(#earth-land)"
-                opacity={landOpacity + 0.18}
-                stroke="#d6f2d7"
-                strokeOpacity={dateAwake ? 0.32 : 0.14}
-                strokeWidth="0.13"
-              />
-              <path
-                d={landD}
-                fill="#203426"
-                opacity={dateAwake ? 0.16 : 0.08}
-                transform="translate(1.1 0.8)"
-              />
-              <g filter="url(#earth-cloud-blur)" opacity={dateAwake ? 0.66 : 0.28}>
-                <ellipse cx="34" cy="33" fill="#ffffff" opacity="0.72" rx="18" ry="3.4" transform="rotate(9 34 33)" />
-                <ellipse cx="47" cy="48" fill="#ffffff" opacity="0.58" rx="25" ry="3.2" transform="rotate(-11 47 48)" />
-                <ellipse cx="62" cy="65" fill="#ffffff" opacity="0.46" rx="21" ry="2.8" transform="rotate(16 62 65)" />
-                <ellipse cx="73" cy="38" fill="#ffffff" opacity="0.34" rx="17" ry="2.3" transform="rotate(22 73 38)" />
-              </g>
-              <g opacity={lightOpacity}>
-                {cityLights.map((light) => {
-                  const p = projectPlace(light.lat, light.lon, projection);
-                  if (!p) return null;
-                  return (
-                    <circle
-                      cx={p.x}
-                      cy={p.y}
-                      fill="#cda861"
-                      key={light.name}
-                      opacity={0.35 + stagePower * 0.38}
-                      r={light.size}
-                    />
-                  );
-                })}
-              </g>
-            </g>
-          </svg>
-          <div className="sky-earth-drift absolute inset-0 rounded-full" />
+          <div
+            className="sky-earth-photo absolute inset-0 rounded-full"
+            style={{ opacity: 0.82 + stagePower * 0.16 }}
+          />
           <div className="absolute inset-[7%] rounded-full border border-aurora/5" />
           <div className="sky-earth-shade absolute inset-0 rounded-full" />
           {placeConfirmed && marker && (
