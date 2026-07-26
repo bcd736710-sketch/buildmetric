@@ -278,6 +278,7 @@ function AwakeningEarth({
   const projection = globeProjection(displayCenter.longitude, displayCenter.latitude);
   const marker = projectPlace(config.latitude, config.longitude, projection);
   const lighting = lightingForTime(config.localTime);
+  const earthPhotoRotation = displayCenter.longitude * -0.12;
 
   useEffect(() => {
     if (placeConfirmed) return;
@@ -383,7 +384,10 @@ function AwakeningEarth({
         >
           <div
             className="sky-earth-photo absolute inset-0 rounded-full"
-            style={{ opacity: 0.82 + stagePower * 0.16 }}
+            style={{
+              opacity: 0.82 + stagePower * 0.16,
+              transform: `rotate(${earthPhotoRotation}deg) scale(1.035)`,
+            }}
           />
           <div className="absolute inset-[7%] rounded-full border border-aurora/5" />
           <div className="sky-earth-shade absolute inset-0 rounded-full" />

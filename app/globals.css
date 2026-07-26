@@ -124,8 +124,9 @@ button {
   background-image: url("/sky/realistic-earth-eurasia.png");
   background-position: center;
   background-size: cover;
-  transform: scale(1.035);
-  transition: opacity 1600ms ease;
+  transition:
+    opacity 1600ms ease,
+    transform 180ms linear;
 }
 
 .sky-earth-drift {
