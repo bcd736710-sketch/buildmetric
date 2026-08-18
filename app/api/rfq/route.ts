@@ -1,12 +1,14 @@
 import net from "node:net";
 import tls from "node:tls";
+import { del, put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { checkRFQRateLimit } from "@/lib/rfq/rate-limit";
 import {
+  RFQDatabaseConfigurationError,
   saveRFQRecord,
-  saveRFQReferenceFile,
-  readRFQReferenceFile,
+  updateRFQEmailStatus,
   type RFQRecord,
+  type RFQReferenceBlob,
 } from "@/lib/rfq/repository";
 import {
   RFQValidationError,
@@ -106,11 +108,20 @@ function emailHtml(record: RFQRecord) {
   return `<!doctype html><html><body style="margin:0;background:#f6f4ed;font-family:Arial,sans-serif;color:#14251f"><main style="max-width:640px;margin:0 auto;padding:32px 20px"><section style="background:#ffffff;border:1px solid #e7e4dc;border-radius:10px;padding:30px"><p style="margin:0 0 6px;color:#6b766f;font-size:12px;letter-spacing:.14em;text-transform:uppercase">TROVANE</p><h1 style="margin:0;color:#14251f;font-size:25px;font-weight:600">New RFQ</h1>${section("Customer", row("Name", record.name) + row("Company", record.company) + row("Country", record.country) + row("Email", record.email) + row("WhatsApp", record.whatsapp))}${section("Inquiry", row("Product", record.product) + row("Quantity", record.quantity) + row("Target Price", record.targetPrice))}${section("Customization", row("Custom Logo", record.customLogo) + row("Custom Packaging", record.customPackaging))}<h2 style="margin:26px 0 8px;color:#173c2d;font-size:15px;letter-spacing:.04em;text-transform:uppercase">Requirements</h2><div style="padding:14px 16px;background:#f6f7f3;border-radius:7px;white-space:pre-wrap;font-size:14px;line-height:1.6">${escapeHtml(record.requirements)}</div>${section("Submission", row("Submission time", record.createdAt) + row("RFQ ID", record.id) + row("Reference image", record.referenceImage ? `Attached: ${record.referenceImage.originalName}` : "-"))}</section></main></body></html>`;
 }
 
+function safeErrorMessage(error: unknown) {
+  const secrets = [
+    process.env.RESEND_API_KEY,
+    process.env.BLOB_READ_WRITE_TOKEN,
+    process.env.DATABASE_URL,
+    process.env.DATABASE_URL_UNPOOLED,
+  ].filter((value): value is string => Boolean(value));
+  let message = error instanceof Error ? error.message : "Unknown error";
+  for (const secret of secrets) message = message.replaceAll(secret, "[redacted]");
+  return message.replace(/[\r\n]+/g, " ").slice(0, 1000);
+}
+
 function logEmailFailure(provider: "Resend" | "SMTP", error: unknown) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const rawMessage = error instanceof Error ? error.message : String(error);
-  const safeMessage = apiKey ? rawMessage.replaceAll(apiKey, "[redacted]") : rawMessage;
-  console.error(`[RFQ] ${provider} email delivery failed: ${safeMessage}`);
+  console.error(`[RFQ] ${provider} email delivery failed: ${safeErrorMessage(error)}`);
 }
 
 function attachmentFilename(record: RFQRecord) {
@@ -118,13 +129,37 @@ function attachmentFilename(record: RFQRecord) {
   return originalName.replace(/[\\/:*?"<>|\r\n]/g, "_").slice(0, 180);
 }
 
-async function sendResendEmail(record: RFQRecord) {
+async function uploadReferenceBlob({
+  id,
+  file,
+  filename,
+  originalName,
+  type,
+  size,
+}: {
+  id: string;
+  file: File;
+  filename: string;
+  originalName: string;
+  type: string;
+  size: number;
+}): Promise<{ blob: RFQReferenceBlob; buffer: Buffer }> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const uploaded = await put(`rfq/${id}/${filename}`, buffer, {
+    access: "private",
+    contentType: type,
+    addRandomSuffix: false,
+  });
+  return {
+    buffer,
+    blob: { filename, originalName, type, size, pathname: uploaded.pathname, url: uploaded.url },
+  };
+}
+
+async function sendResendEmail(record: RFQRecord, attachmentBuffer?: Buffer) {
   const apiKey = process.env.RESEND_API_KEY as string;
-  const attachment = record.referenceImage
-    ? [{
-        filename: attachmentFilename(record),
-        content: (await readRFQReferenceFile(record.referenceImage.filename)).toString("base64"),
-      }]
+  const attachment = record.referenceImage && attachmentBuffer
+    ? [{ filename: attachmentFilename(record), content: attachmentBuffer.toString("base64") }]
     : undefined;
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -149,7 +184,8 @@ async function sendResendEmail(record: RFQRecord) {
     throw new Error(`Resend API responded with ${response.status}: ${detail.slice(0, 500)}`);
   }
 
-  return true;
+  const result = (await response.json()) as { id?: string };
+  return { sent: true, providerId: result.id };
 }
 
 function smtpCommand(socket: net.Socket | tls.TLSSocket, command: string) {
@@ -208,11 +244,11 @@ function encodeHeader(value: string) {
   return value.replace(/[\r\n]/g, " ");
 }
 
-async function sendEmail(record: RFQRecord) {
-  if (resendConfigured()) return sendResendEmail(record);
+async function sendEmail(record: RFQRecord, attachmentBuffer?: Buffer) {
+  if (resendConfigured()) return sendResendEmail(record, attachmentBuffer);
   if (!smtpConfigured()) {
     console.warn("[RFQ] Email service is not configured; RFQ was saved without a notification.");
-    return false;
+    return { sent: false };
   }
 
   const host = process.env.SMTP_HOST as string;
@@ -246,7 +282,7 @@ async function sendEmail(record: RFQRecord) {
       await expectSmtp(upgraded, Buffer.from(pass).toString("base64"), [235]);
       await sendMailData(upgraded, from, to, record);
       upgraded.end();
-      return true;
+      return { sent: true };
     }
 
     await expectSmtp(socket, `AUTH LOGIN`, [334]);
@@ -254,7 +290,7 @@ async function sendEmail(record: RFQRecord) {
     await expectSmtp(socket, Buffer.from(pass).toString("base64"), [235]);
     await sendMailData(socket, from, to, record);
     socket.end();
-    return true;
+    return { sent: true };
   } finally {
     socket.destroy();
   }
@@ -316,13 +352,6 @@ export async function POST(request: Request) {
     const referenceFile = referenceValue instanceof File ? referenceValue : null;
     const referenceImage = await validateRFQReferenceFile(referenceFile);
 
-    if (referenceFile && referenceImage) {
-      await saveRFQReferenceFile({
-        file: referenceFile,
-        filename: referenceImage.filename,
-      });
-    }
-
     const record: RFQRecord = {
       id,
       createdAt: new Date().toISOString(),
@@ -331,12 +360,58 @@ export async function POST(request: Request) {
       referenceImage,
     };
 
-    await saveRFQRecord(record);
+    let referenceBlob: RFQReferenceBlob | undefined;
+    let attachmentBuffer: Buffer | undefined;
+    if (referenceFile && referenceImage) {
+      const uploaded = await uploadReferenceBlob({
+        id,
+        file: referenceFile,
+        ...referenceImage,
+      });
+      referenceBlob = uploaded.blob;
+      attachmentBuffer = uploaded.buffer;
+    }
+
+    try {
+      await saveRFQRecord({ record, referenceBlob });
+    } catch (databaseError) {
+      if (referenceBlob) {
+        try {
+          await del(referenceBlob.url);
+        } catch {
+          console.error("[RFQ] Blob cleanup failed after database persistence failure.");
+        }
+      }
+      throw databaseError;
+    }
+
     let emailSent = false;
     try {
-      emailSent = await sendEmail(record);
+      const email = await sendEmail(record, attachmentBuffer);
+      emailSent = email.sent;
+      if (email.sent) {
+        try {
+          await updateRFQEmailStatus({
+            id: record.id,
+            status: "sent",
+            providerId: "providerId" in email ? email.providerId : undefined,
+          });
+        } catch {
+          console.error("[RFQ] Failed to record successful email delivery status.");
+        }
+      }
     } catch (emailError) {
+      const safeError = safeErrorMessage(emailError);
       logEmailFailure(resendConfigured() ? "Resend" : "SMTP", emailError);
+      try {
+        await updateRFQEmailStatus({
+          id: record.id,
+          status: "failed",
+          error: safeError,
+        });
+      } catch {
+        console.error("[RFQ] Failed to record email delivery status.");
+      }
     }
 
     return NextResponse.json({
@@ -346,9 +421,11 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     const message =
-      error instanceof Error
+      error instanceof RFQValidationError
         ? error.message
-        : "The RFQ could not be submitted. Please try again.";
+        : error instanceof RFQDatabaseConfigurationError
+          ? "RFQ service is temporarily unavailable. Please try again later."
+          : "The RFQ could not be submitted. Please try again.";
     const status = error instanceof RFQValidationError ? error.status : 500;
 
     return NextResponse.json({ message }, { status });

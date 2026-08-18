@@ -11,3 +11,6 @@ artifacts
 .env.production
 .env.*.local
 data/
+
+.vercel
+.env*
