@@ -87,8 +87,8 @@ export default async function RFQPage({
                 fit, sample direction, customization and B2B pricing.
               </p>
               <p className="mt-3">
-                <strong className="text-navy">Email setup:</strong> submissions
-                save locally now; SMTP variables enable automatic delivery.
+                <strong className="text-navy">Response time:</strong> We typically
+                reply within 1 business day.
               </p>
             </div>
           </div>
