@@ -2,32 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  serverExternalPackages: ["@resvg/resvg-js"],
-  async redirects() {
-    return [
+  output: "standalone",
+  images: {
+    remotePatterns: [
       {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "mybuildmetric.com",
-          },
-        ],
-        destination: "https://buildmetriccalc.com/:path*",
-        permanent: true,
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.mybuildmetric.com",
-          },
-        ],
-        destination: "https://buildmetriccalc.com/:path*",
-        permanent: true,
-      },
-    ];
+    ],
   },
 };
 

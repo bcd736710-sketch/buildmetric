@@ -8,4 +8,9 @@ artifacts
 *.log
 .env
 .env.local
+.env.production
 .env.*.local
+data/
+
+.vercel
+.env*
