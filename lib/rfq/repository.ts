@@ -72,6 +72,23 @@ async function ensureRFQSchema() {
         CREATE INDEX IF NOT EXISTS rfq_submissions_created_at_idx
         ON rfq_submissions (created_at DESC)
       `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS customer_email_status TEXT NOT NULL DEFAULT 'pending'
+          CHECK (customer_email_status IN ('pending', 'sent', 'failed'))
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS customer_email_provider_id TEXT
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS customer_email_sent_at TIMESTAMPTZ
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS customer_email_error TEXT
+      `;
     })();
   }
   await schemaPromise;
@@ -89,12 +106,13 @@ export async function saveRFQRecord({
   await sql`
     INSERT INTO rfq_submissions (
       id, created_at, payload, reference_blob_url, reference_blob_pathname,
-      reference_filename, reference_content_type, reference_size, email_status
+      reference_filename, reference_content_type, reference_size, email_status,
+      customer_email_status
     ) VALUES (
       ${record.id}, ${record.createdAt}::timestamptz, ${JSON.stringify(record)}::jsonb,
       ${referenceBlob?.url ?? null}, ${referenceBlob?.pathname ?? null},
       ${referenceBlob?.originalName ?? null}, ${referenceBlob?.type ?? null},
-      ${referenceBlob?.size ?? null}, 'pending'
+      ${referenceBlob?.size ?? null}, 'pending', 'pending'
     )
   `;
 }
@@ -119,6 +137,30 @@ export async function updateRFQEmailStatus({
       email_provider_id = ${providerId ?? null},
       email_sent_at = ${status === "sent" ? new Date().toISOString() : null}::timestamptz,
       email_error = ${error ?? null}
+    WHERE id = ${id}
+  `;
+}
+
+export async function updateRFQCustomerEmailStatus({
+  id,
+  status,
+  providerId,
+  error,
+}: {
+  id: string;
+  status: RFQEmailStatus;
+  providerId?: string;
+  error?: string;
+}) {
+  await ensureRFQSchema();
+  const sql = database();
+  await sql`
+    UPDATE rfq_submissions
+    SET
+      customer_email_status = ${status},
+      customer_email_provider_id = ${providerId ?? null},
+      customer_email_sent_at = ${status === "sent" ? new Date().toISOString() : null}::timestamptz,
+      customer_email_error = ${error ?? null}
     WHERE id = ${id}
   `;
 }
