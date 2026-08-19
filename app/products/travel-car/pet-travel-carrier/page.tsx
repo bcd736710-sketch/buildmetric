@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   title: "Pet Travel Carrier | TROVANE Product Detail",
   description:
     "B2B pet travel carrier product detail with wholesale price, customization and sample options.",
+  alternates: {
+    canonical:
+      "https://buildmetriccalc.com/products/travel-car/pet-travel-carrier",
+  },
 };
 
 const gallery = [

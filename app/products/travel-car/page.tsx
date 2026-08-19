@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Travel & Car Products | TROVANE",
   description:
     "Travel carriers, restraints, hydration and comfort products for pet travel.",
+  alternates: {
+    canonical: "https://buildmetriccalc.com/products/travel-car",
+  },
 };
 
 const products = [

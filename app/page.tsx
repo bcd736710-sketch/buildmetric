@@ -658,7 +658,6 @@ export default function HomePage() {
               <div className="mt-4 space-y-3 text-sm text-slate">
                 <p>Email: admin@buildmetriccalc.com</p>
                 <p>WhatsApp: Available on request</p>
-                <p>Company information: To be updated</p>
               </div>
             </div>
           </div>

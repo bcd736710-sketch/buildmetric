@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Request a Quote | TROVANE",
   description:
     "Submit a B2B RFQ for TROVANE pet outdoor and travel products.",
+  alternates: {
+    canonical: "https://buildmetriccalc.com/rfq",
+  },
 };
 
 function Header() {

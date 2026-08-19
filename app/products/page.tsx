@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Products | TROVANE Pet Outdoor & Travel",
   description:
     "Explore TROVANE outdoor and travel product categories for dogs and cats.",
+  alternates: {
+    canonical: "https://buildmetriccalc.com/products",
+  },
 };
 
 const categories = [
