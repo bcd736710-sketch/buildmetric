@@ -116,6 +116,7 @@ details > summary::-webkit-details-marker {
   color: #b42318;
   margin: 4px 0 0;
 }
+.wide{width:min(100%,1000px)}.admin-form{display:grid;gap:12px}.admin-form label{display:grid;gap:6px;font-weight:600}.admin-form input,.admin-form textarea,.admin-form select{font:inherit;padding:10px;border:1px solid #b9c3be}.admin-form textarea{min-height:90px}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{text-align:left;padding:10px;border-bottom:1px solid #d8ded9}th{font-size:.8rem;text-transform:uppercase}select{padding:9px;margin-right:8px}@media(max-width:640px){.wide{overflow-x:auto}table{min-width:680px}}
 
 @media (prefers-reduced-motion: reduce) {
   *,

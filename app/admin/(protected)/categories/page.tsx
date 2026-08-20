@@ -1,5 +1,1 @@
-import { notFound } from "next/navigation";
-
-export default function ProtectedCategoriesBoundary() {
-  notFound();
-}
+import Link from "next/link";import { categories } from "@/lib/admin/products";export default async function CategoriesPage(){const rows=await categories();return <main className="admin-shell"><section className="admin-card wide"><h1>Categories</h1><p><Link href="/admin/categories/new">New category</Link></p><table><thead><tr><th>Name</th><th>Slug</th><th>Order</th><th>Active</th><th /></tr></thead><tbody>{rows.map(r=><tr key={r.id}><td>{r.name}</td><td>{r.slug}</td><td>{r.sortOrder}</td><td>{r.isActive?"Yes":"No"}</td><td><Link href={`/admin/categories/${r.id}/edit`}>Edit</Link></td></tr>)}</tbody></table></section></main>}

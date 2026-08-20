@@ -1,0 +1,1 @@
+import { notFound } from "next/navigation";import { categories,product } from "@/lib/admin/products";import { ProductForm } from "../../form";export default async function Edit({params}:{params:Promise<{id:string}>}){const r=await product((await params).id);if(!r)notFound();return <ProductForm item={r} categories={await categories(true)}/>}
