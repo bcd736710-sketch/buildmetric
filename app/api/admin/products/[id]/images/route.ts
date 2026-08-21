@@ -25,14 +25,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const form = await request.formData();
     const file = form.get("file");
     const role = form.get("role") === "main" ? "main" : form.get("role") === "gallery" ? "gallery" : null;
-    console.info("[Product images] upload received", {
-      requestHost: new URL(request.url).host,
-      hasFile: Boolean(file),
-      fileIsString: typeof file === "string",
-      fileType: isFileLike(file) ? file.type : null,
-      fileSize: isFileLike(file) ? file.size : null,
-      role,
-    });
     if (!isFileLike(file) || !role) return NextResponse.json({ message: "Choose an image and its placement." }, { status: 400 });
     const image = await uploadProductImage({ productId: id, file, role, altText: typeof form.get("altText") === "string" ? String(form.get("altText")) : null });
     return NextResponse.json({ image }, { status: 201 });

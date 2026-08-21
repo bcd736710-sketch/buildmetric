@@ -51,6 +51,11 @@ function trimAltText(value: string | null | undefined) {
   return value?.trim().slice(0, 240) || null;
 }
 
+function redactBlobError(error: unknown, token: string | undefined) {
+  const message = error instanceof Error ? error.message : "Unknown Blob error";
+  return token ? message.replaceAll(token, "[redacted]") : message;
+}
+
 export function validateProductImage(file: File | null | undefined) {
   if (!file || !file.size) throw new Error("Choose an image to upload.");
   if (file.size > maximumImageBytes) throw new Error("Each image must be 5 MB or smaller.");
@@ -84,16 +89,18 @@ export async function uploadProductImage({ productId, file, role, altText }: {
   const extension = acceptedTypes.get(file.type);
   if (!extension) throw new Error("Use a JPG, JPEG, PNG, or WebP image.");
 
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
   let uploaded: Awaited<ReturnType<typeof put>>;
   try {
     uploaded = await put(`products/${productId}/${crypto.randomUUID()}.${extension}`, file, {
       access: "public",
       addRandomSuffix: false,
       contentType: file.type,
+      token: blobToken,
     });
-    console.info("[Product images] blob upload", { blobUpload: "success" });
-  } catch {
-    console.info("[Product images] blob upload", { blobUpload: "failed" });
+    console.info("[Product images] Blob put", { tokenPresent: Boolean(blobToken), blobPutError: null });
+  } catch (error) {
+    console.info("[Product images] Blob put", { tokenPresent: Boolean(blobToken), blobPutError: redactBlobError(error, blobToken) });
     throw new ProductBlobUploadError();
   }
 
