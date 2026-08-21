@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description:
     "TROVANE helps pet brands, retailers and distributors source and customize pet outdoor, travel, car, hiking and camping products.",
   metadataBase: new URL("https://buildmetriccalc.com"),
+  alternates: {
+    canonical: "https://buildmetriccalc.com/",
+  },
   openGraph: {
     title: "TROVANE | Pet Outdoor & Travel",
     description:

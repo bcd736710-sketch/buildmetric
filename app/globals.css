@@ -54,6 +54,73 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
+.admin-login-shell,
+.admin-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+.admin-login-card,
+.admin-card {
+  width: min(100%, 440px);
+  border: 1px solid color-mix(in srgb, var(--forest) 25%, white);
+  background: white;
+  padding: clamp(28px, 6vw, 48px);
+}
+
+.admin-kicker {
+  color: var(--forest);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.admin-login-card h1,
+.admin-card h1 {
+  margin: 0.25rem 0 0.75rem;
+}
+
+.admin-login-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.admin-login-form input {
+  border: 1px solid color-mix(in srgb, var(--slate) 40%, white);
+  border-radius: 0;
+  font: inherit;
+  padding: 11px 12px;
+}
+
+.admin-login-form button,
+.admin-card button {
+  border: 0;
+  background: var(--forest);
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 12px 16px;
+}
+
+.admin-login-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.admin-login-error {
+  color: #b42318;
+  margin: 4px 0 0;
+}
+.wide{width:min(100%,1000px)}.admin-form{display:grid;gap:12px}.admin-form label{display:grid;gap:6px;font-weight:600}.admin-form input,.admin-form textarea,.admin-form select{font:inherit;padding:10px;border:1px solid #b9c3be}.admin-form .admin-checkbox{align-items:center;display:flex;gap:8px}.admin-form .admin-checkbox input{height:18px;margin:0;padding:0;width:18px}.admin-form textarea{min-height:90px}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{text-align:left;padding:10px;border-bottom:1px solid #d8ded9}th{font-size:.8rem;text-transform:uppercase}select{padding:9px;margin-right:8px}@media(max-width:640px){.wide{overflow-x:auto}table{min-width:680px}}
+.admin-image-fieldset{border:1px solid #b9c3be;display:grid;gap:12px;margin:8px 0;padding:16px}.admin-image-fieldset legend{font-weight:700;padding:0 6px}.admin-image-fieldset p,.admin-image-note,.admin-image-empty,.admin-image-selection{color:var(--slate);font-size:.9rem;line-height:1.5;margin:0}.admin-image-manager{margin:0 auto 24px}.admin-image-manager h2,.admin-image-manager h3{margin-top:0}.admin-image-grid{display:grid;gap:32px;margin-top:20px}@media(min-width:760px){.admin-image-grid{grid-template-columns:1fr 1fr}}.admin-image-upload{display:grid;gap:10px;margin-top:16px}.admin-image-upload label{display:grid;gap:6px;font-weight:600}.admin-image-upload input{border:1px solid #b9c3be;font:inherit;padding:10px}.admin-image-upload button,.admin-image-card button{border:0;background:var(--forest);color:white;cursor:pointer;font:inherit;font-weight:700;padding:10px 12px}.admin-image-upload button:disabled,.admin-image-card button:disabled{cursor:wait;opacity:.6}.admin-image-card{border:1px solid #d8ded9;display:grid;gap:10px;margin:0;padding:12px}.admin-image-card img{height:auto;max-width:100%;object-fit:cover}.admin-image-card p{margin:0}.admin-gallery-list{display:grid;gap:12px;list-style:decimal;margin:0;padding-left:24px}.admin-gallery-list .admin-image-card{grid-template-columns:minmax(100px,150px) 1fr}.admin-image-actions{display:flex;flex-wrap:wrap;gap:8px}.admin-image-actions button{margin:0}
+.admin-status{display:inline-block;background:var(--mist);color:var(--forest);font-size:.78rem;font-weight:700;padding:4px 7px;text-transform:capitalize}.admin-rfq-status{align-items:end;display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.admin-rfq-status label{display:grid;gap:6px;font-weight:700}.admin-rfq-status button{margin:0}.admin-rfq-received{color:var(--slate);font-size:.9rem}.admin-rfq-details{display:grid;gap:24px;margin-top:32px}.admin-rfq-details h2{border-top:1px solid #d8ded9;font-size:1rem;margin:0;padding-top:20px}.admin-rfq-details dl{display:grid;gap:12px;margin:12px 0 0}.admin-rfq-details dl div{display:grid;gap:4px}.admin-rfq-details dt{color:var(--slate);font-size:.8rem;font-weight:700;text-transform:uppercase}.admin-rfq-details dd{margin:0}.admin-rfq-message{line-height:1.6;white-space:pre-wrap}
+.admin-rfq-form{display:grid;gap:10px;margin-top:12px}.admin-rfq-form label{display:grid;gap:6px;font-weight:700}.admin-rfq-form input,.admin-rfq-form textarea{border:1px solid #b9c3be;font:inherit;padding:10px}.admin-rfq-form textarea{min-height:130px;resize:vertical}.admin-rfq-form button{justify-self:start;margin:0}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
