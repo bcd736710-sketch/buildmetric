@@ -15,20 +15,25 @@ async function responseMessage(response: Response) {
 function UploadForm({ productId, role, onComplete }: { productId: string; role: Placement; onComplete: () => void }) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [selectedCount, setSelectedCount] = useState(0);
+  const isGallery = role === "gallery";
   const label = role === "main" ? "Upload main image" : "Add gallery images";
 
   function submit(form: HTMLFormElement) {
     const data = new FormData(form);
-    const file = data.get("file");
-    if (!(file instanceof File) || !file.size) {
+    const files = data.getAll("files");
+    if (!files.length || !files.every((file) => file instanceof File && file.size)) {
       setError("Choose an image to upload.");
       return;
     }
+    if (isGallery && files.length > 10) {
+      setError("Choose no more than 10 gallery images at a time.");
+      return;
+    }
     const upload = new FormData();
-    upload.append("file", file);
+    for (const file of files) upload.append("files", file);
     upload.append("role", role);
     upload.append("altText", String(data.get("altText") || ""));
-    console.info("[Product images] upload prepared", { hasFile: true, fileType: file.type, fileSize: file.size, role });
     startTransition(async () => {
       setError(null);
       const response = await fetch(`/api/admin/products/${productId}/images`, { method: "POST", body: upload });
@@ -37,16 +42,18 @@ function UploadForm({ productId, role, onComplete }: { productId: string; role: 
         return;
       }
       form.reset();
+      setSelectedCount(0);
       onComplete();
     });
   }
 
-  return <form className="admin-image-upload" onSubmit={(event) => { event.preventDefault(); submit(event.currentTarget); }}>
-    <label>{label}<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" aria-describedby={`${role}-image-help`} name="file" required type="file" /></label>
+  return <form aria-busy={pending} className="admin-image-upload" onSubmit={(event) => { event.preventDefault(); submit(event.currentTarget); }}>
+    <label>{label}<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" aria-describedby={`${role}-image-help`} disabled={pending} multiple={isGallery} name="files" onChange={(event) => setSelectedCount(event.currentTarget.files?.length || 0)} required type="file" /></label>
+    {isGallery && selectedCount ? <p className="admin-image-selection" role="status">{selectedCount} {selectedCount === 1 ? "image" : "images"} selected</p> : null}
     <label>Alt text<input name="altText" placeholder="Describe the product image" /></label>
-    <p id={`${role}-image-help`}>JPG, JPEG, PNG or WebP. Maximum 5 MB per image.</p>
+    <p id={`${role}-image-help`}>JPG, JPEG, PNG or WebP. Maximum 5 MB per image.{isGallery ? " Choose up to 10 images at once." : ""}</p>
     {error ? <p className="admin-login-error" role="alert">{error}</p> : null}
-    <button disabled={pending} type="submit">{pending ? "Uploading…" : label}</button>
+    <button disabled={pending} type="submit">{pending ? `Uploading${isGallery ? ` ${selectedCount}` : ""} image${isGallery && selectedCount !== 1 ? "s" : ""}…` : label}</button>
   </form>;
 }
 

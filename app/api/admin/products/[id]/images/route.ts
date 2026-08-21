@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { AdminUnauthorizedError, requireAdmin } from "@/lib/auth/require-admin";
-import { ProductBlobUploadError, ProductImagePersistenceError, uploadProductImage } from "@/lib/products/image-management";
+import { ProductBlobUploadError, ProductImagePersistenceError, uploadProductImage, validateProductImage } from "@/lib/products/image-management";
 
 export const runtime = "nodejs";
 
@@ -23,11 +23,26 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     await requireAdmin();
     const { id } = await params;
     const form = await request.formData();
-    const file = form.get("file");
     const role = form.get("role") === "main" ? "main" : form.get("role") === "gallery" ? "gallery" : null;
-    if (!isFileLike(file) || !role) return NextResponse.json({ message: "Choose an image and its placement." }, { status: 400 });
-    const image = await uploadProductImage({ productId: id, file, role, altText: typeof form.get("altText") === "string" ? String(form.get("altText")) : null });
-    return NextResponse.json({ image }, { status: 201 });
+    const files = form.getAll("files");
+    if (!role || !files.length || !files.every(isFileLike)) {
+      return NextResponse.json({ message: "Choose an image and its placement." }, { status: 400 });
+    }
+    if (role === "main" && files.length !== 1) {
+      return NextResponse.json({ message: "Choose one main image." }, { status: 400 });
+    }
+    if (role === "gallery" && files.length > 10) {
+      return NextResponse.json({ message: "Choose no more than 10 gallery images at a time." }, { status: 400 });
+    }
+
+    const altText = typeof form.get("altText") === "string" ? String(form.get("altText")) : null;
+    const uploadFiles = files as File[];
+    uploadFiles.forEach(validateProductImage);
+    const images = [];
+    for (const file of uploadFiles) {
+      images.push(await uploadProductImage({ productId: id, file, role, altText }));
+    }
+    return NextResponse.json({ images }, { status: 201 });
   } catch (error) {
     if (error instanceof AdminUnauthorizedError) return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
     if (error instanceof ProductBlobUploadError) return NextResponse.json({ message: "Image storage is unavailable. Please try again." }, { status: 502 });
