@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireAdmin } from "@/lib/auth/require-admin";
 
 import { logout } from "./actions";
@@ -13,7 +14,7 @@ export default async function AdminHomePage() {
         <h1>Admin</h1>
         <p>Signed in as {username}.</p>
         <p>Published {counts.published} · Draft {counts.draft} · Archived {counts.archived} · Categories {counts.categories}</p>
-        <p><a href="/admin/products">Products</a> · <a href="/admin/categories">Categories</a></p>
+        <p><Link href="/admin/products">Products</Link> · <Link href="/admin/categories">Categories</Link> · <Link href="/admin/rfq">RFQs</Link></p>
         <form action={logout}><button type="submit">Sign Out</button></form>
       </section>
     </main>

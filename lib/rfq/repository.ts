@@ -1,3 +1,5 @@
+import "server-only";
+
 import { neon } from "@neondatabase/serverless";
 
 export type RFQReferenceFile = {
@@ -32,6 +34,16 @@ export type RFQRecord = {
 };
 
 export type RFQEmailStatus = "pending" | "sent" | "failed";
+export const RFQ_SUBMISSION_STATUSES = ["new", "contacted", "quoted", "negotiating", "won", "lost"] as const;
+export type RFQSubmissionStatus = (typeof RFQ_SUBMISSION_STATUSES)[number];
+
+export type RFQSubmission = {
+  id: string;
+  createdAt: string;
+  status: RFQSubmissionStatus;
+  record: RFQRecord;
+  referenceFile: { url: string; filename: string; contentType: string | null; size: number | null } | null;
+};
 
 export class RFQDatabaseConfigurationError extends Error {
   constructor() {
@@ -61,6 +73,8 @@ async function ensureRFQSchema() {
           reference_filename TEXT,
           reference_content_type TEXT,
           reference_size INTEGER,
+          status TEXT NOT NULL DEFAULT 'new'
+            CHECK (status IN ('new', 'contacted', 'quoted', 'negotiating', 'won', 'lost')),
           email_status TEXT NOT NULL DEFAULT 'pending'
             CHECK (email_status IN ('pending', 'sent', 'failed')),
           email_provider_id TEXT,
@@ -71,6 +85,10 @@ async function ensureRFQSchema() {
       await sql`
         CREATE INDEX IF NOT EXISTS rfq_submissions_created_at_idx
         ON rfq_submissions (created_at DESC)
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'
       `;
       await sql`
         ALTER TABLE rfq_submissions
@@ -92,6 +110,66 @@ async function ensureRFQSchema() {
     })();
   }
   await schemaPromise;
+}
+
+function recordFromPayload(payload: unknown): RFQRecord {
+  const value = typeof payload === "string" ? JSON.parse(payload) : payload;
+  if (!value || typeof value !== "object") throw new Error("RFQ payload is invalid.");
+  return value as RFQRecord;
+}
+
+function submissionFromRow(row: {
+  id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
+  referenceBlobUrl: string | null; referenceFilename: string | null;
+  referenceContentType: string | null; referenceSize: number | null;
+}): RFQSubmission {
+  return {
+    id: row.id,
+    createdAt: row.createdAt,
+    status: row.status,
+    record: recordFromPayload(row.payload),
+    referenceFile: row.referenceBlobUrl && row.referenceFilename
+      ? { url: row.referenceBlobUrl, filename: row.referenceFilename, contentType: row.referenceContentType, size: row.referenceSize }
+      : null,
+  };
+}
+
+export function isRFQSubmissionStatus(value: unknown): value is RFQSubmissionStatus {
+  return typeof value === "string" && (RFQ_SUBMISSION_STATUSES as readonly string[]).includes(value);
+}
+
+export async function getRFQSubmissions(): Promise<RFQSubmission[]> {
+  await ensureRFQSchema();
+  const sql = database();
+  const rows = await sql`SELECT id, created_at AS "createdAt", status, payload,
+    reference_blob_url AS "referenceBlobUrl", reference_filename AS "referenceFilename",
+    reference_content_type AS "referenceContentType", reference_size AS "referenceSize"
+    FROM rfq_submissions ORDER BY created_at DESC` as Array<{
+      id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
+      referenceBlobUrl: string | null; referenceFilename: string | null;
+      referenceContentType: string | null; referenceSize: number | null;
+    }>;
+  return rows.map(submissionFromRow);
+}
+
+export async function getRFQSubmissionById(id: string): Promise<RFQSubmission | null> {
+  await ensureRFQSchema();
+  const sql = database();
+  const rows = await sql`SELECT id, created_at AS "createdAt", status, payload,
+    reference_blob_url AS "referenceBlobUrl", reference_filename AS "referenceFilename",
+    reference_content_type AS "referenceContentType", reference_size AS "referenceSize"
+    FROM rfq_submissions WHERE id = ${id} LIMIT 1` as Array<{
+      id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
+      referenceBlobUrl: string | null; referenceFilename: string | null;
+      referenceContentType: string | null; referenceSize: number | null;
+    }>;
+  return rows[0] ? submissionFromRow(rows[0]) : null;
+}
+
+export async function setRFQSubmissionStatus(id: string, status: RFQSubmissionStatus) {
+  await ensureRFQSchema();
+  const sql = database();
+  await sql`UPDATE rfq_submissions SET status = ${status} WHERE id = ${id}`;
 }
 
 export async function saveRFQRecord({
