@@ -56,6 +56,12 @@ function redactBlobError(error: unknown, token: string | undefined) {
   return token ? message.replaceAll(token, "[redacted]") : message;
 }
 
+function productBlobConfig() {
+  const storeId = process.env.PRODUCT_BLOB_STORE_ID;
+  const token = process.env.PRODUCT_BLOB_READ_WRITE_TOKEN;
+  return storeId && token ? { storeId, token } : null;
+}
+
 export function validateProductImage(file: File | null | undefined) {
   if (!file || !file.size) throw new Error("Choose an image to upload.");
   if (file.size > maximumImageBytes) throw new Error("Each image must be 5 MB or smaller.");
@@ -89,18 +95,27 @@ export async function uploadProductImage({ productId, file, role, altText }: {
   const extension = acceptedTypes.get(file.type);
   if (!extension) throw new Error("Use a JPG, JPEG, PNG, or WebP image.");
 
-  const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+  const productBlob = productBlobConfig();
+  if (!productBlob) {
+    console.info("[Product images] Blob put", {
+      tokenPresent: Boolean(process.env.PRODUCT_BLOB_READ_WRITE_TOKEN),
+      blobPutError: "Product Blob store configuration is unavailable.",
+    });
+    throw new ProductBlobUploadError();
+  }
+
   let uploaded: Awaited<ReturnType<typeof put>>;
   try {
     uploaded = await put(`products/${productId}/${crypto.randomUUID()}.${extension}`, file, {
       access: "public",
       addRandomSuffix: false,
       contentType: file.type,
-      token: blobToken,
+      storeId: productBlob.storeId,
+      token: productBlob.token,
     });
-    console.info("[Product images] Blob put", { tokenPresent: Boolean(blobToken), blobPutError: null });
+    console.info("[Product images] Blob put", { tokenPresent: Boolean(productBlob.token), blobPutError: null });
   } catch (error) {
-    console.info("[Product images] Blob put", { tokenPresent: Boolean(blobToken), blobPutError: redactBlobError(error, blobToken) });
+    console.info("[Product images] Blob put", { tokenPresent: Boolean(productBlob.token), blobPutError: redactBlobError(error, productBlob.token) });
     throw new ProductBlobUploadError();
   }
 
@@ -123,12 +138,15 @@ export async function uploadProductImage({ productId, file, role, altText }: {
     }
     return mapImage(rows[0]);
   } catch {
-    await del(uploaded.url).catch(() => undefined);
+    await del(uploaded.url, productBlob).catch(() => undefined);
     throw new ProductImagePersistenceError();
   }
 }
 
 export async function deleteProductImage(productId: string, imageId: string) {
+  const productBlob = productBlobConfig();
+  if (!productBlob) throw new ProductBlobUploadError();
+
   const sql = database();
   const rows = await sql.query(`DELETE FROM product_images WHERE id = $1 AND product_id = $2
     RETURNING id, product_id AS "productId", blob_url AS "blobUrl", blob_pathname AS "blobPathname",
@@ -136,7 +154,7 @@ export async function deleteProductImage(productId: string, imageId: string) {
   const image = rows[0];
   if (!image) throw new Error("Image not found.");
   try {
-    await del(image.blobUrl);
+    await del(image.blobUrl, productBlob);
   } catch (error) {
     await sql.query(`INSERT INTO product_images(id, product_id, blob_url, blob_pathname, alt_text, role, sort_order, mime_type, byte_size, created_at)
       VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`, [image.id, image.productId, image.blobUrl, image.blobPathname, image.altText, image.role, image.sortOrder, image.mimeType, image.byteSize, image.createdAt]);
