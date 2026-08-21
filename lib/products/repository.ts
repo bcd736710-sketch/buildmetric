@@ -77,6 +77,13 @@ export async function getPublishedProductBySlugs(categorySlug: string, productSl
   return rows[0] ? mapProduct(rows[0]) : null;
 }
 
+// Public storefront aliases. These deliberately return only products that are
+// published and belong to an active category; draft and archived records never
+// cross the repository boundary into a public route.
+export function getProductBySlug(categorySlug: string, productSlug: string) {
+  return getPublishedProductBySlugs(categorySlug, productSlug);
+}
+
 export async function getActiveCategories(): Promise<ProductCategory[]> {
   const sql = database();
   return (await sql`SELECT id, parent_id AS "parentId", name, slug, description,
@@ -84,6 +91,21 @@ export async function getActiveCategories(): Promise<ProductCategory[]> {
     sort_order AS "sortOrder", is_active AS "isActive", created_at AS "createdAt",
     updated_at AS "updatedAt" FROM product_categories WHERE is_active = true
     ORDER BY sort_order ASC, name ASC`) as ProductCategory[];
+}
+
+export async function getPublishedCategories(): Promise<ProductCategory[]> {
+  const sql = database();
+  return (await sql`SELECT c.id, c.parent_id AS "parentId", c.name, c.slug, c.description,
+    c.image_url AS "imageUrl", c.image_pathname AS "imagePathname", c.image_alt AS "imageAlt",
+    c.sort_order AS "sortOrder", c.is_active AS "isActive", c.created_at AS "createdAt",
+    c.updated_at AS "updatedAt"
+    FROM product_categories c
+    WHERE c.is_active = true
+      AND EXISTS (
+        SELECT 1 FROM products p
+        WHERE p.category_id = c.id AND p.status = 'published'
+      )
+    ORDER BY c.sort_order ASC, c.name ASC`) as ProductCategory[];
 }
 
 export async function getProductByIdForAdmin(id: string): Promise<Product | null> {

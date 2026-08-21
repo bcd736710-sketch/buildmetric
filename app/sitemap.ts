@@ -1,17 +1,21 @@
 import type { MetadataRoute } from "next";
+import { getPublishedCategories, getPublishedProducts } from "@/lib/products/repository";
+
+export const dynamic = "force-dynamic";
 
 const siteUrl = "https://buildmetriccalc.com";
 
-const publicPaths = [
-  "/",
-  "/products",
-  "/products/travel-car",
-  "/products/travel-car/pet-travel-carrier",
-  "/rfq",
-];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [categories, products] = await Promise.all([
+    getPublishedCategories(),
+    getPublishedProducts(),
+  ]);
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return publicPaths.map((path) => ({
-    url: new URL(path, siteUrl).toString(),
-  }));
+  return [
+    "/",
+    "/products",
+    "/rfq",
+    ...categories.map((category) => `/products/${category.slug}`),
+    ...products.map((product) => `/products/${product.category.slug}/${product.slug}`),
+  ].map((path) => ({ url: new URL(path, siteUrl).toString() }));
 }

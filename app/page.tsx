@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getPublishedCategories, getPublishedFeaturedProducts } from "@/lib/products/repository";
+
+export const dynamic = "force-dynamic";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -9,103 +12,6 @@ const navItems = [
   { label: "Sourcing Service", href: "#service" },
   { label: "About Us", href: "#about" },
   { label: "Contact", href: "#contact" },
-];
-
-const categories = [
-  {
-    title: "Travel & Car",
-    href: "/products/travel-car",
-    image: "/trovane-category-travel-cat.jpg",
-    objectPosition: "center",
-    items: ["Car Seats", "Carriers", "Safety Restraints", "Car Covers"],
-  },
-  {
-    title: "Walking & Hiking",
-    href: "/products/travel-car",
-    image: "/trovane-category-hiking-dog.jpg",
-    objectPosition: "center",
-    items: ["Harnesses", "Leashes", "Collars", "Reflective Gear"],
-  },
-  {
-    title: "Outdoor Feeding",
-    href: "/products/travel-car",
-    image: "/trovane-product-bowl-cat.jpg",
-    objectPosition: "center",
-    items: ["Travel Water Bottles", "Travel Bowls", "Food & Water Containers"],
-  },
-  {
-    title: "Outdoor Apparel",
-    href: "/products/travel-car",
-    image: "/trovane-category-apparel-dog.jpg",
-    objectPosition: "center",
-    items: ["Cooling Vests", "Raincoats", "Functional Outdoor Clothing"],
-  },
-  {
-    title: "Camping & Accessories",
-    href: "/products/travel-car",
-    image: "/trovane-category-camping-pets.jpg",
-    objectPosition: "65% center",
-    items: ["Portable Beds", "Travel Mats", "Backpacks", "Outdoor Accessories"],
-  },
-];
-
-const products = [
-  {
-    name: "2-in-1 Pet Travel Bottle",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Hydration",
-    audience: "For Dogs & Cats",
-    image: "/trovane-product-bottle-dog.jpg",
-  },
-  {
-    name: "Pet Travel Carrier",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Travel & Car",
-    audience: "For Dogs & Cats",
-    image: "/trovane-product-carrier-cat.jpg",
-  },
-  {
-    name: "Adjustable Outdoor Harness",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Walking & Hiking",
-    audience: "For Dogs",
-    image: "/trovane-product-harness-dog.jpg",
-  },
-  {
-    name: "Collapsible Travel Bowl",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Outdoor Feeding",
-    audience: "For Dogs & Cats",
-    image: "/trovane-product-bowl-cat.jpg",
-  },
-  {
-    name: "Cooling Vest",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Outdoor Apparel",
-    audience: "For Dogs",
-    image: "/trovane-product-vest-dog.jpg",
-  },
-  {
-    name: "Pet Travel Backpack / Carrier",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Dogs & Cats",
-    audience: "For Cats",
-    image: "/trovane-product-backpack-cat.jpg",
-  },
-  {
-    name: "Reflective Leash",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Safety Gear",
-    audience: "For Dogs",
-    image: "/trovane-product-leash-dog.jpg",
-  },
-  {
-    name: "Portable Outdoor Pet Bed",
-    href: "/products/travel-car/pet-travel-carrier",
-    tag: "Camping",
-    audience: "For Dogs & Cats",
-    image: "/trovane-category-camping-pets.jpg",
-  },
 ];
 
 const services = [
@@ -224,7 +130,11 @@ function Button({
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [categories, products] = await Promise.all([
+    getPublishedCategories(),
+    getPublishedFeaturedProducts(),
+  ]);
   return (
     <main id="home" className="overflow-x-hidden bg-warm text-navy">
       <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur">
@@ -339,33 +249,27 @@ export default function HomePage() {
                 className={`group relative min-h-[320px] overflow-hidden rounded-[24px] bg-navy text-white sm:min-h-[360px] ${
                   index < 2 ? "lg:col-span-6" : "lg:col-span-4"
                 }`}
-                href={category.href}
-                key={category.title}
+                href={`/products/${category.slug}`}
+                key={category.id}
               >
                 <Image
-                  alt={`${category.title} pet outdoor product scene`}
+                  alt={category.imageAlt || `${category.name} pet outdoor product scene`}
                   className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  src={category.image}
-                  style={{ objectPosition: category.objectPosition ?? "center" }}
+                  src={category.imageUrl || "/trovane-category-travel-cat.jpg"}
                   unoptimized
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,63,0.02),rgba(0,32,63,0.64))]" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                   <h3 className="text-2xl font-semibold tracking-tight">
-                    {category.title}
+                    {category.name}
                   </h3>
                   <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1.5 text-xs font-semibold text-white/84">
-                    {category.items.map((item) => (
-                      <span
-                        className="border-b border-white/24 pb-0.5"
-                        key={item}
-                      >
-                        {item}
-                      </span>
-                    ))}
+                    <span className="border-b border-white/24 pb-0.5">
+                      {category.description || "Explore the collection"}
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -391,7 +295,7 @@ export default function HomePage() {
           </div>
           <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (
-              <article className="group" key={product.name}>
+              <article className="group" key={product.id}>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] border border-navy/8 bg-mist">
                   <Image
                     alt={`${product.name} for pet outdoor and travel sourcing`}
@@ -399,24 +303,24 @@ export default function HomePage() {
                     fill
                     loading="lazy"
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    src={product.image}
+                    src={product.images.find((image) => image.role === "main")?.blobUrl || product.images[0]?.blobUrl || "/trovane-product-carrier-cat.jpg"}
                     unoptimized
                   />
                 </div>
                 <div className="pt-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-forest">
-                      {product.tag}
+                      {product.category.name}
                     </p>
                     <span className="rounded-full bg-mist px-2.5 py-1 text-[11px] font-bold text-navy/72">
-                      {product.audience}
+                      {product.moq ? `MOQ: ${product.moq}` : "Customizable"}
                     </span>
                   </div>
                   <h3 className="mt-2 text-xl font-semibold text-navy">
                     {product.name}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-slate">
-                    Custom logo and packaging options available.
+                    {product.shortDescription || "Custom logo and packaging options available."}
                   </p>
                   <Link
                     className="mt-4 inline-flex text-sm font-bold uppercase tracking-[0.08em] text-navy transition hover:text-forest"

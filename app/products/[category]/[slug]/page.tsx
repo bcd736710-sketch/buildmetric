@@ -5,13 +5,13 @@ import { getProductBySlug } from "@/lib/products/repository";
 
 export const dynamic = "force-dynamic";
 
-const categorySlug = "travel-car";
-const productSlug = "pet-travel-carrier";
+type Props = { params: Promise<{ category: string; slug: string }> };
 
-export async function generateMetadata(): Promise<Metadata> {
-  const product = await getProductBySlug(categorySlug, productSlug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { category, slug } = await params;
+  const product = await getProductBySlug(category, slug);
   if (!product) return {};
-  const url = `https://buildmetriccalc.com/products/${categorySlug}/${productSlug}`;
+  const url = `https://buildmetriccalc.com/products/${product.category.slug}/${product.slug}`;
   return {
     title: product.seoTitle || `${product.name} | TROVANE`,
     description: product.seoDescription || product.shortDescription || product.fullDescription || undefined,
@@ -19,8 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function CurrentProductDetailPage() {
-  const product = await getProductBySlug(categorySlug, productSlug);
+export default async function DynamicProductDetailPage({ params }: Props) {
+  const { category, slug } = await params;
+  const product = await getProductBySlug(category, slug);
   if (!product) notFound();
   return <ProductDetailPage product={product} />;
 }
