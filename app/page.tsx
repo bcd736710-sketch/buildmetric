@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getPublishedCategories, getPublishedFeaturedProducts } from "@/lib/products/repository";
+import { getPublishedHomepageContent } from "@/lib/products/repository";
 
 export const dynamic = "force-dynamic";
 
@@ -131,10 +131,7 @@ function Button({
 }
 
 export default async function HomePage() {
-  const [categories, products] = await Promise.all([
-    getPublishedCategories(),
-    getPublishedFeaturedProducts(),
-  ]);
+  const { categories, products } = await getPublishedHomepageContent();
   return (
     <main id="home" className="overflow-x-hidden bg-warm text-navy">
       <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur">

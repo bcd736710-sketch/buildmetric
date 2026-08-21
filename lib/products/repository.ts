@@ -67,6 +67,13 @@ async function queryPublished(where: string, values: string[] = []) {
 
 export function getPublishedProducts() { return queryPublished(""); }
 export function getPublishedFeaturedProducts() { return queryPublished("AND p.featured = true"); }
+export async function getPublishedHomepageContent() {
+  const [categories, products] = await Promise.all([
+    getPublishedCategories(),
+    getPublishedFeaturedProducts(),
+  ]);
+  return { categories, products };
+}
 export function getPublishedProductsByCategory(categorySlug: string) {
   return queryPublished("AND c.slug = $1", [categorySlug]);
 }
