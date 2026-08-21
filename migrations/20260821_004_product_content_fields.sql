@@ -1,0 +1,8 @@
+BEGIN;
+
+ALTER TABLE products
+  ADD COLUMN IF NOT EXISTS key_features TEXT,
+  ADD COLUMN IF NOT EXISTS applications TEXT,
+  ADD COLUMN IF NOT EXISTS certifications TEXT;
+
+COMMIT;

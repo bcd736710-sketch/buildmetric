@@ -5,7 +5,8 @@ import type { Product, ProductCategory, ProductImage, ProductStatus } from "./ty
 
 type ProductRow = {
   id: string; name: string; slug: string; short_description: string | null;
-  full_description: string | null; moq: string | null; material: string | null;
+  full_description: string | null; key_features: string | null; applications: string | null;
+  certifications: string | null; moq: string | null; material: string | null;
   specifications: Record<string, unknown>; colors: string[]; customization: string[];
   packaging: string | null; lead_time: string | null; featured: boolean;
   sort_order: number; status: ProductStatus; seo_title: string | null;
@@ -24,7 +25,8 @@ function database() {
 }
 
 const productColumns = `
-  p.id, p.name, p.slug, p.short_description, p.full_description, p.moq, p.material,
+  p.id, p.name, p.slug, p.short_description, p.full_description, p.key_features, p.applications,
+  p.certifications, p.moq, p.material,
   p.specifications, p.colors, p.customization, p.packaging, p.lead_time, p.featured,
   p.sort_order, p.status, p.seo_title, p.seo_description, p.main_image_url, p.created_at, p.updated_at,
   jsonb_build_object('id', c.id, 'parentId', c.parent_id, 'name', c.name, 'slug', c.slug,
@@ -43,6 +45,7 @@ function mapProduct(row: ProductRow): Product {
   return {
     id: row.id, category: row.category, name: row.name, slug: row.slug,
     shortDescription: row.short_description, fullDescription: row.full_description,
+    keyFeatures: row.key_features, applications: row.applications, certifications: row.certifications,
     moq: row.moq, material: row.material, specifications: row.specifications ?? {},
     colors: row.colors ?? [], customization: row.customization ?? [], packaging: row.packaging,
     leadTime: row.lead_time, featured: row.featured, sortOrder: row.sort_order,

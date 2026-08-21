@@ -18,6 +18,10 @@ function values(value: unknown): string[] {
   return value ? [String(value)] : [];
 }
 
+function contentLines(value: string | null): string[] {
+  return value?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
+}
+
 function Header({ productName }: { productName: string }) {
   const rfq = `/rfq?product=${encodeURIComponent(productName)}`;
   return (
@@ -50,7 +54,10 @@ export function ProductDetailPage({ product }: { product: Product }) {
       : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
   const detailSections = [
     { title: "Product Details", items: [product.material && `Material: ${product.material}`, ...values(product.specifications), product.colors.length ? `Colors: ${product.colors.join(", ")}` : null].filter(Boolean) as string[] },
+    { title: "Key Features", items: contentLines(product.keyFeatures) },
+    { title: "Applications", items: contentLines(product.applications) },
     { title: "Customization", items: values(product.customization) },
+    { title: "Certifications", items: contentLines(product.certifications) },
     { title: "Packaging & MOQ", items: [product.packaging && `Packaging: ${product.packaging}`, product.moq && `MOQ: ${product.moq}`, product.leadTime && `Lead time: ${product.leadTime}`].filter(Boolean) as string[] },
   ].filter((section) => section.items.length);
   const facts = [["Category", product.category.name], ["Customization", product.customization.length ? product.customization.join(" / ") : "Available on request"], ["MOQ", product.moq || "Available on request"], ["Lead Time", product.leadTime || "Confirmed after requirements"]];

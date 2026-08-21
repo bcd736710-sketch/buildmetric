@@ -18,6 +18,9 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
     <label>Category<select defaultValue={item?.categoryId} name="categoryId" required>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select></label>
     <label>Short Description<textarea defaultValue={item?.shortDescription ?? ""} name="shortDescription" /></label>
     <label>Full Description<textarea defaultValue={item?.fullDescription ?? ""} name="fullDescription" /></label>
+    <label>Key Features<textarea defaultValue={item?.keyFeatures ?? ""} name="keyFeatures" /><span>One feature per line.</span></label>
+    <label>Applications<textarea defaultValue={item?.applications ?? ""} name="applications" /><span>One application per line.</span></label>
+    <label>Certifications<textarea defaultValue={item?.certifications ?? ""} name="certifications" /><span>One certification per line.</span></label>
     <label>MOQ<input defaultValue={item?.moq ?? ""} name="moq" /></label>
     <label>Material<input defaultValue={item?.material ?? ""} name="material" /></label>
     <label>Specifications (JSON)<textarea defaultValue={value(item?.specifications ?? {})} name="specifications" /></label>
