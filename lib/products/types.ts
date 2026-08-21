@@ -16,7 +16,8 @@ export type ProductCategory = {
 
 export type Product = {
   id: string; category: ProductCategory; name: string; slug: string;
-  shortDescription: string | null; fullDescription: string | null; moq: string | null;
+  shortDescription: string | null; fullDescription: string | null;
+  keyFeatures: string | null; applications: string | null; certifications: string | null; moq: string | null;
   material: string | null; specifications: Record<string, unknown>; colors: string[];
   customization: string[]; packaging: string | null; leadTime: string | null;
   featured: boolean; sortOrder: number; status: ProductStatus;
