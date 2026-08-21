@@ -1,1 +1,36 @@
-import { saveProduct } from "../manage-actions";import type { AdminCategory,AdminProduct } from "@/lib/admin/products";export function ProductForm({item,categories}:{item?:AdminProduct;categories:AdminCategory[]}){const v=(x:unknown)=>JSON.stringify(x,null,2);return <main className="admin-shell"><form action={saveProduct} className="admin-card admin-form wide"><input type="hidden" name="id" value={item?.id}/><h1>{item?"Edit product":"New product"}</h1><label>Product Name<input name="name" required defaultValue={item?.name}/></label><label>Slug<input name="slug" defaultValue={item?.slug}/></label><label>Category<select name="categoryId" required defaultValue={item?.categoryId}>{categories.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label>Short Description<textarea name="shortDescription" defaultValue={item?.shortDescription??""}/></label><label>Full Description<textarea name="fullDescription" defaultValue={item?.fullDescription??""}/></label><label>MOQ<input name="moq" defaultValue={item?.moq??""}/></label><label>Material<input name="material" defaultValue={item?.material??""}/></label><label>Specifications (JSON)<textarea name="specifications" defaultValue={v(item?.specifications??{})}/></label><label>Colors (JSON array)<textarea name="colors" defaultValue={v(item?.colors??[])}/></label><label>Customization (JSON array)<textarea name="customization" defaultValue={v(item?.customization??[])}/></label><label>Packaging<input name="packaging" defaultValue={item?.packaging??""}/></label><label>Lead Time<input name="leadTime" defaultValue={item?.leadTime??""}/></label><label>Status<select name="status" defaultValue={item?.status??"draft"}><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label><label>Sort Order<input name="sortOrder" type="number" min="0" defaultValue={item?.sortOrder??0}/></label><label><input name="featured" type="checkbox" defaultChecked={item?.featured}/> Featured</label><label>SEO Title<input name="seoTitle" defaultValue={item?.seoTitle??""}/></label><label>SEO Description<textarea name="seoDescription" defaultValue={item?.seoDescription??""}/></label><button>Save product</button></form></main>}
+"use client";
+
+import { useActionState } from "react";
+import { saveNewProductWithImages, saveProduct, type ProductSaveState } from "../manage-actions";
+import type { AdminCategory, AdminProduct } from "@/lib/admin/products";
+
+const initial: ProductSaveState = { error: null };
+
+export function ProductForm({ item, categories }: { item?: AdminProduct; categories: AdminCategory[] }) {
+  const [state, action] = useActionState(item ? saveProduct : saveNewProductWithImages, initial);
+  const value = (entry: unknown) => JSON.stringify(entry, null, 2);
+  return <main className="admin-shell"><form action={action} className="admin-card admin-form wide">
+    <input name="id" type="hidden" value={item?.id} />
+    <h1>{item ? "Edit product" : "New product"}</h1>
+    {state.error ? <p className="admin-login-error" role="alert">{state.error}</p> : null}
+    <label>Product Name<input defaultValue={item?.name} name="name" required /></label>
+    <label>Slug<input defaultValue={item?.slug} name="slug" /></label>
+    <label>Category<select defaultValue={item?.categoryId} name="categoryId" required>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select></label>
+    <label>Short Description<textarea defaultValue={item?.shortDescription ?? ""} name="shortDescription" /></label>
+    <label>Full Description<textarea defaultValue={item?.fullDescription ?? ""} name="fullDescription" /></label>
+    <label>MOQ<input defaultValue={item?.moq ?? ""} name="moq" /></label>
+    <label>Material<input defaultValue={item?.material ?? ""} name="material" /></label>
+    <label>Specifications (JSON)<textarea defaultValue={value(item?.specifications ?? {})} name="specifications" /></label>
+    <label>Colors (JSON array)<textarea defaultValue={value(item?.colors ?? [])} name="colors" /></label>
+    <label>Customization (JSON array)<textarea defaultValue={value(item?.customization ?? [])} name="customization" /></label>
+    <label>Packaging<input defaultValue={item?.packaging ?? ""} name="packaging" /></label>
+    <label>Lead Time<input defaultValue={item?.leadTime ?? ""} name="leadTime" /></label>
+    <label>Status<select defaultValue={item?.status ?? "draft"} name="status"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label>
+    <label>Sort Order<input defaultValue={item?.sortOrder ?? 0} min="0" name="sortOrder" type="number" /></label>
+    <label className="admin-checkbox"><input defaultChecked={item?.featured} name="featured" type="checkbox" /><span>Featured</span></label>
+    <label>SEO Title<input defaultValue={item?.seoTitle ?? ""} name="seoTitle" /></label>
+    <label>SEO Description<textarea defaultValue={item?.seoDescription ?? ""} name="seoDescription" /></label>
+    {!item ? <fieldset className="admin-image-fieldset"><legend>Product images</legend><label>Main Image<input accept="image/jpeg,image/png,image/webp" name="mainImage" type="file" /></label><label>Main Image Alt Text<input name="mainImageAlt" placeholder="Describe the main product image" /></label><label>Gallery Images<input accept="image/jpeg,image/png,image/webp" multiple name="galleryImages" type="file" /></label><label>Gallery Alt Text<input name="galleryImageAlt" placeholder="Applied to initial gallery images" /></label><p>JPG, JPEG, PNG or WebP. Maximum 5 MB per image.</p></fieldset> : null}
+    <button>Save product</button>
+  </form></main>;
+}

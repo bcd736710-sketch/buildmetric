@@ -42,9 +42,12 @@ function Header({ productName }: { productName: string }) {
 }
 
 export function ProductDetailPage({ product }: { product: Product }) {
-  const images = product.images.length
-    ? product.images.map((image) => ({ src: image.blobUrl, alt: image.altText || product.name }))
-    : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
+  const savedImages = product.images.map((image) => ({ src: image.blobUrl, alt: image.altText || product.name }));
+  const images = product.mainImageUrl && !savedImages.some((image) => image.src === product.mainImageUrl)
+    ? [{ src: product.mainImageUrl, alt: product.name }, ...savedImages]
+    : savedImages.length
+      ? savedImages
+      : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
   const detailSections = [
     { title: "Product Details", items: [product.material && `Material: ${product.material}`, ...values(product.specifications), product.colors.length ? `Colors: ${product.colors.join(", ")}` : null].filter(Boolean) as string[] },
     { title: "Customization", items: values(product.customization) },

@@ -9,7 +9,7 @@ type ProductRow = {
   specifications: Record<string, unknown>; colors: string[]; customization: string[];
   packaging: string | null; lead_time: string | null; featured: boolean;
   sort_order: number; status: ProductStatus; seo_title: string | null;
-  seo_description: string | null; created_at: string; updated_at: string;
+  seo_description: string | null; main_image_url: string | null; created_at: string; updated_at: string;
   category: ProductCategory; images: ProductImage[];
 };
 
@@ -26,7 +26,7 @@ function database() {
 const productColumns = `
   p.id, p.name, p.slug, p.short_description, p.full_description, p.moq, p.material,
   p.specifications, p.colors, p.customization, p.packaging, p.lead_time, p.featured,
-  p.sort_order, p.status, p.seo_title, p.seo_description, p.created_at, p.updated_at,
+  p.sort_order, p.status, p.seo_title, p.seo_description, p.main_image_url, p.created_at, p.updated_at,
   jsonb_build_object('id', c.id, 'parentId', c.parent_id, 'name', c.name, 'slug', c.slug,
     'description', c.description, 'imageUrl', c.image_url, 'imagePathname', c.image_pathname,
     'imageAlt', c.image_alt, 'sortOrder', c.sort_order, 'isActive', c.is_active,
@@ -46,7 +46,7 @@ function mapProduct(row: ProductRow): Product {
     moq: row.moq, material: row.material, specifications: row.specifications ?? {},
     colors: row.colors ?? [], customization: row.customization ?? [], packaging: row.packaging,
     leadTime: row.lead_time, featured: row.featured, sortOrder: row.sort_order,
-    status: row.status, seoTitle: row.seo_title, seoDescription: row.seo_description,
+    status: row.status, seoTitle: row.seo_title, seoDescription: row.seo_description, mainImageUrl: row.main_image_url,
     images: row.images ?? [], createdAt: row.created_at, updatedAt: row.updated_at,
   };
 }

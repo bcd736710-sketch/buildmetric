@@ -20,6 +20,6 @@ export type Product = {
   material: string | null; specifications: Record<string, unknown>; colors: string[];
   customization: string[]; packaging: string | null; leadTime: string | null;
   featured: boolean; sortOrder: number; status: ProductStatus;
-  seoTitle: string | null; seoDescription: string | null; images: ProductImage[];
+  seoTitle: string | null; seoDescription: string | null; mainImageUrl: string | null; images: ProductImage[];
   createdAt: string; updatedAt: string;
 };
