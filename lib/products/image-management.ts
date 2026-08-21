@@ -7,6 +7,7 @@ import type { ProductImage, ProductImageRole } from "./types";
 const maximumImageBytes = 5 * 1024 * 1024;
 const acceptedTypes = new Map([
   ["image/jpeg", "jpg"],
+  ["image/jpg", "jpg"],
   ["image/png", "png"],
   ["image/webp", "webp"],
 ]);

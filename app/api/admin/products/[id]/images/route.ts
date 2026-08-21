@@ -14,6 +14,10 @@ function message(error: unknown) {
   return "The image could not be uploaded. Please try again.";
 }
 
+function isFileLike(value: FormDataEntryValue | null): value is File {
+  return Boolean(value && typeof value !== "string" && typeof value.arrayBuffer === "function" && typeof value.size === "number" && typeof value.type === "string");
+}
+
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAdmin();
@@ -21,7 +25,14 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const form = await request.formData();
     const file = form.get("file");
     const role = form.get("role") === "main" ? "main" : form.get("role") === "gallery" ? "gallery" : null;
-    if (!(file instanceof File) || !role) return NextResponse.json({ message: "Choose an image and its placement." }, { status: 400 });
+    console.info("[Product images] upload received", {
+      hasFile: Boolean(file),
+      fileIsString: typeof file === "string",
+      fileType: isFileLike(file) ? file.type : null,
+      fileSize: isFileLike(file) ? file.size : null,
+      role,
+    });
+    if (!isFileLike(file) || !role) return NextResponse.json({ message: "Choose an image and its placement." }, { status: 400 });
     const image = await uploadProductImage({ productId: id, file, role, altText: typeof form.get("altText") === "string" ? String(form.get("altText")) : null });
     return NextResponse.json({ image }, { status: 201 });
   } catch (error) {

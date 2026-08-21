@@ -19,10 +19,19 @@ function UploadForm({ productId, role, onComplete }: { productId: string; role: 
 
   function submit(form: HTMLFormElement) {
     const data = new FormData(form);
-    data.set("role", role);
+    const file = data.get("file");
+    if (!(file instanceof File) || !file.size) {
+      setError("Choose an image to upload.");
+      return;
+    }
+    const upload = new FormData();
+    upload.append("file", file);
+    upload.append("role", role);
+    upload.append("altText", String(data.get("altText") || ""));
+    console.info("[Product images] upload prepared", { hasFile: true, fileType: file.type, fileSize: file.size, role });
     startTransition(async () => {
       setError(null);
-      const response = await fetch(`/api/admin/products/${productId}/images`, { method: "POST", body: data });
+      const response = await fetch(`/api/admin/products/${productId}/images`, { method: "POST", body: upload });
       if (!response.ok) {
         setError(await responseMessage(response));
         return;
@@ -33,7 +42,7 @@ function UploadForm({ productId, role, onComplete }: { productId: string; role: 
   }
 
   return <form className="admin-image-upload" onSubmit={(event) => { event.preventDefault(); submit(event.currentTarget); }}>
-    <label>{label}<input accept="image/jpeg,image/png,image/webp" aria-describedby={`${role}-image-help`} name="file" required type="file" /></label>
+    <label>{label}<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" aria-describedby={`${role}-image-help`} name="file" required type="file" /></label>
     <label>Alt text<input name="altText" placeholder="Describe the product image" /></label>
     <p id={`${role}-image-help`}>JPG, JPEG, PNG or WebP. Maximum 5 MB per image.</p>
     {error ? <p className="admin-login-error" role="alert">{error}</p> : null}
