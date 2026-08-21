@@ -12,6 +12,18 @@ const acceptedTypes = new Map([
   ["image/webp", "webp"],
 ]);
 
+export class ProductBlobUploadError extends Error {
+  constructor() {
+    super("Product Blob upload failed.");
+  }
+}
+
+export class ProductImagePersistenceError extends Error {
+  constructor() {
+    super("Product image persistence failed.");
+  }
+}
+
 type ImageRow = {
   id: string;
   productId: string;
@@ -72,11 +84,18 @@ export async function uploadProductImage({ productId, file, role, altText }: {
   const extension = acceptedTypes.get(file.type);
   if (!extension) throw new Error("Use a JPG, JPEG, PNG, or WebP image.");
 
-  const uploaded = await put(`products/${productId}/${crypto.randomUUID()}.${extension}`, file, {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: file.type,
-  });
+  let uploaded: Awaited<ReturnType<typeof put>>;
+  try {
+    uploaded = await put(`products/${productId}/${crypto.randomUUID()}.${extension}`, file, {
+      access: "public",
+      addRandomSuffix: false,
+      contentType: file.type,
+    });
+    console.info("[Product images] blob upload", { blobUpload: "success" });
+  } catch {
+    console.info("[Product images] blob upload", { blobUpload: "failed" });
+    throw new ProductBlobUploadError();
+  }
 
   const sql = database();
   try {
@@ -96,9 +115,9 @@ export async function uploadProductImage({ productId, file, role, altText }: {
       await sql.query("UPDATE products SET main_image_url = $1, updated_at = now() WHERE id = $2", [uploaded.url, productId]);
     }
     return mapImage(rows[0]);
-  } catch (error) {
+  } catch {
     await del(uploaded.url).catch(() => undefined);
-    throw error;
+    throw new ProductImagePersistenceError();
   }
 }
 
