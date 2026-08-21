@@ -41,6 +41,8 @@ export type RFQSubmission = {
   id: string;
   createdAt: string;
   status: RFQSubmissionStatus;
+  internalNotes: string | null;
+  nextFollowUpAt: string | null;
   record: RFQRecord;
   referenceFile: { url: string; filename: string; contentType: string | null; size: number | null } | null;
 };
@@ -73,6 +75,8 @@ async function ensureRFQSchema() {
           reference_filename TEXT,
           reference_content_type TEXT,
           reference_size INTEGER,
+          internal_notes TEXT,
+          next_follow_up_at TIMESTAMP,
           status TEXT NOT NULL DEFAULT 'new'
             CHECK (status IN ('new', 'contacted', 'quoted', 'negotiating', 'won', 'lost')),
           email_status TEXT NOT NULL DEFAULT 'pending'
@@ -89,6 +93,14 @@ async function ensureRFQSchema() {
       await sql`
         ALTER TABLE rfq_submissions
         ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS internal_notes TEXT
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS next_follow_up_at TIMESTAMP
       `;
       await sql`
         ALTER TABLE rfq_submissions
@@ -120,6 +132,7 @@ function recordFromPayload(payload: unknown): RFQRecord {
 
 function submissionFromRow(row: {
   id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
+  internalNotes: string | null; nextFollowUpAt: string | null;
   referenceBlobUrl: string | null; referenceFilename: string | null;
   referenceContentType: string | null; referenceSize: number | null;
 }): RFQSubmission {
@@ -127,6 +140,8 @@ function submissionFromRow(row: {
     id: row.id,
     createdAt: row.createdAt,
     status: row.status,
+    internalNotes: row.internalNotes,
+    nextFollowUpAt: row.nextFollowUpAt,
     record: recordFromPayload(row.payload),
     referenceFile: row.referenceBlobUrl && row.referenceFilename
       ? { url: row.referenceBlobUrl, filename: row.referenceFilename, contentType: row.referenceContentType, size: row.referenceSize }
@@ -141,35 +156,53 @@ export function isRFQSubmissionStatus(value: unknown): value is RFQSubmissionSta
 export async function getRFQSubmissions(): Promise<RFQSubmission[]> {
   await ensureRFQSchema();
   const sql = database();
-  const rows = await sql`SELECT id, created_at AS "createdAt", status, payload,
+  const rows = await sql`SELECT id, created_at AS "createdAt", status, internal_notes AS "internalNotes",
+    next_follow_up_at AS "nextFollowUpAt", payload,
     reference_blob_url AS "referenceBlobUrl", reference_filename AS "referenceFilename",
     reference_content_type AS "referenceContentType", reference_size AS "referenceSize"
     FROM rfq_submissions ORDER BY created_at DESC` as Array<{
-      id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
+      id: string; createdAt: string; status: RFQSubmissionStatus; internalNotes: string | null;
+      nextFollowUpAt: string | null; payload: unknown;
       referenceBlobUrl: string | null; referenceFilename: string | null;
       referenceContentType: string | null; referenceSize: number | null;
     }>;
   return rows.map(submissionFromRow);
 }
 
-export async function getRFQSubmissionById(id: string): Promise<RFQSubmission | null> {
+export async function getRFQById(id: string): Promise<RFQSubmission | null> {
   await ensureRFQSchema();
   const sql = database();
-  const rows = await sql`SELECT id, created_at AS "createdAt", status, payload,
+  const rows = await sql`SELECT id, created_at AS "createdAt", status, internal_notes AS "internalNotes",
+    next_follow_up_at AS "nextFollowUpAt", payload,
     reference_blob_url AS "referenceBlobUrl", reference_filename AS "referenceFilename",
     reference_content_type AS "referenceContentType", reference_size AS "referenceSize"
     FROM rfq_submissions WHERE id = ${id} LIMIT 1` as Array<{
-      id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
+      id: string; createdAt: string; status: RFQSubmissionStatus; internalNotes: string | null;
+      nextFollowUpAt: string | null; payload: unknown;
       referenceBlobUrl: string | null; referenceFilename: string | null;
       referenceContentType: string | null; referenceSize: number | null;
     }>;
   return rows[0] ? submissionFromRow(rows[0]) : null;
 }
 
+export const getRFQSubmissionById = getRFQById;
+
 export async function setRFQSubmissionStatus(id: string, status: RFQSubmissionStatus) {
   await ensureRFQSchema();
   const sql = database();
   await sql`UPDATE rfq_submissions SET status = ${status} WHERE id = ${id}`;
+}
+
+export async function updateRFQNotes(id: string, internalNotes: string | null) {
+  await ensureRFQSchema();
+  const sql = database();
+  await sql`UPDATE rfq_submissions SET internal_notes = ${internalNotes} WHERE id = ${id}`;
+}
+
+export async function updateRFQFollowUpDate(id: string, nextFollowUpAt: string | null) {
+  await ensureRFQSchema();
+  const sql = database();
+  await sql`UPDATE rfq_submissions SET next_follow_up_at = ${nextFollowUpAt}::timestamp WHERE id = ${id}`;
 }
 
 export async function saveRFQRecord({
