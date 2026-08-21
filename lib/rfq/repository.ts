@@ -36,6 +36,13 @@ export type RFQRecord = {
 export type RFQEmailStatus = "pending" | "sent" | "failed";
 export const RFQ_SUBMISSION_STATUSES = ["new", "contacted", "quoted", "negotiating", "won", "lost"] as const;
 export type RFQSubmissionStatus = (typeof RFQ_SUBMISSION_STATUSES)[number];
+export type RFQQuote = {
+  quotedPrice: string | null;
+  currency: string | null;
+  quoteFileUrl: string | null;
+  quoteNotes: string | null;
+  quotedAt: string | null;
+};
 
 export type RFQSubmission = {
   id: string;
@@ -43,6 +50,7 @@ export type RFQSubmission = {
   status: RFQSubmissionStatus;
   internalNotes: string | null;
   nextFollowUpAt: string | null;
+  quote: RFQQuote;
   record: RFQRecord;
   referenceFile: { url: string; filename: string; contentType: string | null; size: number | null } | null;
 };
@@ -77,6 +85,11 @@ async function ensureRFQSchema() {
           reference_size INTEGER,
           internal_notes TEXT,
           next_follow_up_at TIMESTAMP,
+          quoted_price TEXT,
+          currency TEXT,
+          quote_file_url TEXT,
+          quote_notes TEXT,
+          quoted_at TIMESTAMP,
           status TEXT NOT NULL DEFAULT 'new'
             CHECK (status IN ('new', 'contacted', 'quoted', 'negotiating', 'won', 'lost')),
           email_status TEXT NOT NULL DEFAULT 'pending'
@@ -101,6 +114,26 @@ async function ensureRFQSchema() {
       await sql`
         ALTER TABLE rfq_submissions
         ADD COLUMN IF NOT EXISTS next_follow_up_at TIMESTAMP
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS quoted_price TEXT
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS currency TEXT
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS quote_file_url TEXT
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS quote_notes TEXT
+      `;
+      await sql`
+        ALTER TABLE rfq_submissions
+        ADD COLUMN IF NOT EXISTS quoted_at TIMESTAMP
       `;
       await sql`
         ALTER TABLE rfq_submissions
@@ -133,6 +166,8 @@ function recordFromPayload(payload: unknown): RFQRecord {
 function submissionFromRow(row: {
   id: string; createdAt: string; status: RFQSubmissionStatus; payload: unknown;
   internalNotes: string | null; nextFollowUpAt: string | null;
+  quotedPrice: string | null; currency: string | null; quoteFileUrl: string | null;
+  quoteNotes: string | null; quotedAt: string | null;
   referenceBlobUrl: string | null; referenceFilename: string | null;
   referenceContentType: string | null; referenceSize: number | null;
 }): RFQSubmission {
@@ -142,6 +177,7 @@ function submissionFromRow(row: {
     status: row.status,
     internalNotes: row.internalNotes,
     nextFollowUpAt: row.nextFollowUpAt,
+    quote: { quotedPrice: row.quotedPrice, currency: row.currency, quoteFileUrl: row.quoteFileUrl, quoteNotes: row.quoteNotes, quotedAt: row.quotedAt },
     record: recordFromPayload(row.payload),
     referenceFile: row.referenceBlobUrl && row.referenceFilename
       ? { url: row.referenceBlobUrl, filename: row.referenceFilename, contentType: row.referenceContentType, size: row.referenceSize }
@@ -157,12 +193,15 @@ export async function getRFQSubmissions(): Promise<RFQSubmission[]> {
   await ensureRFQSchema();
   const sql = database();
   const rows = await sql`SELECT id, created_at AS "createdAt", status, internal_notes AS "internalNotes",
-    next_follow_up_at AS "nextFollowUpAt", payload,
+    next_follow_up_at AS "nextFollowUpAt", quoted_price AS "quotedPrice", currency,
+    quote_file_url AS "quoteFileUrl", quote_notes AS "quoteNotes", quoted_at AS "quotedAt", payload,
     reference_blob_url AS "referenceBlobUrl", reference_filename AS "referenceFilename",
     reference_content_type AS "referenceContentType", reference_size AS "referenceSize"
     FROM rfq_submissions ORDER BY created_at DESC` as Array<{
       id: string; createdAt: string; status: RFQSubmissionStatus; internalNotes: string | null;
       nextFollowUpAt: string | null; payload: unknown;
+      quotedPrice: string | null; currency: string | null; quoteFileUrl: string | null;
+      quoteNotes: string | null; quotedAt: string | null;
       referenceBlobUrl: string | null; referenceFilename: string | null;
       referenceContentType: string | null; referenceSize: number | null;
     }>;
@@ -173,12 +212,15 @@ export async function getRFQById(id: string): Promise<RFQSubmission | null> {
   await ensureRFQSchema();
   const sql = database();
   const rows = await sql`SELECT id, created_at AS "createdAt", status, internal_notes AS "internalNotes",
-    next_follow_up_at AS "nextFollowUpAt", payload,
+    next_follow_up_at AS "nextFollowUpAt", quoted_price AS "quotedPrice", currency,
+    quote_file_url AS "quoteFileUrl", quote_notes AS "quoteNotes", quoted_at AS "quotedAt", payload,
     reference_blob_url AS "referenceBlobUrl", reference_filename AS "referenceFilename",
     reference_content_type AS "referenceContentType", reference_size AS "referenceSize"
     FROM rfq_submissions WHERE id = ${id} LIMIT 1` as Array<{
       id: string; createdAt: string; status: RFQSubmissionStatus; internalNotes: string | null;
       nextFollowUpAt: string | null; payload: unknown;
+      quotedPrice: string | null; currency: string | null; quoteFileUrl: string | null;
+      quoteNotes: string | null; quotedAt: string | null;
       referenceBlobUrl: string | null; referenceFilename: string | null;
       referenceContentType: string | null; referenceSize: number | null;
     }>;
@@ -186,6 +228,10 @@ export async function getRFQById(id: string): Promise<RFQSubmission | null> {
 }
 
 export const getRFQSubmissionById = getRFQById;
+
+export async function getRFQQuote(id: string): Promise<RFQQuote | null> {
+  return (await getRFQById(id))?.quote ?? null;
+}
 
 export async function setRFQSubmissionStatus(id: string, status: RFQSubmissionStatus) {
   await ensureRFQSchema();
@@ -203,6 +249,14 @@ export async function updateRFQFollowUpDate(id: string, nextFollowUpAt: string |
   await ensureRFQSchema();
   const sql = database();
   await sql`UPDATE rfq_submissions SET next_follow_up_at = ${nextFollowUpAt}::timestamp WHERE id = ${id}`;
+}
+
+export async function updateRFQQuote(id: string, quote: RFQQuote) {
+  await ensureRFQSchema();
+  const sql = database();
+  await sql`UPDATE rfq_submissions SET quoted_price = ${quote.quotedPrice}, currency = ${quote.currency},
+    quote_file_url = ${quote.quoteFileUrl}, quote_notes = ${quote.quoteNotes},
+    quoted_at = ${quote.quotedAt}::timestamp WHERE id = ${id}`;
 }
 
 export async function saveRFQRecord({
