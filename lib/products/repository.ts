@@ -31,7 +31,8 @@ const productColumns = `
   p.sort_order, p.status, p.seo_title, p.seo_description, p.main_image_url, p.created_at, p.updated_at,
   jsonb_build_object('id', c.id, 'parentId', c.parent_id, 'name', c.name, 'slug', c.slug,
     'description', c.description, 'imageUrl', c.image_url, 'imagePathname', c.image_pathname,
-    'imageAlt', c.image_alt, 'sortOrder', c.sort_order, 'isActive', c.is_active,
+    'imageAlt', c.image_alt, 'sortOrder', c.sort_order, 'isActive', c.is_active, 'status', c.status,
+    'seoTitle', c.seo_title, 'seoDescription', c.seo_description,
     'createdAt', c.created_at, 'updatedAt', c.updated_at) AS category,
   COALESCE(jsonb_agg(jsonb_build_object('id', pi.id, 'productId', pi.product_id,
     'blobUrl', pi.blob_url, 'blobPathname', pi.blob_pathname, 'altText', pi.alt_text,
@@ -59,7 +60,7 @@ async function queryPublished(where: string, values: string[] = []) {
   const query = `SELECT ${productColumns} FROM products p
     INNER JOIN product_categories c ON c.id = p.category_id
     LEFT JOIN product_images pi ON pi.product_id = p.id
-    WHERE p.status = 'published' AND c.is_active = true ${where}
+    WHERE p.status = 'published' AND c.is_active = true AND c.status = 'published' ${where}
     GROUP BY p.id, c.id ORDER BY p.sort_order ASC, p.created_at DESC`;
   const rows = await sql.query(query, values) as ProductRow[];
   return rows.map(mapProduct);
@@ -82,7 +83,7 @@ export async function getPublishedProductBySlugs(categorySlug: string, productSl
   const rows = await sql.query(`SELECT ${productColumns} FROM products p
     INNER JOIN product_categories c ON c.id = p.category_id
     LEFT JOIN product_images pi ON pi.product_id = p.id
-    WHERE p.status = 'published' AND c.is_active = true AND c.slug = $1 AND p.slug = $2
+    WHERE p.status = 'published' AND c.is_active = true AND c.status = 'published' AND c.slug = $1 AND p.slug = $2
     GROUP BY p.id, c.id LIMIT 1`, [categorySlug, productSlug]) as ProductRow[];
   return rows[0] ? mapProduct(rows[0]) : null;
 }
@@ -98,7 +99,8 @@ export async function getActiveCategories(): Promise<ProductCategory[]> {
   const sql = database();
   return (await sql`SELECT id, parent_id AS "parentId", name, slug, description,
     image_url AS "imageUrl", image_pathname AS "imagePathname", image_alt AS "imageAlt",
-    sort_order AS "sortOrder", is_active AS "isActive", created_at AS "createdAt",
+    sort_order AS "sortOrder", is_active AS "isActive", status, seo_title AS "seoTitle",
+    seo_description AS "seoDescription", created_at AS "createdAt",
     updated_at AS "updatedAt" FROM product_categories WHERE is_active = true
     ORDER BY sort_order ASC, name ASC`) as ProductCategory[];
 }
@@ -107,10 +109,11 @@ export async function getPublishedCategories(): Promise<ProductCategory[]> {
   const sql = database();
   return (await sql`SELECT c.id, c.parent_id AS "parentId", c.name, c.slug, c.description,
     c.image_url AS "imageUrl", c.image_pathname AS "imagePathname", c.image_alt AS "imageAlt",
-    c.sort_order AS "sortOrder", c.is_active AS "isActive", c.created_at AS "createdAt",
+    c.sort_order AS "sortOrder", c.is_active AS "isActive", c.status, c.seo_title AS "seoTitle",
+    c.seo_description AS "seoDescription", c.created_at AS "createdAt",
     c.updated_at AS "updatedAt"
     FROM product_categories c
-    WHERE c.is_active = true
+    WHERE c.is_active = true AND c.status = 'published'
       AND EXISTS (
         SELECT 1 FROM products p
         WHERE p.category_id = c.id AND p.status = 'published'
@@ -131,6 +134,7 @@ export async function getCategoriesForAdmin(): Promise<ProductCategory[]> {
   const sql = database();
   return (await sql`SELECT id, parent_id AS "parentId", name, slug, description,
     image_url AS "imageUrl", image_pathname AS "imagePathname", image_alt AS "imageAlt",
-    sort_order AS "sortOrder", is_active AS "isActive", created_at AS "createdAt",
+    sort_order AS "sortOrder", is_active AS "isActive", status, seo_title AS "seoTitle",
+    seo_description AS "seoDescription", created_at AS "createdAt",
     updated_at AS "updatedAt" FROM product_categories ORDER BY sort_order ASC, name ASC`) as ProductCategory[];
 }

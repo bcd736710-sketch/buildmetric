@@ -1,4 +1,5 @@
 export type ProductStatus = "draft" | "published" | "archived";
+export type ProductCategoryStatus = "draft" | "published" | "archived";
 export type ProductImageRole = "main" | "gallery";
 
 export type ProductImage = {
@@ -10,7 +11,8 @@ export type ProductImage = {
 export type ProductCategory = {
   id: string; parentId: string | null; name: string; slug: string;
   description: string | null; imageUrl: string | null; imagePathname: string | null;
-  imageAlt: string | null; sortOrder: number; isActive: boolean;
+  imageAlt: string | null; sortOrder: number; isActive: boolean; status: ProductCategoryStatus;
+  seoTitle: string | null; seoDescription: string | null;
   createdAt: string; updatedAt: string;
 };
 

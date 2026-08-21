@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { getPublishedCategories, getPublishedProducts } from "@/lib/products/repository";
+import { getPublishedCategories } from "@/lib/categories/repository";
+import { getPublishedProducts } from "@/lib/products/repository";
 
 export const dynamic = "force-dynamic";
 

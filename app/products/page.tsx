@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getPublishedCategories } from "@/lib/products/repository";
+import { getPublishedCategories } from "@/lib/categories/repository";
 
 export const dynamic = "force-dynamic";
 

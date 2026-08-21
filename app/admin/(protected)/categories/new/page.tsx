@@ -1,1 +1,3 @@
-import { CategoryForm } from "../form";export default function NewCategory(){return <CategoryForm/>}
+import { CategoryCmsForm } from "../cms-form";
+
+export default function NewCategory() { return <CategoryCmsForm />; }

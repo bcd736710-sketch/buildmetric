@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getPublishedCategoryBySlug } from "@/lib/categories/repository";
 import { getPublishedProductsByCategory } from "@/lib/products/repository";
 
 export const dynamic = "force-dynamic";
@@ -9,19 +10,24 @@ export const dynamic = "force-dynamic";
 const categorySlug = "travel-car";
 const fallbackImage = "/trovane-product-carrier-cat.jpg";
 
-export const metadata: Metadata = {
-  title: "Travel & Car Products | TROVANE",
-  description: "Travel carriers, restraints, hydration and comfort products for pet travel.",
-  alternates: { canonical: "https://buildmetriccalc.com/products/travel-car" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const category = await getPublishedCategoryBySlug(categorySlug);
+  return {
+    title: category?.seoTitle || "Travel & Car Products | TROVANE",
+    description: category?.seoDescription || category?.description || "Travel carriers, restraints, hydration and comfort products for pet travel.",
+    alternates: { canonical: "https://buildmetriccalc.com/products/travel-car" },
+  };
+}
 
 function Header() {
   return <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur"><div className="mx-auto flex h-[68px] max-w-[1360px] items-center justify-between gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8"><Link aria-label="TROVANE home" className="flex shrink-0 items-center" href="/"><Image alt="TROVANE Pet Outdoor and Travel logo" className="h-auto w-[146px] sm:w-[170px]" height={47} src="/trovane-logo-horizontal-cropped.png" style={{ height: "auto" }} unoptimized width={170} /></Link><nav className="hidden items-center gap-6 text-[13px] font-semibold text-navy/78 lg:flex"><Link className="text-forest" href="/products">Products</Link><Link className="hover:text-forest" href="/#customization">Customization</Link><Link className="hover:text-forest" href="/#service">Sourcing Service</Link></nav><Link className="hidden min-h-11 items-center justify-center rounded-full bg-forest px-5 text-xs font-bold uppercase tracking-[0.08em] text-white transition hover:bg-navy sm:min-h-12 sm:px-6 sm:text-sm lg:inline-flex" href="/rfq">Request a Quote</Link><div className="flex items-center gap-2 lg:hidden"><details className="relative"><summary className="flex h-11 cursor-pointer list-none items-center rounded-full border border-navy/15 px-4 text-xs font-bold uppercase tracking-[0.08em] text-navy">Menu</summary><div className="absolute right-0 mt-3 w-56 border border-navy/10 bg-warm p-3"><Link className="block px-3 py-3 text-sm font-semibold text-navy" href="/products">Products</Link><Link className="block px-3 py-3 text-sm font-semibold text-navy" href="/#customization">Customization</Link><Link className="block px-3 py-3 text-sm font-semibold text-navy" href="/#service">Sourcing Service</Link></div></details><Link className="inline-flex h-11 items-center rounded-full bg-forest px-3 text-[11px] font-bold uppercase tracking-normal text-white whitespace-nowrap" href="/rfq">Request a Quote</Link></div></div></header>;
 }
 
 export async function CategoryProductsPage({ categorySlug }: { categorySlug: string }) {
-  const products = await getPublishedProductsByCategory(categorySlug);
-  const category = products[0]?.category;
+  const [category, products] = await Promise.all([
+    getPublishedCategoryBySlug(categorySlug),
+    getPublishedProductsByCategory(categorySlug),
+  ]);
   if (!category) notFound();
   const heroImage = category.imageUrl || "/trovane-category-travel-cat.jpg";
 
