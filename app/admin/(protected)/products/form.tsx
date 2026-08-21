@@ -21,6 +21,7 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
     <label>Key Features<textarea defaultValue={item?.keyFeatures ?? ""} name="keyFeatures" /><span>One feature per line.</span></label>
     <label>Applications<textarea defaultValue={item?.applications ?? ""} name="applications" /><span>One application per line.</span></label>
     <label>Certifications<textarea defaultValue={item?.certifications ?? ""} name="certifications" /><span>One certification per line.</span></label>
+    <fieldset className="admin-image-fieldset"><legend>Product Specifications</legend><label>Size Specifications<textarea defaultValue={item?.sizeSpecs ?? ""} name="sizeSpecs" /><span>Enter one size specification per line, for example: 45 × 30 × 28 cm.</span></label></fieldset>
     <label>MOQ<input defaultValue={item?.moq ?? ""} name="moq" /></label>
     <label>Material<input defaultValue={item?.material ?? ""} name="material" /></label>
     <label>Specifications (JSON)<textarea defaultValue={value(item?.specifications ?? {})} name="specifications" /></label>

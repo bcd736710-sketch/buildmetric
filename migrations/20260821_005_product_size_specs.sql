@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE products
+  ADD COLUMN IF NOT EXISTS size_specs TEXT;
+
+COMMIT;

@@ -54,6 +54,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
       : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
   const detailSections = [
     { title: "Product Details", items: [product.material && `Material: ${product.material}`, ...values(product.specifications), product.colors.length ? `Colors: ${product.colors.join(", ")}` : null].filter(Boolean) as string[] },
+    { title: "Product Specifications", items: contentLines(product.sizeSpecs) },
     { title: "Key Features", items: contentLines(product.keyFeatures) },
     { title: "Applications", items: contentLines(product.applications) },
     { title: "Customization", items: values(product.customization) },
