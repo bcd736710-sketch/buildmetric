@@ -1,56 +1,64 @@
 import Link from "next/link";
 import type { Product } from "@/lib/products/types";
-import {
-  ProductAccordions,
-  ProductDetailGallery,
-} from "../travel-car/pet-travel-carrier/product-detail-gallery";
+import { ProductDetailGallery } from "../travel-car/pet-travel-carrier/product-detail-gallery";
 
 const fallbackImage = "/trovane-product-carrier-cat.jpg";
 
-function values(value: unknown): string[] {
-  if (Array.isArray(value)) return value.map(String).filter(Boolean);
-  if (value && typeof value === "object") {
-    return Object.entries(value as Record<string, unknown>)
-      .map(([key, entry]) => `${key}: ${Array.isArray(entry) ? entry.join(", ") : String(entry)}`)
-      .filter(Boolean);
-  }
-  return value ? [String(value)] : [];
+function lines(value: string | null): string[] {
+  return value?.split("\n").map((item) => item.trim()).filter(Boolean) ?? [];
 }
 
-function contentLines(value: string | null): string[] {
-  return value?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
+function text(value: string | null | undefined): string | null {
+  const normalized = value?.trim();
+  return normalized || null;
+}
+
+function specificationValue(specifications: Record<string, unknown>, names: string[]): string | null {
+  for (const [key, value] of Object.entries(specifications)) {
+    if (names.includes(key.toLowerCase()) && value !== null && value !== undefined) {
+      return Array.isArray(value) ? value.map(String).join(", ") : String(value);
+    }
+  }
+  return null;
 }
 
 export function ProductDetailPage({ product }: { product: Product }) {
   const savedImages = product.images.map((image) => ({ src: image.blobUrl, alt: image.altText || product.name }));
   const images = product.mainImageUrl && !savedImages.some((image) => image.src === product.mainImageUrl)
     ? [{ src: product.mainImageUrl, alt: product.name }, ...savedImages]
-    : savedImages.length
-      ? savedImages
-      : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
-  const specificationRows = [
-    { label: "Material", value: product.material },
-    { label: "Size Specifications", value: contentLines(product.sizeSpecs).join(" / ") || null },
-    { label: "Colors", value: product.colors.length ? product.colors.join(", ") : null },
-    { label: "MOQ", value: product.moq },
-    { label: "Lead Time", value: product.leadTime },
+    : savedImages.length ? savedImages : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
+  const dimensions = lines(product.sizeSpecs).join(" · ") || null;
+  const colors = product.colors.filter(Boolean).join(", ") || null;
+  const model = specificationValue(product.specifications, ["sku", "model", "product code"]);
+  const overview = text(product.fullDescription) || text(product.shortDescription) || "Contact our team for product details, sample requests and sourcing support.";
+  const intro = text(product.shortDescription) || text(product.fullDescription) || "Built for dependable wholesale, project and OEM sourcing programs.";
+  const topSpecifications = [
+    { label: "Material", value: text(product.material) }, { label: "Size / Dimensions", value: dimensions },
+    { label: "Color / Finish", value: colors }, { label: "MOQ", value: text(product.moq) },
   ].filter((row): row is { label: string; value: string } => Boolean(row.value));
-  const detailSections = [
-    { title: "Product Overview", items: contentLines(product.fullDescription || product.shortDescription) },
-    { title: "Key Features", items: contentLines(product.keyFeatures) },
-    { title: "Specifications", items: specificationRows.map(({ label, value }) => `${label}: ${value}`) },
-    { title: "Applications", items: contentLines(product.applications) },
-    { title: "Customization", items: [...values(product.customization), product.packaging && `Packaging: ${product.packaging}`].filter(Boolean) as string[] },
-    { title: "Certifications", items: contentLines(product.certifications) },
-  ].filter((section) => section.items.length);
-  const facts = [["Category", product.category.name], ["Customization", product.customization.length ? product.customization.join(" / ") : "Available on request"], ["MOQ", product.moq || "Available on request"], ["Lead Time", product.leadTime || "Confirmed after requirements"]];
+  const detailedSpecifications = [
+    { label: "Model / Product Type", value: model || product.category.name }, { label: "Material", value: text(product.material) },
+    { label: "Available Size", value: dimensions }, { label: "Color / Finish", value: colors },
+    { label: "Usage / Application", value: lines(product.applications).join(", ") || null }, { label: "MOQ", value: text(product.moq) },
+    { label: "Customization", value: product.customization.filter(Boolean).join(", ") || null }, { label: "Lead Time", value: text(product.leadTime) },
+    { label: "Packaging", value: text(product.packaging) }, { label: "Certifications", value: lines(product.certifications).join(", ") || null },
+  ].filter((item): item is { label: string; value: string } => Boolean(item.value));
   const rfq = `/rfq?product=${encodeURIComponent(product.name)}`;
 
-  return <main className="bg-warm text-navy">
-    <section className="px-4 py-8 sm:px-6 sm:py-10 lg:px-8"><div className="mx-auto max-w-7xl">
-      <div className="mb-7 flex flex-wrap items-center gap-2 text-sm text-slate"><Link className="font-semibold text-navy hover:text-forest" href="/products">Products</Link><span>/</span><Link className="font-semibold text-navy hover:text-forest" href={`/products/${product.category.slug}`}>{product.category.name}</Link><span>/</span><span>{product.name}</span></div>
-      <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.6fr)_minmax(360px,0.4fr)] lg:items-start lg:gap-12"><ProductDetailGallery images={images} /><div className="lg:pt-1"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">{product.category.name}</p><h1 className="mt-3 text-4xl font-semibold tracking-tight text-navy sm:text-6xl lg:text-5xl">{product.name}</h1><p className="mt-4 max-w-xl text-base leading-7 text-slate">{product.shortDescription || product.fullDescription || "Contact us for product details and customization options."}</p><div className="mt-5 grid gap-2 sm:grid-cols-2 sm:gap-3"><Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-navy" href={`${rfq}&intent=wholesale-price`}>Get Wholesale Price</Link><Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-navy/18 px-6 text-sm font-bold uppercase tracking-[0.08em] text-navy transition hover:border-forest hover:text-forest" href={`${rfq}&intent=custom-project`}>Start Custom Project</Link></div><dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-navy/10 pt-5">{facts.map(([label, value]) => <div key={label}><dt className="text-[11px] font-bold uppercase tracking-[0.12em] text-navy/50">{label}</dt><dd className="mt-2 text-sm leading-6 text-navy">{value}</dd></div>)}</dl></div></div>
+  return <main className="bg-white text-navy">
+    <section className="px-5 pb-16 pt-8 sm:px-8 lg:px-12 lg:pb-24 lg:pt-10"><div className="mx-auto max-w-[1440px]">
+      <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap items-center gap-2 text-xs text-slate sm:text-sm"><Link className="transition hover:text-forest" href="/products">Products</Link><span aria-hidden="true">/</span><Link className="transition hover:text-forest" href={`/products/${product.category.slug}`}>{product.category.name}</Link><span aria-hidden="true">/</span><span className="text-navy/70">{product.name}</span></nav>
+      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(380px,0.88fr)] lg:gap-20 xl:gap-28"><ProductDetailGallery images={images} /><div className="max-w-[560px] pb-2 lg:pt-5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-navy/45">{model ? `Model / SKU · ${model}` : `TROVANE · ${product.category.name}`}</p>
+        <h1 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-navy sm:text-5xl lg:text-6xl">{product.name}</h1><p className="mt-6 max-w-[52ch] text-base leading-8 text-slate sm:text-lg">{intro}</p>
+        {topSpecifications.length ? <dl className="mt-10 border-y border-navy/15">{topSpecifications.map((row) => <div className="grid grid-cols-[minmax(8.5rem,0.72fr)_minmax(0,1.28fr)] gap-5 border-b border-navy/10 py-4 last:border-b-0" key={row.label}><dt className="text-sm font-medium text-navy">{row.label}</dt><dd className="text-sm leading-6 text-slate">{row.value}</dd></div>)}</dl> : null}
+        <div className="mt-9 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center"><Link className="inline-flex min-h-13 items-center justify-center bg-navy px-7 text-sm font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-forest" href={rfq}>Request a Quote</Link><Link className="inline-flex min-h-13 items-center justify-center border border-navy/30 px-7 text-sm font-bold uppercase tracking-[0.1em] text-navy transition-colors hover:border-forest hover:text-forest" href="/catalog">Download full catalog</Link></div>
+      </div></div>
     </div></section>
-    <section className="px-4 pb-20 sm:px-6 sm:pb-28 lg:px-8"><div className="mx-auto max-w-7xl"><ProductAccordions sections={detailSections} /><div className="hidden border-t border-navy/10 pt-10 lg:grid lg:grid-cols-4 lg:gap-12">{detailSections.map((section, index) => <article className={section.title === "Product Overview" || section.title === "Specifications" ? "lg:col-span-2" : ""} key={section.title}><p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-forest">{String(index + 1).padStart(2, "0")} {section.title}</p>{section.title === "Specifications" ? <dl className="border-y border-navy/10 text-sm leading-6">{specificationRows.map((row) => <div className="grid grid-cols-[minmax(9rem,0.8fr)_minmax(0,1.2fr)] gap-5 border-b border-navy/10 py-3 last:border-b-0" key={row.label}><dt className="font-semibold text-navy">{row.label}</dt><dd className="text-slate">{row.value}</dd></div>)}</dl> : <ul className="space-y-4 text-sm leading-7 text-slate">{section.items.map((item) => <li key={item}>{item}</li>)}</ul>}</article>)}</div><div className="mt-12 border-y border-navy/10 py-10 text-center lg:mt-16"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">Request Quote</p><p className="mx-auto mt-3 max-w-2xl text-2xl font-semibold tracking-tight text-navy sm:text-4xl">Ready to build this product into your pet travel line?</p><div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row"><Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-navy" href={rfq}>Request a Quote</Link><Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-navy/18 px-6 text-sm font-bold uppercase tracking-[0.08em] text-navy transition hover:border-forest hover:text-forest" href={`${rfq}&intent=custom-project`}>Start Custom Project</Link></div></div></div></section>
+    <section className="border-t border-navy/10 px-5 py-16 sm:px-8 lg:px-12 lg:py-28"><div className="mx-auto max-w-[1080px]">
+      <article className="max-w-[800px]"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">Product information</p><h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Overview</h2><div className="mt-7 space-y-5 text-base leading-8 text-slate sm:text-lg">{lines(overview).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></article>
+      {detailedSpecifications.length ? <article className="mt-20 max-w-[900px] border-t border-navy/15 pt-10 sm:mt-28 sm:pt-12"><h2 className="text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Specifications</h2><ul className="mt-9 divide-y divide-navy/10 border-y border-navy/10">{detailedSpecifications.map((item) => <li className="grid gap-2 py-4 sm:grid-cols-[minmax(12rem,0.75fr)_minmax(0,1.25fr)] sm:gap-8" key={item.label}><span className="flex gap-3 font-medium text-navy"><span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-forest" />{item.label}</span><span className="leading-7 text-slate">{item.value}</span></li>)}</ul></article> : null}
+      <article className="mt-20 border-t border-navy/15 pt-10 sm:mt-28 sm:pt-12"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">Built for B2B sourcing</p><h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Wholesale / OEM / Project Supply</h2><p className="mt-7 max-w-[760px] text-base leading-8 text-slate sm:text-lg">Work with TROVANE on wholesale programs, product development and tailored sourcing for pet brands, retailers and project teams. Share your requirements to discuss samples, customization and delivery planning.</p><Link className="mt-9 inline-flex min-h-13 items-center justify-center bg-forest px-7 text-sm font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-navy" href={rfq}>Request a Quote</Link></article>
+    </div></section>
   </main>;
 }

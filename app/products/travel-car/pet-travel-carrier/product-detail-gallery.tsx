@@ -14,24 +14,24 @@ export function ProductDetailGallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <div className="min-w-0">
-      <div className="hidden lg:block">
-        <div className="relative aspect-[4/3] overflow-hidden bg-mist">
+      <div>
+        <div className="relative aspect-[1/1.04] overflow-hidden bg-[#f2f3f1] sm:aspect-[1.04/1]">
           <Image
             alt={activeImage.alt}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain p-6 sm:p-10 lg:p-14"
             fill
             priority
-            sizes="60vw"
+            sizes="(min-width: 1024px) 56vw, 100vw"
             src={activeImage.src}
             unoptimized
           />
         </div>
-        <div className="mt-3 grid grid-cols-4 gap-3">
+        {images.length > 1 ? <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
           {images.map((image, index) => (
             <button
               aria-label={`Show product image ${index + 1}`}
-              className={`relative aspect-square overflow-hidden border transition ${
-                activeIndex === index ? "border-forest" : "border-navy/10 hover:border-navy/35"
+              className={`relative aspect-square w-18 shrink-0 overflow-hidden border transition-colors sm:w-20 ${
+                activeIndex === index ? "border-navy" : "border-navy/15 hover:border-forest"
               }`}
               key={image.src}
               onClick={() => setActiveIndex(index)}
@@ -41,32 +41,13 @@ export function ProductDetailGallery({ images }: { images: GalleryImage[] }) {
                 alt=""
                 className="h-full w-full object-cover"
                 fill
-                sizes="14vw"
+                sizes="80px"
                 src={image.src}
                 unoptimized
               />
             </button>
           ))}
-        </div>
-      </div>
-
-      <div className="flex w-full snap-x gap-3 overflow-x-auto pb-2 lg:hidden">
-        {images.map((image, index) => (
-          <div
-            className="relative aspect-[4/4.55] w-full shrink-0 snap-center overflow-hidden bg-mist"
-            key={image.src}
-          >
-            <Image
-              alt={image.alt}
-              className="h-full w-full object-cover"
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              src={image.src}
-              unoptimized
-            />
-          </div>
-        ))}
+        </div> : null}
       </div>
     </div>
   );
