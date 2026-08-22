@@ -414,7 +414,7 @@ export default async function HomePage() {
 
       <section id="about" className="bg-white px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-16">
+          <div className="grid gap-10 lg:grid-cols-[1.08fr_0.72fr] lg:items-center lg:gap-20">
             <div>
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-forest">
                 About TROVANE
@@ -431,7 +431,7 @@ export default async function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="relative aspect-[5/4] overflow-hidden rounded-[28px]">
+            <div className="relative mx-auto aspect-[2/3] w-full max-w-[430px] overflow-hidden rounded-[28px] lg:justify-self-end">
               <Image
                 alt="TROVANE manufacturing workshop with skilled pet product production team"
                 className="h-full w-full object-cover"
@@ -453,7 +453,7 @@ export default async function HomePage() {
                 A closer look at the people, processes, and craftsmanship behind our pet outdoor products.
               </p>
             </div>
-            <div className="mt-10 grid gap-4 lg:grid-cols-[1.18fr_0.82fr]">
+            <div className="mt-10 grid gap-4 lg:grid-cols-[0.84fr_1.16fr]">
               <div className="relative aspect-[4/5] overflow-hidden rounded-[28px]">
                 <Image
                   alt="Skilled worker sewing pet outdoor product details"
@@ -465,7 +465,7 @@ export default async function HomePage() {
                   unoptimized
                 />
               </div>
-              <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
                   <Image
                     alt="Pet product manufacturing workshop overview"
@@ -496,6 +496,17 @@ export default async function HomePage() {
                     loading="lazy"
                     sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
                     src="/images/factory/factory-4.jpg"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <Image
+                    alt="Finished pet outdoor product collection and sample display"
+                    className="h-full w-full object-cover"
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 29vw, (min-width: 640px) 50vw, 100vw"
+                    src="/images/factory/factory-5.jpg"
                     unoptimized
                   />
                 </div>
