@@ -7,6 +7,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        widgetEnter: {
+          "0%": { opacity: "0", transform: "translateY(8px) scale(0.96)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+      },
+      animation: {
+        "widget-enter": "widgetEnter 0.2s ease-out both",
+      },
       colors: {
         navy: "#00203f",
         forest: "#00433b",
