@@ -53,7 +53,7 @@ export function WhatsAppWidget() {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   }
 
-  return <aside aria-label="WhatsApp chat" className="fixed bottom-4 right-4 z-[60] sm:bottom-6 sm:right-6">
+  return <aside aria-label="WhatsApp chat" className="fixed bottom-6 right-6 z-[9999]">
     {isOpen ? <section aria-labelledby="whatsapp-widget-title" className="flex h-[min(500px,calc(100dvh-2rem))] w-[calc(100vw-2rem)] max-w-[360px] flex-col overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_16px_48px_rgba(20,37,31,0.24)] sm:h-[480px]" id="whatsapp-widget">
       <header className="flex shrink-0 items-center justify-between bg-[#128C7E] px-4 py-3 text-white">
         <div className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15"><WhatsAppIcon className="h-6 w-6" /></span><div><p className="text-[11px] font-medium text-white/75">TROVANE</p><h2 className="font-semibold leading-5" id="whatsapp-widget-title">Chat with TROVANE</h2></div></div>
