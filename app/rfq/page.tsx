@@ -75,21 +75,54 @@ export default async function RFQPage({
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-forest">
               Company Information
             </p>
-            <h1 className="max-w-xl text-4xl font-semibold tracking-tight text-navy sm:text-6xl">
-              TROVANE Pet Outdoor &amp; Travel
-            </h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-slate">
-              We help pet brands, retailers and distributors develop outdoor and
-              travel product ranges with practical sourcing support.
-            </p>
-
-            <div className="mt-8 space-y-5 border-y border-navy/10 py-6 text-sm leading-7 text-slate">
-              <div><p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Business Type</p><p className="mt-1 text-navy">Pet Outdoor &amp; Travel Products Supplier</p></div>
-              <div><p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Customization</p><p className="mt-1 text-navy">OEM / ODM Support</p></div>
-              <div><p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Email</p><a className="mt-1 inline-block font-semibold text-forest hover:text-navy" href="mailto:admin@buildmetriccalc.com">admin@buildmetriccalc.com</a></div>
-              <div><p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">WhatsApp</p><p className="mt-1 text-navy">Available on request</p></div>
-              <div><p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Response Time</p><p className="mt-1 text-navy">Within 1 business day</p></div>
+            <div className="border-y border-navy/10 text-sm leading-7 text-navy">
+              <div className="grid gap-1 border-b border-navy/10 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Company</p>
+                <p>Chengdu Yingmengzhuxi Trading Co., Ltd.</p>
+              </div>
+              <div className="grid gap-1 border-b border-navy/10 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Contact</p>
+                <p>Ethan Gou</p>
+              </div>
+              <div className="grid gap-1 border-b border-navy/10 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Business Type</p>
+                <p>Pet Outdoor &amp; Travel Products Supplier</p>
+              </div>
+              <div className="grid gap-1 border-b border-navy/10 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Customization</p>
+                <p>OEM / ODM Support</p>
+              </div>
+              <div className="grid gap-1 border-b border-navy/10 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Phone</p>
+                <a className="w-fit hover:text-forest" href="tel:+8618215529827">+86 18215529827</a>
+              </div>
+              <div className="grid gap-1 border-b border-navy/10 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">WhatsApp</p>
+                <a className="w-fit hover:text-forest" href="https://wa.me/8618215529827">+86 18215529827</a>
+              </div>
+              <div className="grid gap-1 py-5 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-navy/55">Email / General Email</p>
+                <a className="w-fit break-all hover:text-forest" href="mailto:jin.gou@buildmetriccalc.com">jin.gou@buildmetriccalc.com</a>
+              </div>
             </div>
+
+            <a
+              aria-label="Chat with Ethan Gou on WhatsApp"
+              className="mt-8 flex w-full max-w-[390px] items-center gap-6 border border-navy/15 bg-white p-6 transition hover:border-forest/50"
+              href="https://wa.me/8618215529827"
+            >
+              <Image
+                alt="WhatsApp QR code for Ethan Gou"
+                className="h-[92px] w-[92px] shrink-0 object-contain"
+                height={92}
+                src="/trovane-whatsapp-qr.jpg"
+                width={92}
+              />
+              <span>
+                <span className="block text-lg font-semibold tracking-tight text-navy">Chat with Ethan Gou</span>
+                <span className="mt-1 block text-sm leading-6 text-slate">Scan to open WhatsApp.</span>
+              </span>
+            </a>
           </div>
 
           <div className="border border-navy/10 bg-white p-5 sm:p-8">
