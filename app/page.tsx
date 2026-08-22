@@ -413,37 +413,93 @@ export default async function HomePage() {
       </section>
 
       <section id="about" className="bg-white px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <div className="rounded-[28px] border border-navy/10 bg-warm p-8 sm:p-10">
-            <Image
-              alt="TROVANE Pet Outdoor and Travel logo"
-              className="h-auto w-full"
-              height={1180}
-              loading="lazy"
-              src="/trovane-logo-horizontal-cropped.png"
-              style={{ height: "auto" }}
-              unoptimized
-              width={1180}
-            />
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-16">
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-forest">
+                About TROVANE
+              </p>
+              <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-navy sm:text-5xl">
+                Reliable Manufacturing Partner for Pet Brands
+              </h2>
+              <div className="mt-6 max-w-xl space-y-5 text-base leading-8 text-slate">
+                <p>
+                  TROVANE works with experienced manufacturing partners specializing in pet outdoor and travel products.
+                </p>
+                <p>
+                  From material selection and production to quality inspection and final packaging, we focus on delivering reliable solutions for global pet brands, retailers and distributors.
+                </p>
+              </div>
+            </div>
+            <div className="relative aspect-[5/4] overflow-hidden rounded-[28px]">
+              <Image
+                alt="TROVANE manufacturing workshop with skilled pet product production team"
+                className="h-full w-full object-cover"
+                fill
+                loading="lazy"
+                sizes="(min-width: 1024px) 56vw, 100vw"
+                src="/images/factory/factory-2.jpg"
+                unoptimized
+              />
+            </div>
           </div>
-          <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-forest">
-              About TROVANE
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-navy sm:text-5xl">
-              Pet outdoor and travel sourcing for brands that need a better
-              product line.
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-slate">
-              TROVANE is a China-based pet outdoor and travel products supplier,
-              helping pet brands, retailers and distributors source, customize
-              and develop products for their markets.
-            </p>
-            <div className="mt-8 grid gap-3 text-sm font-semibold text-navy sm:grid-cols-2">
-              <span>Pet Outdoor & Travel specialization</span>
-              <span>Reliable sourcing partners</span>
-              <span>Professional coordination</span>
-              <span>International shipping support</span>
+
+          <div className="mt-20 sm:mt-28">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-semibold tracking-tight text-navy sm:text-5xl">
+                From Production to Finished Products
+              </h2>
+              <p className="mt-5 text-base leading-8 text-slate">
+                A closer look at the people, processes, and craftsmanship behind our pet outdoor products.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-4 lg:grid-cols-[1.18fr_0.82fr]">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[28px]">
+                <Image
+                  alt="Skilled worker sewing pet outdoor product details"
+                  className="h-full w-full object-cover"
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 56vw, 100vw"
+                  src="/images/factory/factory-1.jpg"
+                  unoptimized
+                />
+              </div>
+              <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <Image
+                    alt="Pet product manufacturing workshop overview"
+                    className="h-full w-full object-cover"
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
+                    src="/images/factory/factory-2.jpg"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <Image
+                    alt="Pet outdoor product production line"
+                    className="h-full w-full object-cover"
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
+                    src="/images/factory/factory-3.jpg"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <Image
+                    alt="Pet product assembly and quality inspection"
+                    className="h-full w-full object-cover"
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
+                    src="/images/factory/factory-4.jpg"
+                    unoptimized
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
