@@ -23,10 +23,17 @@ export function FactoryProcessVideo() {
       });
     };
 
-    startPlayback();
+    // Force Safari to request the already-rendered source instead of retaining its poster.
+    video.load();
+    video.addEventListener("loadedmetadata", startPlayback);
+    video.addEventListener("loadeddata", startPlayback);
     video.addEventListener("canplay", startPlayback);
 
-    return () => video.removeEventListener("canplay", startPlayback);
+    return () => {
+      video.removeEventListener("loadedmetadata", startPlayback);
+      video.removeEventListener("loadeddata", startPlayback);
+      video.removeEventListener("canplay", startPlayback);
+    };
   }, []);
 
   return <div className="mx-auto aspect-[9/16] w-full max-w-[320px] overflow-hidden rounded-[20px] bg-mist shadow-[0_12px_30px_rgba(0,32,63,0.14)] sm:max-w-[360px]">

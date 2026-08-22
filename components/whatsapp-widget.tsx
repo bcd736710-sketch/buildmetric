@@ -53,8 +53,8 @@ export function WhatsAppWidget() {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   }
 
-  return <aside aria-label="WhatsApp chat" className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] right-4 z-[9999] sm:bottom-6 sm:right-6">
-    {isOpen ? <section aria-labelledby="whatsapp-widget-title" className="flex h-[min(390px,calc(100dvh-10rem))] w-[calc(100vw-2rem)] max-w-[360px] flex-col overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_16px_48px_rgba(20,37,31,0.24)] sm:h-[480px]" id="whatsapp-widget">
+  return <aside aria-label="WhatsApp chat" className={`fixed z-[9999] ${isOpen ? "bottom-[max(16px,env(safe-area-inset-bottom))] left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6" : "bottom-[max(16px,env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6"}`}>
+    {isOpen ? <section aria-labelledby="whatsapp-widget-title" className="ml-auto flex h-[min(60dvh,360px)] max-h-[60vh] w-full max-w-[360px] flex-col overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_16px_48px_rgba(20,37,31,0.24)] sm:h-[480px] sm:w-[360px]" id="whatsapp-widget">
       <header className="flex shrink-0 items-center justify-between bg-[#128C7E] px-3 py-3 text-white sm:px-4">
         <div className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15"><WhatsAppIcon className="h-6 w-6" /></span><div><p className="text-[11px] font-medium text-white/75">TROVANE</p><h2 className="font-semibold leading-5" id="whatsapp-widget-title">Chat with TROVANE</h2></div></div>
         <button aria-label="Close WhatsApp chat" className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-full bg-white text-[#128C7E] shadow-sm transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white sm:bg-transparent sm:text-white sm:shadow-none sm:hover:bg-white/15" onClick={() => { setIsOpen(false); setIsPickerOpen(false); }} type="button"><CloseIcon className="h-5 w-5" /></button>
