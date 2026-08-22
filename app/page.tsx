@@ -300,7 +300,7 @@ export default async function HomePage() {
                     fill
                     loading="lazy"
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    src={product.images.find((image) => image.role === "main")?.blobUrl || product.images[0]?.blobUrl || "/trovane-product-carrier-cat.jpg"}
+                    src={product.mainImageUrl || product.images[0]?.blobUrl || "/trovane-product-carrier-cat.jpg"}
                     unoptimized
                   />
                 </div>

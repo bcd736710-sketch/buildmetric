@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { AdminUnauthorizedError, requireAdmin } from "@/lib/auth/require-admin";
-import { ProductBlobUploadError, ProductImagePersistenceError, uploadProductImage, validateProductImage } from "@/lib/products/image-management";
+import { ProductBlobUploadError, ProductImagePersistenceError, uploadProductImage, uploadProductMainImage, validateProductImage } from "@/lib/products/image-management";
 
 export const runtime = "nodejs";
 
@@ -31,17 +31,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     if (role === "main" && files.length !== 1) {
       return NextResponse.json({ message: "Choose one main image." }, { status: 400 });
     }
-    if (role === "gallery" && files.length > 10) {
-      return NextResponse.json({ message: "Choose no more than 10 gallery images at a time." }, { status: 400 });
-    }
-
     const altText = typeof form.get("altText") === "string" ? String(form.get("altText")) : null;
     const uploadFiles = files as File[];
     uploadFiles.forEach(validateProductImage);
-    const images = [];
-    for (const file of uploadFiles) {
-      images.push(await uploadProductImage({ productId: id, file, role, altText }));
+    if (role === "main") {
+      const mainImageUrl = await uploadProductMainImage({ productId: id, file: uploadFiles[0] });
+      return NextResponse.json({ mainImageUrl }, { status: 201 });
     }
+    const images = [];
+    for (const file of uploadFiles) images.push(await uploadProductImage({ productId: id, file, altText }));
     return NextResponse.json({ images }, { status: 201 });
   } catch (error) {
     if (error instanceof AdminUnauthorizedError) return NextResponse.json({ message: "Unauthorized." }, { status: 401 });

@@ -34,7 +34,7 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
     <label className="admin-checkbox"><input defaultChecked={item?.featured} name="featured" type="checkbox" /><span>Featured</span></label>
     <label>SEO Title<input defaultValue={item?.seoTitle ?? ""} name="seoTitle" /></label>
     <label>SEO Description<textarea defaultValue={item?.seoDescription ?? ""} name="seoDescription" /></label>
-    {!item ? <fieldset className="admin-image-fieldset"><legend>Product images</legend><label>Main Image<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" name="mainImage" type="file" /></label><label>Main Image Alt Text<input name="mainImageAlt" placeholder="Describe the main product image" /></label><label>Gallery Images<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" multiple name="galleryImages" type="file" /></label><label>Gallery Alt Text<input name="galleryImageAlt" placeholder="Applied to initial gallery images" /></label><p>JPG, JPEG, PNG or WebP. Maximum 5 MB per image.</p></fieldset> : null}
+    {!item ? <fieldset className="admin-image-fieldset"><legend>Product images</legend><label>Main Image<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" name="mainImage" type="file" /></label><label>Gallery Images<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" multiple name="galleryImages" type="file" /></label><label>Gallery Alt Text<input name="galleryImageAlt" placeholder="Applied to initial gallery images" /></label><p>JPG, JPEG, PNG or WebP. Maximum 5 MB per image.</p></fieldset> : null}
     <button>Save product</button>
   </form></main>;
 }

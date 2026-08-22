@@ -59,7 +59,7 @@ async function queryPublished(where: string, values: string[] = []) {
   const sql = database();
   const query = `SELECT ${productColumns} FROM products p
     INNER JOIN product_categories c ON c.id = p.category_id
-    LEFT JOIN product_images pi ON pi.product_id = p.id
+    LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.role = 'gallery'
     WHERE p.status = 'published' AND c.is_active = true AND c.status = 'published' ${where}
     GROUP BY p.id, c.id ORDER BY p.sort_order ASC, p.created_at DESC`;
   const rows = await sql.query(query, values) as ProductRow[];
@@ -82,7 +82,7 @@ export async function getPublishedProductBySlugs(categorySlug: string, productSl
   const sql = database();
   const rows = await sql.query(`SELECT ${productColumns} FROM products p
     INNER JOIN product_categories c ON c.id = p.category_id
-    LEFT JOIN product_images pi ON pi.product_id = p.id
+    LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.role = 'gallery'
     WHERE p.status = 'published' AND c.is_active = true AND c.status = 'published' AND c.slug = $1 AND p.slug = $2
     GROUP BY p.id, c.id LIMIT 1`, [categorySlug, productSlug]) as ProductRow[];
   return rows[0] ? mapProduct(rows[0]) : null;
@@ -125,7 +125,7 @@ export async function getProductByIdForAdmin(id: string): Promise<Product | null
   const sql = database();
   const rows = await sql.query(`SELECT ${productColumns} FROM products p
     INNER JOIN product_categories c ON c.id = p.category_id
-    LEFT JOIN product_images pi ON pi.product_id = p.id WHERE p.id = $1
+    LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.role = 'gallery' WHERE p.id = $1
     GROUP BY p.id, c.id LIMIT 1`, [id]) as ProductRow[];
   return rows[0] ? mapProduct(rows[0]) : null;
 }
