@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteHeader } from "@/components/site-header";
 import { WhatsAppWidget } from "@/components/whatsapp-widget";
 import "./globals.css";
 
@@ -43,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}<WhatsAppWidget /></body>
+      <body><SiteHeader />{children}<WhatsAppWidget /></body>
     </html>
   );
 }

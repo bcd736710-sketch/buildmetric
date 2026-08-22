@@ -12,43 +12,6 @@ export const metadata: Metadata = {
   },
 };
 
-function Header() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur">
-      <div className="mx-auto flex h-[68px] max-w-[1360px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-        <Link aria-label="TROVANE home" className="flex shrink-0 items-center" href="/">
-          <Image
-            alt="TROVANE Pet Outdoor and Travel logo"
-            className="h-auto w-[146px] sm:w-[170px]"
-            height={47}
-            src="/trovane-logo-horizontal-cropped.png"
-            style={{ height: "auto" }}
-            unoptimized
-            width={170}
-          />
-        </Link>
-        <nav className="hidden items-center gap-6 text-[13px] font-semibold text-navy/78 lg:flex">
-          <Link className="hover:text-forest" href="/products">
-            Products
-          </Link>
-          <Link className="hover:text-forest" href="/#customization">
-            Customization
-          </Link>
-          <Link className="hover:text-forest" href="/#service">
-            Sourcing Service
-          </Link>
-        </nav>
-        <Link
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-forest px-5 text-xs font-bold uppercase tracking-[0.08em] text-white transition hover:bg-navy sm:min-h-12 sm:px-6 sm:text-sm"
-          href="/rfq"
-        >
-          Request a Quote
-        </Link>
-      </div>
-    </header>
-  );
-}
-
 export default async function RFQPage({
   searchParams,
 }: {
@@ -60,8 +23,6 @@ export default async function RFQPage({
 
   return (
     <main className="bg-warm text-navy">
-      <Header />
-
       <section className="px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-start lg:gap-16">
           <div className="lg:sticky lg:top-24">

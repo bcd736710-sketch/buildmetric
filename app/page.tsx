@@ -5,15 +5,6 @@ import { getPublishedHomepageContent } from "@/lib/products/repository";
 
 export const dynamic = "force-dynamic";
 
-const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Products", href: "/products" },
-  { label: "Customization", href: "#customization" },
-  { label: "Sourcing Service", href: "#service" },
-  { label: "About Us", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
-
 const services = [
   {
     title: "Custom Logo",
@@ -134,45 +125,6 @@ export default async function HomePage() {
   const { categories, products } = await getPublishedHomepageContent();
   return (
     <main id="home" className="overflow-x-hidden bg-warm text-navy">
-      <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur">
-        <div className="mx-auto flex h-[68px] max-w-[1360px] items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
-          <Logo />
-          <nav aria-label="Primary navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-4 xl:gap-6 lg:flex">
-            {navItems.map((item) => (
-              <a
-                className="whitespace-nowrap text-[12px] font-semibold text-navy/78 transition hover:text-forest xl:text-[13px]"
-                href={item.href}
-                key={item.label}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <div className="hidden shrink-0 lg:flex">
-            <Button href="/rfq">Request a Quote</Button>
-          </div>
-          <details className="relative lg:hidden">
-            <summary className="flex h-11 cursor-pointer list-none items-center rounded-full border border-navy/15 px-5 text-xs font-bold uppercase tracking-[0.08em] text-navy">
-              Menu
-            </summary>
-            <div className="absolute right-0 mt-3 w-72 rounded-2xl border border-navy/10 bg-white p-4 shadow-[0_24px_70px_rgba(0,35,70,0.14)]">
-              {navItems.map((item) => (
-                <a
-                  className="block rounded-xl px-3 py-3 text-sm font-semibold text-navy hover:bg-mist"
-                  href={item.href}
-                  key={item.label}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <div className="mt-3 grid gap-2">
-                <Button href="/rfq">Request a Quote</Button>
-              </div>
-            </div>
-          </details>
-        </div>
-      </header>
-
       <section className="relative isolate h-[720px] overflow-hidden sm:h-[748px] lg:h-auto lg:min-h-[calc(100dvh-68px)]">
         <Image
           alt="A dog wearing an outdoor harness drinks from a portable pet water bottle while a cat uses an open travel carrier beside a lakeside SUV rest stop"

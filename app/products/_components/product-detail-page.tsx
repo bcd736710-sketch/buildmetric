@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/lib/products/types";
 import {
@@ -20,29 +19,6 @@ function values(value: unknown): string[] {
 
 function contentLines(value: string | null): string[] {
   return value?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
-}
-
-function Header({ productName }: { productName: string }) {
-  const rfq = `/rfq?product=${encodeURIComponent(productName)}`;
-  return (
-    <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur">
-      <div className="mx-auto flex h-[68px] max-w-[1360px] items-center justify-between gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8">
-        <Link aria-label="TROVANE home" className="flex shrink-0 items-center" href="/">
-          <Image alt="TROVANE Pet Outdoor and Travel logo" className="h-auto w-[146px] sm:w-[170px]" height={47} src="/trovane-logo-horizontal-cropped.png" style={{ height: "auto" }} unoptimized width={170} />
-        </Link>
-        <nav className="hidden items-center gap-6 text-[13px] font-semibold text-navy/78 lg:flex">
-          <Link className="text-forest" href="/products">Products</Link>
-          <Link className="hover:text-forest" href="/#customization">Customization</Link>
-          <Link className="hover:text-forest" href="/#service">Sourcing Service</Link>
-        </nav>
-        <Link className="hidden min-h-11 items-center justify-center rounded-full bg-forest px-5 text-xs font-bold uppercase tracking-[0.08em] text-white transition hover:bg-navy sm:min-h-12 sm:px-6 sm:text-sm lg:inline-flex" href={rfq}>Request a Quote</Link>
-        <div className="flex items-center gap-2 lg:hidden">
-          <details className="relative"><summary className="flex h-11 cursor-pointer list-none items-center rounded-full border border-navy/15 px-4 text-xs font-bold uppercase tracking-[0.08em] text-navy">Menu</summary><div className="absolute right-0 mt-3 w-56 border border-navy/10 bg-warm p-3"><Link className="block px-3 py-3 text-sm font-semibold text-navy" href="/products">Products</Link><Link className="block px-3 py-3 text-sm font-semibold text-navy" href="/#customization">Customization</Link><Link className="block px-3 py-3 text-sm font-semibold text-navy" href="/#service">Sourcing Service</Link></div></details>
-          <Link className="inline-flex h-11 items-center rounded-full bg-forest px-3 text-[11px] font-bold uppercase tracking-normal text-white whitespace-nowrap" href={rfq}>Request a Quote</Link>
-        </div>
-      </div>
-    </header>
-  );
 }
 
 export function ProductDetailPage({ product }: { product: Product }) {
@@ -70,7 +46,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
   const facts = [["Category", product.category.name], ["Customization", product.customization.length ? product.customization.join(" / ") : "Available on request"], ["MOQ", product.moq || "Available on request"], ["Lead Time", product.leadTime || "Confirmed after requirements"]];
   const rfq = `/rfq?product=${encodeURIComponent(product.name)}`;
 
-  return <main className="bg-warm text-navy"><Header productName={product.name} />
+  return <main className="bg-warm text-navy">
     <section className="px-4 py-8 sm:px-6 sm:py-10 lg:px-8"><div className="mx-auto max-w-7xl">
       <div className="mb-7 flex flex-wrap items-center gap-2 text-sm text-slate"><Link className="font-semibold text-navy hover:text-forest" href="/products">Products</Link><span>/</span><Link className="font-semibold text-navy hover:text-forest" href={`/products/${product.category.slug}`}>{product.category.name}</Link><span>/</span><span>{product.name}</span></div>
       <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.6fr)_minmax(360px,0.4fr)] lg:items-start lg:gap-12"><ProductDetailGallery images={images} /><div className="lg:pt-1"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">{product.category.name}</p><h1 className="mt-3 text-4xl font-semibold tracking-tight text-navy sm:text-6xl lg:text-5xl">{product.name}</h1><p className="mt-4 max-w-xl text-base leading-7 text-slate">{product.shortDescription || product.fullDescription || "Contact us for product details and customization options."}</p><div className="mt-5 grid gap-2 sm:grid-cols-2 sm:gap-3"><Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-navy" href={`${rfq}&intent=wholesale-price`}>Get Wholesale Price</Link><Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-navy/18 px-6 text-sm font-bold uppercase tracking-[0.08em] text-navy transition hover:border-forest hover:text-forest" href={`${rfq}&intent=custom-project`}>Start Custom Project</Link></div><dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-navy/10 pt-5">{facts.map(([label, value]) => <div key={label}><dt className="text-[11px] font-bold uppercase tracking-[0.12em] text-navy/50">{label}</dt><dd className="mt-2 text-sm leading-6 text-navy">{value}</dd></div>)}</dl></div></div>
