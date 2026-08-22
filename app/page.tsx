@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FactoryProcessVideo } from "@/components/factory-process-video";
 import { getPublishedHomepageContent } from "@/lib/products/repository";
 
 export const dynamic = "force-dynamic";
@@ -184,6 +185,23 @@ export default async function HomePage() {
           <span className="whitespace-nowrap px-1">Shipping Coordination</span>
         </div>
       </div>
+
+      <section className="px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
+          <FactoryProcessVideo />
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-forest">Manufacturing Process</p>
+            <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-navy sm:text-5xl">Inside Our Manufacturing Process</h2>
+            <p className="mt-6 max-w-xl text-base leading-8 text-slate">From material selection and cutting to sewing and final inspection, we carefully craft every product to deliver reliable quality for global pet brands.</p>
+            <div className="mt-8 space-y-5 border-y border-navy/10 py-6">
+              <article><h3 className="text-base font-semibold text-navy">OEM / ODM Support</h3><p className="mt-1.5 text-sm leading-6 text-slate">Flexible customization solutions including logo, packaging, and product improvements.</p></article>
+              <article><h3 className="text-base font-semibold text-navy">Skilled Production Team</h3><p className="mt-1.5 text-sm leading-6 text-slate">Experienced workers and professional equipment ensure stable production quality.</p></article>
+              <article><h3 className="text-base font-semibold text-navy">Quality-Focused Production</h3><p className="mt-1.5 text-sm leading-6 text-slate">Strict attention to every detail, from materials to finished products.</p></article>
+            </div>
+            <div className="mt-8"><Button href="/rfq">Request Quote</Button></div>
+          </div>
+        </div>
+      </section>
 
       <section id="products" className="px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <div className="mx-auto max-w-7xl">
