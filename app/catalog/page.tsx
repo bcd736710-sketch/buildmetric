@@ -18,14 +18,14 @@ const catalogSections = [
 
 export default function CatalogPage() {
   return <main className="bg-white text-navy">
-    <section className="relative isolate overflow-hidden bg-navy px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-44">
+    <section className="relative isolate flex min-h-[500px] items-center overflow-hidden bg-navy px-5 py-16 sm:px-8 sm:py-20 lg:min-h-[540px] lg:px-12 lg:py-24">
       <Image alt="TROVANE pet travel products" className="-z-20 object-cover object-center opacity-45" fill priority sizes="100vw" src="/trovane-hero-pets-roadtrip.jpg" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/80 to-navy/25" />
       <div className="mx-auto max-w-[1440px]"><div className="max-w-3xl text-white">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/70"><Link className="transition hover:text-white" href="/">Home</Link><span aria-hidden="true">/</span><span>Catalog</span></nav>
         <p className="mt-13 text-xs font-bold uppercase tracking-[0.18em] text-white/70">2026 Product Catalog</p>
-        <h1 className="mt-6 text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-8xl">One catalog.<br />A clearer way to source<br />pet outdoor &amp; travel products.</h1>
-        <p className="mt-9 max-w-2xl text-base leading-8 text-white/78 sm:text-lg">Browse TROVANE’s featured categories, product specifications and OEM/ODM sourcing options in one downloadable catalog.</p>
+        <h1 className="mt-6 text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-5xl lg:text-7xl">One catalog.<br />A clearer way to source<br />pet outdoor &amp; travel products.</h1>
+        <p className="mt-7 max-w-2xl text-base leading-8 text-white/78 sm:text-lg">Browse TROVANE’s featured categories, product specifications and OEM/ODM sourcing options in one downloadable catalog.</p>
       </div></div>
     </section>
 

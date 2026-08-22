@@ -42,8 +42,9 @@ export function ProductDetailPage({ product }: { product: Product }) {
   const overview = text(product.fullDescription) || text(product.shortDescription) || "Contact our team for product details, sample requests and sourcing support.";
   const intro = text(product.shortDescription) || text(product.fullDescription) || "Built for dependable wholesale, project and OEM sourcing programs.";
   const topSpecifications = [
-    { label: "Material", value: text(product.material) }, { label: "Size / Dimensions", value: dimensions },
-    { label: "Color / Finish", value: colorFinish }, { label: "MOQ", value: text(product.moq) },
+    { label: "Material", value: text(product.material) },
+    { label: "Dimensions", value: dimensions },
+    { label: "Color", value: colorFinish },
   ].filter((row): row is { label: string; value: string } => Boolean(row.value));
   const detailedSpecifications = [
     { label: "Model / Product Type", value: model || product.category.name }, { label: "Material", value: text(product.material) },
