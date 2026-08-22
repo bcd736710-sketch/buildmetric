@@ -225,7 +225,12 @@ export default async function HomePage() {
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  src={category.imageUrl || "/trovane-category-travel-cat.jpg"}
+                  src={
+                    category.imageUrl ||
+                    (category.slug === "travel-car"
+                      ? "/images/categories/travel-car.jpg"
+                      : "/trovane-category-travel-cat.jpg")
+                  }
                   unoptimized
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,63,0.02),rgba(0,32,63,0.64))]" />
