@@ -18,9 +18,9 @@ const catalogSections = [
 
 export default function CatalogPage() {
   return <main className="bg-white text-navy">
-    <section className="relative isolate flex min-h-[500px] items-center overflow-hidden bg-navy px-5 py-16 sm:px-8 sm:py-20 lg:min-h-[540px] lg:px-12 lg:py-24">
-      <Image alt="TROVANE pet travel products" className="-z-20 object-cover object-center opacity-45" fill priority sizes="100vw" src="/trovane-hero-pets-roadtrip.jpg" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/80 to-navy/25" />
+    <section className="relative isolate flex h-[500px] items-center overflow-hidden bg-navy px-5 py-12 sm:px-8 sm:py-16 lg:h-[540px] lg:px-12 lg:py-20">
+      <Image alt="Pet outdoor and travel products in use" className="-z-20 object-cover object-[62%_center] opacity-85" fill priority sizes="100vw" src="/trovane-hero-product-use.png" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/82 to-navy/10" />
       <div className="mx-auto max-w-[1440px]"><div className="max-w-3xl text-white">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/70"><Link className="transition hover:text-white" href="/">Home</Link><span aria-hidden="true">/</span><span>Catalog</span></nav>
         <p className="mt-13 text-xs font-bold uppercase tracking-[0.18em] text-white/70">2026 Product Catalog</p>
