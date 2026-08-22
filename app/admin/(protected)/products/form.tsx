@@ -8,7 +8,19 @@ const initial: ProductSaveState = { error: null };
 
 export function ProductForm({ item, categories }: { item?: AdminProduct; categories: AdminCategory[] }) {
   const [state, action] = useActionState(item ? saveProduct : saveNewProductWithImages, initial);
-  const list = (entry: string[]) => entry.join("\n");
+  // Products created before the current form can contain JSON values returned as
+  // strings by the database driver. Keep the edit form renderable for those rows.
+  const textValue = (value: unknown) => typeof value === "string" ? value : "";
+  const list = (value: unknown) => {
+    if (Array.isArray(value)) return value.filter((entry): entry is string => typeof entry === "string").join("\n");
+    if (typeof value !== "string") return "";
+    try {
+      const parsed: unknown = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed.filter((entry): entry is string => typeof entry === "string").join("\n") : value;
+    } catch {
+      return value;
+    }
+  };
   return <main className="admin-shell"><form action={action} className="admin-card admin-form wide">
     <input name="id" type="hidden" value={item?.id} />
     <h1>{item ? "Edit product" : "New product"}</h1>
@@ -21,10 +33,10 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
       <label>Overview<textarea defaultValue={item?.fullDescription ?? ""} name="fullDescription" /><span>Use separate paragraphs for longer product information.</span></label>
     </fieldset>
     <fieldset className="admin-image-fieldset"><legend>Specifications</legend>
-      <label>Material<input defaultValue={item?.material ?? ""} name="material" /></label>
-      <label>Size / Dimensions<textarea defaultValue={item?.sizeSpecs ?? ""} name="sizeSpecs" /><span>Enter one size or dimension per line.</span></label>
+      <label>Material<input defaultValue={textValue(item?.material)} name="material" /></label>
+      <label>Size / Dimensions<textarea defaultValue={textValue(item?.sizeSpecs)} name="sizeSpecs" /><span>Enter one size or dimension per line.</span></label>
       <label>Colors<textarea defaultValue={list(item?.colors ?? [])} name="colors" /><span>Enter one color per line.</span></label>
-      <label>Finish<input defaultValue={item?.finish ?? ""} name="finish" /><span>For example: Matte black, Pink, or Custom finish.</span></label>
+      <label>Finish<input defaultValue={textValue(item?.finish)} name="finish" /><span>For example: Matte black, Pink, or Custom finish.</span></label>
       <label>MOQ<input defaultValue={item?.moq ?? ""} name="moq" /></label>
       <label>Usage / Applications<textarea defaultValue={item?.applications ?? ""} name="applications" /><span>Enter one application per line.</span></label>
       <label>Customization<textarea defaultValue={list(item?.customization ?? [])} name="customization" /><span>Enter one option per line.</span></label>
