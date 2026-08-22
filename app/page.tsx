@@ -226,10 +226,9 @@ export default async function HomePage() {
                   loading="lazy"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   src={
-                    category.imageUrl ||
-                    (category.slug === "travel-car"
+                    category.slug === "travel-car"
                       ? "/images/categories/travel-car.jpg"
-                      : "/trovane-category-travel-cat.jpg")
+                      : category.imageUrl || "/trovane-category-travel-cat.jpg"
                   }
                   unoptimized
                 />
