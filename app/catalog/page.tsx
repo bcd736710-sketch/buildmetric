@@ -18,7 +18,7 @@ const catalogSections = [
 
 export default function CatalogPage() {
   return <main className="bg-white text-navy">
-    <section className="relative isolate flex h-[500px] items-center overflow-hidden bg-navy px-5 py-12 sm:px-8 sm:py-16 lg:h-[540px] lg:px-12 lg:py-20">
+    <section className="relative isolate flex h-[500px] items-start overflow-hidden bg-navy px-5 pb-12 pt-20 sm:px-8 sm:pb-16 sm:pt-24 lg:h-[540px] lg:px-12 lg:pb-20 lg:pt-28">
       <Image alt="Pet outdoor and travel products in use" className="-z-20 object-cover object-[62%_center] opacity-85" fill priority sizes="100vw" src="/trovane-hero-product-use.png" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/82 to-navy/10" />
       <div className="mx-auto max-w-[1440px]"><div className="max-w-3xl text-white">

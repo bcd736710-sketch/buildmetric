@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { trovaneButton } from "@/components/trovane-button";
 
 const catalogUrl = "/catalog/trovane-catalog.pdf";
 
@@ -39,6 +40,6 @@ export function CatalogDownloadForm() {
       <label className="block text-sm font-medium text-navy">Company *<input required className="mt-2 block h-12 w-full border border-navy/20 bg-white px-3 text-base outline-none transition focus:border-forest" name="company" /></label>
       <label className="block text-sm font-medium text-navy">Market / Country *<input required className="mt-2 block h-12 w-full border border-navy/20 bg-white px-3 text-base outline-none transition focus:border-forest" name="market" /></label>
     </div>
-    <button className="mt-8 inline-flex min-h-13 w-full items-center justify-center bg-navy px-6 text-sm font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-forest" type="submit">Download PDF</button>
+    <button className={`mt-8 w-full ${trovaneButton.primary}`} type="submit">Download PDF</button>
   </form>;
 }

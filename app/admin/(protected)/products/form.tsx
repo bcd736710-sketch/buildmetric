@@ -23,7 +23,8 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
     <fieldset className="admin-image-fieldset"><legend>Specifications</legend>
       <label>Material<input defaultValue={item?.material ?? ""} name="material" /></label>
       <label>Size / Dimensions<textarea defaultValue={item?.sizeSpecs ?? ""} name="sizeSpecs" /><span>Enter one size or dimension per line.</span></label>
-      <label>Colors / Finish<textarea defaultValue={list(item?.colors ?? [])} name="colors" /><span>Enter one color or finish per line.</span></label>
+      <label>Colors<textarea defaultValue={list(item?.colors ?? [])} name="colors" /><span>Enter one color per line.</span></label>
+      <label>Finish<input defaultValue={item?.finish ?? ""} name="finish" /><span>For example: Matte black, Pink, or Custom finish.</span></label>
       <label>MOQ<input defaultValue={item?.moq ?? ""} name="moq" /></label>
       <label>Usage / Applications<textarea defaultValue={item?.applications ?? ""} name="applications" /><span>Enter one application per line.</span></label>
       <label>Customization<textarea defaultValue={list(item?.customization ?? [])} name="customization" /><span>Enter one option per line.</span></label>
