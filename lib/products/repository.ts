@@ -6,7 +6,7 @@ import type { Product, ProductCategory, ProductImage, ProductStatus } from "./ty
 type ProductRow = {
   id: string; name: string; slug: string; short_description: string | null;
   full_description: string | null; key_features: string | null; applications: string | null;
-  certifications: string | null; moq: string | null; material: string | null; size_specs: string | null; finish: string | null;
+  certifications: string | null; moq: string | null; material: string | null; size_specs: string | null; finish: string | null; available_options: string | null;
   specifications: Record<string, unknown>; colors: string[]; customization: string[];
   packaging: string | null; lead_time: string | null; featured: boolean;
   sort_order: number; status: ProductStatus; seo_title: string | null;
@@ -26,7 +26,7 @@ function database() {
 
 const productColumns = `
   p.id, p.name, p.slug, p.short_description, p.full_description, p.key_features, p.applications,
-  p.certifications, p.moq, p.material, p.size_specs, p.finish,
+  p.certifications, p.moq, p.material, p.size_specs, p.finish, p.available_options,
   p.specifications, p.colors, p.customization, p.packaging, p.lead_time, p.featured,
   p.sort_order, p.status, p.seo_title, p.seo_description, p.main_image_url, p.created_at, p.updated_at,
   jsonb_build_object('id', c.id, 'parentId', c.parent_id, 'name', c.name, 'slug', c.slug,
@@ -47,7 +47,7 @@ function mapProduct(row: ProductRow): Product {
     id: row.id, category: row.category, name: row.name, slug: row.slug,
     shortDescription: row.short_description, fullDescription: row.full_description,
     keyFeatures: row.key_features, applications: row.applications, certifications: row.certifications,
-    moq: row.moq, material: row.material, sizeSpecs: row.size_specs, finish: row.finish, specifications: row.specifications ?? {},
+    moq: row.moq, material: row.material, sizeSpecs: row.size_specs, finish: row.finish, availableOptions: row.available_options, specifications: row.specifications ?? {},
     colors: row.colors ?? [], customization: row.customization ?? [], packaging: row.packaging,
     leadTime: row.lead_time, featured: row.featured, sortOrder: row.sort_order,
     status: row.status, seoTitle: row.seo_title, seoDescription: row.seo_description, mainImageUrl: row.main_image_url,

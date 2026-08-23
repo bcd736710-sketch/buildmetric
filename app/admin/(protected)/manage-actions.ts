@@ -39,7 +39,7 @@ function productValues(form: FormData) {
   const status = text(form, "status");
   if (!name || !categoryId || !slug || !["draft", "published", "archived"].includes(status)) return null;
   return [
-    categoryId, name, slug, text(form, "shortDescription") || null, text(form, "fullDescription") || null,
+    categoryId, name, slug, text(form, "shortDescription") || null, text(form, "fullDescription") || null, text(form, "availableOptions") || null,
     text(form, "applications") || null, text(form, "certifications") || null, text(form, "moq") || null,
     text(form, "material") || null, text(form, "sizeSpecs") || null, text(form, "finish") || null,
     list(form, "colors"), list(form, "customization"), text(form, "packaging") || null, text(form, "leadTime") || null,
@@ -59,7 +59,7 @@ export async function saveProduct(_: ProductSaveState, form: FormData): Promise<
     const id = text(form, "id");
     const values = productValues(form);
     if (!id || !values) return { error: "Complete the required product fields." };
-    await db().query("UPDATE products SET category_id=$1,name=$2,slug=$3,short_description=$4,full_description=$5,applications=$6,certifications=$7,moq=$8,material=$9,size_specs=$10,finish=$11,colors=$12,customization=$13,packaging=$14,lead_time=$15,featured=$16,sort_order=$17,status=$18,updated_at=now() WHERE id=$19", [...values, id]);
+    await db().query("UPDATE products SET category_id=$1,name=$2,slug=$3,short_description=$4,full_description=$5,available_options=$6,applications=$7,certifications=$8,moq=$9,material=$10,size_specs=$11,finish=$12,colors=$13,customization=$14,packaging=$15,lead_time=$16,featured=$17,sort_order=$18,status=$19,updated_at=now() WHERE id=$20", [...values, id]);
     revalidatePath("/admin");
     revalidatePath("/admin/products");
     revalidatePath("/products");
@@ -74,7 +74,7 @@ export async function saveNewProductWithImages(_: ProductSaveState, form: FormDa
   try {
     const values = productValues(form);
     if (!values) return { error: "Complete the required product fields." };
-    const rows = await db().query("INSERT INTO products(category_id,name,slug,short_description,full_description,applications,certifications,moq,material,size_specs,finish,colors,customization,packaging,lead_time,featured,sort_order,status)VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING id", values) as Array<{ id: string }>;
+    const rows = await db().query("INSERT INTO products(category_id,name,slug,short_description,full_description,available_options,applications,certifications,moq,material,size_specs,finish,colors,customization,packaging,lead_time,featured,sort_order,status)VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING id", values) as Array<{ id: string }>;
     const id = rows[0]?.id;
     if (!id) throw new Error("Product could not be created.");
     try {

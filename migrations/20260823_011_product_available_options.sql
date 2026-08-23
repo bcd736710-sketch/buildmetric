@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE products
+  ADD COLUMN IF NOT EXISTS available_options TEXT;
+
+COMMIT;
