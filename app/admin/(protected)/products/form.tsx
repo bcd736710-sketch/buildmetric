@@ -31,7 +31,10 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
     <fieldset className="admin-image-fieldset"><legend>Product Detail Content</legend>
       <label>Short Description<textarea defaultValue={item?.shortDescription ?? ""} name="shortDescription" required /><span>Shown beside the product image.</span></label>
       <label>Overview<textarea defaultValue={item?.fullDescription ?? ""} name="fullDescription" /><span>Use separate paragraphs for longer product information.</span></label>
-      <label>Available Options<textarea defaultValue={textValue(item?.availableOptions)} name="availableOptions" /><span>Enter one option per line.</span></label>
+    </fieldset>
+    <fieldset className="admin-image-fieldset">
+      <legend>Available Options</legend>
+      <label htmlFor="availableOptions">Available Options<textarea defaultValue={textValue(item?.availableOptions)} id="availableOptions" name="availableOptions" /><span>Enter one option per line.</span></label>
     </fieldset>
     <fieldset className="admin-image-fieldset"><legend>Specifications</legend>
       <label>Material<input defaultValue={textValue(item?.material)} name="material" /></label>
