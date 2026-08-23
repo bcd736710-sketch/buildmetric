@@ -10,7 +10,6 @@ import { deleteProductImage, getProductImages, uploadProductImage, uploadProduct
 const db = () => neon(process.env.DATABASE_URL!);
 const text = (form: FormData, key: string) => String(form.get(key) ?? "").trim();
 const number = (form: FormData, key: string) => Math.max(0, Number(text(form, key) || 0));
-const list = (form: FormData, key: string) => text(form, key).split(/\r?\n|,/).map((value) => value.trim()).filter(Boolean);
 
 export async function saveCategory(form: FormData) {
   await requireAdmin();
@@ -41,8 +40,7 @@ function productValues(form: FormData) {
   return [
     categoryId, name, slug, text(form, "shortDescription") || null, text(form, "fullDescription") || null, text(form, "availableOptions") || null,
     text(form, "material") || null, text(form, "sizeSpecs") || null, text(form, "finish") || null,
-    list(form, "customization"), text(form, "packaging") || null, text(form, "leadTime") || null,
-    form.get("featured") === "on", number(form, "sortOrder"), status,
+    text(form, "wholesaleSupplyDescription") || null, form.get("featured") === "on", number(form, "sortOrder"), status,
   ];
 }
 
@@ -58,7 +56,7 @@ export async function saveProduct(_: ProductSaveState, form: FormData): Promise<
     const id = text(form, "id");
     const values = productValues(form);
     if (!id || !values) return { error: "Complete the required product fields." };
-    await db().query("UPDATE products SET category_id=$1,name=$2,slug=$3,short_description=$4,full_description=$5,available_options=$6,material=$7,size_specs=$8,finish=$9,customization=$10,packaging=$11,lead_time=$12,featured=$13,sort_order=$14,status=$15,updated_at=now() WHERE id=$16", [...values, id]);
+    await db().query("UPDATE products SET category_id=$1,name=$2,slug=$3,short_description=$4,full_description=$5,available_options=$6,material=$7,size_specs=$8,finish=$9,wholesale_supply_description=$10,featured=$11,sort_order=$12,status=$13,updated_at=now() WHERE id=$14", [...values, id]);
     revalidatePath("/admin");
     revalidatePath("/admin/products");
     revalidatePath("/products");
@@ -73,7 +71,7 @@ export async function saveNewProductWithImages(_: ProductSaveState, form: FormDa
   try {
     const values = productValues(form);
     if (!values) return { error: "Complete the required product fields." };
-    const rows = await db().query("INSERT INTO products(category_id,name,slug,short_description,full_description,available_options,material,size_specs,finish,customization,packaging,lead_time,featured,sort_order,status)VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING id", values) as Array<{ id: string }>;
+    const rows = await db().query("INSERT INTO products(category_id,name,slug,short_description,full_description,available_options,material,size_specs,finish,wholesale_supply_description,featured,sort_order,status)VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id", values) as Array<{ id: string }>;
     const id = rows[0]?.id;
     if (!id) throw new Error("Product could not be created.");
     try {

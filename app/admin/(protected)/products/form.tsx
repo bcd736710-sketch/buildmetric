@@ -11,16 +11,6 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
   // Products created before the current form can contain JSON values returned as
   // strings by the database driver. Keep the edit form renderable for those rows.
   const textValue = (value: unknown) => typeof value === "string" ? value : "";
-  const list = (value: unknown) => {
-    if (Array.isArray(value)) return value.filter((entry): entry is string => typeof entry === "string").join("\n");
-    if (typeof value !== "string") return "";
-    try {
-      const parsed: unknown = JSON.parse(value);
-      return Array.isArray(parsed) ? parsed.filter((entry): entry is string => typeof entry === "string").join("\n") : value;
-    } catch {
-      return value;
-    }
-  };
   return <main className="admin-shell"><form action={action} className="admin-card admin-form wide">
     <input name="id" type="hidden" value={item?.id} />
     <h1>{item ? "Edit product" : "New product"}</h1>
@@ -44,10 +34,8 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
       <label>Size / Dimensions<textarea defaultValue={textValue(item?.sizeSpecs)} name="sizeSpecs" /><span>Enter one size or dimension per line.</span></label>
       <label>Finish<input defaultValue={textValue(item?.finish)} name="finish" /><span>For example: Matte black, Pink, or Custom finish.</span></label>
     </fieldset>
-    <fieldset className="admin-image-fieldset"><legend>Supply Information</legend>
-      <label>Customization<textarea defaultValue={list(item?.customization ?? [])} name="customization" /><span>Enter one option per line.</span></label>
-      <label>Lead Time<input defaultValue={item?.leadTime ?? ""} name="leadTime" /></label>
-      <label>Packaging<textarea defaultValue={item?.packaging ?? ""} name="packaging" /></label>
+    <fieldset className="admin-image-fieldset"><legend>Wholesale / OEM / Project Supply</legend>
+      <label htmlFor="wholesaleSupplyDescription">Wholesale / OEM / Project Supply Description<textarea defaultValue={textValue(item?.wholesaleSupplyDescription)} id="wholesaleSupplyDescription" name="wholesaleSupplyDescription" /><span>Describe wholesale programs, OEM customization, or project supply support for this product.</span></label>
     </fieldset>
     <label>Status<select defaultValue={item?.status ?? "draft"} name="status"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label>
     <label>Sort Order<input defaultValue={item?.sortOrder ?? 0} min="0" name="sortOrder" type="number" /></label>

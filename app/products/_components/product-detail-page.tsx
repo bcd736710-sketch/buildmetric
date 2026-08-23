@@ -37,8 +37,8 @@ export function ProductDetailPage({ product }: { product: Product }) {
     : savedImages.length ? savedImages : [{ src: fallbackImage, alt: `${product.name} TROVANE product` }];
   const dimensions = stringList(product.sizeSpecs).join(" · ") || null;
   const finish = text(product.finish) || "Available on request";
-  const customization = stringList(product.customization);
   const availableOptions = paragraphs(product.availableOptions);
+  const wholesaleSupplyDescription = paragraphs(product.wholesaleSupplyDescription);
   const overview = text(product.fullDescription) || text(product.shortDescription) || "Contact our team for product details, sample requests and sourcing support.";
   const intro = text(product.shortDescription) || "Contact our team for product details, sample requests and sourcing support.";
   const topSpecifications = [
@@ -52,11 +52,6 @@ export function ProductDetailPage({ product }: { product: Product }) {
     { label: "Finish", value: finish },
     ...extraSpecifications(product.specifications),
   ];
-  const supplyInformation = [
-    { label: "Customization", value: customization.join(", ") || null },
-    { label: "Packaging", value: text(product.packaging) },
-    { label: "Lead Time", value: text(product.leadTime) },
-  ].filter((item): item is { label: string; value: string } => Boolean(item.value));
   const rfq = `/rfq?product=${encodeURIComponent(product.name)}`;
 
   return <main className="bg-white text-navy">
@@ -72,7 +67,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
       <article className="max-w-[800px]"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">Product information</p><h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Overview</h2><div className="mt-7 space-y-5 text-base leading-8 text-slate sm:text-lg">{paragraphs(overview).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></article>
       {detailedSpecifications.length ? <article className="mt-20 max-w-[900px] border-t border-navy/15 pt-10 sm:mt-28 sm:pt-12"><h2 className="text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Specifications</h2><ul className="mt-9 divide-y divide-navy/10 border-y border-navy/10">{detailedSpecifications.map((item) => <li className="grid gap-2 py-4 sm:grid-cols-[minmax(12rem,0.75fr)_minmax(0,1.25fr)] sm:gap-8" key={item.label}><span className="flex gap-3 font-medium text-navy"><span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-forest" />{item.label}</span><span className="leading-7 text-slate">{item.value}</span></li>)}</ul></article> : null}
       {availableOptions.length ? <article className="mt-20 max-w-[900px] border-t border-navy/15 pt-10 sm:mt-28 sm:pt-12"><h2 className="text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Available Options</h2><ul className="mt-9 divide-y divide-navy/10 border-y border-navy/10">{availableOptions.map((option, index) => <li className="flex gap-3 py-4 leading-7 text-slate" key={`${option}-${index}`}><span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-forest" />{option}</li>)}</ul></article> : null}
-      <article className="mt-20 border-t border-navy/15 pt-10 sm:mt-28 sm:pt-12"><p className="text-xs font-bold uppercase tracking-[0.16em] text-forest">Built for B2B sourcing</p><h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Wholesale / OEM / Project Supply</h2>{supplyInformation.length ? <ul className="mt-9 divide-y divide-navy/10 border-y border-navy/10">{supplyInformation.map((item) => <li className="grid gap-2 py-4 sm:grid-cols-[minmax(12rem,0.75fr)_minmax(0,1.25fr)] sm:gap-8" key={item.label}><span className="font-medium text-navy">{item.label}</span><span className="leading-7 text-slate">{item.value}</span></li>)}</ul> : null}<Link className={`mt-9 ${trovaneButton.primary}`} href={rfq}>Request a Quote</Link></article>
+      <article className="mt-20 border-t border-navy/15 pt-10 sm:mt-28 sm:pt-12"><h2 className="text-4xl font-semibold tracking-[-0.04em] text-navy sm:text-5xl">Wholesale / OEM / Project Supply</h2>{wholesaleSupplyDescription.length ? <div className="mt-7 max-w-[800px] space-y-5 text-base leading-8 text-slate sm:text-lg">{wholesaleSupplyDescription.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div> : null}<Link className={`mt-9 ${trovaneButton.primary}`} href={rfq}>Request a Quote</Link></article>
     </div></section>
   </main>;
 }
