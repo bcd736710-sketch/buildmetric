@@ -51,18 +51,24 @@ function productSaveError(error: unknown): ProductSaveState {
 
 export async function saveProduct(_: ProductSaveState, form: FormData): Promise<ProductSaveState> {
   await requireAdmin();
+  const id = text(form, "id");
+  const values = productValues(form);
+  if (!id || !values) return { error: "Complete the required product fields." };
+  const categoryId = values[0] as string;
+  console.info("Saving product category", { id, submittedCategoryId: categoryId });
   try {
-    const id = text(form, "id");
-    const values = productValues(form);
-    if (!id || !values) return { error: "Complete the required product fields." };
-    await db().query("UPDATE products SET category_id=$1,name=$2,slug=$3,short_description=$4,full_description=$5,available_options=$6,material=$7,size_specs=$8,finish=$9,wholesale_supply_description=$10,featured=$11,sort_order=$12,status=$13,updated_at=now() WHERE id=$14", [...values, id]);
-    revalidatePath("/admin");
-    revalidatePath("/admin/products");
-    revalidatePath("/products");
-    redirect("/admin/products");
+    const rows = await db().query("UPDATE products SET category_id=$1,name=$2,slug=$3,short_description=$4,full_description=$5,available_options=$6,material=$7,size_specs=$8,finish=$9,wholesale_supply_description=$10,featured=$11,sort_order=$12,status=$13,updated_at=now() WHERE id=$14 RETURNING category_id AS \"categoryId\"", [...values, id]) as Array<{ categoryId: string }>;
+    const savedCategoryId = rows[0]?.categoryId;
+    console.info("Saved product category", { id, submittedCategoryId: categoryId, savedCategoryId });
+    if (savedCategoryId !== categoryId) throw new Error("Product category was not updated.");
   } catch (error) {
+    console.error("Failed to save product", { id, error });
     return productSaveError(error);
   }
+  revalidatePath("/admin");
+  revalidatePath("/admin/products");
+  revalidatePath("/products");
+  redirect("/admin/products");
 }
 
 export async function saveNewProductWithImages(_: ProductSaveState, form: FormData): Promise<ProductSaveState> {
