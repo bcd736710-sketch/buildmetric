@@ -283,9 +283,11 @@ export default async function HomePage() {
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-forest">
                       {product.category.name}
                     </p>
-                    <span className="rounded-full bg-mist px-2.5 py-1 text-[11px] font-bold text-navy/72">
-                      {product.moq ? `MOQ: ${product.moq}` : "Customizable"}
-                    </span>
+                    {product.customization.length > 0 && (
+                      <span className="rounded-full bg-mist px-2.5 py-1 text-[11px] font-bold text-navy/72">
+                        Customizable
+                      </span>
+                    )}
                   </div>
                   <h3 className="mt-2 text-xl font-semibold text-navy">
                     {product.name}
