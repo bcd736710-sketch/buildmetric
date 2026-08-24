@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { neon } from "@neondatabase/serverless";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { slugify } from "@/lib/admin/products";
-import { deleteProductImage, getProductImages, uploadProductImage, uploadProductMainImage } from "@/lib/products/image-management";
 
 const db = () => neon(process.env.DATABASE_URL!);
 const text = (form: FormData, key: string) => String(form.get(key) ?? "").trim();
@@ -74,17 +73,6 @@ export async function saveNewProductWithImages(_: ProductSaveState, form: FormDa
     const rows = await db().query("INSERT INTO products(category_id,name,slug,short_description,full_description,available_options,material,size_specs,finish,wholesale_supply_description,featured,sort_order,status)VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id", values) as Array<{ id: string }>;
     const id = rows[0]?.id;
     if (!id) throw new Error("Product could not be created.");
-    try {
-      const main = form.get("mainImage");
-      if (main instanceof File && main.size) await uploadProductMainImage({ productId: id, file: main });
-      for (const image of form.getAll("galleryImages")) {
-        if (image instanceof File && image.size) await uploadProductImage({ productId: id, file: image, altText: text(form, "galleryImageAlt") || null });
-      }
-    } catch (error) {
-      for (const image of await getProductImages(id)) await deleteProductImage(id, image.id).catch(() => undefined);
-      await db().query("DELETE FROM products WHERE id=$1", [id]);
-      throw error;
-    }
     revalidatePath("/admin");
     revalidatePath("/admin/products");
     revalidatePath("/products");

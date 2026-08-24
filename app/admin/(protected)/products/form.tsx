@@ -19,7 +19,7 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
       <label>Product Name<input defaultValue={item?.name} name="name" required /></label>
       <label>Slug<input defaultValue={item?.slug} name="slug" /></label>
       <label>Category<select defaultValue={item?.categoryId} name="categoryId" required>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select></label>
-      {!item ? <><label>Main Image<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" name="mainImage" type="file" /></label><label>Gallery Images<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" multiple name="galleryImages" type="file" /></label><label>Gallery Alt Text<input name="galleryImageAlt" placeholder="Applied to initial gallery images" /></label></> : <p>Main Image and Gallery can be managed in the Product Images section below.</p>}
+      <p>{item ? "Main Image and Gallery can be managed in the Product Images section below." : "After creating the product, add Main Image and Gallery images in the Product Images section using the 1:1 crop tool."}</p>
     </fieldset>
     <fieldset className="admin-image-fieldset"><legend>Product Content</legend>
       <label>Short Description<textarea defaultValue={item?.shortDescription ?? ""} name="shortDescription" required /><span>Shown beside the product image.</span></label>
