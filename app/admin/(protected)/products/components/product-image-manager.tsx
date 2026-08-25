@@ -8,8 +8,8 @@ import { useRef, useState, useTransition } from "react";
 import type { ProductImage } from "@/lib/products/types";
 
 type Placement = "main" | "gallery";
-type Crop = { x: number; y: number; zoom: number };
-type CropItem = { file: File; previewUrl: string; crop: Crop | null; confirmed: boolean };
+export type SquareCrop = { x: number; y: number; zoom: number };
+export type CropItem = { file: File; previewUrl: string; crop: SquareCrop | null; confirmed: boolean };
 type ImageSize = { width: number; height: number };
 
 const cropPreviewSize = 280;
@@ -25,12 +25,12 @@ function renderedSize(size: ImageSize, zoom: number) {
   return { width: size.width * scale, height: size.height * scale };
 }
 
-function clampCrop(crop: Crop, size: ImageSize) {
+function clampCrop(crop: SquareCrop, size: ImageSize) {
   const rendered = renderedSize(size, crop.zoom);
   return { ...crop, x: Math.min(0, Math.max(cropPreviewSize - rendered.width, crop.x)), y: Math.min(0, Math.max(cropPreviewSize - rendered.height, crop.y)) };
 }
 
-function centeredCrop(size: ImageSize, zoom = 1): Crop {
+function centeredCrop(size: ImageSize, zoom = 1): SquareCrop {
   const rendered = renderedSize(size, zoom);
   return { x: (cropPreviewSize - rendered.width) / 2, y: (cropPreviewSize - rendered.height) / 2, zoom };
 }
@@ -45,7 +45,7 @@ function loadImage(file: File) {
   });
 }
 
-async function createSquareFile(item: CropItem): Promise<File> {
+export async function createSquareFile(item: CropItem): Promise<File> {
   const image = await loadImage(item.file);
   const size = { width: image.naturalWidth, height: image.naturalHeight };
   const crop = clampCrop(item.crop || centeredCrop(size), size);
@@ -65,13 +65,13 @@ async function createSquareFile(item: CropItem): Promise<File> {
   return new File([blob], `${filename}.jpg`, { type: "image/jpeg" });
 }
 
-function SquareCropEditor({ item, index, onChange, onRemove }: { item: CropItem; index: number; onChange: (item: CropItem) => void; onRemove: () => void }) {
+export function SquareCropEditor({ item, index, onChange, onRemove }: { item: CropItem; index: number; onChange: (item: CropItem) => void; onRemove: () => void }) {
   const [size, setSize] = useState<ImageSize | null>(null);
-  const drag = useRef<{ pointerId: number; startX: number; startY: number; crop: Crop } | null>(null);
+  const drag = useRef<{ pointerId: number; startX: number; startY: number; crop: SquareCrop } | null>(null);
   const crop = size ? clampCrop(item.crop || centeredCrop(size), size) : item.crop || { x: 0, y: 0, zoom: 1 };
   const rendered = size ? renderedSize(size, crop.zoom) : null;
 
-  function update(next: Partial<Crop>) {
+  function update(next: Partial<SquareCrop>) {
     if (!size) return;
     onChange({ ...item, crop: clampCrop({ ...crop, ...next }, size) });
   }
