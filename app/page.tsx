@@ -267,17 +267,23 @@ export default async function HomePage() {
           <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (
               <article className="group" key={product.id}>
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] border border-navy/8 bg-mist">
-                  <Image
-                    alt={`${product.name} for pet outdoor and travel sourcing`}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
-                    fill
-                    loading="lazy"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    src={product.mainImageUrl || product.images[0]?.blobUrl || "/trovane-product-carrier-cat.jpg"}
-                    unoptimized
-                  />
-                </div>
+                <Link
+                  aria-label={`View details for ${product.name}`}
+                  className="group/image block rounded-[20px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+                  href={`/products/${product.category.slug}/${product.slug}`}
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] border border-navy/8 bg-mist">
+                    <Image
+                      alt={`${product.name} for pet outdoor and travel sourcing`}
+                      className="h-full w-full object-cover transition duration-500 group-hover/image:scale-[1.035]"
+                      fill
+                      loading="lazy"
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      src={product.mainImageUrl || product.images[0]?.blobUrl || "/trovane-product-carrier-cat.jpg"}
+                      unoptimized
+                    />
+                  </div>
+                </Link>
                 <div className="pt-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-forest">
@@ -290,17 +296,30 @@ export default async function HomePage() {
                     )}
                   </div>
                   <h3 className="mt-2 text-xl font-semibold text-navy">
-                    {product.name}
+                    <Link
+                      className="transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+                      href={`/products/${product.category.slug}/${product.slug}`}
+                    >
+                      {product.name}
+                    </Link>
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-slate">
                     {product.shortDescription || "Custom logo and packaging options available."}
                   </p>
-                  <Link
-                    className="mt-4 inline-flex text-sm font-bold uppercase tracking-[0.08em] text-navy transition hover:text-forest"
-                    href={`/rfq?product=${encodeURIComponent(product.name)}&intent=wholesale-price`}
-                  >
-                    Request Price -&gt;
-                  </Link>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-bold uppercase tracking-[0.08em]">
+                    <Link
+                      className="text-navy transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+                      href={`/products/${product.category.slug}/${product.slug}`}
+                    >
+                      View Details -&gt;
+                    </Link>
+                    <Link
+                      className="text-navy transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+                      href={`/rfq?product=${encodeURIComponent(product.name)}&intent=wholesale-price`}
+                    >
+                      Request Quote -&gt;
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -600,8 +619,8 @@ export default async function HomePage() {
             <div>
               <h3 className="text-sm font-bold text-navy">Get in Touch</h3>
               <div className="mt-4 space-y-3 text-sm text-slate">
-                <p>Email: admin@buildmetriccalc.com</p>
-                <p>WhatsApp: Available on request</p>
+                <p>Email: jin.gou@buildmetriccalc.com</p>
+                <p>WhatsApp: +86 18215529827</p>
               </div>
             </div>
           </div>
