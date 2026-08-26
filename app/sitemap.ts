@@ -16,6 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/",
     "/products",
     "/rfq",
+    "/blog",
+    "/blog/pet-travel-accessories-wholesale-buying-guide",
     ...categories.map((category) => `/products/${category.slug}`),
     ...products.map((product) => `/products/${product.category.slug}/${product.slug}`),
   ].map((path) => ({ url: new URL(path, siteUrl).toString() }));

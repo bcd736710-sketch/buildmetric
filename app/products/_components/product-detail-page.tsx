@@ -53,6 +53,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
     ...extraSpecifications(product.specifications),
   ];
   const rfq = `/rfq?product=${encodeURIComponent(product.name)}`;
+  const relatedBuyingGuide = product.category.slug === "travel-car" && ["portable-pet-carrier-backpack", "dual-use-pet-car-seat-tether", "dog-car-window-safety-guard", "foldable-travel-cat-litter-box"].includes(product.slug);
 
   return <main className="bg-white text-navy">
     <section className="px-5 pb-16 pt-8 sm:px-8 lg:px-12 lg:pb-24 lg:pt-10"><div className="mx-auto max-w-[1440px]">
@@ -61,6 +62,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
         <h1 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-navy sm:text-5xl lg:text-6xl">{product.name}</h1><p className="mt-6 max-w-[52ch] text-base leading-8 text-slate sm:text-lg">{intro}</p>
         {topSpecifications.length ? <dl className="mt-10 border-y border-navy/15">{topSpecifications.map((row) => <div className="grid grid-cols-[minmax(10rem,0.7fr)_minmax(0,1.3fr)] gap-6 border-b border-navy/10 py-4 last:border-b-0" key={row.label}><dt className="text-sm font-semibold text-navy">{row.label}</dt><dd className="text-sm leading-6 text-slate">{row.value}</dd></div>)}</dl> : null}
         <div className="mt-9 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-5"><Link className={trovaneButton.primary} href={rfq}>Request a Quote</Link><Link className={trovaneButton.secondary} href="/catalog">Download full catalog</Link></div>
+        {relatedBuyingGuide ? <p className="mt-5 text-sm leading-6 text-slate"><Link className="font-semibold text-forest underline decoration-forest/35 underline-offset-4 transition hover:text-navy" href="/blog/pet-travel-accessories-wholesale-buying-guide">Related Buying Guide: Pet Travel Accessories Wholesale</Link></p> : null}
       </div></div>
     </div></section>
     <section className="border-t border-navy/10 px-5 py-16 sm:px-8 lg:px-12 lg:py-28"><div className="mx-auto max-w-[1080px]">
