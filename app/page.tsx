@@ -144,45 +144,44 @@ export default async function HomePage() {
               TROVANE PET OUTDOOR & TRAVEL
             </p>
             <h1 className="max-w-[340px] text-[38px] font-semibold leading-[1.02] tracking-tight sm:max-w-[420px] sm:text-[42px] lg:max-w-[540px] lg:text-[4.25rem]">
-              Outdoor & Travel Gear for Pets
+              Outdoor & Travel<br />Gear for Pets
             </h1>
             <p className="mt-4 max-w-[340px] text-base leading-6 text-white/88 sm:max-w-[390px] lg:mt-6 lg:max-w-[480px] lg:text-lg lg:leading-8">
-              Pet outdoor and travel products for brands, retailers and
-              distributors worldwide.
+              Flexible small-batch supply for pet brands — with OEM/ODM support for logos, colors, packaging and product adjustments.
             </p>
             <div className="mt-6 flex flex-col items-start gap-3 sm:max-w-[360px] lg:mt-8 lg:max-w-none lg:flex-row">
               <a
                 className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-forest px-6 text-sm font-bold uppercase tracking-[0.08em] text-white transition duration-200 hover:bg-navy active:translate-y-px sm:w-auto lg:hidden"
                 href="/rfq"
               >
-                Request a Quote
+                REQUEST A QUOTE
               </a>
               <a
                 className="inline-flex min-h-8 items-center justify-center px-1 text-xs font-bold uppercase tracking-[0.08em] text-white/90 underline decoration-white/35 underline-offset-8 transition duration-200 hover:text-white active:translate-y-px lg:hidden"
                 href="#products"
               >
-                Explore Products -&gt;
+                EXPLORE PRODUCTS
               </a>
               <div className="hidden lg:contents">
-                <Button href="/rfq">Request a Quote</Button>
+                <Button href="/rfq">REQUEST A QUOTE</Button>
                 <Button href="#products" variant="light">
-                Explore Products
+                EXPLORE PRODUCTS
                 </Button>
               </div>
             </div>
             <div className="mt-10 hidden grid-cols-3 divide-x divide-white/35 border-t border-white/30 pt-4 text-xs font-semibold uppercase tracking-[0.12em] text-white/78 lg:grid">
-              <span className="whitespace-nowrap pr-3">Flexible MOQ</span>
-              <span className="whitespace-nowrap px-3">Customization</span>
-              <span className="whitespace-nowrap pl-3">Shipping Coordination</span>
+              <span className="whitespace-nowrap pr-3">SMALL-BATCH CUSTOMIZATION</span>
+              <span className="whitespace-nowrap px-3">OEM / ODM SUPPORT</span>
+              <span className="whitespace-nowrap pl-3">FLEXIBLE PRODUCT ADJUSTMENTS</span>
             </div>
           </div>
         </div>
       </section>
       <div className="bg-warm px-4 py-3 text-[9px] font-bold uppercase text-navy/72 sm:px-6 lg:hidden">
         <div className="mx-auto grid max-w-[520px] grid-cols-3 items-center divide-x divide-navy/15 text-center">
-          <span className="whitespace-nowrap px-1">Flexible MOQ</span>
-          <span className="whitespace-nowrap px-1">Customization</span>
-          <span className="whitespace-nowrap px-1">Shipping Coordination</span>
+          <span className="whitespace-nowrap px-1">SMALL-BATCH CUSTOMIZATION</span>
+          <span className="whitespace-nowrap px-1">OEM / ODM SUPPORT</span>
+          <span className="whitespace-nowrap px-1">FLEXIBLE PRODUCT ADJUSTMENTS</span>
         </div>
       </div>
 
