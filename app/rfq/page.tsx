@@ -1,14 +1,28 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { siteUrl } from "@/lib/seo/site-keyword-map";
 import { RFQForm } from "./rfq-form";
 
 export const metadata: Metadata = {
-  title: "Request a Quote | TROVANE",
+  title: "Pet Product Wholesale RFQ | TROVANE",
   description:
-    "Submit a B2B RFQ for TROVANE pet outdoor and travel products.",
+    "Request a quote for TROVANE pet outdoor and travel products. Share the model, quantity, market and customization needs for a relevant B2B response.",
   alternates: {
-    canonical: "https://buildmetriccalc.com/rfq",
+    canonical: `${siteUrl}/rfq`,
+  },
+  openGraph: {
+    type: "website",
+    url: `${siteUrl}/rfq`,
+    title: "Pet Product Wholesale RFQ | TROVANE",
+    description: "Send a model-specific sourcing brief for pet outdoor and travel products.",
+    images: [{ url: `${siteUrl}/trovane-logo-horizontal.jpg`, alt: "TROVANE pet product RFQ" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pet Product Wholesale RFQ | TROVANE",
+    description: "Send a model-specific sourcing brief for pet outdoor and travel products.",
+    images: [`${siteUrl}/trovane-logo-horizontal.jpg`],
   },
 };
 

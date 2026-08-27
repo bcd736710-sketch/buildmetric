@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FactoryProcessVideo } from "@/components/factory-process-video";
 import { getPublishedHomepageContent } from "@/lib/products/repository";
+import { getCategorySeo, getProductSeo } from "@/lib/seo/site-keyword-map";
 
 export const dynamic = "force-dynamic";
 
@@ -189,13 +190,13 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
           <FactoryProcessVideo />
           <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-forest">Manufacturing Process</p>
-            <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-navy sm:text-5xl">Inside Our Manufacturing Process</h2>
-            <p className="mt-6 max-w-xl text-base leading-8 text-slate">From material selection and cutting to sewing and final inspection, we carefully craft every product to deliver reliable quality for global pet brands.</p>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-forest">Production Coordination</p>
+            <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-navy sm:text-5xl">How Product Supply Is Coordinated</h2>
+            <p className="mt-6 max-w-xl text-base leading-8 text-slate">TROVANE works with manufacturing partners across material review, cutting, sewing and final inspection to coordinate product requirements for pet brands.</p>
             <div className="mt-8 space-y-5 border-y border-navy/10 py-6">
-              <article><h3 className="text-base font-semibold text-navy">OEM / ODM Support</h3><p className="mt-1.5 text-sm leading-6 text-slate">Flexible customization solutions including logo, packaging, and product improvements.</p></article>
-              <article><h3 className="text-base font-semibold text-navy">Skilled Production Team</h3><p className="mt-1.5 text-sm leading-6 text-slate">Experienced workers and professional equipment ensure stable production quality.</p></article>
-              <article><h3 className="text-base font-semibold text-navy">Quality-Focused Production</h3><p className="mt-1.5 text-sm leading-6 text-slate">Strict attention to every detail, from materials to finished products.</p></article>
+              <article><h3 className="text-base font-semibold text-navy">OEM / ODM Coordination</h3><p className="mt-1.5 text-sm leading-6 text-slate">Logo, packaging and product-adjustment requirements are confirmed against the selected model.</p></article>
+              <article><h3 className="text-base font-semibold text-navy">Manufacturing Partners</h3><p className="mt-1.5 text-sm leading-6 text-slate">Production is coordinated with experienced partners and relevant equipment for the product type.</p></article>
+              <article><h3 className="text-base font-semibold text-navy">Quality Check Planning</h3><p className="mt-1.5 text-sm leading-6 text-slate">Product, packaging and quantity checks are aligned with the approved brief before shipment.</p></article>
             </div>
             <div className="mt-8"><Button href="/rfq">Request Quote</Button></div>
           </div>
@@ -219,7 +220,7 @@ export default async function HomePage() {
                 key={category.id}
               >
                 <Image
-                  alt={category.imageAlt || `${category.name} pet outdoor product scene`}
+                  alt={getCategorySeo(category.slug)?.imageAlt || category.imageAlt || `${category.name} pet outdoor product scene`}
                   className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
                   fill
                   loading="lazy"
@@ -234,11 +235,11 @@ export default async function HomePage() {
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,63,0.02),rgba(0,32,63,0.64))]" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                   <h3 className="text-2xl font-semibold tracking-tight">
-                    {category.name}
+                    {getCategorySeo(category.slug)?.h1 || category.name}
                   </h3>
                   <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1.5 text-xs font-semibold text-white/84">
                     <span className="border-b border-white/24 pb-0.5">
-                      {category.description || "Explore the collection"}
+                      {getCategorySeo(category.slug)?.cardDescription || category.description || "Explore the collection"}
                     </span>
                   </div>
                 </div>
@@ -264,16 +265,17 @@ export default async function HomePage() {
             </Button>
           </div>
           <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <article className="group" key={product.id}>
+            {products.map((product) => {
+              const seo = getProductSeo(product.category.slug, product.slug);
+              return <article className="group" key={product.id}>
                 <Link
-                  aria-label={`View details for ${product.name}`}
+                  aria-label={`View details for ${seo?.h1 || product.name}`}
                   className="group/image block rounded-[20px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
                   href={`/products/${product.category.slug}/${product.slug}`}
                 >
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] border border-navy/8 bg-mist">
                     <Image
-                      alt={`${product.name} for pet outdoor and travel sourcing`}
+                      alt={seo?.imageAlt || `${product.name} for pet outdoor and travel use`}
                       className="h-full w-full object-cover transition duration-500 group-hover/image:scale-[1.035]"
                       fill
                       loading="lazy"
@@ -299,11 +301,11 @@ export default async function HomePage() {
                       className="transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
                       href={`/products/${product.category.slug}/${product.slug}`}
                     >
-                      {product.name}
+                      {seo?.h1 || product.name}
                     </Link>
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-slate">
-                    {product.shortDescription || "Custom logo and packaging options available."}
+                    {seo?.shortDescription || product.shortDescription || "Contact TROVANE for model-specific product and order details."}
                   </p>
                   <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-bold uppercase tracking-[0.08em]">
                     <Link
@@ -320,8 +322,8 @@ export default async function HomePage() {
                     </Link>
                   </div>
                 </div>
-              </article>
-            ))}
+              </article>;
+            })}
           </div>
         </div>
       </section>
@@ -444,20 +446,20 @@ export default async function HomePage() {
                 About TROVANE
               </p>
               <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-navy sm:text-5xl">
-                Reliable Manufacturing Partner for Pet Brands
+                Pet Product Sourcing Partner for Brands
               </h2>
               <div className="mt-6 max-w-xl space-y-5 text-base leading-8 text-slate">
                 <p>
                   TROVANE works with experienced manufacturing partners specializing in pet outdoor and travel products.
                 </p>
                 <p>
-                  From material selection and production to quality inspection and final packaging, we focus on delivering reliable solutions for global pet brands, retailers and distributors.
+                  From product requirements and production coordination to quality inspection and final packaging, we support global pet brands, retailers and distributors.
                 </p>
               </div>
             </div>
             <div className="relative mx-auto aspect-[2/3] w-full max-w-[430px] overflow-hidden rounded-[28px] lg:justify-self-end">
               <Image
-                alt="TROVANE manufacturing workshop with skilled pet product production team"
+                alt="Pet product manufacturing partner workshop"
                 className="h-full w-full object-cover"
                 fill
                 loading="lazy"
@@ -471,16 +473,16 @@ export default async function HomePage() {
           <div className="mt-20 sm:mt-28">
             <div className="max-w-2xl">
               <h2 className="text-3xl font-semibold tracking-tight text-navy sm:text-5xl">
-                From Production to Finished Products
+                From Production Coordination to Finished Products
               </h2>
               <p className="mt-5 text-base leading-8 text-slate">
-                A closer look at the people, processes, and craftsmanship behind our pet outdoor products.
+                A closer look at the partner production processes and finished pet outdoor product samples we coordinate.
               </p>
             </div>
             <div className="mt-10 grid gap-4 lg:grid-cols-[0.84fr_1.16fr]">
               <div className="relative aspect-[4/5] overflow-hidden rounded-[28px]">
                 <Image
-                  alt="Skilled worker sewing pet outdoor product details"
+                  alt="Worker sewing pet outdoor product details at a manufacturing partner workshop"
                   className="h-full w-full object-cover"
                   fill
                   loading="lazy"
@@ -492,7 +494,7 @@ export default async function HomePage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
                   <Image
-                    alt="Pet product manufacturing workshop overview"
+                    alt="Pet product manufacturing partner workshop overview"
                     className="h-full w-full object-cover"
                     fill
                     loading="lazy"
@@ -503,7 +505,7 @@ export default async function HomePage() {
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
                   <Image
-                    alt="Pet outdoor product production line"
+                    alt="Pet outdoor product production line at a partner workshop"
                     className="h-full w-full object-cover"
                     fill
                     loading="lazy"

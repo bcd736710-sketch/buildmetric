@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsAppWidget } from "@/components/whatsapp-widget";
+import { homeSeo, siteUrl } from "@/lib/seo/site-keyword-map";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TROVANE | Pet Outdoor & Travel Products B2B Supplier",
-  description:
-    "TROVANE helps pet brands, retailers and distributors source and customize pet outdoor, travel, car, hiking and camping products.",
-  metadataBase: new URL("https://buildmetriccalc.com"),
+  title: homeSeo.title,
+  description: homeSeo.description,
+  metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: "https://buildmetriccalc.com/",
+    canonical: `${siteUrl}/`,
   },
   openGraph: {
-    title: "TROVANE | Pet Outdoor & Travel",
-    description:
-      "Pet outdoor and travel products for brands, retailers and distributors worldwide.",
-    url: "https://buildmetriccalc.com",
+    title: homeSeo.title,
+    description: homeSeo.description,
+    url: siteUrl,
     siteName: "TROVANE",
     images: [
       {
@@ -30,9 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TROVANE | Pet Outdoor & Travel",
-    description:
-      "Pet outdoor and travel products for B2B sourcing and customization.",
+    title: homeSeo.title,
+    description: homeSeo.description,
     images: ["/trovane-logo-horizontal.jpg"],
   },
 };
@@ -42,9 +40,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", name: "TROVANE", url: siteUrl, logo: `${siteUrl}/trovane-logo-horizontal-cropped.png`, email: "jin.gou@buildmetriccalc.com", telephone: "+8618215529827", description: "Supplier and sourcing partner for pet outdoor and travel products." },
+      { "@type": "WebSite", name: "TROVANE", url: siteUrl },
+    ],
+  };
   return (
     <html lang="en">
-      <body><SiteHeader />{children}<WhatsAppWidget /></body>
+      <body><script dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c") }} type="application/ld+json" /><SiteHeader />{children}<WhatsAppWidget /></body>
     </html>
   );
 }

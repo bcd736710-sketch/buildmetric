@@ -1,12 +1,26 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { siteUrl } from "@/lib/seo/site-keyword-map";
 import { CatalogDownloadForm } from "./catalog-download-form";
 
 export const metadata: Metadata = {
-  title: "2026 Product Catalog | TROVANE",
-  description: "Download the TROVANE product catalog for pet outdoor, travel and OEM/ODM sourcing.",
-  alternates: { canonical: "/catalog" },
+  title: "Pet Outdoor & Travel Product Catalog | TROVANE",
+  description: "Download the TROVANE catalog to review published pet outdoor and travel products, specifications and sourcing options before preparing an RFQ.",
+  alternates: { canonical: `${siteUrl}/catalog` },
+  openGraph: {
+    type: "website",
+    url: `${siteUrl}/catalog`,
+    title: "Pet Outdoor & Travel Product Catalog | TROVANE",
+    description: "Review TROVANE pet outdoor and travel products before preparing a B2B sourcing brief.",
+    images: [{ url: `${siteUrl}/trovane-hero-product-use.png`, alt: "TROVANE pet outdoor and travel product catalog" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pet Outdoor & Travel Product Catalog | TROVANE",
+    description: "Review published pet outdoor and travel products before preparing an RFQ.",
+    images: [`${siteUrl}/trovane-hero-product-use.png`],
+  },
 };
 
 const catalogSections = [

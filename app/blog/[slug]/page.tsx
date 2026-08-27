@@ -4,7 +4,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { trovaneButton } from "@/components/trovane-button";
+import {
+  buyerProductGuideSlugs,
+  getBuyerProductGuide,
+} from "@/lib/blog/buyer-product-guides";
 import { petTravelBuyingGuide } from "@/lib/blog/pet-travel-accessories-wholesale";
+import { BuyerProductGuidePage } from "./buyer-product-guide-page";
 
 const articleUrl = "https://buildmetriccalc.com/blog/pet-travel-accessories-wholesale-buying-guide";
 
@@ -14,11 +19,39 @@ export const dynamicParams = false;
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return [{ slug: petTravelBuyingGuide.slug }];
+  return [petTravelBuyingGuide.slug, ...buyerProductGuideSlugs].map((slug) => ({
+    slug,
+  }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  if ((await params).slug !== petTravelBuyingGuide.slug) return {};
+  const slug = (await params).slug;
+  const buyerProductGuide = getBuyerProductGuide(slug);
+  if (buyerProductGuide) {
+    const url = `https://buildmetriccalc.com/blog/${buyerProductGuide.slug}`;
+    return {
+      title: buyerProductGuide.seoTitle,
+      description: buyerProductGuide.description,
+      alternates: { canonical: url },
+      openGraph: {
+        type: "article",
+        url,
+        title: buyerProductGuide.seoTitle,
+        description: buyerProductGuide.description,
+        publishedTime: buyerProductGuide.publishedAt,
+        images: [
+          { url: buyerProductGuide.image, alt: buyerProductGuide.imageAlt },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: buyerProductGuide.seoTitle,
+        description: buyerProductGuide.description,
+        images: [buyerProductGuide.image],
+      },
+    };
+  }
+  if (slug !== petTravelBuyingGuide.slug) return {};
   return {
     title: "Pet Travel Accessories Wholesale: A Buyer’s Guide | TROVANE",
     description: "Source pet travel accessories for wholesale, OEM and private label programs. Compare product types, materials, samples, packaging and supplier capabilities.",
@@ -33,7 +66,12 @@ function ArticleCta() {
 }
 
 export default async function BlogArticlePage({ params }: Props) {
-  if ((await params).slug !== petTravelBuyingGuide.slug) notFound();
+  const slug = (await params).slug;
+  const buyerProductGuide = getBuyerProductGuide(slug);
+  if (buyerProductGuide) {
+    return <BuyerProductGuidePage article={buyerProductGuide} />;
+  }
+  if (slug !== petTravelBuyingGuide.slug) notFound();
   const structuredData = { "@context": "https://schema.org", "@graph": [
     { "@type": "BlogPosting", headline: petTravelBuyingGuide.title, description: "Source pet travel accessories for wholesale, OEM and private label programs. Compare product types, materials, samples, packaging and supplier capabilities.", mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl }, url: articleUrl, datePublished: petTravelBuyingGuide.publishedAt, dateModified: petTravelBuyingGuide.publishedAt, image: `https://buildmetriccalc.com${petTravelBuyingGuide.image}`, articleSection: petTravelBuyingGuide.category, author: { "@type": "Organization", name: "TROVANE" }, publisher: { "@type": "Organization", name: "TROVANE", logo: { "@type": "ImageObject", url: "https://buildmetriccalc.com/trovane-logo-horizontal-cropped.png" } } },
     { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://buildmetriccalc.com/" }, { "@type": "ListItem", position: 2, name: "Blog", item: "https://buildmetriccalc.com/blog" }, { "@type": "ListItem", position: 3, name: petTravelBuyingGuide.title, item: articleUrl }] },
