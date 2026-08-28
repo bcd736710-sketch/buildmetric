@@ -42,6 +42,271 @@ const broaderGuide: ArticleLink = {
 
 export const buyerProductGuides: BuyerProductGuide[] = [
   {
+    slug: "dog-water-bottle-leak-test",
+    title: "Why Dog Water Bottles Leak in Bags: A Retail Sample-Test Framework",
+    seoTitle: "Dog Water Bottle Leak Test for Retail Buyers | TROVANE",
+    description:
+      "Use a practical pet water bottle leak test to inspect closures, orientation, bag transport, repeated use and cleaning before a retail order.",
+    introduction:
+      "When a dog water bottle leaks in a bag, the problem is larger than a wet pocket. For a retailer, it can become a return, a poor review, damaged belongings and a loss of confidence in the whole travel range. Public retailer reviews in the wider category and independent product comparisons show that transport leakage is a real evaluation issue, but they do not prove that every bottle fails for the same reason. The responsible response is a repeatable sample test that records what happened, under which conditions and on which sample before a purchase decision is made.",
+    category: "Product Evaluation",
+    publishedAt: "2026-08-29",
+    publishedLabel: "August 29, 2026",
+    image: "/trovane-product-bottle-dog.jpg",
+    imageAlt: "Dog using a portable water bottle during an outdoor trip",
+    productName: "Portable Pet Water Bottle with Silicone Drinking Bowl",
+    productHref:
+      "/products/outdoor-feeding/portable-pet-water-bottle-foldable-silicone-bowl",
+    sections: [
+      {
+        heading: "Why bag leakage matters to retail buyers",
+        paragraphs: [
+          [
+            "A bottle can appear acceptable during an upright desk check and behave differently when it is placed on its side, moved with other items or operated repeatedly. That difference matters because customers commonly judge a travel bottle in the exact conditions suggested by its category: walking, driving, hiking and carrying gear away from home.",
+          ],
+          [
+            "Retail evaluation should therefore separate a product claim from a buyer's own acceptance decision. A listing phrase or supplier demonstration is useful context, but it is not a substitute for testing current samples in the intended use case. Define the channel, customer routine and acceptable result first. Then use the same procedure for every candidate so that the comparison is fair.",
+          ],
+        ],
+        bullets: [
+          [
+            "Customer impact: moisture may reach a phone, clothing, documents, treats or the lining of a travel bag.",
+          ],
+          [
+            "Retail impact: an unclear failure can increase support time because staff cannot distinguish setup, use and product-condition issues.",
+          ],
+          [
+            "Buying impact: inconsistent test conditions make two supplier samples look comparable when they are not.",
+          ],
+          [
+            "Merchandising impact: product copy and instructions may promise or imply a carrying routine that the sample has not been evaluated against.",
+          ],
+        ],
+      },
+      {
+        heading: "Where leakage risk can show up during travel",
+        paragraphs: [
+          [
+            "Do not begin by assuming one universal cause. The closure, bottle thread, seal, dispensing control, lock and any moving connection are inspection points, not a diagnosis. Moisture can also remain in the drinking area after use and later appear in a bag even when the reservoir closure has stayed dry. A useful test identifies the location and sequence instead of recording only \"leaked\" or \"did not leak.\"",
+          ],
+          [
+            "Start with the way the sample is assembled and closed. Note the lock position, the alignment of threaded or fitted parts, and whether a customer can recognize the closed state. After dispensing, inspect the outside of the bottle and the drinking surface before placing it in the test bag. This baseline helps distinguish water left on an exterior surface from water that appears during transport.",
+          ],
+        ],
+        points: [
+          {
+            heading: "Orientation changes the question",
+            paragraphs: [
+              [
+                "Upright storage checks only one position. Sideways and inverted checks put water against different interfaces. Record each orientation separately and use a buyer-defined dwell time that matches the intended retail scenario. Do not combine the results into a vague overall impression.",
+              ],
+            ],
+          },
+          {
+            heading: "Movement adds another variable",
+            paragraphs: [
+              [
+                "A bag moves, presses against other contents and may contact its controls. Simulated transport should be controlled enough to repeat without crushing or abusing the sample. The goal is to compare normal-use scenarios, not to create an extreme test that customers were never told the product could withstand.",
+              ],
+            ],
+          },
+        ],
+      },
+      {
+        heading: "A practical sample-test framework for retail buyers",
+        paragraphs: [
+          [
+            "Use a clean, undamaged sample and keep electronics and valuable goods out of the evaluation bag. Absorbent paper, a tray or secondary containment can make small moisture events visible while protecting the test area. Apply the same water level, closure method, orientations and movement routine to each candidate, and document any deliberate change between rounds.",
+          ],
+        ],
+        points: [
+          {
+            heading: "1. Identify the sample and configuration",
+            paragraphs: [
+              [
+                "Assign a sample ID. Record the model, colour or configuration, received condition, included components and the instructions used. Photograph the dry sample before filling it. If several units are available, keep their records separate rather than averaging them mentally.",
+              ],
+            ],
+          },
+          {
+            heading: "2. Establish a dry visual baseline",
+            paragraphs: [
+              [
+                "Inspect the closure surfaces, visible seals, threads or fitted joints, lock and dispensing area. Confirm that removable parts are seated according to the instructions. Wipe the exterior dry and place the bottle on fresh absorbent paper so that later moisture has a clear starting point.",
+              ],
+            ],
+          },
+          {
+            heading: "3. Fill and close it as a customer would",
+            paragraphs: [
+              [
+                "Use the normal operating level specified for the sample, if one is provided. Follow the current instructions rather than adding force, tools or unofficial sealing steps. Record how the closed or locked state is communicated and whether the sequence is easy to repeat consistently.",
+              ],
+            ],
+          },
+          {
+            heading: "4. Check multiple orientations",
+            paragraphs: [
+              [
+                "Place the closed bottle upright, on each relevant side and inverted in separate rounds. Use fresh dry paper for each round. Record the dwell time, the surface in contact with the paper and the first location where moisture appears. If the sample remains dry, record that observation only for the tested conditions.",
+              ],
+            ],
+          },
+          {
+            heading: "5. Run a controlled bag simulation",
+            paragraphs: [
+              [
+                "Put the dry exterior bottle into a dedicated test bag with safe, non-valuable contents that represent ordinary contact and movement. Follow a defined carrying routine, then inspect the bottle, paper and bag lining before changing anything. Note whether a control moved or the closure position changed; do not infer the cause if it was not observed.",
+              ],
+            ],
+          },
+          {
+            heading: "6. Repeat after dispensing and cleaning",
+            paragraphs: [
+              [
+                "Operate the product through several normal drinking cycles, manage unused water according to its instructions and check for residual water on the drinking surface. Wash and dry only as directed, reassemble the sample and repeat the relevant orientation and bag rounds. This shows whether the procedure remains understandable after routine handling without claiming a lifetime result.",
+              ],
+            ],
+          },
+        ],
+      },
+      {
+        heading: "What to record during sample evaluation",
+        paragraphs: [
+          [
+            "A pass or fail mark without context is difficult to use in supplier discussion or later quality review. Create one record per sample and attach photos in sequence. The record should allow another team member to reproduce the setup without relying on the original evaluator's memory.",
+          ],
+        ],
+        bullets: [
+          [
+            "Sample ID, model or configuration, date received and visible condition before testing.",
+          ],
+          [
+            "Instructions followed, fill level, closure sequence and lock state.",
+          ],
+          [
+            "Orientation, dwell time, movement routine and items used in the test bag.",
+          ],
+          [
+            "Exact location of moisture, when it first appeared and a consistent way of describing its extent.",
+          ],
+          [
+            "Whether exterior or drinking-area water was removed before each transport round.",
+          ],
+          [
+            "Number and sequence of dispensing, return, washing, drying and reassembly cycles performed.",
+          ],
+          [
+            "Photographs before and after each round, plus the evaluator's pass, conditional pass or fail decision against a written criterion.",
+          ],
+        ],
+      },
+      {
+        heading: "How leakage risk connects to product selection",
+        paragraphs: [
+          [
+            "The same observation can lead to different buying decisions when the intended use changes. A model merchandised for external attachment is evaluated differently from one promoted for storage beside electronics in a day bag. A car-travel assortment may prioritize a stable storage position, while a hiking range may involve more repeated access and movement. Define those scenarios before setting the acceptance criterion.",
+          ],
+          [
+            "Leakage is only one part of selection. Capacity, filled handling, drinking access, cleaning, instructions and packaging still shape the retail experience. Use the ",
+            {
+              href: "/blog/pet-travel-water-bottle-retail-selection",
+              text: "pet travel water bottle retail selection guide",
+            },
+            " for the broader comparison, then apply this framework as the focused transport-leakage check. Buyers building a wider assortment can also review the ",
+            {
+              href: "/products/outdoor-feeding",
+              text: "Outdoor Feeding collection",
+            },
+            ".",
+          ],
+        ],
+      },
+      {
+        heading: "Questions to ask a supplier before ordering",
+        paragraphs: [
+          [
+            "Send the sample record with precise questions instead of asking whether the product is simply \"leak-proof.\" Ask the supplier to identify the current configuration and the information that applies to it. Treat answers, documents and test evidence as items to verify for the target market and order, not as interchangeable marketing phrases.",
+          ],
+        ],
+        bullets: [
+          [
+            "Which materials are used for each water-contact component in this exact configuration?",
+          ],
+          [
+            "What is the correct closing, locking, drinking, water-management and cleaning sequence?",
+          ],
+          [
+            "Which seals or other parts are removable, and what assembly checks are required after cleaning?",
+          ],
+          [
+            "What current test records or supporting documents are available for the exact sample and intended market?",
+          ],
+          [
+            "Can production samples be evaluated against the buyer's written acceptance method before an order decision?",
+          ],
+          [
+            "How will packaging and instructions reduce accidental operation or incorrect assembly during normal handling?",
+          ],
+        ],
+      },
+      {
+        heading: "TROVANE water bottle options",
+        paragraphs: [
+          [
+            "TROVANE's published range includes two formats that a buyer can place into the same evaluation process. The ",
+            {
+              href: "/products/outdoor-feeding/portable-pet-water-bottle-foldable-silicone-bowl",
+              text: "Portable Pet Water Bottle with Silicone Drinking Bowl",
+            },
+            " lists a 15.5 x 7.5 cm format, a soft foldable silicone drinking bowl, and green and pink colour options for walking, hiking, camping and travel.",
+          ],
+          [
+            "The ",
+            {
+              href: "/products/outdoor-feeding/portable-pet-water-bottle-foldable-feeding-bowl",
+              text: "2-in-1 Pet Water Bottle with Foldable Feeding Bowl",
+            },
+            " lists a 28.5 x 7.5 cm format, a durable plastic body with a soft silicone bowl, and pink, green and custom colour options for walking, hiking, camping and travel. Its product information also presents model-specific colour, packaging and private-label customization for confirmation during an enquiry.",
+          ],
+          [
+            "These published details describe format and positioning; they are not comparative leakage results. Capacity, complete material specifications, weight, compliance documents, packaging, minimum order quantity, lead time and the result of any buyer-defined leak test should be confirmed for the current quotation and sample.",
+          ],
+        ],
+      },
+      {
+        heading: "Final buyer checklist",
+        paragraphs: [
+          [
+            "Before approving a bottle for a retail range, confirm that the commercial decision is tied to a traceable sample record and a clearly defined customer scenario.",
+          ],
+        ],
+        bullets: [
+          ["Define the intended channel, carrying position and customer routine."],
+          ["Test more than one orientation under repeatable conditions."],
+          ["Separate residual exterior water from reservoir or closure leakage."],
+          ["Repeat relevant checks after normal dispensing, washing and drying."],
+          ["Record the exact sample, setup, timing, observations and photos."],
+          ["Set written acceptance criteria before comparing candidates."],
+          ["Verify product information and documents for the exact order."],
+          [
+            "Share the framework through the ",
+            {
+              href: "/rfq?intent=pet-water-bottle-sample-test&source=dog-water-bottle-leak-test",
+              text: "TROVANE RFQ form",
+            },
+            " when requesting samples or discussing a water bottle programme.",
+          ],
+        ],
+      },
+    ],
+    conclusion: [
+      [
+        "A useful pet water bottle leak test does not start with a promise. It starts with a defined use case, a controlled procedure and a record that shows exactly what was observed. That discipline helps retail buyers compare samples, ask better supplier questions and write product information that reflects the conditions they have actually evaluated.",
+      ],
+    ],
+  },
+  {
     slug: "pet-travel-water-bottle-retail-selection",
     title: "What to Look for in a Pet Travel Water Bottle for Retail",
     seoTitle: "How to Choose a Pet Travel Water Bottle for Retail | TROVANE",
