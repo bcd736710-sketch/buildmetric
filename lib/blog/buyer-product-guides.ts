@@ -42,6 +42,228 @@ const broaderGuide: ArticleLink = {
 
 export const buyerProductGuides: BuyerProductGuide[] = [
   {
+    slug: "retractable-dog-leash-cycle-test",
+    title:
+      "How to Cycle-Test a Retractable Dog Leash: A Retail Sample Framework",
+    seoTitle: "Retractable Dog Leash Cycle Test for Retail Buyers | TROVANE",
+    description:
+      "Use a repeatable retractable dog leash cycle test to compare retraction, brake and lock behaviour, visible wear and supplier evidence before ordering.",
+    introduction:
+      "A retractable dog leash can feel smooth in a short demonstration yet change after repeated motions. For a retail buyer, sample evaluation is a process, not a first impression. This framework helps teams repeat extension, retraction, braking and locking in controlled batches, record changes and decide what needs supplier follow-up. It is a buyer-side screen, not a formal safety, durability or certification test, and it cannot establish product lifetime or pet suitability.",
+    category: "Product Evaluation",
+    publishedAt: "2026-08-30",
+    publishedLabel: "August 30, 2026",
+    image: "/trovane-product-leash-dog.jpg",
+    imageAlt: "Dog on a retractable leash during an outdoor walk",
+    productName: "Automatic Retractable Dog Leash for Outdoor Walking",
+    productHref: "/products/walking-hiking/automatic-retractable-dog-leash",
+    sections: [
+      {
+        heading: "Why repeated operation matters in sample evaluation",
+        paragraphs: [
+          [
+            "A clean sample has little operating history. One full extension and return confirms movement, not repeat consistency. Broader public category discussion mentions jamming, uneven return, line tangling and changes in brake or lock behaviour. Those reports are not evidence of the same issue in a TROVANE sample.",
+          ],
+          [
+            "Identify every candidate, use the same buyer-defined sequence and inspect at the same checkpoints. The result is not a pass certificate. It records whether a sample stayed consistent during the normal, non-destructive routine the buyer selected.",
+          ],
+          [
+            "Use the existing ",
+            {
+              href: "/blog/retractable-dog-leash-buyer-checklist",
+              text: "retractable dog leash buyer checklist",
+            },
+            " for the broader selection decision. That guide covers configuration, handle, casing, webbing, hardware and suitability questions. This framework goes deeper on repeated mechanism operation and the evidence record that should follow it.",
+          ],
+        ],
+      },
+      {
+        heading: "What this cycle test can and cannot tell you",
+        paragraphs: [
+          [
+            "This screen can compare extension feel, return behaviour, button operation, visible line tracking, casing condition and changes between the first and final inspection. A recorded setup also gives the supplier a clearer starting point for answering questions.",
+          ],
+          [
+            "It cannot prove breaking strength, service life, suitability for a dog, standards compliance, or resistance to impact, weather or misuse. It cannot replace model instructions, supplier evidence, an agreed quality plan or qualified laboratory work. Do not call it an ISO, ASTM, certification, safety or factory quality-control test.",
+          ],
+        ],
+        bullets: [
+          ["Suitable output: a comparable observation record for current samples."],
+          ["Unsuitable output: a durability, safety, lifetime or pet-weight claim."],
+          ["Suitable decision: proceed, hold or reject against written buyer criteria."],
+        ],
+      },
+      {
+        heading: "Set up a controlled, non-destructive sample screen",
+        paragraphs: [
+          [
+            "Use a clear, dry area where the line will not cross people, animals, furniture or traffic. Keep it detached from any dog. Do not use a running animal, sudden pull, hanging load, impact, drop or break test. Follow the sample instructions and stop if the line becomes difficult to control or the housing shows an obvious problem.",
+          ],
+          [
+            "Assign a sample ID. Record the supplier reference, received date, colour, stated length option, packaging and instruction version. Mark missing details as unconfirmed rather than borrowing them from another listing. Keep the operator, path, pace, lighting and sequence consistent where practical.",
+          ],
+          [
+            "Choose an extension point within the sample's documented setup and mark the work area, not the line. Define repetitions and batch size before starting. The count is an internal comparison condition, not an industry standard or service-life prediction.",
+          ],
+        ],
+        bullets: [
+          ["Prepare the sample, instructions, ID label, camera and a separate record sheet."],
+          ["Write the path, observation position and sequence before starting."],
+        ],
+      },
+      {
+        heading: "Step 1: Record a baseline before cycling",
+        paragraphs: [
+          [
+            "Photograph both sides, the line exit, visible line, terminal connection, hook, casing joint and controls. Record casing alignment, whether control positions are clear and whether the line lies flat at entry. Note existing marks, loose parts, sounds or packaging damage without diagnosing a cause.",
+          ],
+          [
+            "Operate one slow extension and return to learn the normal feel of that sample. Then check temporary brake operation and continuous lock operation separately, using only hand operation and no added load. Record the starting behaviour in neutral language such as smooth, hesitant at a stated point, button returns, lock position clear or observation not confirmed. This baseline gives the later inspection something specific to compare against.",
+          ],
+        ],
+      },
+      {
+        heading: "Step 2: Repeat extension and retraction in batches",
+        paragraphs: [
+          [
+            "Stand in the same position and guide the line along the clear path at a steady pace. Extend to the buyer-defined point, pause, and allow a controlled return while keeping hands away from the moving line and entry opening. Do not snap the line out, let it whip back or add force to make the sequence more demanding. The screen is intended to reproduce normal mechanism motion consistently, not create a worst-case event.",
+          ],
+          [
+            "Work in recorded batches and inspect between them. Compare extension, return, line tracking, sound, vibration and resistance with the baseline. If the line twists, bunches, hesitates or returns unexpectedly, stop, photograph the condition and preserve the sample state. Never force the mechanism to reach the planned count.",
+          ],
+          [
+            "Keep pace and path comparable. If a condition changes, record it as a new result line so another reviewer can trace what happened before an observation appeared.",
+          ],
+        ],
+      },
+      {
+        heading: "Step 3: Check brake and lock consistency separately",
+        paragraphs: [
+          [
+            "The temporary brake and continuous lock answer different operating questions, even when one button controls both. At the same predetermined extension points, activate the temporary brake, release it and confirm that normal movement resumes. In a separate sequence, engage the lock, confirm the visible or tactile control position, release it and resume a controlled return. Keep the leash unloaded and follow the sample instructions throughout.",
+          ],
+          [
+            "Record the operator action and the observed response rather than using a vague note such as controls good. Useful fields include control position, response on first operation, response after repeated batches, release behaviour and any change in required thumb movement. Do not convert a hand-operated screen into a lock-hold strength claim. If holding force or rated-load evidence matters to the program, request the supplier's documented method and results for the exact configuration.",
+          ],
+        ],
+      },
+      {
+        heading: "Step 4: Re-inspect the line, housing and hardware",
+        paragraphs: [
+          [
+            "Return the sample to the same lighting and camera position used for the baseline. Compare the visible nylon webbing, line exit, terminal connection, alloy hook, casing joint and control area with the first photographs. Look for observable changes such as new surface marking, edge wear, twisting, bunching, looseness, separation or misalignment. Describe what is visible and where it appears; do not infer an internal failure without evidence.",
+          ],
+          [
+            "Repeat the single slow operating sequence used at baseline and note any difference in sound or feel. A change does not automatically identify the cause, and no visible change does not prove a lifetime outcome. The correct next step may be a supplier question, a replacement-sample check or a more appropriate documented evaluation performed by a qualified party.",
+          ],
+        ],
+      },
+      {
+        heading: "Step 5: Record results instead of relying on memory",
+        paragraphs: [
+          [
+            "Create one dated record per sample, with fixed fields, observations and image references. Separate each batch so a late change is not hidden inside an overall pass. Approval must trace back to the configuration, instructions, conditions and photographs.",
+          ],
+          [
+            "Build the sheet with the fields below and write the acceptance rule before testing. A team may place any unexplained baseline change or interrupted batch on hold. That remains an internal purchasing rule, not a public claim or industry benchmark.",
+          ],
+        ],
+        bullets: [
+          ["Sample identity: ID, supplier reference, configuration, colour, length option, received date and instruction version."],
+          ["Test definition: operator, location, extension point, pace, repetitions, batch size and stop conditions."],
+          ["Baseline: extension, return, brake, lock, line tracking, sound, casing and hardware."],
+          ["Batch log: completed repetitions, checkpoint, observed change, image number and continue or stop decision."],
+          ["Final inspection: comparison with baseline for line, entry opening, casing, controls, terminal connection and hook."],
+          ["Disposition: proceed, hold for supplier clarification, compare another sample or reject against the buyer's written criteria."],
+          ["Approval record: reviewer, date, open questions and documents still required."],
+        ],
+      },
+      {
+        heading: "When a sample should trigger more questions",
+        paragraphs: [
+          [
+            "Pause when further operation could obscure an observation: repeated hesitation, incomplete return, changed line tracking, a control that does not return, a new casing gap or a changed terminal connection. Preserve photographs and the batch record before resetting the sample.",
+          ],
+          [
+            "A hold is not the same as a public defect finding. Ask whether the supplier can identify the exact configuration, provide current instructions, explain the observation and propose a documented next step. When multiple samples are available, keep unit-level records so the team can see whether an observation is isolated or repeated. Do not average away a stopped sample.",
+          ],
+        ],
+      },
+      {
+        heading: "Questions to ask a retractable leash supplier",
+        paragraphs: [
+          [
+            "Ask for answers tied to the quoted model, length option, materials and control design. Request records where a claim affects listing copy or acceptance criteria; a generic product-family presentation is not automatically evidence for the selected configuration.",
+          ],
+        ],
+        bullets: [
+          ["Which exact configuration and length option does this sample represent?"],
+          ["What pet-size or weight range is documented for that exact model, and what supports it?"],
+          ["How should temporary braking, continuous locking and release be operated according to the current instructions?"],
+          ["What mechanism, line, housing and finished-product checks are performed, by whom and at which production stage?"],
+          ["If cycle testing is claimed, what is the written method, setup, sample quantity, acceptance rule and result for this configuration?"],
+          ["How are line-tracking, control or casing inconsistencies handled before shipment?"],
+          ["Which claims or reports are current and traceable to the quoted product?"],
+          ["Can branding, colour and packaging requirements be confirmed in the same approved specification?"],
+        ],
+      },
+      {
+        heading: "Evaluating TROVANE's automatic retractable dog leash",
+        paragraphs: [
+          [
+            "TROVANE's ",
+            {
+              href: "/products/walking-hiking/automatic-retractable-dog-leash",
+              text: "Automatic Retractable Dog Leash",
+            },
+            " publishes an ABS casing, nylon webbing, alloy hardware, a one-button brake-and-lock control and a soft-touch ergonomic grip. The body is listed as 13.5 × 9.9 × 3.9 cm. Public product data lists 3 m and 5 m length options, so a buyer should confirm the selected length rather than infer it from a general page or image.",
+          ],
+          [
+            "The page also lists yellow-green, orange and green, and says custom colours, branding and packaging can be discussed. These commercial details do not establish test performance. Do not assume a pet-size or weight rating, certification, cycle-test result, MOQ or production lead time; request exact-sample confirmation.",
+          ],
+          [
+            "Use the framework above to create a buyer-owned observation record for the sample you receive. TROVANE has not published a pass result under this method, and this article does not imply one.",
+          ],
+        ],
+      },
+      {
+        heading: "Final retail sample checklist",
+        paragraphs: [
+          [
+            "Before closing the sample review, confirm that the record is complete enough for a colleague to repeat the decision. If the leash is part of a wider walking assortment, compare the surrounding ",
+            {
+              href: "/products/walking-hiking",
+              text: "dog walking and hiking accessories",
+            },
+            " category so that claims, instructions and retail positioning remain consistent across the range.",
+          ],
+        ],
+        bullets: [
+          ["Identify the sample and keep each unit's record separate."],
+          ["Use a clear area, no dog and no destructive load, pull, drop or impact step."],
+          ["Photograph and describe the baseline before repeated operation."],
+          ["Define repetitions, batches, checkpoints and stop conditions in advance."],
+          ["Repeat extension and controlled retraction with the same path and pace."],
+          ["Check temporary brake and continuous lock as separate operations."],
+          ["Compare the line, housing, controls and hardware with the baseline."],
+          ["Record changes by batch and attach image references."],
+          ["Request evidence for suitability, testing and claims."],
+          ["Approve, hold or reject only against the buyer's written criteria."],
+        ],
+      },
+    ],
+    conclusion: [
+      [
+        "A useful retractable dog leash cycle test is repeatable, traceable and deliberately limited. It helps a retail team compare current samples and ask better supplier questions without pretending to predict lifetime, safety or compliance. To discuss an exact configuration, sample evidence, colour, branding and packaging, ",
+        {
+          href: "/rfq?product=Automatic%20Retractable%20Dog%20Leash&intent=retractable-leash-sample-evaluation&source=retractable-dog-leash-cycle-test",
+          text: "send TROVANE your retractable leash sourcing brief",
+        },
+        ".",
+      ],
+    ],
+  },
+  {
     slug: "dog-water-bottle-leak-test",
     title: "Why Dog Water Bottles Leak in Bags: A Retail Sample-Test Framework",
     seoTitle: "Dog Water Bottle Leak Test for Retail Buyers | TROVANE",
