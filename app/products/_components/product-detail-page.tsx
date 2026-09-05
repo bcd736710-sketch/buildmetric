@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { trovaneButton } from "@/components/trovane-button";
 import type { Product } from "@/lib/products/types";
+import { DEFAULT_WHOLESALE_SUPPLY_DESCRIPTION } from "@/lib/products/defaults";
 import { absoluteUrl, getProductSeo } from "@/lib/seo/site-keyword-map";
 import { ProductDetailGallery } from "../travel-car/pet-travel-carrier/product-detail-gallery";
 
@@ -44,7 +45,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
   const dimensions = stringList(product.sizeSpecs).join(" · ") || null;
   const finish = text(product.finish) || "Available on request";
   const availableOptions = paragraphs(product.availableOptions);
-  const wholesaleSupplyDescription = seo?.commercialCopy || paragraphs(product.wholesaleSupplyDescription);
+  const wholesaleSupplyDescription = [DEFAULT_WHOLESALE_SUPPLY_DESCRIPTION];
   const overview = seo?.overview || paragraphs(product.fullDescription || product.shortDescription || "Contact our team for product details, sample requests and sourcing support.");
   const intro = seo?.shortDescription || text(product.shortDescription) || "Contact our team for product details, sample requests and sourcing support.";
   const topSpecifications = [

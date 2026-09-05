@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { DEFAULT_WHOLESALE_SUPPLY_DESCRIPTION } from "@/lib/products/defaults";
 import { saveNewProductWithImages, saveProduct, type ProductSaveState } from "../manage-actions";
 import type { AdminCategory, AdminProduct } from "@/lib/admin/products";
 
@@ -35,7 +36,7 @@ export function ProductForm({ item, categories }: { item?: AdminProduct; categor
       <label>Finish<input defaultValue={textValue(item?.finish)} name="finish" /><span>For example: Matte black, Pink, or Custom finish.</span></label>
     </fieldset>
     <fieldset className="admin-image-fieldset"><legend>Wholesale / OEM / Project Supply</legend>
-      <label htmlFor="wholesaleSupplyDescription">Wholesale / OEM / Project Supply Description<textarea defaultValue={textValue(item?.wholesaleSupplyDescription)} id="wholesaleSupplyDescription" name="wholesaleSupplyDescription" /><span>Describe wholesale programs, OEM customization, or project supply support for this product.</span></label>
+      <label htmlFor="wholesaleSupplyDescription">Wholesale / OEM / Project Supply Description<textarea defaultValue={DEFAULT_WHOLESALE_SUPPLY_DESCRIPTION} id="wholesaleSupplyDescription" name="wholesaleSupplyDescription" /><span>Describe wholesale programs, OEM customization, or project supply support for this product.</span></label>
     </fieldset>
     <label>Status<select defaultValue={item?.status ?? "draft"} name="status"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label>
     <label>Sort Order<input defaultValue={item?.sortOrder ?? 0} min="0" name="sortOrder" type="number" /></label>

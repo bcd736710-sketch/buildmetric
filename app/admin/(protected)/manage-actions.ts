@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { neon } from "@neondatabase/serverless";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { slugify } from "@/lib/admin/products";
+import { DEFAULT_WHOLESALE_SUPPLY_DESCRIPTION } from "@/lib/products/defaults";
 
 const db = () => neon(process.env.DATABASE_URL!);
 const text = (form: FormData, key: string) => String(form.get(key) ?? "").trim();
@@ -39,7 +40,7 @@ function productValues(form: FormData) {
   return [
     categoryId, name, slug, text(form, "shortDescription") || null, text(form, "fullDescription") || null, text(form, "availableOptions") || null,
     text(form, "material") || null, text(form, "sizeSpecs") || null, text(form, "finish") || null,
-    text(form, "wholesaleSupplyDescription") || null, form.get("featured") === "on", number(form, "sortOrder"), status,
+    text(form, "wholesaleSupplyDescription") || DEFAULT_WHOLESALE_SUPPLY_DESCRIPTION, form.get("featured") === "on", number(form, "sortOrder"), status,
   ];
 }
 
