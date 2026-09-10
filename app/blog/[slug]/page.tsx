@@ -9,6 +9,7 @@ import {
   getBuyerProductGuide,
 } from "@/lib/blog/buyer-product-guides";
 import { petTravelBuyingGuide } from "@/lib/blog/pet-travel-accessories-wholesale";
+import { getResolvedBlogImage } from "@/lib/blog/resolve-blog-image";
 import { BuyerProductGuidePage } from "./buyer-product-guide-page";
 
 const articleUrl = "https://buildmetriccalc.com/blog/pet-travel-accessories-wholesale-buying-guide";
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
   const buyerProductGuide = getBuyerProductGuide(slug);
   if (buyerProductGuide) {
+    const resolvedArticle = await getResolvedBlogImage(buyerProductGuide);
     const url = `https://buildmetriccalc.com/blog/${buyerProductGuide.slug}`;
     return {
       title: buyerProductGuide.seoTitle,
@@ -40,14 +42,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: buyerProductGuide.description,
         publishedTime: buyerProductGuide.publishedAt,
         images: [
-          { url: buyerProductGuide.image, alt: buyerProductGuide.imageAlt },
+          { url: resolvedArticle.resolvedImage, alt: resolvedArticle.resolvedImageAlt },
         ],
       },
       twitter: {
         card: "summary_large_image",
         title: buyerProductGuide.seoTitle,
         description: buyerProductGuide.description,
-        images: [buyerProductGuide.image],
+        images: [resolvedArticle.resolvedImage],
       },
     };
   }
@@ -69,7 +71,7 @@ export default async function BlogArticlePage({ params }: Props) {
   const slug = (await params).slug;
   const buyerProductGuide = getBuyerProductGuide(slug);
   if (buyerProductGuide) {
-    return <BuyerProductGuidePage article={buyerProductGuide} />;
+    return <BuyerProductGuidePage article={await getResolvedBlogImage(buyerProductGuide)} />;
   }
   if (slug !== petTravelBuyingGuide.slug) notFound();
   const structuredData = { "@context": "https://schema.org", "@graph": [

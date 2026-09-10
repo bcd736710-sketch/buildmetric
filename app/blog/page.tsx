@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { ResolvedBlogImage } from "@/components/resolved-blog-image";
 import { SiteFooter } from "@/components/site-footer";
 import { trovaneButton } from "@/components/trovane-button";
 import { buyerProductGuides } from "@/lib/blog/buyer-product-guides";
 import { petTravelBuyingGuide } from "@/lib/blog/pet-travel-accessories-wholesale";
+import { getResolvedBlogImages } from "@/lib/blog/resolve-blog-image";
 import { siteUrl } from "@/lib/seo/site-keyword-map";
 
 export const metadata: Metadata = {
@@ -26,8 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  const articles = [petTravelBuyingGuide, ...buyerProductGuides].sort(
+export default async function BlogPage() {
+  const articles = (await getResolvedBlogImages([
+    petTravelBuyingGuide,
+    ...buyerProductGuides,
+  ])).sort(
     (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt),
   );
   const [featuredArticle, ...remainingArticles] = articles;
@@ -69,7 +73,7 @@ export default function BlogPage() {
       <div className="mx-auto max-w-7xl">
         <article className="grid overflow-hidden border border-navy/10 bg-white lg:grid-cols-[1.05fr_0.95fr]">
           <div className="relative aspect-[4/3] bg-mist lg:aspect-auto">
-            <Image alt={featuredArticle.imageAlt} className="h-full w-full object-cover" fill priority sizes="(min-width: 1024px) 55vw, 100vw" src={featuredArticle.image} unoptimized />
+            <ResolvedBlogImage alt={featuredArticle.resolvedImageAlt} className="h-full w-full object-cover object-center" fallbackSrc={featuredArticle.fallbackImage} key={featuredArticle.resolvedImage} priority sizes="(min-width: 1024px) 55vw, 100vw" src={featuredArticle.resolvedImage} />
           </div>
           <div className="flex flex-col p-6 sm:p-9 lg:p-12">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">
@@ -90,7 +94,7 @@ export default function BlogPage() {
             <article className="overflow-hidden border border-navy/10 bg-white" key={article.slug}>
               <Link className="group block" href={`/blog/${article.slug}`}>
                 <div className="relative aspect-[16/9] bg-mist">
-                  <Image alt={article.imageAlt} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" fill sizes="(min-width: 768px) 50vw, 100vw" src={article.image} unoptimized />
+                  <ResolvedBlogImage alt={article.resolvedImageAlt} className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.025]" fallbackSrc={article.fallbackImage} key={article.resolvedImage} sizes="(min-width: 768px) 50vw, 100vw" src={article.resolvedImage} />
                 </div>
                 <div className="p-6 sm:p-8">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">

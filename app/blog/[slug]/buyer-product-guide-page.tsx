@@ -1,11 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
+import { ResolvedBlogImage } from "@/components/resolved-blog-image";
 import { SiteFooter } from "@/components/site-footer";
 import type {
   BuyerProductGuide,
   RichText,
 } from "@/lib/blog/buyer-product-guides";
-import { getCategorySeo } from "@/lib/seo/site-keyword-map";
+import type { ResolvedBlogArticle } from "@/lib/blog/resolve-blog-image";
+import { absoluteUrl, getCategorySeo } from "@/lib/seo/site-keyword-map";
 
 const siteUrl = "https://buildmetriccalc.com";
 const linkClass =
@@ -51,7 +52,7 @@ function RichList({ items }: { items: RichText[] }) {
   );
 }
 
-export function BuyerProductGuidePage({ article }: { article: BuyerProductGuide }) {
+export function BuyerProductGuidePage({ article }: { article: ResolvedBlogArticle<BuyerProductGuide> }) {
   const articleUrl = `${siteUrl}/blog/${article.slug}`;
   const categorySlug = article.productHref.split("/")[2];
   const categorySeo = categorySlug ? getCategorySeo(categorySlug) : null;
@@ -67,7 +68,7 @@ export function BuyerProductGuidePage({ article }: { article: BuyerProductGuide 
         url: articleUrl,
         datePublished: article.publishedAt,
         dateModified: article.publishedAt,
-        image: `${siteUrl}${article.image}`,
+        image: absoluteUrl(article.resolvedImage),
         articleSection: article.category,
         author: { "@type": "Organization", name: "TROVANE" },
         publisher: {
@@ -142,14 +143,14 @@ export function BuyerProductGuidePage({ article }: { article: BuyerProductGuide 
         <div className="px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
           <div className="mx-auto max-w-[780px]">
             <figure className="relative aspect-[16/8] overflow-hidden bg-mist">
-              <Image
-                alt={article.imageAlt}
-                className="h-full w-full object-cover"
-                fill
+              <ResolvedBlogImage
+                alt={article.resolvedImageAlt}
+                className="h-full w-full object-cover object-center"
+                fallbackSrc={article.fallbackImage}
+                key={article.resolvedImage}
                 priority
                 sizes="(min-width: 1024px) 780px, 100vw"
-                src={article.image}
-                unoptimized
+                src={article.resolvedImage}
               />
             </figure>
             <div className="mt-12 text-base leading-8 text-slate sm:text-lg">
