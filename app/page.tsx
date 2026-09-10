@@ -60,9 +60,9 @@ function Logo({ compact = false }: { compact?: boolean }) {
         alt="TROVANE Pet Outdoor and Travel logo"
         className={compact ? "h-auto w-[126px]" : "h-auto w-[146px] sm:w-[170px]"}
         height={compact ? 41 : 47}
+        sizes={compact ? "126px" : "(min-width: 640px) 170px, 146px"}
         src="/trovane-logo-horizontal-cropped.png"
         style={{ height: "auto" }}
-        unoptimized
         width={compact ? 126 : 170}
       />
     </a>
@@ -135,7 +135,6 @@ export default async function HomePage() {
           priority
           sizes="100vw"
           src="/trovane-hero-product-use.png"
-          unoptimized
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,63,0.54),rgba(0,32,63,0.24)_35%,rgba(0,32,63,0.06)_62%,rgba(0,32,63,0.10))] lg:bg-[linear-gradient(90deg,rgba(0,32,63,0.50),rgba(0,32,63,0.31)_34%,rgba(0,32,63,0.09)_62%,rgba(0,32,63,0.02))]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,63,0.04),rgba(0,32,63,0.02)_44%,rgba(0,32,63,0.18))] max-lg:hidden" />
@@ -224,13 +223,14 @@ export default async function HomePage() {
                   className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
                   fill
                   loading="lazy"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes={index < 2
+                    ? "(min-width: 1280px) 624px, (min-width: 1024px) 50vw, 100vw"
+                    : "(min-width: 1280px) 411px, (min-width: 1024px) 33vw, 100vw"}
                   src={
                     category.slug === "travel-car"
                       ? "/images/categories/travel-car.jpg"
                       : category.imageUrl || "/trovane-category-travel-cat.jpg"
                   }
-                  unoptimized
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,63,0.02),rgba(0,32,63,0.64))]" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
@@ -279,9 +279,8 @@ export default async function HomePage() {
                       className="h-full w-full object-cover transition duration-500 group-hover/image:scale-[1.035]"
                       fill
                       loading="lazy"
-                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1280px) 305px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       src={product.mainImageUrl || product.images[0]?.blobUrl || "/trovane-product-carrier-cat.jpg"}
-                      unoptimized
                     />
                   </div>
                 </Link>
@@ -337,7 +336,6 @@ export default async function HomePage() {
             loading="lazy"
             sizes="(min-width: 1024px) 50vw, 100vw"
             src="/trovane-category-camping-pets.jpg"
-            unoptimized
           />
         </div>
         <div className="flex items-center bg-navy px-4 py-20 text-white sm:px-10 lg:px-16">
@@ -463,9 +461,8 @@ export default async function HomePage() {
                 className="h-full w-full object-cover"
                 fill
                 loading="lazy"
-                sizes="(min-width: 1024px) 56vw, 100vw"
+                sizes="(min-width: 640px) 430px, calc(100vw - 2rem)"
                 src="/images/factory/factory-2.jpg"
-                unoptimized
               />
             </div>
           </div>
@@ -486,9 +483,8 @@ export default async function HomePage() {
                   className="h-full w-full object-cover"
                   fill
                   loading="lazy"
-                  sizes="(min-width: 1024px) 56vw, 100vw"
+                  sizes="(min-width: 1280px) 531px, (min-width: 1024px) 42vw, 100vw"
                   src="/images/factory/factory-1.jpg"
-                  unoptimized
                 />
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
@@ -498,9 +494,8 @@ export default async function HomePage() {
                     className="h-full w-full object-cover"
                     fill
                     loading="lazy"
-                    sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
+                    sizes="(min-width: 1280px) 359px, (min-width: 1024px) 29vw, (min-width: 640px) 50vw, 100vw"
                     src="/images/factory/factory-2.jpg"
-                    unoptimized
                   />
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
@@ -509,9 +504,8 @@ export default async function HomePage() {
                     className="h-full w-full object-cover"
                     fill
                     loading="lazy"
-                    sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
+                    sizes="(min-width: 1280px) 359px, (min-width: 1024px) 29vw, (min-width: 640px) 50vw, 100vw"
                     src="/images/factory/factory-3.jpg"
-                    unoptimized
                   />
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
@@ -520,9 +514,8 @@ export default async function HomePage() {
                     className="h-full w-full object-cover"
                     fill
                     loading="lazy"
-                    sizes="(min-width: 1024px) 38vw, (min-width: 768px) 33vw, 100vw"
+                    sizes="(min-width: 1280px) 359px, (min-width: 1024px) 29vw, (min-width: 640px) 50vw, 100vw"
                     src="/images/factory/factory-4.jpg"
-                    unoptimized
                   />
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px]">
@@ -531,9 +524,8 @@ export default async function HomePage() {
                     className="h-full w-full object-cover"
                     fill
                     loading="lazy"
-                    sizes="(min-width: 1024px) 29vw, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1280px) 359px, (min-width: 1024px) 29vw, (min-width: 640px) 50vw, 100vw"
                     src="/images/factory/factory-5.jpg"
-                    unoptimized
                   />
                 </div>
               </div>

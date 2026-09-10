@@ -31,7 +31,7 @@ export function SiteHeader() {
   return <header className="sticky top-0 z-50 border-b border-navy/10 bg-warm/92 backdrop-blur">
     <div className="mx-auto flex h-[68px] max-w-[1360px] items-center justify-between gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8">
       <Link aria-label="TROVANE home" className="flex shrink-0 items-center" href="/">
-        <Image alt="TROVANE Pet Outdoor and Travel logo" className="h-auto w-[126px] sm:w-[146px] lg:w-[170px]" height={47} src="/trovane-logo-horizontal-cropped.png" style={{ height: "auto" }} unoptimized width={170} />
+        <Image alt="TROVANE Pet Outdoor and Travel logo" className="h-auto w-[126px] sm:w-[146px] lg:w-[170px]" height={47} sizes="(min-width: 1024px) 170px, (min-width: 640px) 146px, 126px" src="/trovane-logo-horizontal-cropped.png" style={{ height: "auto" }} width={170} />
       </Link>
       <nav aria-label="Primary navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-4 text-[12px] font-semibold text-navy/78 lg:flex xl:gap-6 xl:text-[13px]">
         {navigationItems.map((item) => <Link aria-current={isActive(item.href) ? "page" : undefined} className={`whitespace-nowrap transition hover:text-forest ${isActive(item.href) ? "text-forest" : ""}`} href={item.href} key={item.label}>{item.label}</Link>)}
