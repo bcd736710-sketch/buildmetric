@@ -27,7 +27,10 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
-  const articles = [petTravelBuyingGuide, ...buyerProductGuides];
+  const articles = [petTravelBuyingGuide, ...buyerProductGuides].sort(
+    (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt),
+  );
+  const [featuredArticle, ...remainingArticles] = articles;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -66,24 +69,24 @@ export default function BlogPage() {
       <div className="mx-auto max-w-7xl">
         <article className="grid overflow-hidden border border-navy/10 bg-white lg:grid-cols-[1.05fr_0.95fr]">
           <div className="relative aspect-[4/3] bg-mist lg:aspect-auto">
-            <Image alt={petTravelBuyingGuide.imageAlt} className="h-full w-full object-cover" fill priority sizes="(min-width: 1024px) 55vw, 100vw" src={petTravelBuyingGuide.image} unoptimized />
+            <Image alt={featuredArticle.imageAlt} className="h-full w-full object-cover" fill priority sizes="(min-width: 1024px) 55vw, 100vw" src={featuredArticle.image} unoptimized />
           </div>
           <div className="flex flex-col p-6 sm:p-9 lg:p-12">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">
-              <span>{petTravelBuyingGuide.category}</span>
+              <span>{featuredArticle.category}</span>
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-forest/60" />
-              <time dateTime={petTravelBuyingGuide.publishedAt}>{petTravelBuyingGuide.publishedLabel}</time>
+              <time dateTime={featuredArticle.publishedAt}>{featuredArticle.publishedLabel}</time>
             </div>
             <h2 className="mt-6 max-w-xl text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
-              <Link className="transition hover:text-forest" href={`/blog/${petTravelBuyingGuide.slug}`}>{petTravelBuyingGuide.title}</Link>
+              <Link className="transition hover:text-forest" href={`/blog/${featuredArticle.slug}`}>{featuredArticle.title}</Link>
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-8 text-slate">{petTravelBuyingGuide.description}</p>
-            <Link className={`mt-8 w-fit ${trovaneButton.primary}`} href={`/blog/${petTravelBuyingGuide.slug}`}>Read Article</Link>
+            <p className="mt-5 max-w-xl text-base leading-8 text-slate">{featuredArticle.description}</p>
+            <Link className={`mt-8 w-fit ${trovaneButton.primary}`} href={`/blog/${featuredArticle.slug}`}>Read Article</Link>
           </div>
         </article>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {buyerProductGuides.map((article) => (
+          {remainingArticles.map((article) => (
             <article className="overflow-hidden border border-navy/10 bg-white" key={article.slug}>
               <Link className="group block" href={`/blog/${article.slug}`}>
                 <div className="relative aspect-[16/9] bg-mist">
