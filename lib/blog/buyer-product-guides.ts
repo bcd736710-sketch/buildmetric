@@ -42,6 +42,213 @@ const broaderGuide: ArticleLink = {
 
 export const buyerProductGuides: BuyerProductGuide[] = [
   {
+    slug: "dog-flying-disc-sample-test",
+    title: "How Retail Buyers Can Sample-Test a Soft Dog Flying Disc",
+    seoTitle: "Dog Flying Disc Sample Test for Retail Buyers | TROVANE",
+    description:
+      "Use a controlled dog flying disc sample test to compare handling, flight, pickup, deformation and post-play condition without unsupported claims.",
+    introduction:
+      "A soft dog flying disc can make a positive first impression in the hand or during one throw, but that does not establish durability, safety or product life. Retailers, brands, distributors and sourcing teams need a controlled sample screen that separates observable fetch performance from chewing, tugging and other use. This buyer-side framework creates a traceable record for the exact sample; it is not a formal safety, certification, factory or laboratory test.",
+    category: "Product Evaluation",
+    publishedAt: "2026-09-09",
+    publishedLabel: "September 9, 2026",
+    image: "/trovane-category-hiking-dog.jpg",
+    imageAlt: "Dog outdoors in a walking and hiking setting",
+    productName: "Soft EVA Dog Flying Disc for Outdoor Fetch",
+    productHref: "/products/walking-hiking/soft-eva-dog-flying-disc",
+    sections: [
+      {
+        heading: "Define the buying decision before testing",
+        paragraphs: [
+          [
+            "Start by writing down what the sample review must decide. A retail team may need to compare handling, short-throw flight, pickup, recovery, visible deformation and post-play condition across candidate units. Keep those observations separate so one favourable result does not become a general durability claim.",
+          ],
+          [
+            "The output should be an internal sourcing record tied to a sample ID, configuration, routine and date. It cannot prove lifetime, puncture resistance, bite resistance, universal suitability or compliance with a standard. Public professional guidance also distinguishes retrieve toys from chew use, which makes intended use a necessary part of the decision boundary rather than a footnote.",
+          ],
+        ],
+        bullets: [
+          ["Suitable output: comparable observations from the buyer-defined routine."],
+          ["Unsuitable output: a safety, durability, lifetime or standards claim."],
+          ["Suitable decision: proceed, hold, compare another sample or reject against written buyer criteria."],
+        ],
+      },
+      {
+        heading: "Identify the exact sample and confirmed product facts",
+        paragraphs: [
+          [
+            "Assign a unique ID to every unit and record the supplier reference, received date, colour, packaging, instructions and any quoted configuration. Photograph labels and packaging so a later reviewer can connect the observations to the sample that was actually handled.",
+          ],
+          [
+            "For TROVANE's ",
+            {
+              href: "/products/walking-hiking/soft-eva-dog-flying-disc",
+              text: "Soft EVA Dog Flying Disc for Outdoor Fetch",
+            },
+            ", the published material is EVA and the published diameter is 21 cm. Yellow, blue and green are published colours. Custom colour, custom logo and custom retail packaging are published bulk-order options. These confirmed facts identify the offer; they do not establish a test result or performance level.",
+          ],
+          [
+            "Product weight, intended pet-size range, puncture resistance, bite resistance, flight distance, flotation, testing results, certifications, MOQ and lead time are not confirmed. Keep them as configuration-specific supplier questions rather than filling the record from a competitor page or a similar model.",
+          ],
+        ],
+      },
+      {
+        heading: "Build an unused baseline that another reviewer can inspect",
+        paragraphs: [
+          [
+            "Before throwing the disc, photograph both faces, the full edge and the profile in consistent light. Record the published diameter against the sample identification, then describe only what can be observed: surface texture, edge continuity, visible marks, loose material, shape and whether the sample rests flat or shows an initial deformation.",
+          ],
+          [
+            "Do not diagnose a cause from appearance alone. A neutral baseline such as mark at a stated position, edge continuous or deformation not observed is easier to compare than labels such as strong, safe or high quality. Keep the original images and use the same camera position for the final inspection.",
+          ],
+        ],
+        bullets: [
+          ["Sample ID, colour, received date and configuration reference."],
+          ["Face, edge and profile photographs with image numbers."],
+          ["Observable starting condition, including any existing marks or shape variation."],
+          ["Unconfirmed fields clearly marked as questions."],
+        ],
+      },
+      {
+        heading: "Separate handling, flight, pickup and recovery",
+        paragraphs: [
+          [
+            "Use a clear, appropriate outdoor area and follow the sample instructions. Record who handled the disc, the surface, weather and the buyer-defined throw routine. Keep the session short and controlled. Veterinary guidance supports avoiding play to exhaustion and repeated high-load movement such as leaping, twisting and abrupt stops; that is an activity boundary, not a disc test standard or a TROVANE safety claim.",
+          ],
+          [
+            "Handling covers grip, release and carry before the throw. Flight covers the path observed under the recorded throw, not a promised distance. Pickup covers how the dog takes the disc from the ground under this setup. Recovery covers return and release. Record each field independently, because a convenient pickup does not prove resistance to chewing and an orderly flight does not establish product life.",
+          ],
+        ],
+        points: [
+          {
+            heading: "Keep the routine comparable",
+            paragraphs: [
+              [
+                "Use the same handler, general release point, retrieval area and observation fields where practical. If wind, surface, handler or dog changes, record the change instead of treating the results as directly equivalent.",
+              ],
+            ],
+          },
+          {
+            heading: "Use stop rules before the first throw",
+            paragraphs: [
+              [
+                "Stop for fatigue, an unsuitable environment, uncontrolled movement, loose material, a tear, an edge change or any condition that makes continued use inappropriate. A stopped session is a documented outcome, not permission to push the sample until it fails.",
+              ],
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Keep fetch observations separate from chewing and tugging",
+        paragraphs: [
+          [
+            "Mouthing during pickup may occur within a fetch session, but sustained chewing or tugging creates a different use condition. Do not introduce either activity to make the sample screen more demanding. If it occurs, stop the routine, record the event and inspect the sample before deciding whether any comparison remains valid.",
+          ],
+          [
+            "Retail and community observations from other products show why the distinction matters: favourable flight or pickup impressions can coexist with damage during rougher use. Those signals identify a category-level buyer concern only. They do not establish a failure rate, a likely result or a defect in the TROVANE disc.",
+          ],
+        ],
+      },
+      {
+        heading: "Compare post-play condition with the baseline",
+        paragraphs: [
+          [
+            "Return the sample to the original lighting and camera position. Photograph both faces, the complete edge and the profile again. Compare surface marks, cuts, tears, loose material, edge changes and visible deformation with the unused baseline. If dimensional change is part of the buyer's record, use the same buyer-defined measurement method at both checkpoints and record the values without turning them into a standard.",
+          ],
+          [
+            "Describe location and extent in neutral terms and preserve the image reference. No visible change during a short session does not prove product lifetime, puncture resistance or bite resistance. A visible change does not by itself identify its cause or establish a category-wide failure. The record should show what happened, under which routine, to which sample.",
+          ],
+        ],
+      },
+      {
+        heading: "Use a neutral sample comparison record",
+        paragraphs: [
+          [
+            "Create one row or form per unit rather than combining observations from several samples. Predetermine which findings lead to proceed, hold, another-sample review or rejection under the buyer's own acceptance criteria. A buyer rule is not an industry benchmark and should not appear in retail copy as one.",
+          ],
+        ],
+        bullets: [
+          ["Identity: sample ID, reference, colour, configuration, packaging and instructions."],
+          ["Baseline: face, edge, profile, visible condition and image references."],
+          ["Routine: handler, location, surface, weather, session boundary and stop rules."],
+          ["Fetch observations: handling, flight, pickup and recovery in separate fields."],
+          ["Interruption log: chewing, tugging, fatigue, environmental change or early stop."],
+          ["Final inspection: surface, edge, loose material, deformation and dimensional comparison."],
+          ["Disposition: proceed, hold, compare another sample or reject against written criteria."],
+          ["Open evidence: exact supplier questions, document owner and due date."],
+        ],
+      },
+      {
+        heading: "Turn unknowns into exact supplier questions",
+        paragraphs: [
+          [
+            "Ask for answers and evidence tied to the quoted configuration. Generic family-level material, a result for another model or competitor wording cannot support claims for the sample in hand. If a claim will appear on packaging or a product listing, define the wording and required evidence before approval.",
+          ],
+        ],
+        bullets: [
+          ["What product weight and intended pet-size range apply to this exact configuration?"],
+          ["What intended-use, supervision, inspection and retirement instructions accompany it?"],
+          ["Are puncture resistance or bite resistance claimed? If so, what exact wording, method, sample quantity, acceptance rule and current result support the claim?"],
+          ["Are flight distance or flotation claimed for this configuration, and what evidence supports the precise wording?"],
+          ["Which testing results or certifications, if any, are current and traceable to the quoted product?"],
+          ["What MOQ and lead time apply to the selected colour, logo and retail-packaging direction?"],
+          ["How will the approved configuration and claims be controlled across quotation, sample and production documents?"],
+        ],
+      },
+      {
+        heading: "Place the result within the wider assortment decision",
+        paragraphs: [
+          [
+            "The sample record answers a narrow product-evaluation question. It should not expand into a general flying-disc buying guide, consumer training article or product sales claim. Buyers planning the surrounding assortment can review TROVANE's ",
+            {
+              href: "/products/walking-hiking",
+              text: "dog walking and hiking accessories",
+            },
+            " category while keeping each model's facts, intended use and evidence separate.",
+          ],
+          [
+            "For other sourcing and product-evaluation topics, use the ",
+            {
+              href: "/blog",
+              text: "TROVANE pet product sourcing guides",
+            },
+            ". This article remains focused on the dog flying disc sample test and its evidence boundary.",
+          ],
+        ],
+      },
+      {
+        heading: "Final dog flying disc retail sample checklist",
+        paragraphs: [
+          [
+            "Before closing the review, confirm that a colleague can trace the decision without relying on memory or unsupported assumptions.",
+          ],
+        ],
+        bullets: [
+          ["Define the decision, intended use and limits of the buyer-side screen."],
+          ["Identify every sample and record only confirmed configuration facts."],
+          ["Photograph the unused faces, edge and profile."],
+          ["Set a short, controlled routine and written stop rules."],
+          ["Record handling, flight, pickup and recovery separately."],
+          ["Stop and document chewing, tugging, fatigue or an unsuitable condition."],
+          ["Compare surface, edge, loose material, shape and dimensions with the baseline."],
+          ["Keep unit-level observations and photographs together."],
+          ["Request configuration-specific evidence before approving claims."],
+          ["Use proceed, hold, compare or reject only as internal buyer dispositions."],
+        ],
+      },
+    ],
+    conclusion: [
+      [
+        "A useful dog flying disc sample test is controlled, observable and deliberately limited. It helps a buying team compare current samples while keeping fetch behaviour separate from chewing, durability, safety and lifetime claims. To discuss the target market, channel, exact configuration, packaging direction, intended-use statement and evidence requirements, ",
+        {
+          href: "/rfq?product=soft-eva-dog-flying-disc&intent=sample-evaluation&source=blog-dog-flying-disc-sample-test",
+          text: "send TROVANE your flying disc sample brief",
+        },
+        ".",
+      ],
+    ],
+  },
+  {
     slug: "retractable-dog-leash-cycle-test",
     title:
       "How to Cycle-Test a Retractable Dog Leash: A Retail Sample Framework",
