@@ -753,6 +753,82 @@ export const buyerProductGuides: BuyerProductGuide[] = [
       "/products/outdoor-feeding/portable-pet-water-bottle-foldable-silicone-bowl",
     sections: [
       {
+        heading: "Buyer Decision Summary",
+        paragraphs: [
+          [
+            "Use published product data to narrow a shortlist, then confirm model-specific details before ordering. Buyers comparing TROVANE’s two currently published formats can review the ",
+            {
+              href: "/products/outdoor-feeding",
+              text: "fact-based Outdoor Feeding comparison",
+            },
+            ".",
+          ],
+        ],
+        points: [
+          {
+            heading: "Compare From Published Product Data",
+            paragraphs: [
+              [
+                "Compare product format, published dimensions, published material descriptions, bowl or serving format, published colors, stated customization direction and intended use context. Do not use a listing to rank unverified performance.",
+              ],
+            ],
+          },
+          {
+            heading: "Confirm Before Ordering",
+            paragraphs: [
+              [
+                "Confirm capacity, net weight, complete component and water-contact materials, closure or dispensing mechanism, cleaning instructions, packaging specification, logo method, MOQ, lead time and compliance documents where applicable for the selected model.",
+              ],
+            ],
+          },
+          {
+            heading: "Validate With a Sample",
+            paragraphs: [
+              [
+                "Use a sample to review carrying, dispensing, serving access, closure operation, cleaning, drying, reassembly and transport-related moisture or leakage risk. For a structured leakage-risk sample review, see the ",
+                {
+                  href: "/blog/dog-water-bottle-leak-test",
+                  text: "existing leak-test framework",
+                },
+                ".",
+              ],
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Questions Buyers Commonly Need to Resolve",
+        paragraphs: [
+          ["Use these direct answers to separate published product information from details that require supplier confirmation or sample review."],
+        ],
+        points: [
+          {
+            heading: "What should buyers compare first when sourcing portable pet water bottles?",
+            paragraphs: [
+              [
+                "Compare verified product format, dimensions, published material description, serving design and customization direction first. Do not begin by comparing capacity or leak performance when those details are not confirmed for the exact model.",
+              ],
+            ],
+          },
+          {
+            heading: "Can dimensions be used to estimate bottle capacity?",
+            paragraphs: [["No. Published dimensions alone should not be used to infer capacity. Confirm capacity for the exact model."]],
+          },
+          {
+            heading: "Can a product listing prove that a bottle is leak-proof?",
+            paragraphs: [["No. Product descriptions or images alone are not evidence of leak performance. Evaluate leakage risk against documented product information and sample testing."]],
+          },
+          {
+            heading: "What material information should buyers request?",
+            paragraphs: [["Use the published material description as a starting point, then request complete water-contact component material information for the selected model."]],
+          },
+          {
+            heading: "What should buyers include in an RFQ?",
+            paragraphs: [["Include the target market, expected quantity, selected model, color, branding requirement, packaging requirement, capacity confirmation, material or document requirements and sample requirement."]],
+          },
+        ],
+      },
+      {
         heading: "Start with the trip the customer is actually taking",
         paragraphs: [
           [
