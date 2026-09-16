@@ -60,7 +60,7 @@ export const categorySeoBySlug: Record<string, CategorySeoProfile> = {
     introduction:
       "This collection brings together products for road trips, daily vehicle travel and temporary stays away from home. The current range includes a pet carrier backpack, car seat tether, dog car window guard and foldable cat litter box. It is intended for overseas pet retailers, brands, distributors and importers building practical travel assortments. Product dimensions, materials and available options are shown on each detail page. Branding, packaging and order requirements should be confirmed against the exact model before sampling or quotation.",
     cardDescription:
-      "Carriers, restraints, car-safety accessories and portable cat care products for travel assortments.",
+      "Carriers, restraints, car-travel accessories and portable cat care products for travel assortments.",
     imageAlt: "Pet travel and car accessories for road trips",
     relatedGuide: {
       href: "/blog/pet-travel-accessories-wholesale-buying-guide",
@@ -68,18 +68,19 @@ export const categorySeoBySlug: Record<string, CategorySeoProfile> = {
     },
   },
   "outdoor-feeding": {
-    primaryKeyword: "outdoor pet feeding products",
+    primaryKeyword: "portable pet water bottles",
     secondaryKeywords: [
+      "pet water bottle wholesale",
       "pet travel water bottles",
       "portable pet hydration products",
       "dog travel feeding accessories",
     ],
-    title: "Outdoor Pet Feeding Products for B2B Buyers | TROVANE",
+    title: "Portable Pet Water Bottles for B2B Buyers | TROVANE",
     description:
-      "Compare outdoor pet feeding products for travel, walks and hiking. Review portable hydration designs and sourcing options for retail pet ranges.",
-    h1: "Outdoor Pet Feeding Products",
+      "Compare portable pet water bottles for retail, wholesale and private-label travel ranges. Review two foldable-bowl formats for walks, hiking and travel.",
+    h1: "Portable Pet Water Bottles for B2B Buyers",
     introduction:
-      "Outdoor feeding products need to be easy to carry, simple to clean and clear about how the pet drinks or feeds from them. TROVANE’s published range currently focuses on portable pet water bottles with foldable bowl designs for walking, hiking and travel. Retailers, distributors and brand teams can compare the two models by material, dimensions, bowl structure and colour options. Any branding, packaging or bulk-order requirement should be checked for the selected model rather than assumed across the whole category.",
+      "TROVANE’s published outdoor-feeding range currently focuses on portable pet water bottles with foldable bowl designs for walks, hiking, camping and travel. Retailers, distributors and brand teams can compare the compact silicone-bowl model with the larger 2-in-1 bottle by their published material, dimensions, bowl structure and colour options. Confirm any branding, packaging, private-label or bulk-order requirement for the exact model before sampling or quotation.",
     cardDescription:
       "Portable hydration products with foldable bowl formats for pet walks, hiking and travel.",
     imageAlt: "Portable pet hydration products for walking and travel",
@@ -211,9 +212,9 @@ export const productSeoByPath: Record<string, ProductSeoProfile> = {
     ],
     scenarioKeywords: ["pet water bottle for walks", "dog water bottle for travel"],
     b2bKeywords: ["pet water bottle wholesale", "custom pet travel water bottle"],
-    title: "Pet Water Bottle with Silicone Bowl | TROVANE",
+    title: "Portable Pet Water Bottle with Silicone Bowl for B2B Buyers | TROVANE",
     description:
-      "Source a compact pet water bottle with a foldable silicone drinking bowl for walks and travel. Compare colour and order options for retail pet ranges.",
+      "Source a compact portable pet water bottle with a foldable silicone drinking bowl for retail and wholesale travel ranges. Confirm colour, packaging and sample requirements.",
     h1: "Portable Pet Water Bottle with Silicone Drinking Bowl",
     shortDescription:
       "A compact portable pet water bottle with a foldable silicone drinking bowl for dogs and cats. The 15.5 × 7.5 cm format is intended for walks, hiking, camping and travel, with green and pink listed as available colours.",

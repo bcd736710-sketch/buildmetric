@@ -906,6 +906,14 @@ export const buyerProductGuides: BuyerProductGuide[] = [
             ". Use the page as a product reference, then confirm the exact sample, material, dimensions and operating details for your market before making a range decision.",
           ],
           [
+            "For a larger 2-in-1 format, compare the ",
+            {
+              href: "/products/outdoor-feeding/portable-pet-water-bottle-foldable-feeding-bowl",
+              text: "2-in-1 Pet Water Bottle with Foldable Feeding Bowl",
+            },
+            ". Its published 28.5 × 7.5 cm plastic format and soft silicone bowl create a different carry and storage comparison; confirm the exact sample, colour, branding and packaging requirements before ordering.",
+          ],
+          [
             "For decisions that extend beyond one hydration item, the ",
             broaderGuide,
             " provides a wider framework for use cases, samples, packaging and assortment planning.",
