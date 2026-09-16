@@ -316,6 +316,37 @@ export const productSeoByPath: Record<string, ProductSeoProfile> = {
       href: "/blog/retractable-dog-leash-buyer-checklist",
       label: "retractable dog leash buyer checklist",
     },
+    buyerNotes: {
+      summary:
+        "Published product details for this model cover its ABS casing, nylon webbing, alloy hardware, 13.5 × 9.9 × 3.9 cm product-body dimensions, 3 m and 5 m leash-length variants, smooth matte surface, soft-touch grip and one-button brake-and-lock design. The published context is daily walks, parks and outdoor walking.",
+      publishedOptions:
+        "Yellow-green, orange and green are published colors. Custom color options, branding and packaging requirements can be discussed for bulk orders. Exact leash-length configuration, branding method, packaging specification and production terms should be confirmed for the selected order configuration.",
+      confirmBeforeSampling: [
+        "Exact SKU or leash-length mapping",
+        "Intended pet-size or weight range",
+        "Webbing width",
+        "Hardware specification",
+        "Brake and lock operating instructions",
+        "Inspection and care instructions",
+        "Packaging specification",
+        "Exact branding method",
+        "Selected configuration",
+      ],
+      confirmationNote:
+        "Published leash length or product dimensions must not be used to infer load rating, breaking strength, durability or suitability for a specific dog weight.",
+      resources: [
+        {
+          href: "/blog/retractable-dog-leash-buyer-checklist",
+          label: "Retractable Dog Leash Buyer Guide",
+          description: "Review extension, retraction, brake, lock, handling, sample inspection and configuration-selection considerations.",
+        },
+        {
+          href: "/blog/retractable-dog-leash-cycle-test",
+          label: "Retractable Dog Leash Cycle-Test Framework",
+          description: "Use this framework to plan repeatable extension and retraction observations, brake and lock observations, wear recording and sample evidence. It explains how to evaluate a sample; it is not a completed cycle test for this model.",
+        },
+      ],
+    },
   },
   "outdoor-feeding/portable-pet-water-bottle-foldable-silicone-bowl": {
     primaryKeyword: "pet water bottle with silicone bowl",
