@@ -15,6 +15,15 @@ export type CategorySeoProfile = {
   cardDescription: string;
   imageAlt: string;
   relatedGuide: RelatedGuide;
+  comparison?: {
+    title: string;
+    introduction: string;
+    products: Array<{ name: string; href: string }>;
+    rows: Array<{ consideration: string; values: [string, string] }>;
+    confirmBeforeSampling: string[];
+    confirmationNote: string;
+    resource: { href: string; label: string; description: string };
+  };
 };
 
 export type ProductSeoProfile = {
@@ -94,6 +103,77 @@ export const categorySeoBySlug: Record<string, CategorySeoProfile> = {
     relatedGuide: {
       href: "/blog/pet-travel-water-bottle-retail-selection",
       label: "pet travel water bottle retail guide",
+    },
+    comparison: {
+      title: "Compare the Two Portable Water-Bottle Formats",
+      introduction:
+        "TROVANE’s published Outdoor Feeding range includes two portable water-bottle formats. Buyers can use the published format, dimensions, bowl design and colour or customization direction to narrow their sample-selection scope.",
+      products: [
+        {
+          name: "Silicone Drinking Bowl Model",
+          href: "/products/outdoor-feeding/portable-pet-water-bottle-foldable-silicone-bowl",
+        },
+        {
+          name: "2-in-1 Feeding Bowl Model",
+          href: "/products/outdoor-feeding/portable-pet-water-bottle-foldable-feeding-bowl",
+        },
+      ],
+      rows: [
+        {
+          consideration: "Format",
+          values: [
+            "Portable water bottle with a foldable silicone drinking bowl",
+            "2-in-1 water bottle with an integrated foldable feeding bowl",
+          ],
+        },
+        {
+          consideration: "Published Dimensions",
+          values: ["15.5 × 7.5 cm", "28.5 × 7.5 cm"],
+        },
+        {
+          consideration: "Published Material Description",
+          values: [
+            "Material: Silicone. Finish: Soft-touch silicone surface with foldable drinking bowl design",
+            "Material: Durable Plastic. Finish: Smooth Plastic Surface with Soft Silicone Bowl",
+          ],
+        },
+        {
+          consideration: "Bowl Design",
+          values: ["Foldable silicone drinking bowl", "Integrated foldable feeding bowl"],
+        },
+        {
+          consideration: "Published Colors",
+          values: ["Green and Pink", "Pink, Green and customized colors"],
+        },
+        {
+          consideration: "Intended Use Context",
+          values: ["Walking, hiking, camping and travel", "Walking, hiking, camping and travel"],
+        },
+        {
+          consideration: "B2B / Customization Direction",
+          values: [
+            "Green and pink are published; confirm branding, packaging and other commercial requirements for the quoted model",
+            "OEM and ODM support is published for colour, packaging and private-label bulk programs; confirm the selected configuration",
+          ],
+        },
+      ],
+      confirmBeforeSampling: [
+        "Capacity",
+        "Net weight",
+        "Water-contact component materials",
+        "Closure and dispensing details",
+        "Cleaning guidance",
+        "Packaging specification",
+        "Exact private-label configuration",
+        "MOQ and lead time where applicable",
+      ],
+      confirmationNote:
+        "Published dimensions or product format should not be used to infer capacity, leakage performance or material-compliance claims.",
+      resource: {
+        href: "/blog/pet-travel-water-bottle-retail-selection",
+        label: "Pet Travel Water Bottle Retail Selection Guide",
+        description: "Use this guide to evaluate carrying, serving, cleaning, sample review and leakage-risk evaluation.",
+      },
     },
   },
   "walking-hiking": {
