@@ -30,6 +30,13 @@ export type ProductSeoProfile = {
   commercialCopy: string[];
   imageAlt: string;
   relatedGuide: RelatedGuide;
+  buyerNotes?: {
+    summary: string;
+    publishedOptions: string;
+    confirmBeforeSampling: string[];
+    confirmationNote: string;
+    resources: Array<{ href: string; label: string; description: string }>;
+  };
 };
 
 export const homeSeo = {
@@ -141,6 +148,33 @@ export const productSeoByPath: Record<string, ProductSeoProfile> = {
     relatedGuide: {
       href: "/blog/pet-travel-carrier-buying-considerations",
       label: "pet travel carrier buying guide",
+    },
+    buyerNotes: {
+      summary:
+        "Published product details for this model cover its external dimensions, approximate weight, Oxford fabric, breathable mesh, soft fleece pad, and its carrying, ventilation and foldable-storage design. Use these details to identify the selected model when requesting a sample or quote.",
+      publishedOptions:
+        "Multiple colours, custom logo printing and custom packaging are published options. Exact branding method, packaging specification and production terms should be confirmed for the selected order configuration.",
+      confirmBeforeSampling: [
+        "Internal usable space",
+        "Intended pet-fit range",
+        "Exact branding method",
+        "Packaging specification",
+        "Selected configuration",
+      ],
+      confirmationNote:
+        "External dimensions alone should not be used to claim fit for a specific pet size or weight.",
+      resources: [
+        {
+          href: "/blog/pet-travel-carrier-buying-considerations",
+          label: "Pet Travel Carrier Buying Considerations",
+          description: "Review ventilation, structure, access, carrying and sample-inspection criteria.",
+        },
+        {
+          href: "/resources/pet-carrier-oem-buying-guide",
+          label: "Pet Carrier OEM Buying Guide",
+          description: "Prepare fit requirements, branding, packaging and quotation information for an OEM or private-label program.",
+        },
+      ],
     },
   },
   "travel-car/dual-use-pet-car-seat-tether": {
