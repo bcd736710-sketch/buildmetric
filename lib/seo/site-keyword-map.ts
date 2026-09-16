@@ -406,6 +406,35 @@ export const productSeoByPath: Record<string, ProductSeoProfile> = {
       href: "/blog/travel-cat-litter-box-buyer-guide",
       label: "travel cat litter box buyer guide",
     },
+    buyerNotes: {
+      summary:
+        "Published product details for this model cover its waterproof PP material description, open 50 × 37 × 19 cm dimensions, white finish, foldable travel-litter-box format and stated travel or temporary-use scenarios. Use these details to identify the selected model when requesting a sample or quote.",
+      publishedOptions:
+        "Custom packaging and OEM or private-label support are published options. Exact packaging format, branding scope, order quantity and production terms should be confirmed for the selected order configuration.",
+      confirmBeforeSampling: [
+        "Folded dimensions",
+        "Net and packed weight",
+        "Cleaning instructions",
+        "Drying guidance",
+        "Packaging specification",
+        "Exact OEM or private-label scope",
+        "Selected configuration",
+      ],
+      confirmationNote:
+        "Open dimensions and published material must not be used to infer folded size, litter capacity, leakage performance or cat-fit range.",
+      resources: [
+        {
+          href: "/blog/travel-cat-litter-box-buyer-guide",
+          label: "Travel Cat Litter Box Buyer Guide",
+          description: "Review usable space, setup, containment, cleaning, drying, refolding and sample-review considerations.",
+        },
+        {
+          href: "/blog/portable-cat-litter-box-use-cases",
+          label: "Portable Cat Litter Box Use Cases",
+          description: "Consider road trips, hotels, temporary stays, camping and reusable travel-litter use cases.",
+        },
+      ],
+    },
   },
   "travel-car/dog-car-window-safety-guard": {
     primaryKeyword: "dog car window safety guard",
