@@ -524,6 +524,32 @@ export const productSeoByPath: Record<string, ProductSeoProfile> = {
       href: "/blog/dog-car-window-guard-buyer-guide",
       label: "dog car window guard buyer guide",
     },
+    buyerNotes: {
+      summary:
+        "Published product details for this model identify high-density EVA foam, a 40.5 × 4.7 × 4.7 cm format and blue or black finishes. The current product page does not publish an adjustment range or a defined vehicle-compatibility specification.",
+      publishedOptions:
+        "Blue and black are the published options, each listed in the 40.5 × 4.7 × 4.7 cm format. Branding, packaging and order requirements should be confirmed for the exact model and selected order configuration.",
+      confirmBeforeSampling: [
+        "Intended vehicle window and trim location",
+        "Fit, placement, installation and removal on relevant vehicles",
+        "Window operation and clearance",
+        "Supporting window or trim location to inspect",
+        "Selected color and final dimensions",
+        "Customer instructions",
+        "Warnings and limitations",
+        "Branding and packaging requirements",
+      ],
+      confirmationNote:
+        "Published material and dimensions must not be used to infer universal vehicle compatibility, window-security performance, prevention of escape or crash protection.",
+      resources: [
+        {
+          href: "/blog/dog-car-window-guard-buyer-guide",
+          label: "Dog Car Window Guard Buyer Guide",
+          description:
+            "Review installation, fit, placement, stability, visibility, ventilation, storage and sample-inspection considerations for the selected vehicle context.",
+        },
+      ],
+    },
   },
 };
 

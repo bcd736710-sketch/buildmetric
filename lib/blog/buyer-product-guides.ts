@@ -1963,6 +1963,102 @@ export const buyerProductGuides: BuyerProductGuide[] = [
       ],
     ],
   },
+  {
+    slug: "dog-raincoat-wholesale-sizing-guide",
+    title: "How Wholesale Buyers Should Build a Dog Raincoat Size Range",
+    seoTitle: "Dog Raincoat Wholesale Sizing Guide | TROVANE",
+    description:
+      "A B2B buying guide for comparing dog raincoat size ranges, sample fit, product instructions, reflective details and configuration questions before ordering.",
+    introduction:
+      "A dog raincoat range succeeds when the retailer can explain fit clearly and the ordered size chart matches the approved sample. For brands, distributors and importers, the decision is not simply whether a coat looks protective in a product image. It is whether the measurements, openings, coverage, adjustment, instructions and retail presentation make sense for the intended customer. This guide separates the published facts of TROVANE’s current raincoat model from the questions that still require sample and order-level confirmation.",
+    category: "Product Selection",
+    publishedAt: "2026-09-17",
+    publishedLabel: "September 17, 2026",
+    image: "/trovane-category-hiking-dog.jpg",
+    imageAlt: "Dog outdoors in a walking and hiking setting",
+    productName: "Reflective Full-Body Waterproof Dog Raincoat with Tail Cover",
+    productHref: "/products/walking-hiking/reflective-full-body-waterproof-dog-raincoat-tail-cover",
+    sections: [
+      {
+        heading: "Start with a retail size-range decision",
+        paragraphs: [
+          [
+            "A wholesale size range should be planned around the measurements a retailer can present consistently, not a broad breed label or a guessed pet weight. Decide whether the assortment needs a compact core range or every published size, then define the markets, channels and customer questions the range must support.",
+          ],
+          [
+            "Back length, neck and chest are distinct measurements. A buyer should decide how each will be shown on the size chart, how the customer is asked to measure the dog, and what happens when the measurements point to different sizes. Those instructions need review with the selected sample; published dimensions alone do not establish fit for a particular dog.",
+          ],
+        ],
+        bullets: [
+          ["Use the same measurement names on the product page, packaging, size chart and support material."],
+          ["Keep intended pet-size or breed guidance separate from the published garment measurements until it is confirmed."],
+          ["Record the selected size range in the RFQ rather than assuming every size is part of the order."],
+        ],
+      },
+      {
+        heading: "Use published model data as an identification reference",
+        paragraphs: [
+          [
+            "The current ",
+            {
+              href: "/products/walking-hiking/reflective-full-body-waterproof-dog-raincoat-tail-cover",
+              text: "Reflective Full-Body Waterproof Dog Raincoat with Tail Cover",
+            },
+            " page identifies polyester and lists XS through 2XL. The published size chart gives back, neck and chest measurements for each size: XS 20 / 27 / 30 cm; S 25 / 29 / 35 cm; M 30 / 32 / 40 cm; L 35 / 35 / 45 cm; XL 40 / 38 / 50 cm; and 2XL 45 / 41 / 55 cm.",
+          ],
+          [
+            "Reflective edge detailing, a transparent hood finish, four-leg coverage, leash access and extended tail protection are also published design descriptions. Vintage Green, Navy Blue and Vintage Orange are the listed options. These facts identify the current model; they do not establish a certified visibility level, a universal fit range, water resistance under every condition or a particular pet-weight range.",
+          ],
+        ],
+      },
+      {
+        heading: "Inspect fit through the complete wearing routine",
+        paragraphs: [
+          [
+            "A sample review should follow the customer routine: opening the garment, placing each leg, positioning the hood and tail area, using the leash opening, checking coverage, walking briefly, removing the coat and packing it away. This exposes whether the size chart, product instructions and actual handling are aligned.",
+          ],
+          [
+            "Ask the supplier which product measurements are taken flat, which are taken around the garment and whether tolerances apply to the selected configuration. Confirm the closure, adjusters, leash opening and any hood or tail details on the real sample. Do not convert a single sample observation into a claim for every size or production batch.",
+          ],
+        ],
+        bullets: [
+          ["Compare the approved sample against the exact size label and published dimensions."],
+          ["Check neck, chest, leg and tail coverage without relying on a breed name alone."],
+          ["Review how the leash opening and hood behave in the intended walking setup."],
+          ["Photograph the selected sample, size label, packaging and any instruction insert for the approval record."],
+        ],
+      },
+      {
+        heading: "Keep weather and visibility wording evidence-based",
+        paragraphs: [
+          [
+            "The product is presented for wet-weather walking and outdoor use. Retail copy should preserve that intended-use context without turning design descriptions into performance guarantees. A reflective edge description is not a visibility certification, and the published waterproof product format is not evidence of performance under every weather condition, washing routine or wear cycle.",
+          ],
+          [
+            "If a destination market or retail channel needs a specific claim, test result, compliance record, care instruction or warning, request it for the selected configuration. Until the relevant evidence is supplied, use the published model facts and clear sample-review language instead of importing claims from another supplier’s product.",
+          ],
+        ],
+      },
+      {
+        heading: "Build an RFQ that matches the range you intend to sell",
+        paragraphs: [
+          [
+            "A useful raincoat RFQ identifies the chosen sizes, colours, target market, sales channel, logo or packaging direction, sample purpose and launch timing. It should also state which information the buyer still needs before approval, such as measurement tolerances, final materials, care instructions, packaging specification, branding method, MOQ and lead time.",
+          ],
+          [
+            "For a broader assortment decision, use the ",
+            broaderGuide,
+            " to connect the raincoat with the channel, packaging and sample questions that apply to a wider pet outdoor range.",
+          ],
+        ],
+      },
+    ],
+    conclusion: [
+      [
+        "A clear raincoat size range begins with published measurements, then earns buyer confidence through an approved sample, understandable instructions and order-specific confirmation. Use TROVANE’s current model data to identify the selected size and colour, while keeping fit, performance, care and retail claims tied to evidence for the exact configuration.",
+      ],
+    ],
+  },
 ];
 
 export const buyerProductGuideSlugs = buyerProductGuides.map(
