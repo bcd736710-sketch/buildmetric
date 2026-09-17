@@ -286,6 +286,34 @@ export const productSeoByPath: Record<string, ProductSeoProfile> = {
       href: "/blog/pet-car-seat-tether-buyer-checklist",
       label: "pet car seat tether buyer checklist",
     },
+    buyerNotes: {
+      summary:
+        "Published product details for this model identify nylon webbing, an aluminum-alloy hook and a plastic buckle; dual-use headrest-and-seat-buckle and single seat-buckle configuration formats; 80–110 cm and 55–65 cm published adjustment ranges; reinforced stitching, an elastic shock-absorption design and a swivel hook.",
+      publishedOptions:
+        "Dual-use headrest and seat-buckle attachment, single seat-buckle attachment, black, pink and custom colors, custom logo printing and custom packaging are published options. Exact configuration, attachment method, branding, packaging and production terms should be confirmed for the selected order configuration.",
+      confirmBeforeSampling: [
+        "Exact configuration",
+        "Vehicle attachment method",
+        "Seat-buckle and headrest compatibility",
+        "Intended pet-size or weight guidance",
+        "Harness attachment instructions",
+        "Adjustment range for the selected configuration",
+        "Hardware specification",
+        "Use instructions",
+        "Warnings and limitations",
+        "Packaging specification",
+      ],
+      confirmationNote:
+        "Published length ranges and attachment descriptions must not be used to infer crash performance, restraint strength, universal vehicle compatibility or suitability for a specific dog weight.",
+      resources: [
+        {
+          href: "/blog/pet-car-seat-tether-buyer-checklist",
+          label: "Pet Car Seat Tether Buyer Checklist",
+          description:
+            "Review attachment, adjustment, hardware, stitching, harness-connection and sample-inspection considerations. This guide supports buyer evaluation; it does not establish current-model safety or collision performance.",
+        },
+      ],
+    },
   },
   "walking-hiking/automatic-retractable-dog-leash": {
     primaryKeyword: "retractable dog leash",
