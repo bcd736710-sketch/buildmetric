@@ -615,6 +615,13 @@ export default async function HomePage() {
                 <p>Email: jin.gou@buildmetriccalc.com</p>
                 <p>WhatsApp: +86 18215529827</p>
               </div>
+              <div className="mt-6">
+                <p className="text-sm font-bold text-navy">Buyer Tools</p>
+                <ul className="mt-4 space-y-3 text-sm text-slate">
+                  <li><Link className="transition hover:text-forest" href="/catalog">Product Catalog</Link></li>
+                  <li><Link className="transition hover:text-forest" href="/resources">Buyer Resources</Link></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
