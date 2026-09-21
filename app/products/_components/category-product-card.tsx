@@ -28,7 +28,6 @@ export function CategoryProductCard({ product, fallbackImage }: CategoryProductC
             height={900}
             sizes="(min-width: 1024px) 33vw, 50vw"
             src={image}
-            unoptimized
             width={1200}
           />
         </div>

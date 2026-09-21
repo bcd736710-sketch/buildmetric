@@ -20,10 +20,9 @@ export function ProductDetailGallery({ images }: { images: GalleryImage[] }) {
             alt={activeImage.alt}
             className="h-full w-full object-contain p-6 sm:p-10 lg:p-14"
             fill
-            priority
-            sizes="(min-width: 1024px) 56vw, 100vw"
+            priority={activeIndex === 0}
+            sizes="(min-width: 1280px) 530px, (min-width: 768px) 40vw, 100vw"
             src={activeImage.src}
-            unoptimized
           />
         </div>
         {images.length > 1 ? <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
@@ -43,7 +42,6 @@ export function ProductDetailGallery({ images }: { images: GalleryImage[] }) {
                 fill
                 sizes="80px"
                 src={image.src}
-                unoptimized
               />
             </button>
           ))}
